@@ -1,5 +1,7 @@
 
-#import "@preview/typst-ts-variables:0.1.0": page-width, target
+// #import "@preview/typst-ts-variables:0.1.0": page-width, target
+
+#import "variables.typ": page-width, target
 
 // export typst.ts variables again, don't import typst-ts-variables directly
 #let get-page-width() = page-width
