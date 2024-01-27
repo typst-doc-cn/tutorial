@@ -1,6 +1,6 @@
-#import "/src/book.typ": book-page
+#import "mod.typ": *
 
-#show: book-page.with(title: "导引")
+#show: book.page.with(title: "导引")
 
 = 导引
 

@@ -1,20 +1,6 @@
-#import "/src/book.typ": book-page
+#import "mod.typ": *
 
-#show: book-page.with(title: "编写一篇基本文档")
-
-
-#import "/typ/templates/page.typ": main-color
-
-#let code(cc, show-cc: true, res: none) = {
-  if show-cc {
-    cc
-  }
-  rect(width: 100%, inset: 10pt, if res != none {
-    res
-  } else {
-    eval(cc.text, mode: "markup")
-  })
-}
+#show: book.page.with(title: "编写一篇基本文档")
 
 = 编写一篇基本文档
 
