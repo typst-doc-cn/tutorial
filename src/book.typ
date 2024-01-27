@@ -14,11 +14,36 @@
   summary: [
     #prefix-chapter("introduction.typ")[导引]
     = 基本教程
+    // basic content grammar
     - #chapter("basic/writing.typ")[编写一篇基本文档]
-    - #chapter("basic/scripting-base.typ")[脚本：类型、变量和函数]
-    - #chapter("basic/content-and-style.typ")[维护文档内容与样式]
-    - #chapter("basic/scripting-scope.typ")[脚本：控制流、作用域和闭包]
-    - #chapter("basic/stateful-content.typ")[维护和查询文档状态]
+    // integer, float, strings
+    // let x = expression
+    // let f(x) = expression
+    - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
+    // array, dict, arguments
+    // if c { x } else { y }
+    // loop
+    // let f = (..args) => expression
+    // let f(..args) = expression
+    - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
+    // scope
+    // include
+    // mutable variables in scope
+    // show: rule
+    // set rule if c
+    // scope about import
+    // scope about include
+    - #chapter("basic/scripting-scope.typ")[作用域、内容与样式]
+    // selector, query
+    // show.where
+    // state
+    // CLI: typst query
+    - #chapter("basic/stateful-content.typ")[文档状态的维护与查询]
+    // CLI: typst compile --root
+    // local package
+    // local module
+    // import file/module
+    // @preview pacakges
     - #chapter("basic/scripting-modules.typ")[脚本：多文件文档、模块与外部库]
     - #chapter("basic/layout.typ")[控制页面结构]
     - #chapter("basic/chinese-writing.typ")[编写一篇中文文档]
