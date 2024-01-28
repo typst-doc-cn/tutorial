@@ -14,9 +14,11 @@
     align(center + horizon, 
       block(width: 100%, fill: dash-color.lighten(70%), height: 6.2cm, 
         pad(x:2cm, y:1cm)[
-          #text(size: 3em, weight: 900, project-meta.display-title)
+          // #text(size: 3em, weight: 900, project-meta.display-title)
+          #text(size: 3em, weight: 900, [The Raindrop-Blue Book])
           #v(1cm, weak: true)
-          #text(size: 3em, project-meta.at("subtitle", default: none))
+          // #text(size: 3em, project-meta.at("subtitle", default: none))
+          #text(size: 2em, project-meta.display-title)
           #v(1cm, weak: true)
           #text(size: 1em, weight: "bold", "Myriad-Dreamin等著")
         ]
@@ -27,6 +29,7 @@
 }
 
 #let p = counter("book-part")
+#let p-num = numbering.with("1")
 #let default-styles = (
   cover-image: "./rm175-noon-02.jpg",
   cover: cover,
@@ -46,7 +49,9 @@
           pad(x:1cm, y:1cm)[
             #set text(size: 36pt)
             #v(1em)
-            #heading([Part.#p.display()#h(.5em)] + it)
+            #locate(loc => {
+              heading([Part.#p-num(..p.at(loc))#sym.space] + it)
+            })
           ]
         )
       ),
