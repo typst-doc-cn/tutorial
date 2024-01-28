@@ -397,6 +397,7 @@ $
   ```
 
 == 总结
+#include "./math-common-cheet.typ"
 
 Todo：
 + 术语-翻译表
