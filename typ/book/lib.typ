@@ -328,7 +328,7 @@
 /// show template for a book file
 /// Example:
 /// ```typ
-/// #show book
+/// #show: book
 /// ```
 #let book(content) = {
   // set page(width: 300pt, margin: (left: 10pt, right: 10pt, rest: 0pt))

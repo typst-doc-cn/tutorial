@@ -1,8 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "导引")
-
-= 导引
+#show: book.page.with(title: [导引])
 
 本教程面向所有Typst用户，循序渐进，供以中文为母语的Typst语言初学者和爱好者查阅和参考。本教程希望弥补Typst相关资料的缺失，作为官方文档的补充，帮助大家入门和学习Typst。
 

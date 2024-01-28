@@ -47,6 +47,10 @@
     - #chapter("basic/scripting-modules.typ")[脚本：多文件文档、模块与外部库]
     - #chapter("basic/layout.typ")[控制页面结构]
     - #chapter("basic/chinese-writing.typ")[编写一篇中文文档]
+    = 专题
+    = 功能用例
+    = 图表
+    = 模板
   ]
 )
 
@@ -54,7 +58,7 @@
   dest-dir: "../dist",
 )
 
-#get-book-meta()
+// #get-book-meta()
 
 // re-export page template
 #import "/typ/templates/page.typ": project, heading-reference

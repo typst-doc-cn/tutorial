@@ -83,8 +83,12 @@
   set document(author: authors, title: title) if not is-pdf-target
 
   // set web/pdf page properties
+  set page(numbering: if is-pdf-target {
+    "1"
+  })
+
+  // set web/pdf page properties
   set page(
-    numbering: none, 
     number-align: center,
     width: page-width,
   )
@@ -159,6 +163,17 @@
       )
     } else {
       it
+    }
+  }
+
+  if title != none {
+    if is-web-target {
+      heading(title)
+    } else {
+      set text(size: 18pt)
+      v(1em)
+      align(center, heading(title))
+      v(2em)
     }
   }
 
