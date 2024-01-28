@@ -50,6 +50,7 @@
     = 专题
     = 功能用例
     = 图表
+    - #chapter("misc/solid-geometry.typ")[立体几何]
     = 模板
   ]
 )
