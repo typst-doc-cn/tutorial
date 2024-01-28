@@ -338,7 +338,7 @@ Typst提供了一系列「成员」和「方法」访问字面量、变量与函
 #while expression { CONT }
 ```
 
-上面代码中，如果表达式`expression`为非零值（表示真），就会执行`CONT`代码块，然后再次判断`expression`是否为零；如果`expression`为零（表示伪）就跳出循环，不再执行循环体。
+上面代码中，如果表达式`expression`为真，就会执行`CONT`代码块，然后再次判断`expression`是否为假；如果`expression`为假就跳出循环，不再执行循环体。
 
 #code(```typ
 #{
