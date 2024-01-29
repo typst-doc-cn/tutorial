@@ -142,12 +142,14 @@
     it
   } else if it == [ ] {
     " "
-  } else if it.func() == text or it.func() == raw {
+  } else if it.has("children") {
+    it.children.map(plain-text).filter(t => type(t) == str).join()
+  } else if it.has("body") {
+    plain-text(it.body)
+  } else if it.has("text") {
     it.text
   } else if it.func() == smartquote {
     if it.double { "\"" } else { "'" }
-  } else if it.func() == [].func() {
-    it.children.map(plain-text).filter(t => type(t) == str).join()
   } else {
     none
   }
