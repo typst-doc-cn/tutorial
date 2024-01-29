@@ -46,6 +46,8 @@ Hello world!!!
 
 todo更详细的介绍。
 
+todo: repr, eval
+
 == 基本字面量
 
 ```typ
@@ -114,7 +116,7 @@ $1 > 2$的结果为：#(1 > 2)
 
 整数除法：#(10 / 4)
 
-$pi$、$tau$、$tau$、$inf$、NaN对应的取值：#calc.pi、#calc.tau、#calc.tau、#calc.inf、#calc.nan
+$pi$、$tau$、$inf$、NaN对应的取值：#calc.pi、#calc.tau、#calc.inf、#calc.nan
 ```)
 
 === 「字符串字面量」
@@ -140,6 +142,11 @@ $pi$、$tau$、$tau$、$inf$、NaN对应的取值：#calc.pi、#calc.tau、#calc
 == 表达式、转换和计算库
 
 略
+
+todo: operators
+todo: -, +, \*, /, ==, !=, <, <=, >, >=
+todo: and, or, not
+todo: =, +=, -=, \*=, /=
 
 == 回顾第二个Hello World程序
 

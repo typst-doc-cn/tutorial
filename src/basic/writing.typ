@@ -169,10 +169,6 @@ Typst的代码片段标记语法与Markdown非常类似，但不完全相同。�
 1. 列表项3
 ```)
 
-== 表格
-
-略。
-
 == 转义序列
 
 有的时候，你不希望使用Typst提供的语义标记，而是直接展示标记符号本身的真实内容。例如，你可能希望在段落中直接展示一个「下划线」，而非期望使用「下划线」赋予强调语义：
@@ -307,6 +303,35 @@ Typst遵从了大部分语言的习惯，使用「反斜杠」（`\`）转义特
 ]
 ```)
 
+== 文字修饰
+
+- highlight
+- overline
+- underline
+- strikethrough
+- subscript
+- superscript
+
+== 文字颜色
+
+略
+
+== 图片
+
+略
+
+== 链接
+
+略
+
+== 引用
+
+略
+
+== 表格基础
+
+略
+
 == 数学模式
 
 #code(````typ
@@ -395,6 +420,8 @@ $
   #import "latex-look.typ": latex-look
   #show: latex-look
   ```
+
+// set text font
 
 == 总结
 #include "./math-common-cheet.typ"

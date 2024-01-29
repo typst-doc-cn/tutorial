@@ -1,8 +1,14 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "维护文档内容与样式")
+#show: book.page.with(title: "作用域、内容与样式")
 
 == 内容类型的特性
+
+- func()
+- has()
+- at()
+- fields()
+- location()
 
 略
 

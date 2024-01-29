@@ -263,6 +263,19 @@ Typst提供了一系列「成员」和「方法」访问字面量、变量与函
 #a-content
 ```)
 
+todo: (a, b) = (b, a)
+todo: let _
+
+todo: field access
+- dictionary
+- symbol
+- module
+- content
+
+todo: not in
+
+todo: return
+
 == `none`类型和控制流
 
 默认情况下，在逻辑上，Typst按照顺序执行执行你的代码，即先执行前面的语句，再执行后面的语句。开发者如果想要控制程序执行的流程，就必须使用流程控制的语法结构，主要是条件执行和循环执行。
@@ -331,6 +344,11 @@ Typst提供了一系列「成员」和「方法」访问字面量、变量与函
 
 #fib(46)
 ```)
+
+// if condition {..}
+// if condition [..]
+// if condition [..] else {..}
+// if condition [..] else if condition {..} else [..]
 
 `while`语句用于循环结构，满足条件时，不断执行循环体。
 

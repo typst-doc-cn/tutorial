@@ -33,20 +33,21 @@
     // set rule if c
     // scope about import
     // scope about include
-    - #chapter("basic/scripting-scope.typ")[作用域、内容与样式]
+    - #chapter("basic/content-scope-and-style.typ")[作用域、内容与样式]
     // selector, query
     // show.where
     // state
     // CLI: typst query
-    - #chapter("basic/stateful-content.typ")[文档状态的维护与查询]
+    - #chapter("basic/content-stateful.typ")[文档状态的维护与查询]
     // CLI: typst compile --root
     // local package
     // local module
     // import file/module
     // @preview pacakges
     - #chapter("basic/scripting-modules.typ")[脚本：多文件文档、模块与外部库]
-    - #chapter("basic/layout.typ")[控制页面结构]
-    - #chapter("basic/chinese-writing.typ")[编写一篇中文文档]
+    - #chapter("basic/content-layout.typ")[控制页面结构]
+    - #chapter("basic/writing-intermediate.typ")[编写一篇进阶文档]
+    - #chapter("basic/writing-chinese.typ")[编写一篇中文文档]
     = 专题
     = 功能用例
     = 图表
