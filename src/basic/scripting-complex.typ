@@ -264,7 +264,7 @@ Typst提供了一系列「成员」和「方法」访问字面量、变量与函
 ```)
 
 todo: (a, b) = (b, a)
-todo: let _
+todo: let \_
 
 todo: field access
 - dictionary
