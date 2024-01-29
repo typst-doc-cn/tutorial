@@ -44,7 +44,7 @@
     // read, json, etc.
     - #chapter(none)[参考：数据加载]
     = 进阶教程
-    - #chapter("basic/content-scope-and-style.typ")[作用域、内容与样式]
+    - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
     // selector, query
     // show.where
     // state
@@ -52,7 +52,7 @@
     // color, gradient, pattern
     - #chapter(none)[参考：颜色、渐变填充与模式填充]
     - #chapter(none)[参考：box、block、可视元素]
-    - #chapter("basic/content-stateful.typ")[文档状态的维护与查询]
+    - #chapter("intermediate/content-stateful.typ")[文档状态的维护与查询]
     // CLI: typst compile --root
     // local package
     // local module
@@ -60,12 +60,12 @@
     // @preview pacakges
     - #chapter(none)[参考：正则匹配]
     - #chapter(none)[参考：元数据（metadata）]
-    - #chapter("basic/scripting-modules.typ")[脚本：多文件文档、模块与外部库]
+    - #chapter("intermediate/scripting-modules.typ")[脚本：多文件文档、模块与外部库]
     - #chapter(none)[参考：本地文件管理]
-    - #chapter("basic/content-layout.typ")[控制页面结构]
+    - #chapter("intermediate/content-layout.typ")[控制页面结构]
     - #chapter(none)[参考：胶水函数、空间变换函数]
     - #chapter(none)[参考：布局函数与示例]
-    - #chapter("basic/writing-intermediate.typ")[编写一篇进阶文档]
+    - #chapter("intermediate/writing.typ")[编写一篇进阶文档]
     = 专题
     - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
     = 功能用例
