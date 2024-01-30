@@ -424,10 +424,11 @@ $
 // set text font
 
 == 总结
-#include "./math-common-cheet.typ"
+
+基于本节掌握的知识你应该可以：
++ 查看#(refs.reference-math-symbols)[《常用数学符号》]，以助你编写简单的数学公式。
 
 Todo：
 + 术语-翻译表
 + 本文使用的符号-标记对照表
 + 常用函数表和外部链接，用于增加广度。
-+ 数学符号表和外部链接，用于增加广度。

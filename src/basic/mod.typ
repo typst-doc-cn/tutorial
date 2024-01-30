@@ -8,6 +8,8 @@
     writing: cl.with("/basic/writing.typ"),
     scriping-base: cl.with("/basic/scripting-base.typ"),
     scriping-complex: cl.with("/basic/scripting-complex.typ"),
+    
+    reference-math-symbols: cl.with("/basic/reference-math-symbols.typ"),
   )
 }
 

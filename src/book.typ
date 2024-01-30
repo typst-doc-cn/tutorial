@@ -22,7 +22,7 @@
     // + 常用函数表
     - #chapter(none)[参考：常用函数表]
     // + 数学符号表
-    - #chapter(none)[参考：数学符号表]
+    - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
     - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
     // array, dict, arguments
     // if c { x } else { y }
