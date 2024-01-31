@@ -1,0 +1,54 @@
+[workspace.package]
+description = "The Raindrop Book - Typst中文教程"
+authors = ["Myriad-Dreamin <camiyoru@gmail.com>"]
+version = "0.1.0"
+edition = "2021"
+readme = "README.md"
+license = "Apache-2.0"
+homepage = "https://github.com/typst-doc-cn/tutorial"
+repository = "https://github.com/typst-doc-cn/tutorial"
+rust-version = "1.74"
+
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.dependencies]
+typst = "0.10.0"
+typst-svg = "0.10.0"
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+typst-ts-compiler = { version = "0.4.2-rc6", default-features = false, features = [
+] }
+typst-ts-core = { version = "0.4.2-rc6", default-features = false, features = [
+    "flat-vector",
+    "vector-bbox",
+    "no-content-hint",
+] }
+
+[profile.release]
+lto = true        # Enable link-time optimization
+strip = true      # Strip symbols from binary*
+opt-level = 3     # Optimize for speed
+codegen-units = 1 # Reduce number of codegen units to increase optimizations
+panic = 'abort'   # Abort on panic
+
+[patch.crates-io]
+typst = { git = "https://github.com/Myriad-Dreamin/typst.git", branch = "typst.ts-v0.10.0-half" }
+typst-svg = { git = "https://github.com/Myriad-Dreamin/typst.git", branch = "typst.ts-v0.10.0-half" }
+# typst-ts-core = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-core" }
+# typst-ts-compiler = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-compiler" }
+typst-ts-core = { path = "../../rust/typst.ts/core" }
+typst-ts-compiler = { path = "../../rust/typst.ts/compiler" }
+
+[workspace.lints.rust]
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+uninlined_format_args = "warn"
+missing_errors_doc = "warn"
+missing_panics_doc = "warn"
+missing_safety_doc = "warn"
+undocumented_unsafe_blocks = "warn"

@@ -1,0 +1,8 @@
+[submodule "assets/typst-fonts"]
+	path = assets/typst-fonts
+	url = https://github.com/typst-doc-cn/fonts
+	branch = typst-v0.10.0
+[submodule "assets/artifacts"]
+	path = assets/artifacts
+	url = https://github.com/typst-doc-cn/tutorial-artifacts
+	branch = v0.1.0

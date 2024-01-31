@@ -1,0 +1,29 @@
+[package]
+name = "embedded-typst"
+description = "Run typst inside of typst"
+authors.workspace = true
+version.workspace = true
+license.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+typst.workspace = true
+typst-svg.workspace = true
+typst-ts-core.workspace = true
+typst-ts-compiler.workspace = true
+serde_json.workspace = true
+
+wasm-minimal-protocol = { git = "https://github.com/astrale-sharp/wasm-minimal-protocol", optional = true }
+
+[features]
+typst-plugin = ["wasm-minimal-protocol"]
+
+default = ["typst-plugin"]
+
+[lints]
+workspace = true
