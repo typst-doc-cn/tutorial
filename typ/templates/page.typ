@@ -16,12 +16,16 @@
 #let main-color = rgb(theme-style.at("main-color"))
 #let dash-color = rgb(theme-style.at("dash-color"))
 
+#let main-font-cn = (
+  "Source Han Serif SC",
+  "Source Han Serif TC",
+)
+
 #let main-font = (
   "Charter",
   // typst-book's embedded font
   "Linux Libertine",
-  "Source Han Serif SC",
-  "Source Han Serif TC",
+  ..main-font-cn,
 )
 
 #let code-font = (
@@ -119,6 +123,10 @@
     it
   })
   let get-ld(loc, k) = make-unique-label(k, disambiguator: ld.at(loc).at(k))
+
+  // show regex("[A-Za-z]+"): set text(font: main-font-en)
+  show regex("[“”‘’．，。、？！：；（）｛｝［］〔〕〖〗《 》〈 〉「」【】『』─—＿·…\u{30FC}]+"): set text(font: main-font-cn)
+  // show regex("[“”]+"): set text(font: main-font-cn)
 
   // render a dash to hint headings instead of bolding it.
   show heading : set text(weight: "regular") if is-web-target
