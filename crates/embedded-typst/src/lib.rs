@@ -2,7 +2,11 @@
 
 #![cfg_attr(feature = "typst-plugin", allow(missing_docs))]
 
-use std::path::{Path, PathBuf};
+use std::{
+    ops::Deref,
+    path::{Path, PathBuf},
+    sync::Mutex,
+};
 
 use typst::{foundations::Bytes, syntax::VirtualPath};
 use typst_ts_compiler::{
@@ -19,14 +23,24 @@ pub extern "C" fn now() -> f64 {
     0.0
 }
 
+static WORLD: std::sync::OnceLock<Mutex<WorldRepr>> = std::sync::OnceLock::new();
+
 /// Compile a typst file to svg.
+///
+/// # Panics
+///
+/// Panics if the world is not initialized.
 ///
 /// # Errors
 ///
 /// Error if there is an error
 #[cfg_attr(feature = "typst-plugin", wasm_func)]
 pub fn svg(input: &[u8]) -> Result<Vec<u8>, String> {
-    let mut world = TypstWasmWorld::new().0;
+    let mut world = WORLD
+        .get_or_init(|| Mutex::new(TypstWasmWorld::new().0))
+        .lock()
+        .unwrap();
+    world.reset();
 
     // Prepare main file.
     let entry_file = Path::new("/main.typ");
@@ -37,13 +51,13 @@ pub fn svg(input: &[u8]) -> Result<Vec<u8>, String> {
 
     // Compile.
     let mut tracer = Default::default();
-    let doc = typst::compile(&world, &mut tracer).map_err(
+    let doc = typst::compile(world.deref(), &mut tracer).map_err(
         |e: EcoVec<typst::diag::SourceDiagnostic>| {
             let mut error_log = String::new();
             for c in e.into_iter() {
                 error_log.push_str(&format!(
                     "{:?}\n",
-                    typst_ts_core::error::diag_from_std(c, Some(&world))
+                    typst_ts_core::error::diag_from_std(c, Some(world.deref()))
                 ));
             }
             error_log
@@ -51,7 +65,8 @@ pub fn svg(input: &[u8]) -> Result<Vec<u8>, String> {
     )?;
 
     // Query header.
-    let header = typst_ts_compiler::service::query::retrieve(&world, "<embedded-typst>", &doc);
+    let header =
+        typst_ts_compiler::service::query::retrieve(world.deref(), "<embedded-typst>", &doc);
     let header = match header {
         Ok(header) => serde_json::to_vec(&header).map_err(|e| e.to_string())?,
         Err(e) => serde_json::to_vec(&e).map_err(|e| e.to_string())?,
@@ -113,26 +128,34 @@ impl TypstWasmWorld {
     }
 }
 
-macro_rules! add_embedded_font {
+macro_rules! add_font {
+    ($name:literal) => {
+        include_bytes!(concat!("../../../assets/fonts/", $name)).as_slice()
+    };
+}
+
+macro_rules! add_typst_font {
     ($name:literal) => {
         include_bytes!(concat!("../../../assets/typst-fonts/", $name)).as_slice()
     };
 }
 
 pub static EMBEDDED_FONT: &[&[u8]] = &[
+    add_font!("SourceHanSerifSC-Regular.otf"),
+    add_font!("SourceHanSerifSC-Bold.otf"),
     // Embed default fonts.
-    add_embedded_font!("LinLibertine_R.ttf"),
-    add_embedded_font!("LinLibertine_RB.ttf"),
-    add_embedded_font!("LinLibertine_RBI.ttf"),
-    add_embedded_font!("LinLibertine_RI.ttf"),
-    add_embedded_font!("NewCMMath-Book.otf"),
-    add_embedded_font!("NewCMMath-Regular.otf"),
-    add_embedded_font!("NewCM10-Regular.otf"),
-    add_embedded_font!("NewCM10-Bold.otf"),
-    add_embedded_font!("NewCM10-Italic.otf"),
-    add_embedded_font!("NewCM10-BoldItalic.otf"),
-    add_embedded_font!("DejaVuSansMono.ttf"),
-    add_embedded_font!("DejaVuSansMono-Bold.ttf"),
-    add_embedded_font!("DejaVuSansMono-Oblique.ttf"),
-    add_embedded_font!("DejaVuSansMono-BoldOblique.ttf"),
+    add_typst_font!("LinLibertine_R.ttf"),
+    add_typst_font!("LinLibertine_RB.ttf"),
+    add_typst_font!("LinLibertine_RBI.ttf"),
+    add_typst_font!("LinLibertine_RI.ttf"),
+    add_typst_font!("NewCMMath-Book.otf"),
+    add_typst_font!("NewCMMath-Regular.otf"),
+    add_typst_font!("NewCM10-Regular.otf"),
+    add_typst_font!("NewCM10-Bold.otf"),
+    add_typst_font!("NewCM10-Italic.otf"),
+    add_typst_font!("NewCM10-BoldItalic.otf"),
+    add_typst_font!("DejaVuSansMono.ttf"),
+    add_typst_font!("DejaVuSansMono-Bold.ttf"),
+    add_typst_font!("DejaVuSansMono-Oblique.ttf"),
+    add_typst_font!("DejaVuSansMono-BoldOblique.ttf"),
 ];

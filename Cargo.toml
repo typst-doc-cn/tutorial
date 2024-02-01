@@ -38,10 +38,10 @@ panic = 'abort'   # Abort on panic
 [patch.crates-io]
 typst = { git = "https://github.com/Myriad-Dreamin/typst.git", branch = "typst.ts-v0.10.0-half" }
 typst-svg = { git = "https://github.com/Myriad-Dreamin/typst.git", branch = "typst.ts-v0.10.0-half" }
-# typst-ts-core = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-core" }
-# typst-ts-compiler = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-compiler" }
-typst-ts-core = { path = "../../rust/typst.ts/core" }
-typst-ts-compiler = { path = "../../rust/typst.ts/compiler" }
+typst-ts-core = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-core" }
+typst-ts-compiler = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-compiler" }
+# typst-ts-core = { path = "../../rust/typst.ts/core" }
+# typst-ts-compiler = { path = "../../rust/typst.ts/compiler" }
 
 [workspace.lints.rust]
 missing_docs = "warn"

@@ -1852,6 +1852,7 @@ dependencies = [
 [[package]]
 name = "reflexo"
 version = "0.4.2-rc6"
+source = "git+https://github.com/Myriad-Dreamin/typst.ts?branch=fix-wasm-host#63721bc29878b958045da00ca425b31fc17aa953"
 dependencies = [
  "base64",
  "bitvec",
@@ -2879,6 +2880,7 @@ dependencies = [
 [[package]]
 name = "typst-ts-compiler"
 version = "0.4.2-rc6"
+source = "git+https://github.com/Myriad-Dreamin/typst.ts?branch=fix-wasm-host#63721bc29878b958045da00ca425b31fc17aa953"
 dependencies = [
  "append-only-vec",
  "base64",
@@ -2909,6 +2911,7 @@ dependencies = [
 [[package]]
 name = "typst-ts-core"
 version = "0.4.2-rc6"
+source = "git+https://github.com/Myriad-Dreamin/typst.ts?branch=fix-wasm-host#63721bc29878b958045da00ca425b31fc17aa953"
 dependencies = [
  "base64",
  "base64-serde",
