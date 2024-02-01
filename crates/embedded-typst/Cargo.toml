@@ -16,7 +16,12 @@ typst.workspace = true
 typst-svg.workspace = true
 typst-ts-core.workspace = true
 typst-ts-compiler.workspace = true
+serde.workspace = true
 serde_json.workspace = true
+comemo = "0.3.0"
+base64 = "0.21.2"
+flate2 = "1"
+tar = "0.4"
 
 wasm-minimal-protocol = { git = "https://github.com/astrale-sharp/wasm-minimal-protocol", optional = true }
 
