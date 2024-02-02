@@ -9,10 +9,19 @@
   data: data,
 )
 
-#let default-fonts = (
-    "/assets/fonts/SourceHanSerifSC-Regular.otf",
-    "/assets/fonts/SourceHanSerifSC-Bold.otf",
-    // Embed default fonts.
+#let create-font-ref(data) = {
+  let data = read(data, encoding: none);
+  let fingerprint = typst.allocate_data(bytes("font"), data);
+  let data = str(typst.encode_base64(data));
+
+  (
+    kind: "font",
+    hash: str(fingerprint),
+    data: data,
+  )
+}
+
+#let default-fonts() = (
     "/assets/typst-fonts/LinLibertine_R.ttf",
     "/assets/typst-fonts/LinLibertine_RB.ttf",
     "/assets/typst-fonts/LinLibertine_RBI.ttf",
@@ -27,17 +36,12 @@
     "/assets/typst-fonts/DejaVuSansMono-Bold.ttf",
     "/assets/typst-fonts/DejaVuSansMono-Oblique.ttf",
     "/assets/typst-fonts/DejaVuSansMono-BoldOblique.ttf",
-).map(t => {
-  let data = read(t, encoding: none);
-  let fg = typst.allocate_data(bytes("font"), data);
-  let data = str(typst.encode_base64(data));
+).map(create-font-ref)
 
-  (
-    kind: "font",
-    hash: str(fg),
-    data: data,
-  )
-})
+#let default-cjk-fonts() = (
+    "/assets/fonts/SourceHanSerifSC-Regular.otf",
+    "/assets/fonts/SourceHanSerifSC-Bold.otf",
+).map(create-font-ref)
 
 #let resolve-context(fonts) = {
   bytes(json.encode((
@@ -68,12 +72,15 @@
   (header, pages)
 }
 
-#let svg-doc(code, fonts: default-fonts) = {
+#let svg-doc(code, fonts: none) = {
   let code = bytes(if type(code) == str {
     code
   } else {
     code.text
   })
+  if fonts == none {
+    fonts = default-fonts()
+  }
   let (header, pages) = _svg-doc(code, fonts)
   (header: json.decode(header), pages: pages)
 }

@@ -51,7 +51,7 @@
     // color, gradient, pattern
     - #chapter(none)[参考：颜色、渐变填充与模式填充]
     - #chapter(none)[参考：box、block、可视元素]
-    - #chapter("intermediate/content-stateful.typ")[文档状态的维护与查询]
+    - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
     // CLI: typst compile --root
     // local package
     // local module
