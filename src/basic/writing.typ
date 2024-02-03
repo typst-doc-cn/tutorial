@@ -135,6 +135,9 @@ function fibnacci(n) {
 ```
 `````)
 
+// typ
+// typc
+
 == 列表
 
 Typst的代码片段标记语法与Markdown非常类似，但不完全相同。如果你使用过Markdown，那么你将可以很快上手。
