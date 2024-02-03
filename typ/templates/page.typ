@@ -174,6 +174,12 @@
     }
   }
 
+  
+  show <typst-raw-func>: it => {
+    it.lines.at(0).body.children.slice(0, -2).join()
+  }
+
+
   if title != none {
     if is-web-target {
       heading(title)

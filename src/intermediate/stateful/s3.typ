@@ -3,34 +3,6 @@
 
 #set text(size: 8pt)
 
-#let last-or(arr) = if arr.len() > 0 {
-  arr.last()
-}
-
-#let get-heading-at-page(loc) = {
-  let headings = curr-heading.final(loc)
-  let page-num = loc.page() - 1
-
-  headings.at(page-num, default:last-or(headings))
-}
-
-#let update-heading-at-page(it) = {
-  locate(loc =>
-    curr-heading.update(headings => {
-      let page-num = loc.page() - 1
-
-      if page-num < headings.len() {
-        return headings
-      }
-      
-      let t = last-or(headings)
-      headings
-      calc.max(0, page-num - 1 - headings.len()) * (t, )
-      (it.body, )
-    })
-  )
-}
-
 #let set-heading(content) = {
   show heading.where(level: 3): it => {
     show regex("[\p{hani}\s]+"): underline
@@ -38,7 +10,7 @@
   }
   show heading: it => {
     show regex("KiraKira"): box("★", baseline: -20%)
-    show regex("FuwaFuwa"): box(text("🪄", size: 0.5em), baseline: -50%)
+    show regex("FuwaFuwa"): box("✎", baseline: -20%)
     it
   }
 

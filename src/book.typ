@@ -52,6 +52,8 @@
     - #chapter(none)[参考：颜色、渐变填充与模式填充]
     - #chapter(none)[参考：box、block、可视元素]
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
+    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 —— 制作页眉标题法一]
+    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 —— 制作页眉标题法二]
     // CLI: typst compile --root
     // local package
     // local module

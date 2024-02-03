@@ -14,6 +14,11 @@
     it
   }
 
+  set page(header: {
+    set text(size: 5pt);
+    [这是页眉]
+  })
+
   content
 }
 
@@ -22,6 +27,7 @@
   content
 }
 
+#show: set-heading
 #show: set-text
 
 #set page(width: 120pt, height: 120pt, margin: (top: 12pt, bottom: 10pt, x: 5pt))
@@ -39,4 +45,3 @@ feat: 删除了一个多余的文件夹。
 
 == 雨滴书v0.1.0
 feat: 新建了两个文件夹。
-

@@ -3,38 +3,39 @@
 
 #set text(size: 8pt)
 
-#let last-or(arr) = if arr.len() > 0 {
-  arr.last()
+#let first-heading = state("first-heading", (:))
+#let last-heading = state("last-heading", (:))
+
+#let find-headings(headings, page-num) = if page-num > 0 {
+  headings.at(str(page-num), default: find-headings(headings, page-num - 1))
 }
 
 #let get-heading-at-page(loc) = {
-  let headings = curr-heading.final(loc)
-  let page-num = loc.page() - 1
+  let first-headings = first-heading.final(loc)
+  let last-headings = last-heading.at(loc)
+  let page-num = loc.page()
 
-  headings.at(page-num, default:last-or(headings))
+  first-headings.at(str(page-num), default: find-headings(last-headings, page-num))
 }
 
-#let update-heading-at-page(it) = {
-  locate(loc =>
-    curr-heading.update(headings => {
-      let page-num = loc.page() - 1
-
-      if page-num < headings.len() {
-        return headings
-      }
-      
-      let t = last-or(headings)
-      headings
-      calc.max(0, page-num - 1 - headings.len()) * (t, )
-      (it.body, )
-    })
-  )
-}
+#let update-heading-at-page(h) = locate(loc => {
+  let k = str(loc.page())
+  last-heading.update(it => {
+    it.insert(k, h)
+    it
+  })
+  first-heading.update(it => {
+    if k not in it {
+      it.insert(k, h)
+    }
+    it
+  })
+})
 
 #let set-heading(content) = {
   show heading.where(level: 2): it => {
-    update-heading-at-page(it)
     it
+    update-heading-at-page(it.body)
   }
   show heading.where(level: 3): it => {
     show regex("[\p{hani}\s]+"): underline
@@ -42,7 +43,7 @@
   }
   show heading: it => {
     show regex("KiraKira"): box("★", baseline: -20%)
-    show regex("FuwaFuwa"): box(text("🪄", size: 0.5em), baseline: -50%)
+    show regex("FuwaFuwa"): box("✎", baseline: -20%)
     it
   }
 

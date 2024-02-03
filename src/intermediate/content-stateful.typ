@@ -2,34 +2,17 @@
 
 #show: book.page.with(title: "维护和查询文档状态")
 
-#import "/typ/embedded-typst/lib.typ": svg-doc, default-fonts, default-cjk-fonts
-
-#let frames(code, cjk-fonts: false, code-as: none) = {
-  if code-as != none {
-    code-as
-  } else {
-    code
-  }
-
-  let fonts = if cjk-fonts {
-    (..default-cjk-fonts(), ..default-fonts())
-  }
-
-  grid(columns: (1fr, 1fr), ..svg-doc(code, fonts: fonts).pages.map(data => image.decode(data)).map(rect))
-}
-#let frames = frames.with(cjk-fonts: true)
-
 在上一节中我们理解了作用域，也知道如何简单把「`show`」规则应用于文档中的部分内容。
 
-它看起来似乎已经足够强大，但有一种可能，Typst可以给你更强大的原语。
+它看起来似乎已经足够强大。但还有一种可能，Typst可以给你更强大的原语。
 
-我是说有一种可能，Typst对文档内容的理解至少是二维的。一维是空间，另一维是时间。你可以从文档的任意位置，
-1. 空间维度（From Space to Space）：查询文档任意部分的状态（这里的内容和那里的内容）。
-1. 时间维度（From TimeLoc to TimeLoc）：查询文档任意脚本位置的状态（过去的状态和未来的状态）。
+我是说有一种可能，Typst对文档内容的理解至少是二维的。这二维，有一维可以比作空间，另一维可以比作时间。你可以从文档的任意位置，
++ 空间维度（From Space to Space）：查询文档任意部分的状态（这里的内容和那里的内容）。
++ 时间维度（From TimeLoc to TimeLoc）：查询文档任意脚本位置的状态（过去的状态和未来的状态）。
 
 这里有一个示意图，红色线段表示Typst脚本的执行方向。最后我们形成了一个由S1到S4的“时间线”。
 
-我们可以任意选中文档中的位置，例如我们可以选中其中起点（蓝色弧线的起始位置），从该处开始查询文档过去某处或未来某处（蓝色弧线的终止位置）。
+你可以选择文档中的任意位置，例如你可以在文档的某个位置（蓝色弧线的起始位置），从该处开始查询文档过去某处或未来某处（蓝色弧线的终止位置）。
 
 // I mean, Typst maintains states with at least two dimensions. The one resembles a space dimension, and the other one resembles a time dimension. You can create a state that spans:
 
@@ -48,8 +31,10 @@
 == 自定义标题样式
 
 本节讲解的程序是如何在Typst中设置标题样式。我们的目标是：
-1. 为每级标题单独设置样式。
-2. 
++ 为每级标题单独设置样式。
++ 设置标题为内容的页眉：
+  + 如果当前页眉有二级标题，则是当前页面的第一个二级标题。
+  + 否则是之前所有页面的最后一个二级标题。
 
 效果如下：
 
@@ -73,7 +58,9 @@ feat: 新建了两个文件夹。
 
 == 「样式化」内容
 
-当我们有一个`repr`玩具的时候，总想着对着各种各样的对象使用`repr`。这是什么，`repr`一下：
+当我们有一个`repr`玩具的时候，总想着对着各种各样的对象使用`repr`。我们在上一节讲解了「`set`」和「`show`」语法。现在让我们稍微深挖一些。
+
+「`set`」是什么，`repr`一下：
 
 #code(```typ
 #repr({
@@ -83,7 +70,7 @@ feat: 新建了两个文件夹。
 })
 ```)
 
-这是什么，`repr`一下：
+「`show`」是什么，`repr`一下：
 
 #code(```typ
 #repr({
@@ -107,7 +94,9 @@ feat: 新建了两个文件夹。
 该元素的构造函数是：#({show: set text(fill: blue)}).func()
 ```)
 
-原来，你也是内容。从图中，我们可以看到被`show`过的内容会被封装成「样式化」内容。
+原来，你也是内容。从图中，我们可以看到被`show`过的内容会被封装成「样式化」内容，即图中构造函数为`styled`的内容。
+
+关于`styled`的知识便涉及到Typst的核心架构。
 
 == 「`eval`阶段」与「`typeset`阶段」
 
@@ -124,7 +113,7 @@ feat: 新建了两个文件夹。
 
 这里，我们着重讲解“内容评估”阶段与“内容排版”阶段。
 
-事实上，Typst提供了对应“内容评估”阶段的函数，它就是我们之前已经介绍过的函数`eval`。你可以使用`eval`函数，将一个字符串对象「评估」为「内容」：
+事实上，Typst直接在脚本中提供了对应“内容评估”阶段的函数，它就是我们之前已经介绍过的函数`eval`。你可以使用`eval`函数，将一个字符串对象「评估」为「内容」：
 
 #code(```typ
 以代码模式评估：#eval("repr(str(1 + 1))") \
@@ -132,7 +121,13 @@ feat: 新建了两个文件夹。
 以标记模式评估2：#eval("#show: it => [c] + it + [t];a", mode: "markup")
 ```)
 
-由于技术原因，Typst并不提供对应“内容排版”阶段的函数，如果有的话这个函数的名称应该为`typeset`。
+由于技术原因，Typst并不提供对应“内容排版”阶段的函数，如果有的话这个函数的名称应该为`typeset`。已经有很多迹象表明`typeset`可能产生：
++ #link("https://github.com/andreasKroepelin/polylux")[Polylux], #link("https://github.com/touying-typ/touying")[Touying]等演示文档（PPT）框架需要将一部分内容固定为特定结果的能力。
++ Typst的作者在其博客中提及#link("https://laurmaedje.github.io/posts/frozen-state/")[Frozen State
+]的可能性。
+  + 他提及数学公式的编号在演示文档框架。
+  + 即便不涉及用户需求，Typst的排版引擎已经自然存在Frozen State的需求。
++ 本文档也需要`typeset`的能力为你展示特定页面的最终结果而不影响全局状态。
 
 在Typst的源代码中，有一个Rust函数直接对应整个编译流程，其内容非常简短，便是调用了两个阶段对应的函数。“内容评估”阶段（`eval`阶段）对应执行一个Rust函数，它的名称为`typst::eval`；“内容排版”阶段（`typeset`阶段）对应执行另一个Rust函数，它的名称为`typst::typeset`。
 
@@ -145,7 +140,7 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 }
 ```
 
-从代码逻辑上来看，它有明显的先后顺序，似乎与我们所展示的架构略有不同。其`typst::eval`的输出为一个文件模块；其`typst::typeset`仅接受文件的内容并产生一个已经排版好的文档对象`typst::Document`。
+从代码逻辑上来看，它有明显的先后顺序，似乎与我们所展示的架构略有不同。其`typst::eval`的输出为一个文件模块`module`；其`typst::typeset`仅接受文件的内容`module.content()`并产生一个已经排版好的文档对象`typst::Document`。
 
 与架构图对比来看，架构图中还有两个关键的反向箭头，疑问顿生：这两个反向箭头是如何产生的？
 
@@ -158,11 +153,11 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 
 也就是说`eval`并不具备任何排版能力，它只能为排版准备好各种“素材”，并把素材交给排版引擎完成排版。
 
-这里有一个术语很关键：「回调」是一个计算机术语。所谓「回调函数」就是一个临时的函数，它会在后续执行过程的合适时机“回过头来被调用”。例如，我们写了一个这样的「`show`」规则：
+这里的「回调」术语很关键：它是一个计算机术语。所谓「回调函数」就是一个临时的函数，它会在后续执行过程的合适时机“回过头来被调用”。例如，我们写了一个这样的「`show`」规则：
 
 #code(```typ
 #repr({
-  show raw: content => layout(parent => if parent.width > 1000pt {
+  show raw: content => layout(parent => if parent.width > 100pt {
     set text(fill: red); content
   } else {
     content
@@ -171,15 +166,15 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 })
 ```)
 
-这里`parent.width > 1000pt`是说当且仅当父元素的宽度大于`1000pt`时，才为该代码片段设置红色字体样式。其中，父元素宽度与排版相关，自然`eval`也不知道父元素宽度等于多少。那么，自然`eval`也不知道该如何评估。
+这里`parent.width > 100pt`是说当且仅当父元素的宽度大于`100pt`时，才为该代码片段设置红色字体样式。其中，`parent.width`与排版相关。那么，自然`eval`也不知道该如何评估该条件的真正结果。*计算因此被停滞*。
 
-于是，`eval`干脆将整个`show`右侧的函数都作为“素材”交给了排版引擎。当排版引擎计算好了相关内容，才回到评估阶段，执行这一小部分“素材”函数中的脚本，得到为正确的内容。
+于是，`eval`干脆将整个`show`右侧的函数都作为“素材”交给了排版引擎。当排版引擎计算好了相关内容，才回到评估阶段，执行这一小部分“素材”函数中的脚本，得到为正确的内容。我们可以看出，`show`右侧的函数*被延后执行*可。
 
-这种延迟执行的函数便被称为「回调函数」。相关的计算方法也有对应的术语，被称为「延迟执行」。
+这种被延后执行零次、一次或多次的函数便被称为「回调函数」。相关的计算方法也有对应的术语，被称为「延迟执行」。
 
 我们对每个术语咬文嚼字一番，它们都很准确：
 
-1. *「内容评估」*仅仅“评估”好素材，并不具备排版能力。
+1. *「内容评估」*阶段仅仅“评估”出*「内容排版」*阶段所需的素材.*「评估器」*并不具备排版能力。
 2. 对于依赖排版产生的内容，「内容评估」产生包含*「回调函数」*的内容，让「排版引擎」在合适的时机“回过头来调用”。
 3. 相关的计算方法又被称为*「延迟执行」*。因为现在不具备执行条件，所以延迟到条件满足时才继续执行。
 
@@ -203,19 +198,54 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 #styled((box(width: 50pt, `a`), `b`), styles: content => ..)
 ```
 
-排版引擎遇到`a`，继续执行`show`规则的「回调」，由于此时父元素（`box`元素）宽度只有`50pt`，我们为代码片段设置了红色样式。内容变为：
+排版引擎遇到``` `a` ```。由于``` `a` ```是`raw`元素，它「回调」了对应`show`规则右侧的函数。待执行的代码如下：
+
+```typc
+layout(parent => if parent.width < 100pt {
+  set text(fill: red); `a`
+} else {
+  `a`
+})
+```
+
+此时`parent`即为`box(width: 50pt)`。排版引擎将这个`parent`的具体内容交给「评估器」，待执行的代码如下：
+
+```typc
+if box(width: 50pt).width < 100pt {
+  set text(fill: red); `a`
+} else {
+  `a`
+}
+```
+
+由于此时父元素（`box`元素）宽度只有`50pt`，评估器进入了`then`分支，其为代码片段设置了红色样式。内容变为：
 
 ```typ
 #(box(width: 50pt, {set text(fill: red); `a`}), styled((`b`, ), styles: content => ..))
 ```
 
-排版引擎遇到`a`中的`text`元素，执行`set text(fill: red)`的「回调」。记得我们之前说过`set`是一种特殊的`show`。
+待执行的代码如下：
+
+```typc
+set text(fill: red); text("a", font: "monospace")
+```
+
+排版引擎遇到``` `a` ```中的`text`元素。由于其是`text`元素，「回调」了`text`元素的「`show`」规则。记得我们之前说过`set`是一种特殊的`show`，于是排版器执行了`set text(fill: red)`。
 
 ```typ
 #(box(width: 50pt, text(fill: red, "a", ..)), styled((`b`, ), styles: content => ..))
 ```
 
-排版引擎遇到`b`，再度执行`show`规则的「回调」，由于此时父元素（`page`元素，即整个页面）宽度有`500pt`，我们没有为代码片段设置样式。
+排版引擎离开了`show`规则右侧的函数，该函数调用由``` `a` ```触发。同时`set text(fill: red)`规则也被解除，因为离开了相关作用域。
+
+回到文档顶层，待执行的代码如下：
+
+```typc
+#show raw: ...
+`b`
+```
+
+排版引擎遇到``` `b` ```，再度「回调」了对应`show`规则右侧的函数。由于此时父元素（`page`元素，即整个页面）宽度有`500pt`，我们没有为代码片段设置样式。
 
 ```typ
 #(box(width: 50pt, text(fill: red, "a", ..)), text("b", ..))
@@ -232,13 +262,15 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 #repr({ show: it => [c] + it + [d]; [a] })
 ```)
 
-这个时候`show`规则不会对应一个`styled`元素。这种优化警戒你不要太过依赖「未注明特性」(undocumented details)。这些特性随时有可能在未来被打破。
+这个时候`show`规则不会对应一个`styled`元素。
+
+这种优化告诉你前面手动描述的过程仅作理解。一旦涉及更复杂的环境，Typst的实际执行过程就会产生诸多变化。因此，你不应该依赖以上某步中排版引擎的瞬间状态。这些瞬间状态将产生「未注明特性」(undocumented details)，并随时有可能在未来被打破。
 
 == 「可定位」的内容
 
 在过去的章节中，我们了解了评估结果的具体结构，也大致了解了排版引擎的工作方式。
 
-接下来，我们介绍一类内容的「可定位」（Locatable）特性。可以与前文中的「可折叠」（Foldable）特性对照理解。
+接下来，我们介绍一类内容的「可定位」（Locatable）特征。你可以与前文中的「可折叠」（Foldable）特征对照理解。
 
 一个内容是可定位的，如果它可以以某种方式被索引得到。
 
@@ -301,29 +333,36 @@ ababababababa
 为引号单独设置字体会导致错误的排版结果。因为句号与双引号之间产生了分界，使得Typst无法应用标点挤压规则：
 
 #code(````typ
-#show "”": set text(font: "KaiTi")
+#show "”": it => {
+  set text(font: "KaiTi")
+  highlight(it, fill: yellow)
+}
 “无名，万物之始也；有名，万物之母也。”
 ````)
 
-以下正则匹配也会导致句号与双引号之间产生分界：
+以下正则匹配也会导致句号与双引号之间产生分界，因为没有对两个标点进行贪婪匹配：
 
 #code(````typ
-#show regex("[”。]"): set text(font: "KaiTi")
+#show regex("[”。]"): it => {
+  set text(font: "KaiTi")
+  highlight(it, fill: yellow)
+}
 “无名，万物之始也；有名，万物之母也。”
 ````)
 
 以下正则匹配没有在句号与双引号之间创建分界。考虑两个标点的字体设置规则，Typst能排版出这句话的正确结果：
 
 #code(````typ
-#show regex("[”。]+"): set text(font: "KaiTi")
+#show regex("[”。]+"): it => {
+  set text(font: "KaiTi")
+  highlight(it, fill: yellow)
+}
 “无名，万物之始也；有名，万物之母也。”
 ````)
 
 == 「标签」选择器
 
-一些元素无法被直接选中，但是我们可以通过「标签」选中它们。「标签」选择器允许我们选中特定的元素。
-
-基本任何元素都包含文本，这使得我们很难对一段话针对性排版应用排版规则。「标签」有助于改善这一点。标签是「内容」，由一对「尖括号」（`<`和`>`）包裹：
+基本上，任何元素都包含文本。这使得你很难对一段话针对性排版应用排版规则。「标签」有助于改善这一点。标签是「内容」，由一对「尖括号」（`<`和`>`）包裹：
 
 #code(````typ
 一句话 <some-label>
@@ -415,41 +454,6 @@ typst也是。
 
 == 制作页眉标题的两种方法
 
-制作页眉标题有两种方法。
+制作页眉标题至少有两种方法。一是直接查询文档内容；二是创建状态，利用布局迭代收敛的特性获得每个页面的首标题。
 
-== 「query」
-
-略
-
-== 「状态」
-
-略
-
-== 「状态」的更新
-
-略
-
-== 查询特定时间点的「状态」
-
-略
-
-== 「`typeset`」阶段的迭代收敛
-
-略
-
-自定义页眉的方法是`set page(header)`，，且页眉的内容是本页中第一个标题的内容。
-
-
-todo: selector
-
-todo: label
-
-todo: regex
-
-todo: query
-
-todo: state
-
-todo: numbering
-
-todo: reference
+在接下来的两节中我们将分别介绍这两种方法。
