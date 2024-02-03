@@ -21,6 +21,10 @@
   "Source Han Serif TC",
 )
 
+#let code-font-cn = (
+  "Microsoft YaHei",
+)
+
 #let main-font = (
   "Charter",
   // typst-book's embedded font
@@ -32,7 +36,7 @@
   "BlexMono Nerd Font Mono",
   // typst-book's embedded font
   "DejaVu Sans Mono",
-  "Microsoft YaHei",
+  ..code-font-cn,
 )
 
 // todo: move code theme parser to another lib file
@@ -125,7 +129,12 @@
   let get-ld(loc, k) = make-unique-label(k, disambiguator: ld.at(loc).at(k))
 
   // show regex("[A-Za-z]+"): set text(font: main-font-en)
-  show regex("[“”‘’．，。、？！：；（）｛｝［］〔〕〖〗《》〈〉「」【】『』─—＿·…\u{30FC}]+"): set text(font: main-font-cn)
+  let cjk-markers = regex("[“”‘’．，。、？！：；（）｛｝［］〔〕〖〗《》〈〉「」【】『』─—＿·…\u{30FC}]+")
+  show cjk-markers: set text(font: main-font-cn)
+  show raw: it => {
+    show cjk-markers: set text(font: code-font-cn)
+    it
+  }
   // show regex("[“”]+"): set text(font: main-font-cn)
 
   // render a dash to hint headings instead of bolding it.
