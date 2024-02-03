@@ -102,6 +102,35 @@
       external-book(spec: (styles.inc)(spec))
       (styles.cover)(project-meta)
     }
+  
+    {
+      let outline-numbering-base = numbering.with("1.")
+      let outline-numbering(a0, ..args) = if a0 > 0 {
+        h(1em * args.pos().len())
+        outline-numbering-base(a0, ..args) + [ ]
+      }
+
+      let outline-counter = counter("outline-counter")
+      show outline.entry: it => {
+        let has-part = if it.body.func() != none and "children" in it.body.fields() {
+          for ch in it.body.children {
+            if "text" in ch.fields() and ch.text.contains("Part") {
+              ch.text
+            }
+          }
+        }
+
+        if has-part == none {
+          outline-counter.step(level: it.level + 1)
+          outline-counter.display(outline-numbering)
+        } else {
+          outline-counter.step(level: 1)
+        }
+        it
+      }
+    
+      outline(depth: 1, fill: repeat([...]))
+    }
 
     if project-meta.book != none {
       project-meta.book.summary.map(it => visit-summary(it, styles)).sum()
