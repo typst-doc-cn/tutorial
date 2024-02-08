@@ -129,7 +129,7 @@
         it
       }
     
-      outline(depth: 1, fill: repeat([...]))
+      outline(depth: 1, fill: repeat[...])
     }
 
     if project-meta.book != none {
