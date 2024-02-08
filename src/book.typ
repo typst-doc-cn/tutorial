@@ -61,7 +61,7 @@
     // @preview pacakges
     - #chapter(none)[参考：正则匹配]
     - #chapter(none)[参考：元数据（metadata）]
-    - #chapter("intermediate/scripting-modules.typ")[脚本：多文件文档、模块与外部库]
+    - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
     - #chapter(none)[参考：本地文件管理]
     - #chapter("intermediate/content-layout.typ")[控制页面结构]
     - #chapter(none)[参考：胶水函数、空间变换函数]
