@@ -1,17 +1,6 @@
 #import "/src/book.typ"
 #import "/typ/templates/page.typ"
-#import "../mod.typ": code as _code, exec-code as _exec-code
-
-#let refs = {
-  let cl = book.cross-link;
-  (
-    writing: cl.with("/basic/writing.typ"),
-    scriping-base: cl.with("/basic/scripting-base.typ"),
-    scriping-complex: cl.with("/basic/scripting-complex.typ"),
-    
-    reference-math-symbols: cl.with("/basic/reference-math-symbols.typ"),
-  )
-}
+#import "../mod.typ": code as _code, exec-code as _exec-code, refs
 
 #let eval-local(it, scope, res) = if res != none {
   res
