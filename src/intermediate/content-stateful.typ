@@ -38,7 +38,7 @@
 
 效果如下：
 
-#frames(read("./stateful/s1.typ"), code-as: ```typ
+#frames-cjk(read("./stateful/s1.typ"), code-as: ```typ
 #show: set-heading
 
 == 雨滴书v0.1.2
@@ -429,13 +429,13 @@ typst也是。
 
 针对特定的`feat`和`refactor`文本，我们使用`emph`修饰：
 
-#frames(read("./stateful/s2.typ"), code-as: ```typ
+#frames-cjk(read("./stateful/s2.typ"), code-as: ```typ
 #show regex("feat|refactor"): emph
 ```)
 
 对于三级标题，我们将中文文本用下划线标记，同时将特定文本替换成emoji：
 
-#frames(read("./stateful/s3.typ"), code-as: ```typ
+#frames-cjk(read("./stateful/s3.typ"), code-as: ```typ
 #let set-heading(content) = {
   show heading.where(level: 3): it => {
     show regex("[\p{hani}\s]+"): underline

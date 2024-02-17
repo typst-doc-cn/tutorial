@@ -14,59 +14,40 @@
   summary: [
     #prefix-chapter("introduction.typ")[导引]
     = 基本教程
-    // basic content grammar
     - #chapter("basic/writing.typ")[编写一篇基本文档]
-    // integer, float, strings
-    // let x = expression
-    // let f(x) = expression
-    // + 常用函数表
-    - #chapter(none)[参考：常用函数表]
-    - #chapter("basic/reference-math-symbols.typ")[参考：常用数学符号]
     - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
     // array, dict, arguments
     // if c { x } else { y }
     // loop
     // let f = (..args) => expression
     // let f(..args) = expression
-    // calc.*
-    - #chapter(none)[参考：内置计算库]
-    - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
-    // scope
-    // include
     // mutable variables in scope
-    // show: rule
-    // set rule if c
-    // scope about import
-    // scope about include
+    - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
+    = 基本参考
     // str, number, etc.
-    - #chapter(none)[参考：基本类型的方法]
-    // read, json, etc.
-    - #chapter(none)[参考：数据加载]
+    - #chapter(none)[基本类型]
+    - #chapter(none)[常用函数表]
+    // CLI: typst query
+    - #chapter(none)[数据存储与处理]
+    // color, gradient, pattern
+    - #chapter(none)[颜色、渐变填充与模式填充]
+    - #chapter(none)[可视与几何元素]
+    - #chapter(none)[语法速查]
+    - #chapter(none)[示例速查]
+    - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
+    // calc.*
+    - #chapter(none)[数值计算]
     = 进阶教程
     - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
-    // selector, query
-    // show.where
-    // state
-    // CLI: typst query
-    // color, gradient, pattern
-    - #chapter(none)[参考：颜色、渐变填充与模式填充]
-    - #chapter(none)[参考：box、block、可视元素]
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
     - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 —— 制作页眉标题法一]
     - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 —— 制作页眉标题法二]
-    // CLI: typst compile --root
-    // local package
-    // local module
-    // import file/module
-    // @preview pacakges
-    - #chapter(none)[参考：正则匹配]
-    - #chapter(none)[参考：元数据（metadata）]
     - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
-    - #chapter(none)[参考：本地文件管理]
-    - #chapter("intermediate/content-layout.typ")[控制页面结构]
-    - #chapter(none)[参考：胶水函数、空间变换函数]
-    - #chapter(none)[参考：布局函数与示例]
     - #chapter("intermediate/writing.typ")[编写一篇进阶文档]
+    = 进阶参考
+    - #chapter("intermediate/reference-length.typ")[长度单位]
+    - #chapter("intermediate/reference-layout.typ")[布局函数]
+    - #chapter(none)[示例速查Ⅱ]
     = 专题
     - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
     = 功能用例

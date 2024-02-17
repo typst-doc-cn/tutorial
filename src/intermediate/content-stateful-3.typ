@@ -285,7 +285,7 @@ let find-headings(headings, page-num) = if page-num > 0 {
 
 最后让我们设置页眉：
 
-#frames(read("./stateful/s1.typ"), code-as: ```typ
+#frames-cjk(read("./stateful/s1.typ"), code-as: ```typ
 // 这里有get-heading-at-page的实现..
 
 #set page(header: locate(loc => emph(

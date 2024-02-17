@@ -141,7 +141,7 @@ Pro Tips：这与Typst的缓存原理相关。为了加速#typst-func("query")�
 
 页眉的设置方法是创建一条```typc set page(header)```规则：
 
-#frames(read("./stateful/q0.typ"), code-as: ```typ
+#frames-cjk(read("./stateful/q0.typ"), code-as: ```typ
 #set page(header: [这是页眉])
 ```)
 
@@ -469,7 +469,7 @@ Pro Tips: 将`calc-headings`与`get-heading-at-page`分离可以改进脚本性�
 
 最后，让我们适配`calc-headings`到真实场景，并应用到页眉规则：
 
-#frames(read("./stateful/q1.typ"), code-as: ```typ
+#frames-cjk(read("./stateful/q1.typ"), code-as: ```typ
 // 这里有get-heading-at-page的实现..
 
 #set page(header: locate(loc => emph(
