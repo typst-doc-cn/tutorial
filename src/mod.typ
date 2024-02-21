@@ -8,6 +8,7 @@
     scripting-base: cl.with("/basic/scripting-base.typ"),
     scripting-complex: cl.with("/basic/scripting-complex.typ"),
     scripting-modules: cl.with("/intermediate/scripting-modules.typ"),
+    ref-math-symbols: cl.with("/basic/reference-math-symbols.typ"),
     ref-layout: cl.with("/intermediate/reference-layout.typ"),
     ref-length: cl.with("/intermediate/reference-length.typ"),
   )
