@@ -1,6 +1,6 @@
 #import "/src/book.typ"
 #import "/typ/templates/page.typ"
-#import "../mod.typ": code as _code, exec-code as _exec-code, refs
+#import "../mod.typ": code as _code, exec-code as _exec-code, refs, pro-tip, typst-func
 
 #let eval-local(it, scope, res) = if res != none {
   res

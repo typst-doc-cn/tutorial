@@ -30,10 +30,10 @@
     // CLI: typst query
     - #chapter(none)[数据存储与处理]
     // color, gradient, pattern
-    - #chapter(none)[颜色、渐变填充与模式填充]
+    - #chapter("basic/reference-color.typ")[颜色、渐变填充与模式填充]
     - #chapter(none)[可视与几何元素]
-    - #chapter(none)[语法速查]
-    - #chapter(none)[示例速查]
+    - #chapter("basic/reference-grammar.typ")[语法检索表]
+    - #chapter("basic/reference-example.typ")[示例检索表]
     - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
     // calc.*
     - #chapter(none)[数值计算]

@@ -1,5 +1,5 @@
 #import "/src/book.typ"
-#import "../mod.typ": code as _code, exec-code as _exec-code, refs
+#import "../mod.typ": code as _code, exec-code as _exec-code, refs, typst-func
 #import "/typ/templates/page.typ": main-color
 #import "/typ/embedded-typst/lib.typ": svg-doc, default-fonts, default-cjk-fonts
 
@@ -35,7 +35,3 @@
   grid(columns: (1fr, 1fr), ..svg-doc(code, fonts: fonts).pages.map(data => image.decode(data)).map(rect))
 }
 #let frames-cjk = frames.with(cjk-fonts: true)
-
-#let typst-func(it) = [
-  #raw(it + "()", lang: "typc") <typst-raw-func>
-]
