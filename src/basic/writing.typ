@@ -428,7 +428,7 @@ Typst作为一个解释器会从头到尾「解释」你的文档。解释器有
 
 === 划线
 
-你可以分别使用`underline`、`overline`、或`strike`为一段内容添加下划线、上划线或中划线（删除线）：
+你可以分别使用#typst-func("underline")、#typst-func("overline")、或#typst-func("strike")为一段内容添加下划线、上划线或中划线（删除线）：
 
 #{
   set text(font: "Source Han Serif SC")
@@ -450,7 +450,7 @@ Typst作为一个解释器会从头到尾「解释」你的文档。解释器有
 
 该限制可能会在将来被解除。
 
-`underline`有一个很有用的`offset`参数，通过它你可以修改下划线相对于「基线」的偏移量：
+#typst-func("underline")有一个很有用的`offset`参数，通过它你可以修改下划线相对于「基线」的偏移量：
 
 #code(```typ
 #underline(offset: 1.5pt, underline(offset: 3pt, [双下划线]))
@@ -465,7 +465,7 @@ Typst作为一个解释器会从头到尾「解释」你的文档。解释器有
 
 === 上下标
 
-你可以分别使用`sub`或`super`将一段文本调整至下标位置或上标位置：
+你可以分别使用#typst-func("sub")或#typst-func("super")将一段文本调整至下标位置或上标位置：
 
 #code(```typ
 下标：威严满满#sub[抱头蹲防] \
@@ -486,7 +486,36 @@ Typst作为一个解释器会从头到尾「解释」你的文档。解释器有
 
 == 文字属性
 
-文本本身也有一些「具名参数」可供设置。
+文本本身也有一些「具名参数」可供设置。与#typst-func("strong")和#typst-func("emph")类似，文本也有一个对应的元素函数#typst-func("text")。#typst-func("text")接受任意内容，返回一个影响内部文本的结果。
+
+当输入是单个文本时很好理解，返回的就是一个文本元素：
+
+#code(````typ
+#text("一段内容")
+````)
+
+当输入是一段内容时，返回的是该内容本身，但是对于内容的中的每一个文本元素，都作相应文本属性的修改。下例修改了「代码片段」元素中的文本元素为红色：
+
+#code(````typ
+#text(fill: red)[```
+影响块元素的内容
+```]
+````)
+
+进一步，我们强调，其实际修改了缺省的文本属性。对比以下两个情形：
+
+#code(````typ
+#text[```typ #strong[一段内容] #emph[一段内容]```] \
+#text(fill: red)[```typ #strong[一段内容] #emph[一段内容]```] \
+````)
+
+可以看见“红色”的设置仅对代码片段中的“默认颜色”的文本生效。当一个文本已经首先设置了颜色时，“红色”的设置不再生效。
+
+这说明了为什么下列情形输出了蓝色的文本：
+
+#code(````typ
+#text(fill: red, text(fill: blue, "一段内容"))
+````)
 
 === 设置大小
 
@@ -524,7 +553,7 @@ Typst作为一个解释器会从头到尾「解释」你的文档。解释器有
 #text(size: 2em)[四斤鸭梨]
 ```)
 
-`1em`是当前设置的文字大小。
+```typc 1em```是当前设置的文字大小。
 
 关于Typst中长度单位的详细介绍，可以挪步#(refs.ref-length)[《参考：长度单位》]。
 
@@ -595,9 +624,9 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 
 本节前面讲述的所有「具名参数」都可以如是设置，例如文本大小、字体等。
 
-== 图片
+== 图像
 
-你可以通过#(refs.scripting-modules)[绝对路径或相对路径]加载一个图片：
+你可以通过#(refs.scripting-modules)[绝对路径或相对路径]加载一个图片文件：
 
 #{
   show image: set align(center)
@@ -607,7 +636,56 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 ```)
 }
 
-你可以通过`figure`函数为图像设置标题：
+#typst-func("image")有一个很有用的`width`参数，用于限制图片的宽度：
+
+#{
+  show image: set align(center)
+  code(```typ
+#image("/assets/files/香風とうふ店.jpg", width: 100pt)
+```)
+}
+
+你还可以相对于父元素设置宽度，例如设置为父元素宽度的`50%`：
+
+#{
+  show image: set align(center)
+  code(```typ
+#image("/assets/files/香風とうふ店.jpg", width: 50%)
+```)
+}
+
+同理，你也可以用`height`参数限制图片的高度。
+
+#{
+  show image: set align(center)
+  code(```typ
+#image("/assets/files/香風とうふ店.jpg", height: 100pt)
+```)
+}
+
+当同时设置了图片的宽度和高度时，图片默认会被裁剪：
+
+#{
+  show image: set align(center)
+  code(```typ
+#image("/assets/files/香風とうふ店.jpg", width: 100pt, height: 100pt)
+```)
+}
+
+如果想要拉伸图片而非裁剪图片，可以同时使用`fit`参数：
+
+#{
+  show image: set align(center)
+  code(```typ
+#image("/assets/files/香風とうふ店.jpg", width: 100pt, height: 100pt, fit: "stretch")
+```)
+}
+
+`"stretch"`在英文中是拉伸的意思。
+
+== 图形
+
+你可以通过#typst-func("figure")函数为图像设置标题：
 
 #{
   show image: set align(center)
@@ -615,6 +693,17 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
   code(```typ
 #figure(image("/assets/files/香風とうふ店.jpg"), caption: [上世纪90年代，香風とうふ店送外卖的宝贵影像])
 ```)
+}
+
+#typst-func("figure")不仅仅可以接受#typst-func("image")作为内容，而是可以接受任意内容：
+
+#{
+  show raw: set align(left)
+  code(````typ
+#figure(```typ 
+#image("/assets/files/香風とうふ店.jpg")
+```, caption: [用于加载香風とうふ店送外卖的宝贵影像的代码])
+````)
 }
 
 // == 标签与引用
@@ -628,13 +717,13 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 
 == 链接
 
-链接可以分为外链与内链。最简单情况下，你只需要使用link函数即可创建一个链接：
+链接可以分为外链与内链。最简单情况下，你只需要使用#typst-func("link")函数即可创建一个链接：
 
 #code(```typ
 #link("https://zh.wikipedia.org")
 ```)
 
-特别地，Typst会自动识别文中的https和http文本并创建链接：
+特别地，Typst会自动识别文中的HTTPS和HTTP链接文本并创建链接：
 
 #code(```typ
 https://zh.wikipedia.org
@@ -662,7 +751,7 @@ https://zh.wikipedia.org
 
 上例中`myst`是该标签的名字。每个标签都会附加到恰在其之前的内容。这里即为一个标题。
 
-接着，你可以通过`link`函数在文档中的任意位置链接到该内容：
+你可以通过#typst-func("link")函数在文档中的任意位置链接到该内容：
 
 #code(```typ
 == 一个神秘标题 <mystery>
@@ -673,7 +762,7 @@ https://zh.wikipedia.org
 
 == 表格基础
 
-你可以通过`table`函数创建表格。`table`接受一系列内容，并根据参数将内容组装成一个表格。如下，通过`columns`参数设置表格为2列，Typst自动为你生成了一个2行2列的表格：
+你可以通过#typst-func("table")函数创建表格。#typst-func("table")接受一系列内容，并根据参数将内容组装成一个表格。如下，通过`columns`参数设置表格为2列，Typst自动为你生成了一个2行2列的表格：
 
 #code(```typ
 #table(columns: 2, [111], [2], [3])
