@@ -25,18 +25,19 @@
     - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
     = 基本参考
     // str, number, etc.
-    - #chapter(none)[基本类型]
-    - #chapter(none)[常用函数表]
+    - #chapter("basic/reference-typebase.typ")[基本类型]
+    - #chapter("basic/reference-date.typ")[时间类型]
+    - #chapter("basic/reference-utils.typ")[常用函数表]
     // CLI: typst query
-    - #chapter(none)[数据存储与处理]
+    - #chapter("basic/reference-data-process.typ")[数据存储与处理]
     // color, gradient, pattern
     - #chapter("basic/reference-color.typ")[颜色、渐变填充与模式填充]
-    - #chapter(none)[可视与几何元素]
-    - #chapter("basic/reference-grammar.typ")[语法检索表]
-    - #chapter("basic/reference-example.typ")[示例检索表]
+    - #chapter("basic/reference-visualization.typ")[可视与几何元素]
     - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
     // calc.*
-    - #chapter(none)[数值计算]
+    - #chapter("basic/reference-calculation.typ")[数值计算]
+    - #chapter("basic/reference-grammar.typ")[语法检索表]
+    - #chapter("basic/reference-example.typ")[示例检索表]
     = 进阶教程
     - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
@@ -47,7 +48,8 @@
     = 进阶参考
     - #chapter("intermediate/reference-length.typ")[长度单位]
     - #chapter("intermediate/reference-layout.typ")[布局函数]
-    - #chapter(none)[示例速查Ⅱ]
+    - #chapter("basic/reference-grammar.typ")[语法检索表Ⅱ]
+    - #chapter("basic/reference-example.typ")[示例检索表Ⅱ]
     = 专题
     - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
     = 功能用例
