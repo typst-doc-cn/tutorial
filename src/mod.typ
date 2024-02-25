@@ -1,7 +1,7 @@
 #import "/src/book.typ"
 #import "/typ/templates/page.typ"
 #import "/typ/templates/term.typ": _term
-#import "/typ/templates/page.typ": main-color
+#import "/typ/templates/page.typ": main-color, code-extra-bg
 
 #let refs = {
   let cl = book.cross-link;
@@ -69,21 +69,55 @@
 )
 
 #let exec-code(cc, res: none, scope: (:), eval: eval) = {
-  // Don't corrupt normal headings
-  set heading(outlined: false)
 
-  rect(width: 100%, inset: 10pt, if res != none {
-    res
-  } else {
-    eval(cc.text, mode: "markup", scope: scope)
+  rect(width: 100%, inset: 10pt, {
+    // Don't corrupt normal headings
+    set heading(outlined: false)
+
+    if res != none {
+      res
+    } else {
+      eval(cc.text, mode: "markup", scope: scope)
+    }
   })
 }
 
-#let code(cc, show-cc: true, res: none, scope: (:), eval: eval, exec-code: exec-code) = {
-  if show-cc {
+#let code(cc, code-as: none, res: none, scope: (:), eval: eval, exec-code: exec-code) = {
+  let code-as = if code-as == none {
     cc
+  } else {
+    code-as
   }
-  exec-code(cc, res: res, scope: scope, eval: eval)
+
+  layout(lw => style(styles => {
+    let width = lw.width * 0.5 - 0.5em
+    let u = box(width: width, code-as)
+    let vv = exec-code(cc, res: res, scope: scope, eval: eval)
+    let v = box(width: width, vv)
+
+    let u-box = measure(u, styles);
+    let v-box = measure(v, styles);
+
+    let height = calc.max(u-box.height, v-box.height)
+    stack(
+      dir: ltr,
+      {
+        // there is a bug?????
+        set rect(height: height, fill: none, stroke: black)
+        u
+      }, 1em, {
+        rect(height: height, width: width, inset: 10pt, vv.body)
+      }
+    )
+    // stack(
+    //   dir: ltr,
+    //   rect(height: height, width: width, inset: 0pt, radius: 2pt, fill: code-extra-bg, {
+    //     // there is a bug?????
+    //     set rect(height: 0pt, fill: none, stroke: none)
+    //     u
+    //   }), 1em, rect(height: height, width: width, inset: 10pt, vv.body)
+    // )
+  }))
 }
 
 #let fg-blue = main-color.mix(rgb("#0074d9"))

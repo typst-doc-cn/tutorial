@@ -119,7 +119,7 @@
   ) if is-web-target;
 
   // set text style
-  set text(font: main-font, size: 14pt, fill: main-color, lang: "zh", region: "cn")
+  set text(font: main-font, size: 12pt, fill: main-color, lang: "zh", region: "cn")
 
   let ld = state("label-disambiguator", (:))
   let update-ld(k) = ld.update(it => {
@@ -165,20 +165,21 @@
 
   // code block setting
   show raw: it => {
-    set text(font: code-font)
     if "block" in it.fields() and it.block {
       rect(
         width: 100%,
         inset: (x: 4pt, y: 5pt),
-        radius: 4pt,
+        radius: 2pt,
         fill: code-extra-colors.at("bg"),
         [
+          #set text(font: code-font)
           #set text(fill: code-extra-colors.at("fg")) if code-extra-colors.at("fg") != none
           #set par(justify: false)
           #it
         ],
       )
     } else {
+      set text(font: code-font)
       it
     }
   }
@@ -207,3 +208,4 @@
 }
 
 #let part-style = heading
+#let code-extra-bg = code-extra-colors.at("bg")
