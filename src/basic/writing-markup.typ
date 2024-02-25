@@ -334,15 +334,6 @@ AB v.s. A~B
 注释不会插入空格
 ````)
 
-#let show-answer = false
-// #let show-answer = true
-
-#let exercise(c1, c2) = {
-  enum.item(c1 + if show-answer {
-    parbreak() + [答：] + c2
-  })
-}
-
 == 习题
 
 #let q1 = ````typ
