@@ -7,14 +7,13 @@
   if term in s {
     [「#term-list.at(term)」]
   } else {
-    term-state.update(it => {
-      it.insert(term, "")
-      it
-    })
     let en-term = term
     if en != none {
       en-term = en
     }
     [「#term-list.at(term)」（#en-term）]
   }
+}) + term-state.update(it => {
+  it.insert(term, "")
+  it
 })
