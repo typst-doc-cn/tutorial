@@ -1,5 +1,6 @@
 #import "/src/book.typ"
 #import "/typ/templates/page.typ"
+#import "/typ/templates/term.typ": _term
 #import "/typ/templates/page.typ": main-color
 
 #let refs = {
@@ -18,6 +19,34 @@
     misc-font-setting: cl.with("/misc/font-setting.typ"),
   )
 }
+
+#let term-list = (
+  "parser": "解析器",
+  "interpreter": "解释器",
+  "markup mode": "标记模式",
+  "delimiter": "定界符",
+  "strong semantics": "着重语义",
+  "emphasis semantics": "强调语义",
+  "code block": "代码片段",
+  "blocky code block": "块代码片段",
+  "line break": "换行符",
+  "shorthand": "速记符号",
+  "comment": "注释",
+  "escape sequences": "转义序列",
+)
+
+#let mark-list = (
+  "=": "等于号",
+  "*": "星号",
+  "_": "下划线",
+  "`": "反引号",
+  "-": "连字号",
+  "+": "加号",
+  "\\": "反斜杠",
+  "/": "斜杠",
+  "~": "波浪号",
+  ".": "点号",
+)
 
 #let exec-code(cc, res: none, scope: (:), eval: eval) = {
   // Don't corrupt normal headings
@@ -55,3 +84,6 @@
 #let typst-func(it) = [
   #raw(it + "()", lang: "typc") <typst-raw-func>
 ]
+
+#let term(term, en: none) = _term(term-list, term, en: en)
+#let mark(mark) = _term(mark-list, mark, en: raw(mark))

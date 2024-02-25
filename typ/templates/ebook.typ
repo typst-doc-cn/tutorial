@@ -1,5 +1,6 @@
 #import "/typ/book/lib.typ": *
 #import "/typ/templates/page.typ": project, part-style, dash-color
+#import "/typ/templates/term.typ": reset-term-state
 
 #let _page-project = project
 
@@ -58,7 +59,7 @@
       2fr,
     )
   },
-  chapter: it => it,
+  chapter: it => reset-term-state + it,
 )
 
 #let project(title: "", display-title: none, authors: (), spec: "", content, styles: default-styles) = {
