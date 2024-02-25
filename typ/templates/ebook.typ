@@ -5,7 +5,7 @@
 #let _page-project = project
 
 /// Show a title page with a full page background
-#let cover(project-meta) = {
+#let cover(display-title) = {
     // #set text(fill: black, font: titleFont)
     // #if logo != none {
     //   place(top + center, pad(top:1cm, image(logo, width: 3cm)))
@@ -19,7 +19,7 @@
           #text(size: 3em, weight: 900, [The Raindrop-Blue Book])
           #v(1cm, weak: true)
           // #text(size: 3em, project-meta.at("subtitle", default: none))
-          #text(size: 2em, project-meta.display-title)
+          #text(size: 2em, display-title)
           #v(1cm, weak: true)
           #text(size: 1em, weight: "bold", "Myriad-Dreamin等著")
         ]
@@ -35,29 +35,29 @@
   cover-image: "./rm175-noon-02.jpg",
   cover: cover,
   part: it => {
-    pagebreak(weak: true)
     //set image(width: 100%, height: 100%)
-    set page(margin: 0cm, header: none, background: [
+    page(margin: 0cm, header: none, background: [
       #move(dy: 3%, scale(x: -130%, y: 130%, rotate(38.2deg,
         image("./rustacean-flat-gesture.svg", width: 130%)
       )))
-    ]);
-    p.step()
-    stack(
-      1fr,
-      align(right + bottom, 
-        block(width: 100%, fill: dash-color.lighten(70%), height: 6.2cm, 
-          pad(x:1cm, y:1cm)[
-            #set text(size: 36pt)
-            #v(1em)
-            #locate(loc => {
-              heading([Part.#p-num(..p.at(loc))#sym.space] + it)
-            })
-          ]
-        )
-      ),
-      2fr,
-    )
+    ], {
+      p.step()
+      stack(
+        1fr,
+        align(right + bottom, 
+          block(width: 100%, fill: dash-color.lighten(70%), height: 6.2cm, 
+            pad(x:1cm, y:1cm)[
+              #set text(size: 36pt)
+              #v(1em)
+              #locate(loc => {
+                heading([Part.#p-num(..p.at(loc))#sym.space] + it)
+              })
+            ]
+          )
+        ),
+        2fr,
+      )
+    })
   },
   chapter: it => reset-term-state + it,
 )
@@ -74,8 +74,30 @@
   // set document metadata early
   set document(author: authors, title: title)
 
-  // inherit from page setting
-  show: _page-project.with(title: none)
+  // set web/pdf page properties
+  set page(numbering: "1")
+
+  // todo: abstraction
+  {
+    // inherit from page setting
+    show: _page-project.with(title: none)
+
+    //set image(width: 100%, height: 100%)
+    set page(margin: 0cm, header: none, background: [
+      #place({
+        set block(spacing: -0.1em)
+        image("./circuit-board.svg")
+        image("./circuit-board.svg")
+      })
+      #move(dy: 3%, scale(x: -130%, y: 130%, rotate(38.2deg,
+        image("./rustacean-flat-gesture.svg", width: 130%)
+      )))
+    ]);
+
+    // place book meta
+    external-book(spec: (styles.inc)(spec))
+    (styles.cover)(display-title)
+  }
 
   locate(loc => {
     let project-meta = (
@@ -84,27 +106,14 @@
       book: book-meta-state.final(loc),
       styles: styles,
     )
-
-    // todo: abstraction
-    {
-      //set image(width: 100%, height: 100%)
-      set page(margin: 0cm, header: none, background: [
-        #place({
-          set block(spacing: -0.1em)
-          image("./circuit-board.svg")
-          image("./circuit-board.svg")
-        })
-        #move(dy: 3%, scale(x: -130%, y: 130%, rotate(38.2deg,
-          image("./rustacean-flat-gesture.svg", width: 130%)
-        )))
-      ]);
-
-      // place book meta
-      external-book(spec: (styles.inc)(spec))
-      (styles.cover)(project-meta)
-    }
   
     {
+      // inherit from page setting
+      show: _page-project.with(title: none)
+
+      // set web/pdf page properties
+      set page(numbering: none)
+
       let outline-numbering-base = numbering.with("1.")
       let outline-numbering(a0, ..args) = if a0 > 0 {
         h(1em * args.pos().len())

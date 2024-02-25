@@ -1,7 +1,7 @@
 #import "/src/book.typ"
 #import "/typ/templates/page.typ"
 #import "/typ/templates/term.typ": _term
-#import "/typ/templates/page.typ": main-color, code-extra-bg
+#import "/typ/templates/page.typ": main-color
 
 #let refs = {
   let cl = book.cross-link;
@@ -102,21 +102,12 @@
     stack(
       dir: ltr,
       {
-        // there is a bug?????
-        set rect(height: height, fill: none, stroke: black)
+        set rect(height: height)
         u
       }, 1em, {
         rect(height: height, width: width, inset: 10pt, vv.body)
       }
     )
-    // stack(
-    //   dir: ltr,
-    //   rect(height: height, width: width, inset: 0pt, radius: 2pt, fill: code-extra-bg, {
-    //     // there is a bug?????
-    //     set rect(height: 0pt, fill: none, stroke: none)
-    //     u
-    //   }), 1em, rect(height: height, width: width, inset: 10pt, vv.body)
-    // )
   }))
 }
 

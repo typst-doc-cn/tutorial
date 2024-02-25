@@ -208,4 +208,3 @@
 }
 
 #let part-style = heading
-#let code-extra-bg = code-extra-colors.at("bg")
