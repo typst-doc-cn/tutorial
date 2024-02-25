@@ -237,6 +237,38 @@ Typst的代码片段标记语法与Markdown非常类似，但不完全相同。�
 
 空白字符一般取短空格、长空格、回车等。
 
+== 速记符号
+
+在「标记模式」下，一些符号需要用特殊的符号组合打出。它们是：
+
+空格的速记符号是「波浪号」（`~`）：
+
+#code(```typ
+AB v.s. A~B
+```)
+
+连接符的速记符号由两个连续的「连字号」（`-`）组成：
+
+#code(```typ
+北京--上海路线的列车正在到站。
+```)
+
+破折号的速记符号由三个连续的「连字号」（`-`）组成（有问题，毋用，请直接使用em dash，`—`）：
+
+#code(```typ
+你的生日------四月十八日------每年我总记得。\
+你的生日——四月十八日——每年我总记得。
+```)
+
+省略号的速记符号由三个连续的「点号」（`.`）组成：
+
+#code(```typ
+真的假的......
+```)
+
+// - minusi
+// -? soft-hyphen 
+
 == 注释
 
 Typst采用C语言风格的注释语法。
@@ -280,3 +312,89 @@ Typst语言的注释有两种表示方法。
 
 注释不会插入空格
 ````)
+
+#let show-answer = false
+// #let show-answer = true
+
+#let exercise(c1, c2) = {
+  enum.item(c1 + if show-answer {
+    parbreak() + [答：] + c2
+  })
+}
+
+== 习题
+
+#let q1 = ````typ
+欲穷千里目，/*
+*/更上一层楼。
+````
+
+#exercise[
+  使源码至少有两行，第一行包含“欲穷千里目，”，第二行包含“更上一层楼。”，但是输出不换行不空格：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#exercise[
+  输出一个星号，期望的输出：#rect(width: 100%)[\*]
+][
+  ```typ
+  \*
+  ```
+]
+
+#let q1 = ````typ
+```
+`
+```
+````
+
+#exercise[
+  插入代码片段使其包含一个反引号，期望的输出：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q1 = ```typ
+
+```
+
+#let q1 = `````typ
+````
+```
+````
+`````
+
+#exercise[
+  插入代码片段使其包含三个反引号，期望的输出：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q1 = ````typ
+你可以在Typst内通过插件 ```typc plugin("typst.wasm")``` 调用Typst编译器。
+````
+
+#exercise[
+  插入行内的“typc”代码，期望的输出：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q2 = ```typ
+约法五章。
+1. 其一。
++ 其二。
+
+前两条不算。
+
+3. 其三。
++ 其四。
++ 其五。
+```
+
+#exercise[
+  在有序列表间插入描述，期望的输出：#rect(width: 100%, eval(q2.text, mode: "markup"))
+][
+  #q2
+]
