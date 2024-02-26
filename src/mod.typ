@@ -50,6 +50,8 @@
   "function identifier": "函数名标识符",
   "parameter identifier": "参数标识符",
   "placeholder": "占位符",
+  "field": "域成员",
+  "field access": "访问域成员",
 )
 
 #let mark-list = (
@@ -112,15 +114,16 @@
 }
 
 #let fg-blue = main-color.mix(rgb("#0074d9"))
-#let pro-tip(content) = rect(
+#let pro-tip(content) = block(
   width: 100%,
+  breakable: false,
   inset: (x: 0.65em, y: 0.65em, left: 0.65em * 0.6),
   radius: 4pt,
   fill: rgb("#0074d920"), {
   set text(fill: fg-blue)
   stack(
     dir: ltr,
-    image("/assets/files/info-icon.svg", width: 1em),
+    move(dy: 0.1em, image("/assets/files/info-icon.svg", width: 1em)),
     0.2em,
     box(width: 100% - 1.2em, v(0.2em) + content)
   )
