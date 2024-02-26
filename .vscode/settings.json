@@ -1,0 +1,7 @@
+{
+  "typst-preview.invertColors": "auto",
+  "typst-preview.fontPaths": [
+    "${workspaceFolder}/assets/fonts",
+    "${workspaceFolder}/assets/typst-fonts"
+  ]
+}
