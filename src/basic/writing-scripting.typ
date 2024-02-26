@@ -62,7 +62,7 @@ Typst中所谓「脚本」，就是将原始内容通过各种方式转换、裁
 
 Typst作为一个解释器会从头到尾「解释」你的文档。解释器有多种「解释模式」。不同的解释模式会以不同的语法规则解释你的文档。
 
-默认情况下，文档处于「标记模式」（markup mode），所谓标记模式，就是允许你使用各种记号书写文档。在这个模式下，Typst几乎就和一个Markdown文档类似。你可以创建标题、列表、段落......
+默认情况下，文档处于#term("markup mode")，所谓标记模式，就是允许你使用各种记号书写文档。在这个模式下，Typst几乎就和一个Markdown文档类似。你可以创建标题、列表、段落......
 
 当Typst处于「标记模式」，且遇到一个「井号」时，Typst会立即将后续的一段文本认作「脚本」，即它进入了「脚本模式」（scripting mode）。
 
@@ -596,6 +596,62 @@ $
 + 查看#(refs.ref-math-symbols)[《参考：常用数学符号》]，以助你编写简单的数学公式。
 
 Todo：
++ 本节添加box的基础使用
 + 术语-翻译表
 + 本文使用的符号-标记对照表
 + 常用函数表和外部链接，用于增加广度。
+
+== 习题
+
+#let q1 = ````typ
+#underline(offset: -0.4em, evade: false)[
+  吾輩は猫である。
+]
+````
+
+#exercise[
+  实现“删除线”效果，其中删除线距离baseline距离为`40%`：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q1 = ````typ
+#text(fill: rgb("00000001"))[I'm the flag]
+````
+
+#exercise[
+  攻击者有可能读取你文件系统中的内容，并将其隐藏存储在你的PDF中。请尝试将用户密码“I'm the flag”以文本形式存放在PDF中，但不可见：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q1 = ````typ
+走#text(size: 1.5em)[走#text(size: 1.5em)[走#text(size: 1.5em)[走]]]
+````
+
+#exercise[
+  请仅用`em`实现以下效果，其中后一个字是前一个字大小的1.5倍：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q1 = ````typ
+走#text(size: 1.5em)[走#text(size: 1.5em)[走]]
+走#text(size: 1.5em)[走#text(size: 1.5em)[走]]
+````
+
+#exercise[
+  请仅用`em`实现以下效果，其中后一个字是前一个字大小的1.5倍：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q1 = ````typ
+#set text(size: 2.25em);走#set text(size: 0.666666666em);走#set text(size: 0.666666666em);走
+````
+
+#exercise[
+  请仅用`em`实现以下效果，其中前一个字是后一个字大小的1.5倍。要求代码中不允许出现中括号也不允许出现双引号：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
