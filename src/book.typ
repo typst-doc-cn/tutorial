@@ -49,14 +49,45 @@
     = 进阶参考
     - #chapter("intermediate/reference-length.typ")[长度单位]
     - #chapter("intermediate/reference-layout.typ")[布局函数]
+    - #chapter("intermediate/reference-outline.typ")[文档大纲]
     - #chapter("basic/reference-grammar.typ")[语法检索表Ⅱ]
     - #chapter("basic/reference-example.typ")[示例检索表Ⅱ]
     = 专题
     - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
-    = 功能用例
-    = 图表
-    - #chapter("misc/solid-geometry.typ")[立体几何]
+    - #chapter("topics/writing-math.typ")[编写一篇数学文档]
+    // https://github.com/PgBiel/typst-oxifmt/blob/main/oxifmt.typ
+    // - #chapter("topics/format-lib.typ")[制作一个格式化库]
+    // https://github.com/Pablo-Gonzalez-Calderon/showybox-package/blob/main/showy.typ
+    - #chapter("topics/writing-component-lib.typ")[制作一个组件库]
+    - #chapter("topics/writing-plugin-lib.typ")[制作一个外部插件]
+    - #chapter("topics/call-externals.typ")[在Typst内执行Js、Python、Typst等]
+    // https://github.com/frugal-10191/frugal-typst
+    - #chapter("topics/template-book.typ")[制作一个书籍模板]
+    // chicv
+    - #chapter("topics/template-cv.typ")[制作一个CV模板]
+    // official template
+    - #chapter("topics/template-paper.typ")[制作一个IEEE模板]
+    = 公式和定理
+    - #chapter("science/chemical.typ")[化学方程式]
+    - #chapter("science/algorithm.typ")[伪算法]
+    - #chapter("science/theorem.typ")[定理环境]
+    = 杂项
+    - #chapter("misc/font-setting.typ")[字体设置]
+    // - #chapter("misc/font-style.typ")[伪粗体、伪斜体]
+    - #chapter("misc/code-syntax.typ")[自定义代码高亮规则]
+    - #chapter("misc/code-theme.typ")[自定义代码主题]
+    - #chapter("misc/text-processing.typ")[读取外部文件和文本处理]
+    = 绘制图表
+    - #chapter("graph/table.typ")[制表]
+    - #chapter("graph/solid-geometry.typ")[立体几何]
+    - #chapter("graph/digraph.typ")[拓扑图]
+    - #chapter("graph/statistics.typ")[统计图]
+    - #chapter("graph/state-machine.typ")[状态机]
+    - #chapter("graph/electronics.typ")[电路图]
     = 模板
+    - #chapter("template/slides.typ")[演示文稿（PPT）]
+    - #chapter("template/paper.typ")[论文模板]
+    - #chapter("template/book.typ")[书籍模板]
   ]
 )
 
