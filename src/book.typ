@@ -28,15 +28,15 @@
     // str, number, etc.
     - #chapter("basic/reference-typebase.typ")[基本类型]
     - #chapter("basic/reference-date.typ")[时间类型]
-    - #chapter("basic/reference-utils.typ")[常用函数表]
     // CLI: typst query
     - #chapter("basic/reference-data-process.typ")[数据存储与处理]
+    - #chapter("basic/reference-visualization.typ")[可视与几何元素]
     // color, gradient, pattern
     - #chapter("basic/reference-color.typ")[颜色、渐变填充与模式填充]
-    - #chapter("basic/reference-visualization.typ")[可视与几何元素]
-    - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
     // calc.*
     - #chapter("basic/reference-calculation.typ")[数值计算]
+    - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
+    - #chapter("basic/reference-utils.typ")[常用函数表]
     - #chapter("basic/reference-grammar.typ")[语法检索表]
     - #chapter("basic/reference-example.typ")[示例检索表]
     = 进阶教程
