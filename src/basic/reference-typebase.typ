@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [参考：基本类型])
+#show: book.ref-page.with(title: [参考：基本类型])
 
 Typst的基本类型设计大量参考Python和Rust。Typst基本类型的特点是半纯的API设计。其基本类型的方法倾向于保持纯度，但如果影响到了使用的方便性，Typst会适当牺牲纯度。
 
@@ -14,7 +14,7 @@ Typst的基本类型设计大量参考Python和Rust。Typst基本类型的特点
 
 == 整数
 
-A whole number.
+A whole number. #ref-bookmark[`integer`]
 
 The number can be negative, zero, or positive. As Typst uses 64 bits to store integers, integers cannot be smaller than $-2^63$ or larger than $2^63-1$.
 
@@ -32,7 +32,7 @@ You can convert a value to an integer with this type's constructor.
 #0b1001
 ```)
 
-Converts a value to an integer.
+Converts a value to an integer. #ref-bookmark[`#/constructor`]
 
 - Booleans are converted to $0$ or $1$.
 - Floats are floored to the next $64$-bit integer.
@@ -49,7 +49,7 @@ Converts a value to an integer.
 
 == 浮点数
 
-A floating-point number.
+A floating-point number. #ref-bookmark[float]
 
 A limited-precision representation of a real number. Typst uses 64 bits to store floats. Wherever a float is expected, you can also pass an integer.
 

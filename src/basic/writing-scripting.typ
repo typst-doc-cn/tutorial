@@ -177,7 +177,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 ```)
 
 #pro-tip[
-  函数调用可以后接任意多个内容参数。
+  函数调用可以后接不止一个内容参数。例如下面的例子后接了两个内容参数：
 
   #code(```typ
   #let exercise(question, answer) = strong(question) + parbreak() + answer

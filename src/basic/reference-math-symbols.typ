@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [参考：常用数学符号])
+#show: book.ref-page.with(title: [参考：常用数学符号])
 
 #set table(stroke: none, align: horizon + left, row-gutter: 0.45em)
 

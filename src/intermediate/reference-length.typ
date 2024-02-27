@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [参考：长度单位])
+#show: book.ref-page.with(title: [参考：长度单位])
 
 #show quote: it => {
   box(stroke: (

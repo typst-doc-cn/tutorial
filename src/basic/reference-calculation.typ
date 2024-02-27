@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [参考：数值计算])
+#show: book.ref-page.with(title: [参考：数值计算])
 
 #let table-lnk(name, ref, it, scope: (:), res: none, ..args) = (
   align(center + horizon, link("todo", name)), 

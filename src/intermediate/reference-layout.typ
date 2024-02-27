@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [参考：布局函数])
+#show: book.ref-page.with(title: [参考：布局函数])
 
 #let absent(content) = underline(offset: 1.5pt, underline(offset: 3pt, text(red, content)))
 #let ng(content) = underline(offset: 1.5pt, text(blue, content))

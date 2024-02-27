@@ -1,6 +1,7 @@
 // This is important for typst-book to produce a responsive layout
 // and multiple targets.
 #import "/typ/book/lib.typ": get-page-width, target, is-web-target, is-pdf-target, plain-text
+#import "/typ/templates/side-notes.typ": side-attrs
 
 #let page-width = get-page-width()
 #let is-pdf-target = is-pdf-target()
@@ -85,7 +86,8 @@
 // The project function defines how your document looks.
 // It takes your content and some metadata and formats it.
 // Go ahead and customize it to your liking!
-#let project(title: "Typst中文教程", authors: (), body) = {
+#let project(title: "Typst中文教程", authors: (), kind: "page", body) = {
+  let ref-page = kind == "reference-page"
 
   // set basic document metadata
   set document(author: authors, title: title) if not is-pdf-target
@@ -204,7 +206,30 @@
   // Main body.
   set par(justify: true)
 
-  body
+  if ref-page {
+    let side-space = 4 * 12pt;
+    let side-overflow = 2 * 12pt;
+    let gutter = 1 * 12pt;
+    grid(
+      columns: (side-space, 100% - side-space - gutter),
+      column-gutter: gutter,
+      place(
+        dx: -side-overflow,
+        block(
+          breakable: true,
+          width: side-space + side-overflow,
+          locate(loc => side-attrs.update(it => {
+            it.insert("left", loc.position().x)
+            it.insert("width", side-space + side-overflow)
+            it
+          }))
+        )
+      ),
+      body
+    )
+  } else {
+    body
+  }
 }
 
 #let part-style = heading

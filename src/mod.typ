@@ -1,6 +1,7 @@
 #import "/src/book.typ"
 #import "/typ/templates/page.typ"
 #import "/typ/templates/term.typ": _term
+#import "/typ/templates/side-notes.typ": side-note
 #import "/typ/templates/page.typ": main-color
 
 #let refs = {
@@ -154,3 +155,5 @@
 } else {
   raw(mark)
 }, postfix: postfix)
+
+#let ref-bookmark = side-note

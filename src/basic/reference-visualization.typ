@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [参考：可视与几何元素])
+#show: book.ref-page.with(title: [参考：可视与几何元素])
 
 #let table-lnk(name, ref, it, scope: (:), res: none, ..args) = (
   align(center + horizon, link("todo", name)), 
