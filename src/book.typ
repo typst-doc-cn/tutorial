@@ -35,6 +35,7 @@
     - #chapter("basic/reference-color.typ")[颜色、渐变填充与模式填充]
     // calc.*
     - #chapter("basic/reference-calculation.typ")[数值计算]
+    - #chapter("basic/reference-math-mode.typ")[数学模式]
     - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
     - #chapter("basic/reference-utils.typ")[常用函数表]
     - #chapter("basic/reference-grammar.typ")[语法检索表]
