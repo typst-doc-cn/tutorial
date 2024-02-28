@@ -30,8 +30,7 @@
     - #chapter("basic/reference-date.typ")[时间类型]
     // CLI: typst query
     - #chapter("basic/reference-data-process.typ")[数据存储与处理]
-    - #chapter("basic/reference-visualization.typ")[可视与几何元素]
-    // color, gradient, pattern
+    - #chapter("basic/reference-visualization.typ")[图形与几何元素]
     - #chapter("basic/reference-color.typ")[颜色、渐变填充与模式填充]
     // calc.*
     - #chapter("basic/reference-calculation.typ")[数值计算]
