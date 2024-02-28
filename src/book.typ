@@ -14,8 +14,8 @@
   summary: [
     #prefix-chapter("introduction.typ")[导引]
     = 基本教程
-    - #chapter("basic/writing-markup.typ")[编写一篇基本文档 - 标记篇]
-    - #chapter("basic/writing-scripting.typ")[编写一篇基本文档 - 脚本篇]
+    - #chapter("basic/writing-markup.typ")[编写一篇基本文档 —— 标记篇]
+    - #chapter("basic/writing-scripting.typ")[编写一篇基本文档 —— 脚本篇]
     - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
     - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
     = 基本参考

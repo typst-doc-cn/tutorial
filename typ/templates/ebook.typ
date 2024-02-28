@@ -114,6 +114,9 @@
       // set web/pdf page properties
       set page(numbering: none)
 
+      include "/src/prefaces/license.typ"
+      include "/src/prefaces/acknowledgement.typ"
+
       let outline-numbering-base = numbering.with("1.")
       let outline-numbering(a0, ..args) = if a0 > 0 {
         h(1em * args.pos().len())

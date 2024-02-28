@@ -25,6 +25,10 @@ Typst 是撰写长篇文本（如论文、文章、书籍、报告和作业）�
 
 // https://typst-doc-cn.github.io/docs/chinese/
 
+= 配置Typst运行环境
+
+= 如何阅读本书
+
 = 许可证
 
 *typst-tutorial-cn* 所有的源码和文档都在#link("https://www.apache.org/licenses/LICENSE-2.0")[Apache License v2.0]许可证下发布.
