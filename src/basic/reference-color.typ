@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.ref-page.with(title: [参考：颜色、渐变填充与模式填充])
+#show: book.ref-page.with(title: [参考：颜色、色彩渐变与模式])
 
 == RGB
 

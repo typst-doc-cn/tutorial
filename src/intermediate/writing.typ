@@ -6,6 +6,10 @@
 // list again
 // figure again
 // footnote
+// quote
+// smallcaps
+// upper
+// lower
 // heading
 // - outlined
 // - bookmarked
@@ -16,3 +20,4 @@
 // lorem
 // color again
 // read/query/metadata
+// # sys.version

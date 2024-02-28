@@ -17,25 +17,18 @@
     - #chapter("basic/writing-markup.typ")[编写一篇基本文档 - 标记篇]
     - #chapter("basic/writing-scripting.typ")[编写一篇基本文档 - 脚本篇]
     - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
-    // array, dict, arguments
-    // if c { x } else { y }
-    // loop
-    // let f = (..args) => expression
-    // let f(..args) = expression
-    // mutable variables in scope
     - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
     = 基本参考
-    // str, number, etc.
     - #chapter("basic/reference-typebase.typ")[基本类型]
     - #chapter("basic/reference-date.typ")[时间类型]
-    // CLI: typst query
-    - #chapter("basic/reference-data-process.typ")[数据存储与处理]
+    - #chapter("basic/reference-data-process.typ")[数据读写与数据处理]
     - #chapter("basic/reference-visualization.typ")[图形与几何元素]
-    - #chapter("basic/reference-color.typ")[颜色、渐变填充与模式填充]
-    // calc.*
+    - #chapter("basic/reference-color.typ")[颜色、色彩渐变与模式]
     - #chapter("basic/reference-calculation.typ")[数值计算]
     - #chapter("basic/reference-math-mode.typ")[数学模式]
+    - #chapter(none)[特殊Unicode字符]
     - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
+    - #chapter(none)[使用参考文献]
     - #chapter("basic/reference-utils.typ")[常用函数表]
     - #chapter("basic/reference-grammar.typ")[语法检索表]
     - #chapter("basic/reference-example.typ")[示例检索表]
@@ -47,8 +40,10 @@
     - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
     - #chapter("intermediate/writing.typ")[编写一篇进阶文档]
     = 进阶参考
+    - #chapter(none)[计数器和状态]
     - #chapter("intermediate/reference-length.typ")[长度单位]
     - #chapter("intermediate/reference-layout.typ")[布局函数]
+    - #chapter(none)[表格]
     - #chapter("intermediate/reference-outline.typ")[文档大纲]
     - #chapter("basic/reference-grammar.typ")[语法检索表Ⅱ]
     - #chapter("basic/reference-example.typ")[示例检索表Ⅱ]

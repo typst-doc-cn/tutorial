@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.ref-page.with(title: [参考：数据存储与处理])
+#show: book.ref-page.with(title: [参考：数据读写与数据处理])
 
 #let table-lnk(name, ref, it, scope: (:), res: none, ..args) = (
   align(center + horizon, link("todo", name)), 
@@ -24,5 +24,7 @@
 == 正则匹配
 
 == wasm插件
+
+== metadata
 
 == typst query
