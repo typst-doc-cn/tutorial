@@ -29,7 +29,8 @@
     - #chapter("basic/reference-math-mode.typ")[数学模式]
     - #chapter(none)[特殊Unicode字符]
     - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
-    - #chapter(none)[使用参考文献]
+    - #chapter("basic/reference-wasm-plugin.typ")[WASM插件]
+    - #chapter("basic/reference-bibliography.typ")[导入和使用参考文献]
     - #chapter("basic/reference-utils.typ")[常用函数表]
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     = 进阶教程
@@ -40,10 +41,10 @@
     - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
     - #chapter("intermediate/writing.typ")[编写一篇进阶文档]
     = 进阶参考
-    - #chapter(none)[计数器和状态]
+    - #chapter("intermediate/reference-counter-state.typ")[计数器和状态]
     - #chapter("intermediate/reference-length.typ")[长度单位]
     - #chapter("intermediate/reference-layout.typ")[布局函数]
-    - #chapter(none)[表格]
+    - #chapter("intermediate/reference-table.typ")[表格]
     - #chapter("intermediate/reference-outline.typ")[文档大纲]
     - #chapter("intermediate/reference-grammar.typ")[语法示例检索表Ⅱ]
     = 专题

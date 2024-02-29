@@ -705,4 +705,59 @@ Typst的多文件特性从何而来？
 这意味着，如果你发现了Typst中与一般语言的不同之处，可以思考以上种种优势对用户脚本的增强或限制。
 
 基于《复合字面量、控制流和复杂函数》掌握的知识你应该可以：
-+ 阅读基本参考部分中的所有内容
++ 查看#(refs.ref-type-builtin)[《参考：内置类型》]，以掌握内置类型的使用方法。
++ 查看#(refs.ref-visualization)[《参考：图形与几何元素》]，以掌握图形和几何元素的使用方法。
++ 查看#(refs.ref-wasm-plugin)[《参考：WASM插件》]，以掌握在Typst中使用Rust、JavaScript、Python等语言编写插件库。
++ 阅读#(refs.ref-grammar)[《参考：语法示例检索表》]，以检查自己的语法掌握程度。
++ 阅读基本参考部分中的所有内容。
+
+== 习题
+
+#let q1 = ````typ
+#let calc-fib() = {
+  let res = range(2).map(float)
+  for i in range(2, 201) {
+    res.push(res.at(i - 1) + res.at(i - 2))
+  }
+
+  res
+}
+#let fib(n) = calc-fib().at(n)
+
+#fib(75)
+````
+
+#exercise[
+  已知斐波那契数列的递推式为$F_n = F_(n-1) + F_(n-2)$，且$F_0 = 0, F_1 = 1$。使用本节所讲述的语法，计算$F_75$的值：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q1 = ````typ
+#set align(center)
+#let matrix-fmt(..args) = table(
+  columns: args.pos().at(0).len(),
+  ..args.pos().flatten().flatten().map(str)
+)
+#matrix-fmt(
+  (1, 2, 3),
+  (4, 5, 6),
+  (7, 8, 9),
+)
+````
+
+#exercise[
+  编写函数，使用`table`（表格）元素打印任意$N times M$矩阵，例如：
+
+```typ
+#matrix-fmt(
+  (1, 2, 3),
+  (4, 5, 6),
+  (7, 8, 9),
+)
+```
+  
+#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
