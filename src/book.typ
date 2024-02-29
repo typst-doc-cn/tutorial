@@ -20,6 +20,7 @@
     - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
     = 基本参考
     - #chapter("basic/reference-typebase.typ")[基本类型]
+    - #chapter("basic/reference-type-builtin.typ")[内置类型]
     - #chapter("basic/reference-date.typ")[时间类型]
     - #chapter("basic/reference-data-process.typ")[数据读写与数据处理]
     - #chapter("basic/reference-visualization.typ")[图形与几何元素]

@@ -16,6 +16,8 @@
     scripting-modules: cl.with("/intermediate/scripting-modules.typ"),
     content-scope-style: cl.with("/intermediate/content-scope-and-style.typ"),
     content-stateful: cl.with("/intermediate/content-stateful.typ"),
+    ref-typebase: cl.with("/basic/reference-typebase.typ"),
+    ref-type-builtin: cl.with("/basic/reference-type-builtin.typ"),
     ref-color: cl.with("/basic/reference-color.typ"),
     ref-math-mode: cl.with("/basic/reference-math-mode.typ"),
     ref-math-symbols: cl.with("/basic/reference-math-symbols.typ"),
