@@ -44,7 +44,7 @@
   + List 1
   + List 2
   ```),
-  ([有序列表（重新开始标号）], refs.writing-markup.with(reference: <grammar-list>), ```typ
+  ([有序列表（重新开始标号）], refs.writing-markup.with(reference: <grammar-continue-list>), ```typ
   4. List 1
   + List 2
   ```),
@@ -52,7 +52,7 @@
   - Enum 1
   - Enum 2
   ```),
-  ([交替有序与无序列表], refs.writing-markup.with(reference: <grammar-emum>), ```typ
+  ([交替有序与无序列表], refs.writing-markup.with(reference: <grammar-mix-list-emum>), ```typ
   - Enum 1
     + Item 1
   - Enum 2
@@ -63,7 +63,7 @@
   ([长代码片段], refs.writing-markup.with(reference: <grammar-long-raw>), ````typ
   ``` code```
   ````),
-  ([语法高亮], refs.writing-markup.with(reference: <grammar-long-raw>), ````typ
+  ([语法高亮], refs.writing-markup.with(reference: <grammar-lang-raw>), ````typ
   ```rs  trait World```
   ````),
   ([块代码片段], refs.writing-markup.with(reference: <grammar-blocky-raw>), ````typ
@@ -80,26 +80,31 @@
   ([内联图像（盒子法）], refs.writing-markup.with(reference: <grammar-image-inline>), ````typ
   在一段话中插入一个#box(baseline: 0.15em, image("/assets/files/info-icon.svg", width: 1em))图片。
   ````),
-  ([外部链接], refs.writing-markup.with(reference: <grammar->), ````typ
+  ([图像标题], refs.writing-markup.with(reference: <grammar-figure>), ````typ
+  #figure(```typ 
+  #image("/assets/files/香風とうふ店.jpg")
+  ```, caption: [用于加载香風とうふ店送外卖的宝贵影像的代码])
+  ````),
+  ([链接], refs.writing-markup.with(reference: <grammar-link>), ````typ
   #link("https://zh.wikipedia.org")[维基百科]
   ````),
-  ([HTTP(S)链接], refs.writing-markup.with(reference: <grammar->), ````typ
+  ([HTTP(S)链接], refs.writing-markup.with(reference: <grammar-http-link>), ````typ
   https://zh.wikipedia.org
   ````),
-  ([内部链接], refs.writing-markup.with(reference: <grammar->), ````typ
+  ([内部链接], refs.writing-markup.with(reference: <grammar-internal-link>), ````typ
   == 某个标题 <ref-internal-link>
   #link(<ref-internal-link>)[链接到某个标题]
   ````),
-  ([表格], refs.writing-markup.with(reference: <grammar->), ````typ
+  ([表格], refs.writing-markup.with(reference: <grammar-table>), ````typ
   #table(columns: 2, [111], [2], [3])
   ````),
-  ([对齐表格], refs.writing-markup.with(reference: <grammar->), ````typ
+  ([对齐表格], refs.writing-markup.with(reference: <grammar-table-align>), ````typ
   #table(columns: 2, align: center, [111], [2], [3])
   ````),
-  ([行内数学公式], refs.writing-markup.with(reference: <grammar->), ````typ
+  ([行内数学公式], refs.writing-markup.with(reference: <grammar-inline-math>), ````typ
   $sum_x$
   ````),
-  ([行间数学公式], refs.writing-markup.with(reference: <grammar->), ````typ
+  ([行间数学公式], refs.writing-markup.with(reference: <grammar-display-math>), ````typ
   $ sum_x $
   ````),
   ([标记转义序列], refs.writing-markup.with(reference: <grammar-escape-sequences>), ````typ
@@ -141,6 +146,9 @@
   ````),
   ([下划线], refs.writing-markup.with(reference: <grammar-underline>), ````typ
   #underline[ጿኈቼዽ]
+  ````),
+  ([无驱逐效果的下划线], refs.writing-markup.with(reference: <grammar-underline-evade>), ````typ
+  #underline(evade: false)[Language]
   ````),
   ([上划线], refs.writing-markup.with(reference: <grammar-overline>), ````typ
   #overline[ጿኈቼዽ]
@@ -186,7 +194,7 @@
   ([内容参数], refs.writing-markup.with(reference: <grammar-content-param>), ````typ
   #emph[emphasis]
   ````),
-  ([set语法], refs.writing-markup.with(reference: <grammar-set>), ````typ
-    #text(font: "Microsoft YaHei")[板正鸭梨]
+  ([set语法], refs.content-scope-style.with(reference: <grammar-set>), ````typ
+  ````),
   ````),
 ))

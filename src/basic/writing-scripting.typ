@@ -4,7 +4,7 @@
 
 从现在开始，示例将会逐渐开始出现脚本。不要担心，它们都仅涉及脚本的简单用法。
 
-== 内容块
+== 内容块 <grammar-content-block>
 
 有时，文档中会出现连续大段的标记文本。
 
@@ -50,7 +50,7 @@
 
 在接下来两小节你将看到Typst作为一门*编程语言*的核心设计，也是进行更高级排版必须要掌握的知识点。由于本节的目标仅仅是*编写一篇基本文档*，我们将会尽可能减少引入更多知识点，仅仅介绍其中最简单常用的语法。
 
-== 解释模式
+== 解释模式 <grammar-enter-script>
 
 ```typ #strong[]```语法第一点提及：`#`使解释器进入#term("code mode")。
 
@@ -128,7 +128,7 @@ Typst总是倾向于更快地退出脚本模式。
   如此，「标记模式」下默认将中括号解析为普通文本看起来更为合理。
 ]
 
-== 函数和函数调用
+== 函数和函数调用 <grammar-func-call>
 
 这里仅作最基础的介绍。#(refs.scripting-base)[《基本字面量、变量和简单函数》]和#(refs.scripting-complex)[《复合字面量、控制流和复杂函数》]中有对函数和函数调用更详细的介绍。
 
@@ -172,7 +172,7 @@ Typst总是倾向于更快地退出脚本模式。
 
 Typst强调#term("consistency")，因此无论是通过标记还是通过函数，最终效果都必定是一样的。你可以根据实际情况任意组合方式。
 
-== 内容作为函数调用的糖
+== 内容参数的糖 <grammar-content-param>
 
 在许多的语言中，所有函数参数必须包裹在函数调用参数列表的「圆括号」之内。
 
@@ -222,7 +222,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 现在你可以使用更多的文本函数来丰富你的文档效果。
 
-=== 背景高亮
+=== 背景高亮 <grammar-highlight>
 
 你可以使用`highlight`高亮一段内容：
 
@@ -241,7 +241,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 === 修饰线
 
-你可以分别使用#typst-func("underline")、#typst-func("overline")、或#typst-func("strike")为一段内容添加下划线、上划线或中划线（删除线）：
+你可以分别使用#typst-func("underline")、#typst-func("overline")、或#typst-func("strike")为一段内容添加下划线<grammar-underline>、上划线<grammar-overline>或中划线（删除线）<grammar-strike>：
 
 #{
   set text(font: "Source Han Serif SC")
@@ -269,7 +269,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 #underline(offset: 1.5pt, underline(offset: 3pt, [双下划线]))
 ```)
 
-如果你更喜欢连贯的下划线，你可以设置`evade`参数，以解除驱逐效果。
+如果你更喜欢连贯的下划线，你可以设置`evade`参数，以解除驱逐效果。<grammar-underline-evade>
 
 #code(```typ
 带驱逐效果：#underline[Language] \
@@ -278,7 +278,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 === 上下标
 
-你可以分别使用#typst-func("sub")或#typst-func("super")将一段文本调整至下标位置或上标位置：
+你可以分别使用#typst-func("sub")<grammar-subscript>或#typst-func("super")<grammar-superscript>将一段文本调整至下标位置或上标位置：
 
 #code(```typ
 下标：威严满满#sub[抱头蹲防] \
@@ -330,7 +330,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 #text(fill: red, text(fill: blue, "一段内容"))
 ````)
 
-=== 设置大小
+=== 设置大小 <grammar-text-size>
 
 通过`size`参数，可以设置文本大小。
 
@@ -370,7 +370,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 关于Typst中长度单位的详细介绍，可以挪步#(refs.ref-length)[《参考：长度单位》]。
 
-=== 设置颜色
+=== 设置颜色 <grammar-text-fill>
 
 你可以通过`fill`参数为文字配置各种颜色：
 
@@ -388,7 +388,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 关于Typst中色彩系统的详细介绍，详见#(refs.ref-color)[《参考：颜色、渐变填充与模式填充》]。
 
-=== 设置字体
+=== 设置字体 <grammar-text-font>
 
 你可以通过`font`参数为文字配置字体：
 
@@ -437,7 +437,7 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 
 关于对「`set`」语法更详细的介绍，详见#(refs.content-scope-style)[《内容、作用域与样式》]。
 
-== 图像
+== 图像 <grammar-image>
 
 图像对应元素函数#typst-func("image")。
 
@@ -487,7 +487,7 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 ```)
 }
 
-如果想要拉伸图片而非裁剪图片，可以同时使用`fit`参数：
+如果想要拉伸图片而非裁剪图片，可以同时使用`fit`参数：<grammar-image-stretch>
 
 #{
   show image: set align(center)
@@ -498,7 +498,7 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 
 “stretch”在英文中是拉伸的意思。
 
-== 图形
+== 图形 <grammar-figure>
 
 你可以通过#typst-func("figure")函数为图像设置标题：
 
@@ -530,17 +530,17 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 // @myst 讲述了一个神秘标题。
 // ```)
 
-== 行内盒子
+== 行内盒子 <grammar-box>
 
-todo：本节添加box的基础使用。
+todo：本节添加box的基础使用。<grammar-image-inline>
 
 #code(```typ
 在一段话中插入一个#box(baseline: 0.15em, image("/assets/files/info-icon.svg", width: 1em))图片。
 ```)
 
-== 链接
+== 链接 <grammar-link>
 
-链接可以分为外链与内链。最简单情况下，你只需要使用#typst-func("link")函数即可创建一个链接：
+链接可以分为外链与内链。最简单情况下，你只需要使用#typst-func("link")函数即可创建一个链接：<grammar-http-link>
 
 #code(```typ
 #link("https://zh.wikipedia.org")
@@ -564,7 +564,7 @@ https://zh.wikipedia.org
 #link("...")[链接] 等价于 #link("...", [链接])
 ```)
 
-=== 内部链接
+=== 内部链接 <grammar-internal-link>
 
 你可以通过创建标签，标记*任意*内容：
 
@@ -596,7 +596,7 @@ https://zh.wikipedia.org
 讲述了#link(<mystery>)[一个神秘标题]。
 ```)
 
-== 表格基础
+== 表格基础 <grammar-table>
 
 你可以通过#typst-func("table")函数创建表格。#typst-func("table")接受一系列内容，并根据参数将内容组装成一个表格。如下，通过`columns`参数设置表格为2列，Typst自动为你生成了一个2行2列的表格：
 
@@ -604,7 +604,7 @@ https://zh.wikipedia.org
 #table(columns: 2, [111], [2], [3])
 ```)
 
-你可以为表格设定对齐：
+你可以为表格设定对齐：<grammar-table-align>
 
 #code(```typ
 #table(columns: 2, align: center, [111], [2], [3])
@@ -616,7 +616,7 @@ https://zh.wikipedia.org
 
 Typst解释器一共有三种模式，其中两种我们之前已经介绍。这剩下的最后一种被称为#term("math mode")。很多人认为Typst针对LaTeX的核心竞争点之一就是优美的#term("math mode")。
 
-Typst的数学模式如下：
+Typst的数学模式如下：<grammar-inline-math> ~ <grammar-display-math>
 
 #code(````typ
 行内数学公式：$sum_x$

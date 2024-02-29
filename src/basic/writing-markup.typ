@@ -146,7 +146,7 @@ Typst的#term("raw block")标记语法与Markdown完全相同。如果你使用�
 使用四个反引号包裹：```` ``` ````
 `````)
 
-对于长代码片段，你还可以在起始定界符后*紧接着*指定该代码的语言类别，以便Typst根据语言进行语法高亮。
+对于长代码片段，你还可以在起始定界符后*紧接着*指定该代码的语言类别，以便Typst根据语言进行语法高亮。<grammar-lang-raw>
 
 #code(`````typ
 一段有高亮的代码片段：```javascript function uninstallLaTeX {}```
@@ -198,7 +198,7 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
 + 一级列表项1
 ```)
 
-有编号列表项可以与无编号列表项相混合。
+有编号列表项可以与无编号列表项相混合。<grammar-mix-list-emum>
 
 #code(```typ
 + 一级列表项1
@@ -209,7 +209,7 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
   - 二级列表项2.1
 ```)
 
-和Markdown相同，Typst同样允许使用`1.`开启一个有编号列表项，并且可以从指定编号开始。
+和Markdown相同，Typst同样允许使用`1.`开启一个有编号列表项，并且可以从指定编号开始。<grammar-continue-list>
 
 #code(```typ
 1. 列表项1
