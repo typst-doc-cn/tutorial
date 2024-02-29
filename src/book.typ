@@ -13,11 +13,68 @@
   language: "zh-cn",
   summary: [
     #prefix-chapter("introduction.typ")[导引]
-    = 基本教程
-    - #chapter("basic/writing-markup.typ")[编写一篇基本文档 -- 标记篇]
-    - #chapter("basic/writing-scripting.typ")[编写一篇基本文档 -- 脚本篇]
+    // 计划修改
+    = 入门
+    - #chapter("basic/writing-markup.typ")[初识标记模式]
+    - #chapter("basic/writing-scripting.typ")[初识脚本模式]
+    // 2. 脚本I
+    // - 字面量、变量与函数
+    // - 作用域、内容与样式
+    = 脚本I
     - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
     - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
+    - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
+    // 3. 排版I
+    // - 图形
+    // - 表格
+    // - 布局
+    // - 中文排版
+    = 排版I
+    // - #chapter("basic/reference-visualization.typ")[图形与几何元素]
+    // - #chapter("intermediate/reference-table.typ")[表格]
+    // - #chapter("intermediate/reference-layout.typ")[布局函数]
+    - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
+    // 4. 模块
+    // - 模块
+    // - 外部库
+    // - 多文件文档
+    = 模块
+    - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
+    // 5. 状态化排版
+    // - 状态
+    // - 计数器
+    = 状态
+    - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
+    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
+    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
+    // 6. 脚本II
+    // - IO与数据处理
+    // - 内置类型
+    // - 数值计算
+    // - WASM插件
+    // 7. 排版II
+    // - 代码高亮
+    // - 参考文献
+    // - 文档大纲
+    // 8. 科技排版
+    // - 数学模式
+    // - 数学公式和定理
+    // - 物理公式
+    // - 化学方程式
+    // 9. 图表
+    // - 立体几何
+    // - 统计图
+    // - 状态机
+    // - 电路图
+    // 10. 模板
+    // 11. 参考I
+    // - 基本类型
+    // - 内置类型
+    // - 时间
+    // - 高级颜色
+    // - 长度单位
+    // 12. 参考II
+    // - 图形
     = 基本参考
     - #chapter("basic/reference-typebase.typ")[基本类型]
     - #chapter("basic/reference-type-builtin.typ")[内置类型]
@@ -33,13 +90,6 @@
     - #chapter("basic/reference-bibliography.typ")[导入和使用参考文献]
     - #chapter("basic/reference-utils.typ")[常用函数表]
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
-    = 进阶教程
-    - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
-    - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
-    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
-    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
-    - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
-    - #chapter("intermediate/writing.typ")[编写一篇进阶文档]
     = 进阶参考
     - #chapter("intermediate/reference-counter-state.typ")[计数器和状态]
     - #chapter("intermediate/reference-length.typ")[长度单位]
