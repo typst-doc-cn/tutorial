@@ -38,7 +38,7 @@ Hello world!!
 
 这三个程序都输出了相同的结果。虽然后两者并不实用，却更能引人思考。理解它们将有助于你掌握Typst脚本的本质。
 
-== 代码表示的自省函数
+== 代码表示的自省函数 <grammar-repr>
 
 在开始学习之前，先学习几个与排版无关但非常实用的函数。
 
@@ -58,7 +58,7 @@ Hello world!!
 
 #typst-func("repr")的特点是可以接受任意值，因此很适合用来在调试代码的时候输出内容。
 
-== 类型的自省函数
+== 类型的自省函数 <grammar-type>
 
 与#typst-func("repr")类似，一个特殊的函数#typst-func("type")可以获得任意值的#term("type")。
 
@@ -98,7 +98,7 @@ Hello world!!
 #(type(type(type(str))) == type)
 ```)
 
-== 求值函数
+== 求值函数 <grammar-eval>
 
 `eval`函数接受一个字符串，把字符串当作代码执行并求出结果：
 
@@ -109,7 +109,7 @@ Hello world!!
 
 从```typc eval("[一段内容]")```的中括号被解释为「内容块」可以得知，`eval`默认以#term("code mode")解释你的代码。
 
-你可以使用`mode`参数修改`eval`的「解释模式」。`code`对应为#term("code mode")，`markup`对应为#term("markup mode")：
+你可以使用`mode`参数修改`eval`的「解释模式」。`code`对应为#term("code mode")，`markup`对应为#term("markup mode")：<grammar-eval-markup-mode>
 
 #code(```typ
 代码模式eval：#eval("[一段内容]", mode: "code") \
@@ -131,7 +131,7 @@ Hello world!!
 + #term("floating-Point literal", postfix: "。")
 + #term("string literal", postfix: "。")
 
-=== 空字面量
+=== 空字面量 <grammar-none-literal>
 
 空字面量是纯粹抽象的概念，这意味着你在现实中很难找到对应的实体。就像是数学中的零与负数，空字面量自然产生于运算过程中。
 
@@ -194,7 +194,7 @@ Hello world!!
 
 === 布尔字面量
 
-一个布尔字面量表示逻辑的确否。它要么为`false`（真）要么为`true`（假）。
+一个布尔字面量表示逻辑的确否。它要么为`false`（真）<grammar-true-literal>要么为`true`（假）<grammar-false-literal>。
 
 #code(```typ
 两个值 #false 和 #true 偷偷混入了我们内容之中。
@@ -213,7 +213,7 @@ $1 > 2$的结果为：#(1 > 2)
 #type(false), #type(true)
 ```)
 
-=== 整数字面量
+=== 整数字面量 <grammar-integer-literal>
 
 一个整数字面量代表一个整数。相信你一定知道整数的含义。Typst中的整数默认为十进制：
 
@@ -235,7 +235,7 @@ Typst允许十进制数存在前导零：
 #009009
 ```)
 
-有些数字使用其他进制表示更为方便。你可以分别使用`0x`、`0o`和`0b`前缀加上进制内容表示十六进制数、八进制数和二进制数：
+有些数字使用其他进制表示更为方便。你可以分别使用`0x`、`0o`和`0b`前缀加上进制内容表示十六进制数、八进制数和二进制数：<grammar-n-adecimal-literal>
 
 #code(```typ
 十六进制数：#(0xdeadbeef)、#(-0xdeadbeef) \
@@ -283,7 +283,7 @@ Typst允许十进制数存在前导零：
 
 整数的有效取值范围是$[-2^63,2^63)$，其中$2^63=9223372036854775808$。
 
-=== 浮点数字面量
+=== 浮点数字面量 <grammar-float-literal>
 
 浮点数与整数非常类似。最常见的浮点数由至少一个整数部分或小数部分组成：
 
@@ -320,7 +320,7 @@ Typst允许十进制数存在前导零：
 #int(9000000000000000000000000000000)
 ```)
 
-有些数字使用科学表示法更为方便。你可以使用标准的科学表示法创建浮点数：
+有些数字使用#term("exponential notation")更为方便。你可以使用标准的#term("exponential notation")创建浮点数：<grammar-exp-repr-float>
 
 #code(```typ
 #(1e2)、#(1.926e3)、#(-1e-3)
@@ -335,7 +335,7 @@ $inf$=#calc.inf \
 NaN=#calc.nan \
 ```)
 
-=== 字符串字面量
+=== 字符串字面量 <grammar-string-literal>
 
 Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码问题。字符串由一对「英文双引号」定界：
 
@@ -381,7 +381,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 "内容"`.text)
 ```)
 
-== 变量
+== 变量 <grammar-var-decl>
 
 如下语法，「变量声明」表示使得`x`的内容与`"Hello world!!"`相等。我们对语法一一翻译：
 
@@ -483,7 +483,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 #y \
 ```)
 
-== 简单函数
+== 简单函数 <grammar-func-decl>
 
 在Typst中，变量和简单函数有着类似的语法。
 
@@ -629,7 +629,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 
 本节主要讲解情形7。由于情形1至情形6都可以作为情形7的项，不失一般性，我们仍然可以仅以「字面量」作为项讲解所有情形7的情况。
 
-=== 逻辑比较表达式
+=== 逻辑比较表达式 <grammar-logical-cmp-exp>
 
 数字之间可以相互（算术逻辑）比较，并产生布尔类型的表达式：
 
@@ -670,7 +670,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 #(9/1e160/1e160*1e160*1e160), #(9/1e160/1e160*1e160*1e160 == 9)
 ```)
 
-=== 逻辑运算表达式
+=== 逻辑运算表达式 <grammar-logical-calc-exp>
 
 布尔值之间可以做逻辑运算，并产生布尔类型的表达式：
 - 非运算：
@@ -705,17 +705,17 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 
 本书自然不负责教你逻辑学。
 
-=== 算术运算表达式
+=== 算术运算表达式 <grammar-arith-exp>
 
 数字之间可以做算术运算，并产生数字结果的表达式：
 
-- 取正运算：
+- 取正运算：<grammar-plus-exp>
   #code(```typ
-  #(+1), #(+0), #(1), #(++1)
+  #(+1), #(+0), #(++1)
   ```)
-- 取负运算：
+- 取负运算：<grammar-minus-exp>
   #code(```typ
-  #(-1), #(-0), #(1), #(--1), #(-+-1)
+  #(-1), #(-0), #(--1), #(-+-1)
   ```)
 - 加运算：
   #code(```typ
@@ -765,7 +765,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
   ```)
 ]
 
-=== 赋值表达式
+=== 赋值表达式 <grammar-assign-exp>
 
 变量可以被赋予一个表达式的值，所有的赋值表达式都产生`none`值而非返回变量的值。
 
@@ -777,19 +777,19 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 
 === 字符串相关的表达式
 
-字符串相加表示字符串的连接：
+字符串相加表示字符串的连接：<grammar-string-concat-exp>
 
 #code(```typ
 #("a" + "b")
 ```)
 
-字符串与数字相乘表示将该字符串重复$n$次后再连接：
+字符串与数字相乘表示将该字符串重复$n$次后再连接：<grammar-string-mul-exp>
 
 #code(```typ
 #("a" * 4), #(4 * "ab")
 ```)
 
-字符串之间的比较遵从#link("https://en.wikipedia.org/wiki/Lexicographic_order")[#term("lexicographical order")]。
+字符串之间的比较遵从#link("https://en.wikipedia.org/wiki/Lexicographic_order")[#term("lexicographical order")]。<grammar-string-cmp-exp>
 
 等于和不等于的比较，比较每个字符是否相等：
 
@@ -840,20 +840,20 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 
 == 类型转换
 
-整数转浮点数：
+整数转浮点数：<grammar-int-to-float>
 
 #code(```typ
 #float(1), #(type(float(1)))
 ```)
 
-布尔值转整数：
+布尔值转整数：<grammar-bool-to-int>
 
 #code(```typ
 #int(false), #(type(int(false))) \
 #int(true), #(type(int(true)))
 ```)
 
-浮点数转整数：
+浮点数转整数：<grammar-float-to-int>
 
 #code(```typ
 #int(1), #(type(int(1)))
@@ -873,13 +873,13 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 #int(calc.floor(1.9)), #int(calc.ceil(1.9))
 ```)
 
-十进制字符串转整数：
+十进制字符串转整数：<grammar-dec-str-to-int>
 
 #code(```typ
 #int("1"), #(type(int("1")))
 ```)
 
-十六进制/八进制/二进制字符串转整数：
+十六进制/八进制/二进制字符串转整数：<grammar-nadec-str-to-int>
 
 #code(```typ
 #let safe-to-int(x) = {
@@ -894,20 +894,26 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 
 注意：`assert(type(res) == int)`是必须的，否则是不安全的。
 
-数字转字符串：
+数字转字符串：<grammar-num-to-str>
 
 #code(```typ
 #repr(str(1)), #(type(str(1)))
 #repr(str(.5)), #(type(str(.5)))
 ```)
 
-布尔值转字符串：
+整数转 $N$ 进制字符串：<grammar-int-to-nadec-str>
+
+#code(```typ
+#str(501, base:16), #str(0xdeadbeef, base:36)
+```)
+
+布尔值转字符串：<grammar-bool-to-str>
 
 #code(```typ
 #repr(false), #(type(repr(false)))
 ```)
 
-数字转布尔值：
+数字转布尔值：<grammar-int-to-bool>
 
 #code(```typ
 #let to-bool(x) = x != 0
@@ -919,7 +925,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 
 由于该库即将废弃（本文将介绍新的计算API），如有希望使用的朋友，请参见#link("https://typst.app/docs/reference/foundations/calc")[Typst Reference - Calculation]。
 
-== 代码块和内容块
+== 代码块和内容块 <grammar-code-block>
 
 在上一节中，我们介绍了「内容块」，但我们并未对内容块做过多描述。在这里我们将与「代码块」一起详细介绍内容块。
 - 代码块：按顺序包含一系列语句，内部为#term("code mode")。

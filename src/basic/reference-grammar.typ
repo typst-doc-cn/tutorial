@@ -179,14 +179,121 @@
   ([进入脚本模式], refs.writing-markup.with(reference: <grammar-enter-script>), ````typ
   #1
   ````),
+  ([代码块], refs.writing-markup.with(reference: <grammar-code-block>), ````typ
+  #{"a"; "b"}
+  ````),
   ([内容块], refs.writing-markup.with(reference: <grammar-content-block>), ````typ
   #[内容块]
+  ````),
+  ([代码表示的自省函数], refs.content-scope-style.with(reference: <grammar-repr>), ````typ
+  #repr([ 一段文本 ])
+  ````),
+  ([类型的自省函数], refs.content-scope-style.with(reference: <grammar-type>), ````typ
+  #type([一段文本])
+  ````),
+  ([求值函数], refs.content-scope-style.with(reference: <grammar-eval>), ````typ
+  #type(eval("1"))
+  ````),
+  ([求值函数（标记模式）], refs.content-scope-style.with(reference: <grammar-eval-markup-mode>), ````typ
+  #eval("== 一个标题", mode: "markup")
+  ````),
+  ([空字面量], refs.content-scope-style.with(reference: <grammar-none-literal>), ````typ
+  #type(none)
+  ````),
+  ([假（布尔值）], refs.content-scope-style.with(reference: <grammar-false-literal>), ````typ
+  #false
+  ````),
+  ([真（布尔值）], refs.content-scope-style.with(reference: <grammar-true-literal>), ````typ
+  #true
+  ````),
+  ([整数], refs.content-scope-style.with(reference: <grammar-integer-literal>), ````typ
+  #(-1), #(0), #(1)
+  ````),
+  ([进制数], refs.content-scope-style.with(reference: <grammar-n-adecimal-literal>), ````typ
+  #(-0xdeadbeef), #(-0o644), #(-0b1001)
+  ````),
+  ([浮点数], refs.content-scope-style.with(reference: <grammar-float-literal>), ````typ
+  #(0.001), #(.1), #(2.)
+  ````),
+  ([指数表示法], refs.content-scope-style.with(reference: <grammar-exp-repr-float>), ````typ
+  #(1e2), #(1.926e3), #(-1e-3)
+  ````),
+  ([字符串], refs.content-scope-style.with(reference: <grammar-string-literal>), ````typ
+  #"Hello world!!"
   ````),
   ([字符串转义序列], refs.scripting-base.with(reference: <grammar-str-escape-sequences>), ````typ
   #"\""
   ````),
   ([字符串的Unicode转义序列], refs.scripting-base.with(reference: <grammar-str-unicode-escape-sequences>), ````typ
   #"\u{9999}"
+  ````),
+  ([变量声明], refs.content-scope-style.with(reference: <grammar-var-decl>), ````typ
+  #let x = 1;
+  ````),
+  ([函数声明], refs.content-scope-style.with(reference: <grammar-func-decl>), ````typ
+  #let f(x) = x * 2;
+  ````),
+  ([逻辑比较表达式], refs.content-scope-style.with(reference: <grammar-logical-cmp-exp>), ````typ
+  #(1 < 0), #(1 >= 2), #(1 == 2), #(1 != 2)
+  ````),
+  ([逻辑运算表达式], refs.content-scope-style.with(reference: <grammar-logical-calc-exp>), ````typ
+  #(not false), #(false or true), #(true and false)
+  ````),
+  ([取正运算], refs.content-scope-style.with(reference: <grammar-plus-exp>), ````typ
+  #(+1), #(+0), #(1), #(++1)
+  ````),
+  ([取负运算], refs.content-scope-style.with(reference: <grammar-minus-exp>), ````typ
+  #(-1), #(-0), #(--1), #(-+-1)
+  ````),
+  ([算术运算表达式], refs.content-scope-style.with(reference: <grammar-arith-exp>), ````typ
+  #(1 + 1), #(1 + -1), #(1 - 1), #(1 - -1)
+  ````),
+  ([赋值表达式], refs.content-scope-style.with(reference: <grammar-assign-exp>), ````typ
+  #let a = 1; #repr(a = 10), #a, #repr(a += 2), #a
+  ````),
+  ([字符串连接], refs.content-scope-style.with(reference: <grammar-string-concat-exp>), ````typ
+  #("a" + "b")
+  ````),
+  ([重复连接字符串], refs.content-scope-style.with(reference: <grammar-string-mul-exp>), ````typ
+  #("a" * 4), #(4 * "ab")
+  ````),
+  ([字符串比较], refs.content-scope-style.with(reference: <grammar-string-cmp-exp>), ````typ
+  #("a" == "b"), #("a" != "b"), #("a" < "ab"), #("a" >= "a")
+  ````),
+  ([整数转浮点数], refs.content-scope-style.with(reference: <grammar-int-to-float>), ````typ
+  #float(1), #(type(float(1)))
+  ````),
+  ([布尔值转整数], refs.content-scope-style.with(reference: <grammar-bool-to-int>), ````typ
+  #int(true), #(type(int(true)))
+  ````),
+  ([浮点数转整数], refs.content-scope-style.with(reference: <grammar-float-to-int>), ````typ
+  #int(1), #(type(int(1)))
+  ````),
+  ([十进制字符串转整数], refs.content-scope-style.with(reference: <grammar-dec-str-to-int>), ````typ
+  #int("1"), #(type(int("1")))
+  ````),
+  ([十六进制/八进制/二进制字符串转整数], refs.content-scope-style.with(reference: <grammar-nadec-str-to-int>), ````typ
+  #let safe-to-int(x) = {
+    let res = eval(x)
+    assert(type(res) == int, message: "should be integer")
+    res
+  }
+  #safe-to-int("0xf"), #(type(safe-to-int("0xf"))) \
+  #safe-to-int("0o755"), #(type(safe-to-int("0o755"))) \
+  #safe-to-int("0b1011"), #(type(safe-to-int("0b1011"))) \
+  ````),
+  ([数字转字符串], refs.content-scope-style.with(reference: <grammar-num-to-str>), ````typ
+  #repr(str(1)), #repr(str(.5))
+  ````),
+  ([整数转十六进制字符串], refs.content-scope-style.with(reference: <grammar-int-to-nadec-str>), ````typ
+  #str(501, base:16), #str(0xdeadbeef, base:36)
+  ````),
+  ([布尔值转字符串], refs.content-scope-style.with(reference: <grammar-bool-to-str>), ````typ
+  #repr(false)
+  ````),
+  ([数字转布尔值], refs.content-scope-style.with(reference: <grammar-int-to-bool>), ````typ
+  #let to-bool(x) = x != 0
+  #repr(to-bool(0)), #repr(to-bool(1))
   ````),
   ([函数调用], refs.writing-markup.with(reference: <grammar-func-call>), ````typ
   #calc.pow(4, 3)
