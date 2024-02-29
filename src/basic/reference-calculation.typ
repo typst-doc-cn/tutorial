@@ -12,3 +12,5 @@
 )
 
 // calc.*
+
+等待#link("https://github.com/typst/typst/pull/3489")[PR: Begin migration of calc functions to methods]
