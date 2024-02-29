@@ -80,7 +80,7 @@
   // todo: abstraction
   {
     // inherit from page setting
-    show: _page-project.with(title: none)
+    show: _page-project.with(title: none, kind: none)
 
     //set image(width: 100%, height: 100%)
     set page(margin: 0cm, header: none, background: [
@@ -109,7 +109,7 @@
   
     {
       // inherit from page setting
-      show: _page-project.with(title: none)
+      show: _page-project.with(title: none, kind: none)
 
       // set web/pdf page properties
       set page(numbering: none)

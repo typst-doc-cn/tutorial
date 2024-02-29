@@ -87,7 +87,8 @@
 // It takes your content and some metadata and formats it.
 // Go ahead and customize it to your liking!
 #let project(title: "Typst中文教程", authors: (), kind: "page", body) = {
-  let ref-page = kind == "reference-page"
+  let is-ref-page = kind == "reference-page"
+  let is-page = kind == "page"
 
   // set basic document metadata
   set document(author: authors, title: title) if not is-pdf-target
@@ -206,7 +207,7 @@
   // Main body.
   set par(justify: true)
 
-  if ref-page {
+  if is-ref-page {
     let side-space = 4 * 12pt;
     let side-overflow = 2 * 12pt;
     let gutter = 1 * 12pt;
@@ -221,12 +222,21 @@
           locate(loc => side-attrs.update(it => {
             it.insert("left", loc.position().x)
             it.insert("width", side-space + side-overflow)
+            it.insert("gutter", gutter)
             it
           }))
         )
       ),
       body
     )
+  } else if is-page {
+    locate(loc => side-attrs.update(it => {
+      it.insert("left", 0pt)
+      it.insert("width", 0pt)
+      it.insert("gutter", 0pt)
+      it
+    }))
+    body
   } else {
     body
   }

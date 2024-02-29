@@ -129,19 +129,23 @@
 }
 
 #let fg-blue = main-color.mix(rgb("#0074d9"))
-#let pro-tip(content) = block(
-  width: 100%,
-  breakable: false,
-  inset: (x: 0.65em, y: 0.65em, left: 0.65em * 0.6),
-  radius: 4pt,
-  fill: rgb("#0074d920"), {
-  set text(fill: fg-blue)
-  stack(
-    dir: ltr,
-    move(dy: 0.1em, image("/assets/files/info-icon.svg", width: 1em)),
-    0.2em,
-    box(width: 100% - 1.2em, v(0.2em) + content)
-  )
+#let pro-tip(content) = locate(loc => {
+  let attr = side-attrs.at(loc)
+  let ext = attr.width + attr.gutter
+  move(dx: -ext, block(
+    width: 100% + ext,
+    breakable: false,
+    inset: (x: 0.65em, y: 0.65em, left: 0.65em * 0.6),
+    radius: 4pt,
+    fill: rgb("#0074d920"), {
+    set text(fill: fg-blue)
+    stack(
+      dir: ltr,
+      move(dy: 0.1em, image("/assets/files/info-icon.svg", width: 1em)),
+      0.2em,
+      box(width: 100% - 1.2em, v(0.2em) + content)
+    )
+  }))
 })
 
 #let typst-func(it) = [
