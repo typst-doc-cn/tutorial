@@ -108,11 +108,6 @@
 
   assert(content != none, message: "invalid label content")
   locate(loc => {
-    let link-result = link2page.final(loc)
-    if path-lbl in link-result {
-      link((page: link-result.at(path-lbl), x: 0pt, y: 0pt), content)
-      return
-    }
 
     if reference != none {
       let result = query(reference, loc);
@@ -121,6 +116,12 @@
         link(reference, content)
         return
       }
+    }
+
+    let link-result = link2page.final(loc)
+    if path-lbl in link-result {
+      link((page: link-result.at(path-lbl), x: 0pt, y: 0pt), content)
+      return
     }
     // assert(read(path) != none, message: "no such file")
 
