@@ -57,15 +57,15 @@
 //  根据位置信息  计算得到  我们想要的内容
 ```)
 
-Pro Tips：这与Typst的缓存原理相关。由于#typst-func("locate")函数接收的闭包```typc loc => ..```是一个函数，且在Typst中它被认定为*纯函数*，Typst只会针对特定的参数执行一次函数。为了强制让用户书写的函数保持纯性，Typst规定用户必须在函数内部使用「位置」信息。
+#pro-tip[
+  这与Typst的缓存原理相关。由于#typst-func("locate")函数接收的闭包```typc loc => ..```是一个函数，且在Typst中它被认定为*纯函数*，Typst只会针对特定的参数执行一次函数。为了强制让用户书写的函数保持纯性，Typst规定用户必须在函数内部使用「位置」信息。
 
-因此，例如我们希望在偶数页下让内容为“甲”，否则让内容为“乙”，应当这样书写：
+  因此，例如我们希望在偶数页下让内容为“甲”，否则让内容为“乙”，应当这样书写：
 
-#code(```typ
-#locate(loc => if calc.even(loc.page()) [“甲”] else [“乙”])
-```)
-
-
+  #code(```typ
+  #locate(loc => if calc.even(loc.page()) [“甲”] else [“乙”])
+  ```)
+]
 
 == 「query」<grammar-query>
 
@@ -131,11 +131,13 @@ class Integer {
 
 这个规则有些隐晦，并且Typst的设计者也已经注意到了这一点，所以他们正在计划改进这一点。当然在这之前，你只需要记住：#typst-func("query")函数的第二个「位置」参数用于限制该函数仅在#typst-func("locate")函数内部使用。
 
-Pro Tips：这与Typst的缓存原理相关。为了加速#typst-func("query")函数，Typst需要对其缓存。Typst合理做出以下假设：在文档每处的查询（`loc`），都单独缓存对应选择器的查询结果。
+#pro-tip[
+  这与Typst的缓存原理相关。为了加速#typst-func("query")函数，Typst需要对其缓存。Typst合理做出以下假设：在文档每处的查询（`loc`），都单独缓存对应选择器的查询结果。
 
-更细致地描述如下：将```typc query(selector, loc)```的参数为「键」，执行结果为「值」构造一个哈希映射表。若使用`(selector, loc)`作为「键」，查询该表：
-+ 未对应结果，则执行查询，缓存并返回结果。
-+ 已经存在对应结果，则不会重新执行查询，而是使用表中的值作为结果。
+  更细致地描述如下：将```typc query(selector, loc)```的参数为「键」，执行结果为「值」构造一个哈希映射表。若使用`(selector, loc)`作为「键」，查询该表：
+  + 未对应结果，则执行查询，缓存并返回结果。
+  + 已经存在对应结果，则不会重新执行查询，而是使用表中的值作为结果。
+]
 
 == 回顾其二
 
@@ -462,10 +464,12 @@ for i in range(res-headings.len()) {
 }
 ```
 
-Pro Tips: 将`calc-headings`与`get-heading-at-page`分离可以改进脚本性能。这是因为Typst是以函数为粒度缓存你的计算。在最后的实现：
+#pro-tip[
+  将`calc-headings`与`get-heading-at-page`分离可以改进脚本性能。这是因为Typst是以函数为粒度缓存你的计算。在最后的实现：
 
-1. ```typc query(heading.where(level: 2), loc)```会被缓存，如果二级标题的结果不变，则#typst-func("query")函数不会重新执行（不会重新查询文档状态）。
-2. ```typc calc-headings(..)```会被缓存。如果查询的结果不变。则其不会重新执行。
+  + ```typc query(heading.where(level: 2), loc)```会被缓存，如果二级标题的结果不变，则#typst-func("query")函数不会重新执行（不会重新查询文档状态）。
+  + ```typc calc-headings(..)```会被缓存。如果查询的结果不变。则其不会重新执行。
+]
 
 最后，让我们适配`calc-headings`到真实场景，并应用到页眉规则：
 
