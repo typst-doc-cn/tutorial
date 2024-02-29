@@ -131,6 +131,8 @@ Typst会将你提供的任意长度单位都统一成点单位，以便进行长
 
 有两种相对长度（Relative Length），一是百分比（Ratio），一是分数比（Fraction）。
 
+=== 百分比 <reference-type-ratio>
+
 当「百分比」用作长度时，其实际值取决于父容器宽度：
 
 #code(```typ

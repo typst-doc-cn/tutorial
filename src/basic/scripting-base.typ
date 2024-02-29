@@ -146,6 +146,26 @@ Hello world!!
 
 这些例子都蕴含较复杂的脚本逻辑，会在下一节详细介绍。
 
+#pro-tip[
+  空字面量自然产生于运算过程中。以下是所有会产生```typc none```的自然场景：
+  - 当变量未初始化时。
+  #code(```typ
+  #let x; #type(x)
+  ```)
+  - 当`if`语句条件不满足，且没有`false`（`else`）分支时，`if`语句的值为```typc none```。
+  #code(```typ
+  #type(if false {})
+  ```)
+  - 当`for`语句、`while`语句、函数没有产生任何值时，函数返回值为```typc none```。
+  #code(```typ
+  #let f() = {}; #type(f())
+  ```)
+  - 当函数显式`return`且未写明返回值时，函数返回值为```typc none```。
+  #code(```typ
+  #let f() = return; #type(f())
+  ```)
+]
+
 `none`不产生任何内容：
 
 #code(```typ
@@ -975,7 +995,7 @@ Typst实际上不限制代码块的每个语句将会产生什么结果，只要
 
 现在可以重新体会这句话了：Typst按控制流顺序执行代码，将所有结果*折叠*成一个值。对于上例，每句话的执行结果分别是：
 
-#```typc
+```typc
 #{
   none; // let hello = "Hello";
   none; // let space = " ";

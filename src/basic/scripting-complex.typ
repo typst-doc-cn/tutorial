@@ -332,7 +332,7 @@ Typst提供了一系列「成员」和「方法」访问字面量、变量与函
 
 `if`语句用于条件判断，满足条件时，就执行指定的语句。
 
-#```typ
+```typ
 #if expression { then-block } else { else-block }
 #if expression { then-block }
 ```
@@ -347,6 +347,14 @@ Typst提供了一系列「成员」和「方法」访问字面量、变量与函
 ```)
 
 因为`1 < 2`表达式为真，所以脚本执行了`then-block`代码块，而忽略了`else-block`代码块，于是最后文档的内容为“确实”。
+
+`if`语句还可以无限串联下去，你可以自行类比推理更长的`if`语句的语义：
+
+```typ
+#if expression { .. } else if expression { .. } else { .. }
+#if expression { .. } else if expression { .. }
+#if expression { .. } else if expression { .. } else if ..
+```
 
 这里有一个疑问，如果只写了`then`代码块，而没写`else`代码块，但偏偏表达式不为真，最终脚本会报错吗？请看：
 
