@@ -17,36 +17,36 @@
   columns: (1fr, 1fr, 1fr),
   align(center)[「名称/术语」], align(center)[语法], align(center)[渲染结果],
   ..(
-    ([段落], refs.writing, ```typ
-    writing
+    ([段落], refs.writing-markup, ```typ
+    writing-markup
     ```),
-    ([标题], refs.writing, ```typ
+    ([标题], refs.writing-markup, ```typ
     = Heading
     ```),
-    ([二级标题], refs.writing, ```typ
+    ([二级标题], refs.writing-markup, ```typ
     == Heading
     ```),
-    ([着重标记], refs.writing, ```typ
+    ([着重标记], refs.writing-markup, ```typ
     *Strong*
     ```),
-    ([强调标记], refs.writing, ```typ
+    ([强调标记], refs.writing-markup, ```typ
     _emphasis_
     ```),
-    ([有序列表], refs.writing, ```typ
+    ([有序列表], refs.writing-markup, ```typ
     + Item 1
     + Item 2
     ```),
-    ([无序列表], refs.writing, ```typ
+    ([无序列表], refs.writing-markup, ```typ
     - Item 1
     - Item 2
     ```),
-    ([短代码片段], refs.writing, ````typ
+    ([短代码片段], refs.writing-markup, ````typ
     `code`
     ````),
-    ([长代码片段], refs.writing, ````typ
+    ([长代码片段], refs.writing-markup, ````typ
     ```code```
     ````),
-    ([代码块], refs.writing, ````typ
+    ([代码块], refs.writing-markup, ````typ
     ```typ
     = Heading
     ```

@@ -9,7 +9,8 @@
 #let refs = {
   let cl = book.cross-link;
   (
-    writing: cl.with("/basic/writing.typ"),
+    writing-markup: cl.with("/basic/writing-markup.typ"),
+    writing-scripting: cl.with("/basic/writing-scripting.typ"),
     scripting-base: cl.with("/basic/scripting-base.typ"),
     scripting-complex: cl.with("/basic/scripting-complex.typ"),
     scripting-modules: cl.with("/intermediate/scripting-modules.typ"),
