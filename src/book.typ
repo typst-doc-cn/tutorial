@@ -46,7 +46,6 @@
     - #chapter("intermediate/reference-layout.typ")[布局函数]
     - #chapter(none)[表格]
     - #chapter("intermediate/reference-outline.typ")[文档大纲]
-    - #chapter("basic/reference-grammar.typ")[语法检索表Ⅱ]
     - #chapter("basic/reference-example.typ")[示例检索表Ⅱ]
     = 专题
     - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]

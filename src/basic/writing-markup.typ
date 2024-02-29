@@ -14,7 +14,7 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
   你可以选择在初次阅读时*跳过*这些框，而不影响对正文的理解。但建议你在阅读完整本书后回头观看所不理解的那些“Pro Tip”。
 ]
 
-== 段落
+== 段落 <grammar-paragraph>
 
 普通文本默认组成一个个段落。
 
@@ -58,7 +58,7 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 轻轻的我走了，正如我轻轻的来；
 ```)
 
-== 标题
+== 标题 <grammar-heading>
 
 你可以使用一个或多个*连续*的#mark("=")开启一个标题。
 
@@ -108,13 +108,13 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
 与许多标记语言相同，Typst中使用一系列#term("delimiter")规则确定一段语义的开始和结束。为赋予语义，需要将一个#term("delimiter")置于文本之前，表示某语义的开始；同时将另一个#term("delimiter")置于文本末尾，表示该语义的结束。
 
-例如，#mark("*")作为定界符赋予所包裹的一段文本以#term("strong semantics", postfix: "。")
+例如，#mark("*")作为定界符赋予所包裹的一段文本以#term("strong semantics", postfix: "。") <grammar-strong>
 
 #code(```typ
 着重语义：这里有一个*重点！*
 ```)
 
-与#term("strong semantics")类似，#mark("_")作为定界符将赋予#term("emphasis semantics", postfix: "：")
+与#term("strong semantics")类似，#mark("_")作为定界符将赋予#term("emphasis semantics", postfix: "：") <grammar-emph>
 
 #code(```typ
 强调语义：_emphasis_
@@ -128,7 +128,7 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
 注意：中文排版一般不使用斜体表示着重或强调。
 
-== （计算机）代码片段
+== （计算机）代码片段 <grammar-raw>
 
 Typst的#term("raw block")标记语法与Markdown完全相同。如果你使用过Markdown，那么你应该对以下#term("raw block")的标记方式非常熟悉。
 
@@ -138,7 +138,7 @@ Typst的#term("raw block")标记语法与Markdown完全相同。如果你使用�
 短代码片段：`code`
 ````)
 
-有时候你希望允许代码内容包含换行或#mark("`", postfix: "。")这时候，你需要使用*至少连续*三个#mark("`")组成定界符标记#term("raw block", postfix: "：")
+有时候你希望允许代码内容包含换行或#mark("`", postfix: "。")这时候，你需要使用*至少连续*三个#mark("`")组成定界符标记#term("raw block", postfix: "：")<grammar-long-raw>
 
 #code(`````typ
 使用三个反引号包裹：``` ` ```
@@ -154,7 +154,7 @@ Typst的#term("raw block")标记语法与Markdown完全相同。如果你使用�
 另一段有高亮的代码片段：````typst 包含反引号的长代码片段：``` ` ``` ````
 `````)
 
-除了定界符的长短，代码片段还有是否成块的区分。如果代码片段符合以下两点，那么它就是一个#term("blocky raw block", postfix: "：")
+除了定界符的长短，代码片段还有是否成块的区分。如果代码片段符合以下两点，那么它就是一个#term("blocky raw block", postfix: "：") <grammar-blocky-raw>
 + 是长代码片段，即使用*至少连续*三个#mark("`")。
 + 内容包含至少一个#term("line break", postfix: "。")
 
@@ -175,7 +175,7 @@ function fibnacci(n) {
 
 Typst的列表语法与Markdown非常类似，但不完全相同。如果你使用过Markdown，那么你将可以很快上手。
 
-你可以使用一个#mark("-")开启一个无编号列表项：
+你可以使用一个#mark("-")开启一个无编号列表项： <grammar-enum>
 
 #code(```typ
 - 一级列表项1
@@ -192,7 +192,7 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
   - 二级列表项2.1
 ```)
 
-与之相对，#mark("+")开启一个有编号列表项。
+与之相对，#mark("+")开启一个有编号列表项。 <grammar-list>
 
 #code(```typ
 + 一级列表项1
@@ -223,7 +223,7 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
 +  列表项6
 ```)
 
-== 转义序列
+== 转义序列 <grammar-escape-sequences>
 
 你有时希望直接展示标记符号本身的真实内容。例如，你可能希望在段落中直接展示一个#mark("_", postfix: "。")这时你需要使用#term("escape sequences", postfix: "：")
 
@@ -257,7 +257,7 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
 
 #mk-tab(escaped-sequences)
 
-以上大部分#term("escape sequences")都紧跟单个字符，除了表中的最后一列。
+以上大部分#term("escape sequences")都紧跟单个字符，除了表中的最后一列。 <grammar-unicode-escape-sequences>
 
 `\u{unicode}`的语法也常见于各种语言。你可以通过将`unicode`替换为#link("https://zh.wikipedia.org/zh-cn/%E7%A0%81%E4%BD%8D")[Unicode码位]的值，以输出该特定字符，而无需*输入法支持*。例如，你可以这样输出一句话：
 
@@ -269,11 +269,11 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
 + 请尝试在字符前添加一个#mark("\\", postfix: "，")如果其在Typst中已经被赋予含义。
 + 请考虑使用`\u{unicode}`，如果其不可见或难以使用输入法获得。
 
-== 输出换行符
+== 输出换行符 <grammar-newline>
 
 输出换行符是一种特殊的#term("escape sequences", postfix: "，")它使得文档输出换行。
 
-使用#mark("\\")加上任意一个空白字符，表示在此处主动插入一个段落内的换行符：
+使用#mark("\\")加上任意一个空白字符，表示在此处主动插入一个段落内的换行符： <grammar-newline-by-space>
 
 #code(````typ
 转义空格可以换行 \
@@ -283,11 +283,11 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
 
 空白字符可以取短空格（`U+0020`）、长空格（`U+3000`）、回车（`U+000D`）等。
 
-== 速记符号
+== 速记符号 <grammar-shorthand>
 
 在#term("markup mode")下，一些符号需要用特殊的符号组合打出，这种符号组合被称为#term("shorthand", postfix: "。")它们是：
 
-空格（`U+0020`）的#term("shorthand")是#mark("~", postfix: "：")
+空格（`U+0020`）的#term("shorthand")是#mark("~", postfix: "：") <grammar-shorthand-space>
 
 #code(```typ
 AB v.s. A~B
@@ -315,7 +315,7 @@ AB v.s. A~B
 // - minusi
 // -? soft-hyphen 
 
-== 注释
+== 注释 <grammar-inline-comment>
 
 Typst的#term("comment")直接采用C语言风格的注释语法，有两种表示方法。
 
@@ -326,7 +326,7 @@ Typst的#term("comment")直接采用C语言风格的注释语法，有两种表�
 一行文本 // 这也是注释
 ````)
 
-与代码片段的情形类似，Typst也提供了另外一种可以跨行的#term("comment")，形如`/*...*/`。
+与代码片段的情形类似，Typst也提供了另外一种可以跨行的#term("comment")，形如`/*...*/`。<grammar-cross-line-comment>
 
 #code(````typ
 你没有看见/* 混入其中 */注释
