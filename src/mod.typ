@@ -1,8 +1,10 @@
 #import "/src/book.typ"
 #import "/typ/templates/page.typ"
 #import "/typ/templates/term.typ": _term
-#import "/typ/templates/side-notes.typ": side-note
+#import "/typ/templates/side-notes.typ": side-note, side-attrs
 #import "/typ/templates/page.typ": main-color
+
+#import "/typ/typst-meta/docs.typ": typst-v11
 
 #let refs = {
   let cl = book.cross-link;
@@ -160,3 +162,94 @@
 }, postfix: postfix)
 
 #let ref-bookmark = side-note
+
+#let highlighter(it, k) = {
+  if k == "method" {
+    set text(fill: rgb("4b69c6"))
+    raw(it)
+  } else if k == "keyword" {
+    set text(fill: rgb("8b41b1"))
+    raw(it)
+  } else if k == "var" {
+    set text(fill: blue.mix(main-color))
+    raw(it)
+  } else {
+    raw(it)
+  }
+}
+
+#let darkify(clr) = clr.mix(main-color.negate()).saturate(30%)
+
+#let ref-ty-locs = (
+  "int": refs.ref-typebase,
+  "bool": refs.ref-typebase,
+  "float": refs.ref-typebase,
+  "str": refs.ref-typebase,
+  "array": refs.ref-typebase,
+  "dict": refs.ref-typebase,
+  "none": refs.ref-typebase,
+
+  "ratio": refs.ref-length,
+  "alignment": refs.ref-layout,
+
+  "version": refs.ref-type-builtin,
+  
+  "any": refs.ref-type-builtin,
+  "bytes": refs.ref-type-builtin,
+  "label": refs.ref-type-builtin,
+  "type": refs.ref-type-builtin,
+  "regex": refs.ref-type-builtin,
+)
+
+#let show-type(ty) = {
+  h(3pt)
+  ref-ty-locs.at(ty)(
+    reference: label("reference-type-" + ty),
+    box(
+      fill: darkify(rgb("eff0f3")),
+      outset: 2pt, radius: 2pt,
+      raw(ty),
+    ),
+  )
+  h(3pt)
+}
+
+#let ref-signature(name, kind: "scope") = {
+  let fn = if kind == "scope" {
+    typst-v11.scoped-items.at(name)
+  } else if kind == "cons" {
+    let ty = typst-v11.types.at(name)
+    ty.body.content.constructor
+  } else {
+    typst-v11.funcs.at(name)
+  }
+
+  locate(loc => {
+    let attr = side-attrs.at(loc)
+    let ext = attr.width + attr.gutter
+  
+    move(dx: -ext, block(fill: rgb("#add5a220"), radius: 2pt, width: 100% + ext, inset: (x: 1pt, y: 5pt), {
+      set par(justify: false)
+      set text(fill: main-color.mix(rgb("eff0f3").negate()))
+      highlighter("fn", "keyword")
+      raw(" ")
+      highlighter(name, "method")
+      raw("(")
+      fn.params.map(param => {
+        highlighter(param.name, "var")
+        ": "
+        param.types.map(show-type).join()
+      }).join(raw(", "))
+      raw(")")
+      if fn.returns.len() > 0 {
+        raw(" ")
+        box(raw("->"))
+        raw(" ")
+        fn.returns.map(show-type).join()
+      }
+    }))
+  })
+}
+#let ref-func-signature = ref-signature.with(kind: "func")
+#let ref-cons-signature = ref-signature.with(kind: "cons")
+#let ref-method-signature = ref-signature
