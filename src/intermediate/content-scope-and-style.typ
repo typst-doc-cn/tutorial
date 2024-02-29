@@ -81,7 +81,7 @@
 ])
 ```, scope: code-scope)
 
-== 内容类型的特性
+== 内容类型的特性 <content-type-feature>
 
 我们已经学过很多内容：段落、标题、代码片段。
 
@@ -179,14 +179,16 @@ Typst中一切皆组合，它将所有内容打包成「内容类型」的值以
 标题的`level`是：#([= 123]).fields().at("level") \
 ```)
 
-Pro tips：这里的“部分信息”描述稍显模糊。具体来说，Typst只允许你直接访问内容中不受样式影响的信息，至少包含语法属性。如下：
+#pro-tip[
+  这里的“部分信息”描述稍显模糊。具体来说，Typst只允许你直接访问内容中不受样式影响的信息，至少包含语法属性。如下：
 
-#code(````typ
-#let x = [= 123]
-#rect([#x <the-heading>])
-#x.fields() \
-#locate(loc => query(<the-heading>, loc))
-````)
+  #code(al: top, ````typ
+  #let x = [= 123]
+  #rect([#x <the-heading>])
+  #x.fields() \
+  #locate(loc => query(<the-heading>, loc))
+  ````)
+]
 
 通过`query`我们获得同一个内容上更多的信息，即「样式」属性，即内容上的那些可选函数参数。
 
@@ -358,7 +360,7 @@ Typst对代码块有着的一系列语法设计，让代码块非常适合描述
 
 「内容」是一棵树。一个`main.typ`就是「内容」的一再嵌套。
 
-#code(```typ
+#code(al: top, ```typ
 #let main-typ() = {
   [= 生活在Content树上]
   {
@@ -454,7 +456,9 @@ Typst对代码块有着的一系列语法设计，让代码块非常适合描述
 
 至此，我们已经完全讲明了`plain-text`的实现。
 
-Pro tips：利用「内容」与「树」的特性，我们可以在Typst中设计出更多优雅的脚本功能。
+#pro-tip[
+  利用「内容」与「树」的特性，我们可以在Typst中设计出更多优雅的脚本功能。
+]
 
 === CeTZ的「树」
 
@@ -471,7 +475,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 
 使用混合语言，在Typst中可以很优雅地画多面体：
 
-#code(```typ
+#code(al: top, ```typ
 #import "@preview/cetz:0.2.0"
 #align(center, cetz.canvas({
   // 导入cetz的draw方言
@@ -496,7 +500,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 
 通过代码块语法，你可以在Typst中拼接字节，依像素地创建一张PNG格式的图片：
 
-#code(```typ
+#code(al: top, ```typ
 // Origin: https://typst.app/project/r0SkRmsZYIYNxjs6Q712aP
 #import "png.typ": *
 #let prelude = (0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)
@@ -594,7 +598,7 @@ set text(fill: true)
 ```
 ````)
 
-在《内容类型的特性》中，我们所接触到的*已经打包*（packed）的代码片段并不包含`lines`字段。在打包后，内部大部分信息已经被屏蔽了。
+在#link(<content-type-feature>)[《内容类型的特性》]中，我们所接触到的*已经打包*（packed）的代码片段并不包含`lines`字段。在打包后，内部大部分信息已经被屏蔽了。
 
 以下示例说明它可以返回*任意*内容。这里我们选择语言为`my-calc`的代码片段，执行并返回一个*非代码片段*：
 

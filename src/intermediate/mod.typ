@@ -1,5 +1,5 @@
 #import "/src/book.typ"
-#import "../mod.typ": code as _code, exec-code as _exec-code, refs, typst-func
+#import "../mod.typ": code as _code, exec-code as _exec-code, refs, typst-func, pro-tip
 #import "/typ/templates/page.typ": main-color
 #import "/typ/embedded-typst/lib.typ": svg-doc, default-fonts, default-cjk-fonts
 
