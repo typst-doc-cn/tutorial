@@ -27,7 +27,7 @@
 )
 
 #let main-font = (
-  "Charter",
+  // "Charter",
   // typst-book's embedded font
   "Linux Libertine",
   ..main-font-cn,
@@ -89,6 +89,9 @@
 #let project(title: "Typst中文教程", authors: (), kind: "page", body) = {
   let is-ref-page = kind == "reference-page"
   let is-page = kind == "page"
+  let heading-sizes = (
+    26pt, 22pt, 15pt, 14pt, 12pt,
+  )
 
   // set basic document metadata
   set document(author: authors, title: title) if not is-pdf-target
@@ -138,11 +141,20 @@
     show cjk-markers: set text(font: code-font-cn)
     it
   }
+  // show regex("[a-zA-Z\s\#\[\]]+"): set text(baseline: -0.05em)
   // show regex("[“”]+"): set text(font: main-font-cn)
 
   // render a dash to hint headings instead of bolding it.
   show heading : set text(weight: "regular") if is-web-target
+  set par(leading: 0.65em)
+  let list-indent = 0.5em
+  set enum(indent: list-indent * 0.618, body-indent: list-indent)
+  set list(indent: list-indent * 0.618, body-indent: list-indent)
+  set block(spacing: 0.65em * 1.2)
   show heading : it => {
+    set text(size: heading-sizes.at(it.level))
+    set block(spacing: 0.65em * 1.2 * 1.2)
+
     it
     if is-web-target {
       let title = plain-text(it.body).trim();
@@ -182,7 +194,7 @@
         ],
       )
     } else {
-      set text(font: code-font)
+      set text(font: code-font, baseline: -0.08em)
       it
     }
   }
