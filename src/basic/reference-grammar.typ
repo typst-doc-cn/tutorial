@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [参考：语法检索表])
+#show: book.page.with(title: [参考：语法示例检索表])
 
 #let table-lnk(name, ref, it, scope: (:), res: none, ..args) = (
   align(center + horizon, ref(name)), 
@@ -206,19 +206,19 @@
   ([真（布尔值）], refs.content-scope-style.with(reference: <grammar-true-literal>), ````typ
   #true
   ````),
-  ([整数], refs.content-scope-style.with(reference: <grammar-integer-literal>), ````typ
+  ([整数字面量], refs.content-scope-style.with(reference: <grammar-integer-literal>), ````typ
   #(-1), #(0), #(1)
   ````),
-  ([进制数], refs.content-scope-style.with(reference: <grammar-n-adecimal-literal>), ````typ
+  ([进制数字面量], refs.content-scope-style.with(reference: <grammar-n-adecimal-literal>), ````typ
   #(-0xdeadbeef), #(-0o644), #(-0b1001)
   ````),
-  ([浮点数], refs.content-scope-style.with(reference: <grammar-float-literal>), ````typ
+  ([浮点数字面量], refs.content-scope-style.with(reference: <grammar-float-literal>), ````typ
   #(0.001), #(.1), #(2.)
   ````),
   ([指数表示法], refs.content-scope-style.with(reference: <grammar-exp-repr-float>), ````typ
   #(1e2), #(1.926e3), #(-1e-3)
   ````),
-  ([字符串], refs.content-scope-style.with(reference: <grammar-string-literal>), ````typ
+  ([字符串字面量], refs.content-scope-style.with(reference: <grammar-string-literal>), ````typ
   #"Hello world!!"
   ````),
   ([字符串转义序列], refs.scripting-base.with(reference: <grammar-str-escape-sequences>), ````typ
@@ -301,7 +301,122 @@
   ([内容参数], refs.writing-markup.with(reference: <grammar-content-param>), ````typ
   #emph[emphasis]
   ````),
-  ([set语法], refs.content-scope-style.with(reference: <grammar-set>), ````typ
+  ([成员], refs.content-scope-style.with(reference: <grammar-member-exp>), ````typ
+  #`OvO`.text
+  ````),
+  ([方法], refs.content-scope-style.with(reference: <grammar-method-exp>), ````typ
+  #"Hello World".split(" ")
+  ````),
+  ([数组字面量], refs.content-scope-style.with(reference: <grammar-array-literal>), ````typ
+  #(1, "OvO", [一段内容])
+  ````),
+  ([判断数组内容], refs.content-scope-style.with(reference: <grammar-array-in>), ````typ
+  #(1 in (1, "OvO", [一段内容]))
+  ````),
+  ([判断数组内容不在], refs.content-scope-style.with(reference: <grammar-array-not-in>), ````typ
+  #([另一段内容] not in (1, "OvO", [一段内容]))
+  ````),
+  ([字典字面量], refs.content-scope-style.with(reference: <grammar-dict-literal>), ````typ
+  #(neko-mimi: 2, "utterance": "喵喵喵")
+  ````),
+  ([字典成员], refs.content-scope-style.with(reference: <grammar-dict-member-exp>), ````typ
+  #let cat = (neko-mimi: 2)
+  #cat.neko-mimi
+  ````),
+  ([判断字典内容], refs.content-scope-style.with(reference: <grammar-dict-in>), ````typ
+  #let cat = (neko-mimi: 2)
+  #("neko-mimi" in cat)
+  ````),
+  ([空数组], refs.content-scope-style.with(reference: <grammar-empty-array>), ````typ
+  #()
+  ````),
+  ([空字典], refs.content-scope-style.with(reference: <grammar-empty-dict>), ````typ
+  #(:)
+  ````),
+  ([被括号包裹的空数组], refs.content-scope-style.with(reference: <grammar-paren-empty-array>), ````typ
+  #(())
+  ````),
+  ([含有一个元素的数组], refs.content-scope-style.with(reference: <grammar-single-member-array>), ````typ
+  #(1,)
+  ````),
+  ([数组解构赋值], refs.content-scope-style.with(reference: <grammar-destruct-array>), ````typ
+  #let x = (1, "Hello, World", [一段内容])
+  #let (one, hello-world, a-content) = x
+  ````),
+  ([数组解构赋值情形二], refs.content-scope-style.with(reference: <grammar-destruct-array-eliminate>), ````typ
+  #let (_, second, ..) = (1, "Hello, World", [一段内容]); #second
+  ````),
+  ([字典解构赋值], refs.content-scope-style.with(reference: <grammar-destruct-dict>), ````typ
+  #let cat = (neko-mimi: 2, "utterance": "喵喵喵")
+  #let (utterance: u) = cat; #u
+  ````),
+  ([数组内容重映射], refs.content-scope-style.with(reference: <grammar-array-remapping>), ````typ
+  #let a = 1; #let b = 2; #let c = 3
+  #let (b, c, a) = (a, b, c)
+  #a, #b, #c
+  ````),
+  ([数组内容交换], refs.content-scope-style.with(reference: <grammar-array-swap>), ````typ
+  #let a = 1; #let b = 2
+  #((a, b) = (b, a))
+  #a, #b
+  ````),
+  ([`if`语句], refs.content-scope-style.with(reference: <grammar-if>), ````typ
+  #if true { 1 },
+  #if false { 1 } else { 0 }
+  ````),
+  ([串联`if`语句], refs.content-scope-style.with(reference: <grammar-if-if>), ````typ
+  #if false { 0 } else if true { 1 },
+  #if false { 2 } else if false { 1 } else { 0 }
+  ````),
+  ([`while`语句], refs.content-scope-style.with(reference: <grammar-while>), ````typ
+  #{
+    let i = 0;
+    while i < 10 {
+      (i * 2, )
+      i += 1;
+    }
+  }
+  ````),
+  ([`for`语句], refs.content-scope-style.with(reference: <grammar-for>), ````typ
+  #for i in range(10) {
+    (i * 2, )
+  }
+  ````),
+  ([`for`语句解构赋值], refs.content-scope-style.with(reference: <grammar-for-destruct>), ````typ
+  #for (特色, 这个) in (neko-mimi: 2) [猫猫的 #特色 是 #这个\ ]
+  ````),
+  ([`break`语句], refs.content-scope-style.with(reference: <grammar-break>), ````typ
+  #for i in range(10) { (i, ); (i + 1926, ); break }
+  ````),
+  ([`continue`语句], refs.content-scope-style.with(reference: <grammar-continue>), ````typ
+  #for i in range(10) {
+    if calc.even(i) { continue }
+    (i, )
+  }
+  ````),
+  ([占位符（`let _ = ..`）], refs.content-scope-style.with(reference: <grammar-placeholder>), ````typ
+  #let last-two(t) = {
+    let _ = t.pop()
+    t.pop()
+  }
+  #last-two((1, 2, 3, 4))
+  ````),
+  ([`return`语句], refs.content-scope-style.with(reference: <grammar-return>), ````typ
+  #let never(..args) = return
+  #type(never(1, 2))
+  ````),
+  ([函数闭包], refs.content-scope-style.with(reference: <grammar-closure>), ````typ
+  #let f = (x, y) => [两个值#(x)和#(y)偷偷混入了我们内容之中。]
+  #f("a", "b")
+  ````),
+  ([具名参数声明], refs.content-scope-style.with(reference: <grammar-named-param>), ````typ
+  #let g(some-arg: none) = [很多个值，#some-arg，偷偷混入了我们内容之中。]
+  #g()
+  #g(some-arg: "OwO")
+  ````),
+  ([含变参函数], refs.content-scope-style.with(reference: <grammar-variadic-param>), ````typ
+  #let g(..args) = [很多个值，#args.pos().join([、])，偷偷混入了我们内容之中。]
+  #g([一个俩个], [仨个四个], [五六七八个])
   ````),
   ````),
 ))
