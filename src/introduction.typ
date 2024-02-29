@@ -23,11 +23,146 @@ Typst 是撰写长篇文本（如论文、文章、书籍、报告和作业）�
 - #link("https://typst-doc-cn.github.io/docs/reference/")[官方文档翻译 - 参考]
 - #link("https://sitandr.github.io/typst-examples-book/book/about.html")[Typst Example Books]
 
-// https://typst-doc-cn.github.io/docs/chinese/
-
 = 配置Typst运行环境
 
+== 使用官方的webapp（推荐）
+
+官方提供了*在线且免费*的多人协作编辑器。该编辑器会从远程下载WASM编译器，并在你的浏览器内运行编辑器，为你提供预览服务。
+
+#figure(image("/assets/files/editor-webapp.png"), caption: [本书作者在网页中打开webapp的瞬间])
+
+该编辑器的速度相比许多LaTeX编辑器都有显著优势。这是因为：
+- 你的大部分编辑操作不会导致阻塞的网络请求。
+- 所有计算都在本地浏览器中运行。
+- 编译器本身性能极其优越。
+
+你可以注册一个账户并开箱即用该编辑器。
+
+*注意：你需要检测你的网络环境，如有必要请使用科学上网工具（VPN等）。*
+
+== 使用VSCode编辑（推荐）
+
+打开扩展界面，搜索并安装两个插件：
+
++ `nvarner.typst-lsp`：以获得LSP服务。
+  - 它为你提供语法高亮。
+  - 它为你提供自动的代码补全。
+  - 它为你提供自动的代码格式化。
++ `mgt19937.typst-preview`：以获得即时预览服务。
+  - 它为你提供预览服务。
+
+#figure(image("/assets/files/editor-vscode.png"), caption: [本书作者在VSCode中预览并编辑本文的瞬间])
+
+该编辑器的速度相比webapp略慢。这是因为：
+- 编译器与预览程序是两个不同的进程，有通信开销。
+- 用户事件和文件IO有可能增加E2E延时。
+
+但是：
+- 大部分时间下，你感受不到和webapp之间的性能差异。Typst真的非常快。
+- 你可以离线编辑Typst文档，无需任何网络连接，例如本书的部分章节是在飞机上完成的。
+- 你可以在文件系统中管理你所有的源代码，实施包括但不限于使用git等源码管理软件等操作。
+
+== 使用neovim编辑
+
+细节可以问群友。
+
+自去年年底，该编辑器与VSCode一样，已经可以有很好的Typst编辑体验。
+
+== 使用Emacs编辑
+
+可以问群友。
+
+自今年年初，该编辑器与VSCode一样，已经可以有很好的Typst编辑体验。
+
+== 使用typst-cli与PDF阅读器
+
+Typst 的 CLI 可从不同的来源获得：
+
+- 你可以获得最新版本的 Typst 的源代码和预构建的二进制文件来自#link("https://github.com/typst/typst/releases/")[发布页面]。下载适合你平台的存档并将其放在“ PATH ” 中的目录中。及时了解未来发布后，你只需运行```bash typst update```即可。
+- 你可以通过不同的包管理器安装Typst。请注意，包管理器中的版本可能落后于最新版本。
+  - Linux：查看#link("https://repology.org/project/typst/versions")[Typst on Repology]。
+  - macOS：```bash brew install typest```。
+  - Windows：```bash winget install --id Typst.Typst ```。
+- 如果您安装了#link("https://rustup.rs/")[Rust]工具链，您还可以安装最新开发版本```bash cargo --git https://github.com/typst/typst --locked typst-cli```。请注意，这将是一个“夜间”版本，可能已损坏或尚未正确记录。
+- Nix用户可以将`typst`包与```bash nix-shell -p typst```一起使用，或者构建并使用```bash nix run github:typst/typst -- --version```运行前沿版本。
+- Docker用户可以运行预构建的镜像```bash docker run -it ghcr.io/typst/typst:latest ```.
+
+安装好CLI之后，你就可以在命令行里运行Typst编译器了：
+
+```bash
+# Creates `file.pdf` in working directory.
+typst compile file.typ
+
+# Creates PDF file at the desired path.
+typst compile path/to/source.typ path/to/output.pdf
+```
+
+为了提供预览服务，你需要让Typst编译器运行在监视模式（watch）下：
+
+```bash
+# Watches source files and recompiles on changes.
+typst watch file.typ
+```
+
+当你启动Typst编译器后，你可以使用你喜欢的编辑器编辑Typst文档，并使用你喜欢的PDF阅读器打开编译好的PDF文件。PDF阅读器推荐使用：
+
+- 在Windows下使用#link("https://www.sumatrapdfreader.org/free-pdf-reader")[Sumatra PDF]。
+
+== 各Typst运行环境的比较
+
+#{
+  set align(center)
+  table(
+    columns: (1fr, 1fr, 1fr, 1fr, 48pt, 48pt, 1fr), 
+    [名称], [编辑器], [编译器环境], [预览方案], [是否支持即时编译], [语言服务], [备注],
+    [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀],  align(left)[开箱即用，需要科学上网，无法git], 
+    [VSCode], [VSCode], [native], [webview], [是], [良好],  align(left)[简单上手，定制性差], 
+    [neovim], [neovim], [native], [webview], [是], [良好],  align(left)[不易安装，定制性好], 
+    [Emacs], [Emacs], [native], [webview], [是], [良好],  align(left)[难以安装], 
+    [typst-cli], [任意编辑器], [native], [任意PDF阅读器], [否], [无], align(left)[简单上手，灵活组合], 
+  )
+}
+
 = 如何阅读本书
+
+本书主要分为三个部分：
+
++ 教程：介绍Typst的语法、原理和理念，以助你深度理解Typst。
++ 参考：完整介绍Typst中内置的函数和各种外部库，以助你广泛了解Typst的能力，用Typst实现各种排版需求。
++ 专题等：与参考等章节的区别是，每个专题都专注解决一类问题，而不会讲解函数的用法。
+
+每个部分都包含大量例子，它们各有侧重：
+
+- 教程中的例子希望切中要点，而避免冗长的全面的展示特性。
+- 参考中的例子希望讲透元素和函数的使用，例子多选自过去的一年中大家常问的问题。
+- 专题中的例子往往有连贯性，从前往后带你完成一系列专门的问题。专题中的例子假设你已经掌握了相关知识，只以最专业的代码解决该问题。
+
+#pro-tip[
+  本书会随时夹带一些“Pro Tip”。这些“Pro Tip”由蓝色框包裹。它们告诉你一些较难理解的知识点。
+  
+  你可以选择在初次阅读时*跳过*这些框，而不影响对正文的理解。但建议你在阅读完整本书后回头观看所不理解的那些“Pro Tip”。
+]
+
+以下是推荐的阅读方法：
+
++ 首先阅读《编写一篇基本文档 -- 标记篇》和《编写一篇基本文档 -- 脚本篇》。
+
+  经过这一步，你应该可以像使用Markdown那样，编写一篇基本不设置样式的文档。同时，这一步的学习难度也与学习完整Markdown语法相当。
+
++ 接着，阅读《基本教程》剩余两篇内容。
+
+  经过这一步，你应该已经基本入门了Typst的标记和脚本。此时，你和进阶用户的唯一区别是，你还不太会使用高级的样式配置。推荐：
+  - 如果你熟练阅读英语，推荐主要参考#link("https://typst.app/docs/")[官方文档]的内容。
+  - 否则，推荐继续阅读本书剩下的内容，并参考#link("https://typst-doc-cn.github.io/docs/")[非官方中文文档]的内容。
+
+  有什么问题？
+  - 本书只有《基本教程》完成了校对和润色，后续部分还非常不完善。甚至《基本教程》部分还有待改进。
+  - #link("https://typst-doc-cn.github.io/docs/")[非官方中文文档]是GPT机翻后润色的的结果，有可能错翻、漏翻，内容也可能有些许迟滞。
+
++ 接着，同时阅读《基本参考》和《进阶教程》。你可以根据你的需求挑选《基本参考》的部分章节阅读。即便不阅读任何《基本参考》中的内容，你也可以继续阅读《进阶教程》。
+
+  经过这一步，你应该已经完全学会了目前Typst的所有理念与内容。
+
 
 = 许可证
 

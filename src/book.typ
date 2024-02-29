@@ -14,8 +14,8 @@
   summary: [
     #prefix-chapter("introduction.typ")[导引]
     = 基本教程
-    - #chapter("basic/writing-markup.typ")[编写一篇基本文档 —— 标记篇]
-    - #chapter("basic/writing-scripting.typ")[编写一篇基本文档 —— 脚本篇]
+    - #chapter("basic/writing-markup.typ")[编写一篇基本文档 -- 标记篇]
+    - #chapter("basic/writing-scripting.typ")[编写一篇基本文档 -- 脚本篇]
     - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
     - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
     = 基本参考
@@ -36,8 +36,8 @@
     = 进阶教程
     - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
-    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 —— 制作页眉标题法一]
-    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 —— 制作页眉标题法二]
+    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
+    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
     - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
     - #chapter("intermediate/writing.typ")[编写一篇进阶文档]
     = 进阶参考
