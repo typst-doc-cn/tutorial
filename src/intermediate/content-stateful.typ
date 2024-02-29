@@ -292,7 +292,7 @@ set text(fill: red); text("a", font: "monospace")
 
 接下来我们继续学习更多选择器。
 
-== 文本选择器
+== 文本选择器 <grammar-text-selector>
 
 你可以使用「字符串」或「正则表达式」（`regex`）匹配文本中的特定内容，例如为`c++`文本特别设置样式：
 
@@ -301,7 +301,7 @@ set text(fill: red); text("a", font: "monospace")
 在古代，cpp是一门常用语言。
 ````)
 
-这与使用正则表达式的效果相同：
+这与使用正则表达式的效果相同：<grammar-regex-selector>
 
 #code(````typ
 #show regex("cp{2}"): strong(emph(box("C++")))
@@ -360,7 +360,7 @@ ababababababa
 “无名，万物之始也；有名，万物之母也。”
 ````)
 
-== 「标签」选择器
+== 标签选择器 <grammar-label-selector>
 
 基本上，任何元素都包含文本。这使得你很难对一段话针对性排版应用排版规则。「标签」有助于改善这一点。标签是「内容」，由一对「尖括号」（`<`和`>`）包裹：
 
@@ -392,7 +392,7 @@ ababababababa
 另一段话。
 ````)
 
-== 选择器表达式
+== 选择器表达式 <grammar-selector-exp>
 
 任意「内容」可以使用「`where`」方法创建选中满足条件的选择器。
 

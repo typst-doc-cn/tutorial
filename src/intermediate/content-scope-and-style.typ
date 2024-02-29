@@ -196,7 +196,7 @@ Pro tips：这里的“部分信息”描述稍显模糊。具体来说，Typst�
 
 与之相对，当一个标题真正被放置到一个具体的「上下文」中时，才能真正关联与之相关的样式属性。例如，标题的`numbering`字段是与上下文相关的。
 
-=== 特性四：内容类型与`fields`相关的方法糖
+=== 特性四：内容类型与`fields`相关的方法糖 <grammar-content-member-exp>
 
 由于我们经常需要与`fields`交互，Typst提供了`has`方法帮助我们判断一个内容的`fields`是否有相关的「键」。
 
@@ -244,7 +244,7 @@ Typst提供了`at`方法帮助我们访问一个内容的`fields`中键对应的
 #warning[警告，你做个人吧]
 ```)
 
-== 「`set`」语法
+== 「`set`」语法 <grammar-set>
 
 一个段落主要是一个内容序列，其中有可能很多个文本。
 
@@ -266,7 +266,7 @@ Typst提供了`at`方法帮助我们访问一个内容的`fields`中键对应的
 
 我们紧接着来讲与之相关的，Typst中最重要的概念之一：「作用域」。
 
-== 内容块与代码块的「作用域」
+== 内容块与代码块的「作用域」 <grammar-scope>
 
 // 内容块与代码块没有什么不同。
 
@@ -315,7 +315,7 @@ Typst提供了`at`方法帮助我们访问一个内容的`fields`中键对应的
 
 针对文件，我们仍重申一遍「`set`」的影响范围。其影响等价于：对于文件本身，*顶层*「`set`」规则影响到该文件的结束位置。
 
-== 「`set if`」语法
+== 「`set if`」语法 <grammar-set-if>
 
 假设我们脚本中设置了当前文档是否处于暗黑主题，并希望使用「`set`」规则感知这个设定，你可能会写：
 
@@ -524,9 +524,9 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 }))))
 ```)
 
-== 「`show`」语法
+== 「`show`」语法 <grammar-show>
 
-「`set`」语法是「`show set`」语法的简写。因此显然，相比`set`，「`show`」语法可以更强大。
+「`set`」语法是「`show set`」语法的简写。因此显然，相比`set`，「`show`」语法可以更强大。<grammar-show-set>
 
 #code(```typ
 #show: set text(fill: blue)
@@ -587,7 +587,7 @@ wink!
 
 #code(````typ
 #show raw: it => it.lines.at(1)
-以「代码模式」渲染Typst代码片段：```typ
+获取代码片段第二行内容：```typ
 #{
 set text(fill: true)
 }
@@ -619,7 +619,7 @@ set text(fill: true)
 ``` QwQ ```
 ````)
 
-== 「`include`」语法
+== 「`include`」语法 <grammar-include>
 
 介绍`read`，`eval(mode)`。
 

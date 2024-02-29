@@ -145,10 +145,11 @@
   #highlight[高亮一段内容]
   ````),
   ([下划线], refs.writing-markup.with(reference: <grammar-underline>), ````typ
-  #underline[ጿኈቼዽ]
+  #underline[Language]
   ````),
   ([无驱逐效果的下划线], refs.writing-markup.with(reference: <grammar-underline-evade>), ````typ
-  #underline(evade: false)[Language]
+  #underline(
+    evade: false)[ጿኈቼዽ]
   ````),
   ([上划线], refs.writing-markup.with(reference: <grammar-overline>), ````typ
   #overline[ጿኈቼዽ]
@@ -173,7 +174,7 @@
   ````),
 ))
 
-== 分类：声明 <grammar-table:decl>
+== 分类：脚本声明 <grammar-table:decl>
 
 #ref-table((
   ([进入脚本模式], refs.writing-markup.with(reference: <grammar-enter-script>), ````typ
@@ -274,11 +275,9 @@
   }
   #last-two((1, 2, 3, 4))
   ````),
-  ([`set`语法], refs.content-scope-style.with(reference: <grammar-set>), ````typ
-  ````),
 ))
 
-== 分类：语句
+== 分类：脚本语句
 
 #ref-table((
   ([`if`语句], refs.content-scope-style.with(reference: <grammar-if>), ````typ
@@ -319,9 +318,80 @@
   #let never(..args) = return
   #type(never(1, 2))
   ````),
+  ([`include`语句], refs.content-scope-style.with(reference: <grammar-include>), ````typ
+  #include "other-file.typ"
+  ````),
 ))
 
-== 分类：表达式
+== 分类：脚本样式
+
+#ref-table((
+  ([`set`语句], refs.content-scope-style.with(reference: <grammar-set>), ````typ
+  #set text(size: 24pt)
+  四斤鸭梨
+  ````),
+  ([作用域], refs.content-scope-style.with(reference: <grammar-scope>), ````typ
+  两只#[兔#set text(fill: rgb("#ffd1dc").darken(15%))
+    #[兔白#set text(fill: orange)
+    又白]，真可爱
+  ]
+  ````),
+  ([`set if`语句], refs.content-scope-style.with(reference: <grammar-set-if>), ````typ
+  #let is-dark-theme = true
+  #set rect(fill: black) if is-dark-theme
+  #set text(fill: white) if is-dark-theme
+  #rect([wink!])
+  ````),
+  ([`show set`语句], refs.content-scope-style.with(reference: <grammar-show-set>), ````typ
+  #show: set text(fill: blue)
+  wink!
+  ````),
+  ([`show`语句], refs.content-scope-style.with(reference: <grammar-show>), ````typ
+  #show raw: it => it.lines.at(1)
+  获取代码片段第二行内容：```typ
+  #{
+  set text(fill: true)
+  }
+  ```
+  ````),
+  ([文本选择器], refs.content-scope-style.with(reference: <grammar-text-selector>), ````typ
+  #show "cpp": strong(emph(box("C++")))
+  在古代，cpp是一门常用语言。
+  ````),
+  ([正则文本选择器], refs.content-scope-style.with(reference: <grammar-regex-selector>), ````typ
+  #show regex("[”。]+"): it => {
+    set text(font: "KaiTi")
+    highlight(it, fill: yellow)
+  }
+  “无名，万物之始也；有名，万物之母也。”
+  ````),
+  ([标签选择器], refs.content-scope-style.with(reference: <grammar-label-selector>), ````typ
+  #show <一整段话>: set text(fill: blue)
+  #[$lambda$语言是世界上最好的语言。] <一整段话>
+
+  另一段话。
+  ````),
+  ([选择器表达式], refs.content-scope-style.with(reference: <grammar-selector-exp>), ````typ
+  #show heading.where(level: 2): set text(fill: blue)
+  = 一级标题
+  == 二级标题
+  ````),
+  ([获取位置], refs.content-scope-style.with(reference: <grammar-locate>), ````typ
+  #locate(loc => 
+    loc.position())
+  ````),
+  ([检测当前页面是否为偶数页（位置相关计算）], refs.content-scope-style.with(reference: <grammar-locate-calc>), ````typ
+  #locate(loc => [ 页码是偶数：#calc.even(loc.page()) ])
+  ````),
+  ([查询文档内容], refs.content-scope-style.with(reference: <grammar-query>), ````typ
+  #locate(loc => query(<ref-internal-link>, loc).at(0).body)
+  ````),
+  ([声明全局状态], refs.content-scope-style.with(reference: <grammar-state>), ````typ
+  #state("my-state", 1)
+  ````),
+))
+
+== 分类：脚本表达式
 
 #ref-table((
   ([函数调用], refs.writing-markup.with(reference: <grammar-func-call>), ````typ
@@ -339,6 +409,9 @@
   ([字典成员访问], refs.content-scope-style.with(reference: <grammar-dict-member-exp>), ````typ
   #let cat = (neko-mimi: 2)
   #cat.neko-mimi
+  ````),
+  ([内容成员访问], refs.content-scope-style.with(reference: <grammar-content-member-exp>), ````typ
+  #`OvO`.text
   ````),
   ([代码表示的自省函数], refs.content-scope-style.with(reference: <grammar-repr>), ````typ
   #repr[ 一段文本 ]

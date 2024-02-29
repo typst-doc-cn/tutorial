@@ -30,14 +30,18 @@
   return (md(item.oneliner), )
 }
 
+== 分类：函数
+
 #table(
   columns: (1fr, 1fr, 2fr),
   [函数], [名称], [描述],
   ..table-items(typst-v11.funcs, featured-func)
 )
 
+== 分类：方法
+
 #table(
   columns: (1fr, 1fr, 2fr),
-  [函数], [名称], [描述],
+  [方法], [名称], [描述],
   ..table-items(typst-v11.scoped-items, featured-scope-item)
 )

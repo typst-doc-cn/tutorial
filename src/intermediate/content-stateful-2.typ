@@ -9,7 +9,7 @@
 // #locate(loc => query(heading, loc))
 // #locate(loc => query(heading.where(level: 2), loc))
 
-== 「locate」
+== 「locate」<grammar-locate>
 
 有的时候我们会需要获取当前位置的「位置」信息。
 
@@ -41,7 +41,7 @@
 当前位置的页码：#locate(location.page)
 ```)
 
-一个常见的问题是：为什么Typst提供给我的页码信息是「内容」，我无法在内容上做条件判断和计算！
+一个常见的问题是：为什么Typst提供给我的页码信息是「内容」，我无法在内容上做条件判断和计算！<grammar-locate-calc>
 
 #code(```typ
 #repr(locate(location.page)) \
@@ -53,7 +53,7 @@
 这其中的关系比较复杂。一个比较好理解的原因是：Typst会调用你的函数多次，因此你理应将所有使用「位置」信息的脚本放在一个内容块中，这样Typst才能更好地合成内容。
 
 #code(```typ
-#locate(loc       =>    [ 当前位置的页码：#loc.page() ])
+#locate(loc       =>    [ 当前位置的页码是偶数：#calc.even(loc.page()) ])
 //  根据位置信息  计算得到  我们想要的内容
 ```)
 
@@ -67,7 +67,7 @@ Pro Tips：这与Typst的缓存原理相关。由于#typst-func("locate")函数�
 
 
 
-== 「query」
+== 「query」<grammar-query>
 
 使用「#typst-func("query")」函数你可以获得当前文档状态。
 

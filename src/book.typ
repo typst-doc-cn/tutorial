@@ -31,8 +31,7 @@
     - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
     - #chapter(none)[使用参考文献]
     - #chapter("basic/reference-utils.typ")[常用函数表]
-    - #chapter("basic/reference-grammar.typ")[语法检索表]
-    - #chapter("basic/reference-example.typ")[示例检索表]
+    - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     = 进阶教程
     - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
@@ -46,7 +45,7 @@
     - #chapter("intermediate/reference-layout.typ")[布局函数]
     - #chapter(none)[表格]
     - #chapter("intermediate/reference-outline.typ")[文档大纲]
-    - #chapter("basic/reference-example.typ")[示例检索表Ⅱ]
+    - #chapter("intermediate/reference-grammar.typ")[语法示例检索表Ⅱ]
     = 专题
     - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
     - #chapter("topics/writing-math.typ")[编写一篇数学文档]
