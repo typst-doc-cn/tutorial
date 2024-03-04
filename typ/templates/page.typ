@@ -146,14 +146,14 @@
 
   // render a dash to hint headings instead of bolding it.
   show heading : set text(weight: "regular") if is-web-target
-  set par(leading: 0.65em)
   let list-indent = 0.5em
   set enum(indent: list-indent * 0.618, body-indent: list-indent)
   set list(indent: list-indent * 0.618, body-indent: list-indent)
-  set block(spacing: 0.65em * 1.2)
+  set par(leading: 0.7em)
+  set block(spacing: 0.7em * 1.5)
   show heading : it => {
     set text(size: heading-sizes.at(it.level))
-    set block(spacing: 0.65em * 1.2 * 1.2)
+    set block(spacing: 0.7em * 1.5 * 1.2)
 
     it
     if is-web-target {
