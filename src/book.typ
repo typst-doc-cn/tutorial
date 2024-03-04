@@ -17,19 +17,15 @@
     = 入门
     - #chapter("basic/writing-markup.typ")[初识标记模式]
     - #chapter("basic/writing-scripting.typ")[初识脚本模式]
-    // 2. 脚本I
-    // - 字面量、变量与函数
-    // - 作用域、内容与样式
-    = 脚本I
-    - #chapter("basic/scripting-base.typ")[基本字面量、变量和简单函数]
-    - #chapter("basic/scripting-complex.typ")[复合字面量、控制流和复杂函数]
-    - #chapter("intermediate/content-scope-and-style.typ")[作用域、内容与样式]
+    = 脚本Ⅰ
+    - #chapter("basic/scripting.typ")[字面量、变量与函数]
+    - #chapter("basic/scope-and-style.typ")[作用域、内容与样式]
     // 3. 排版I
     // - 图形
     // - 表格
     // - 布局
     // - 中文排版
-    = 排版I
+    = 排版Ⅰ
     // - #chapter("basic/reference-visualization.typ")[图形与几何元素]
     // - #chapter("intermediate/reference-table.typ")[表格]
     // - #chapter("intermediate/reference-layout.typ")[布局函数]
@@ -47,12 +43,12 @@
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
     - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
     - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
-    // 6. 脚本II
+    // 6. 脚本Ⅱ
     // - IO与数据处理
     // - 内置类型
     // - 数值计算
     // - WASM插件
-    // 7. 排版II
+    // 7. 排版Ⅱ
     // - 代码高亮
     // - 参考文献
     // - 文档大纲
@@ -67,13 +63,13 @@
     // - 状态机
     // - 电路图
     // 10. 模板
-    // 11. 参考I
+    // 11. 参考Ⅰ
     // - 基本类型
     // - 内置类型
     // - 时间
     // - 高级颜色
     // - 长度单位
-    // 12. 参考II
+    // 12. 参考Ⅱ
     // - 图形
     = 基本参考
     - #chapter("basic/reference-typebase.typ")[基本类型]
