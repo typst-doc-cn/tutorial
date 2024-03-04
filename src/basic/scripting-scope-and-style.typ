@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "内容、作用域与样式")
+#show: book.page.with(title: "内容与样式")
 
 经历了三节入门教程，我们进入进阶教程。
 

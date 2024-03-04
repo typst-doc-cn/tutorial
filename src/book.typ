@@ -18,8 +18,9 @@
     - #chapter("basic/writing-markup.typ")[初识标记模式]
     - #chapter("basic/writing-scripting.typ")[初识脚本模式]
     = 脚本Ⅰ
-    - #chapter("basic/scripting.typ")[字面量、变量与函数]
-    - #chapter("basic/scope-and-style.typ")[作用域、内容与样式]
+    - #chapter("basic/scripting-literal-and-variable.typ")[常量与变量]
+    - #chapter("basic/scripting-block-and-expression.typ")[块与表达式]
+    - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
     = 排版Ⅰ
     - #chapter("basic/scripting-length-and-layout.typ")[长度与布局]
     - #chapter("basic/scripting-shape-and-table.typ")[图形与表格]
@@ -28,12 +29,14 @@
     // - 模块
     // - 外部库
     // - 多文件文档
-    = 模块
-    - #chapter("intermediate/scripting-modules.typ")[模块、外部库与多文件文档]
+    = 模块化文档
+    - #chapter("basic/modulize-modules.typ")[模块]
+    - #chapter("basic/modulize-packages.typ")[外部库]
+    - #chapter("basic/modulize-multi-files-doc.typ")[多文件架构]
     // 5. 状态化排版
     // - 状态
     // - 计数器
-    = 状态
+    = 状态化文档
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
     - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
     - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
@@ -88,7 +91,6 @@
     - #chapter("intermediate/reference-outline.typ")[文档大纲]
     - #chapter("intermediate/reference-grammar.typ")[语法示例检索表Ⅱ]
     = 专题
-    - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
     - #chapter("topics/writing-math.typ")[编写一篇数学文档]
     // https://github.com/PgBiel/typst-oxifmt/blob/main/oxifmt.typ
     // - #chapter("topics/format-lib.typ")[制作一个格式化库]
