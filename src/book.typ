@@ -20,16 +20,10 @@
     = 脚本Ⅰ
     - #chapter("basic/scripting.typ")[字面量、变量与函数]
     - #chapter("basic/scope-and-style.typ")[作用域、内容与样式]
-    // 3. 排版I
-    // - 图形
-    // - 表格
-    // - 布局
-    // - 中文排版
     = 排版Ⅰ
-    // - #chapter("basic/reference-visualization.typ")[图形与几何元素]
-    // - #chapter("intermediate/reference-table.typ")[表格]
-    // - #chapter("intermediate/reference-layout.typ")[布局函数]
-    - #chapter("topics/writing-chinese.typ")[编写一篇中文文档]
+    - #chapter("basic/scripting-length-and-layout.typ")[长度与布局]
+    - #chapter("basic/scripting-shape-and-table.typ")[图形与表格]
+    - #chapter("basic/writing-chinese.typ")[中文排版]
     // 4. 模块
     // - 模块
     // - 外部库

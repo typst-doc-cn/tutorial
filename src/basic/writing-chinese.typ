@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "编写一篇中文文档")
+#show: book.page.with(title: "中文排版")
 
 建议结合#link("https://typst-doc-cn.github.io/docs/chinese/")[《Typst中文文档：中文用户指南》]食用。
 
