@@ -230,7 +230,7 @@
   if heading == elem.func() {
     return (
         kind: "part",
-        level: elem.level,
+        content: elem,
         title:  _store-content(elem.body),
     )
   }
