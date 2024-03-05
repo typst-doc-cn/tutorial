@@ -1,3 +1,3 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "长度与布局")
+#show: book.page.with(title: "度量与布局")

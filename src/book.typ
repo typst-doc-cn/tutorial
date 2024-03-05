@@ -22,7 +22,7 @@
     - #chapter("basic/scripting-block-and-expression.typ")[块与表达式]
     - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
     = 排版Ⅰ
-    - #chapter("basic/scripting-length-and-layout.typ")[长度与布局]
+    - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-shape-and-table.typ")[图形与表格]
     - #chapter("basic/writing-chinese.typ")[中文排版]
     // 4. 模块
