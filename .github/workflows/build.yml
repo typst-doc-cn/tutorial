@@ -1,0 +1,16 @@
+name: render and release join_ordering.pdf
+on: push
+jobs:
+  render_pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: typst-community/setup-typst@v3
+      - run: git submodule update --init --recursive
+      - run: typst compile --root . --font-path ./assets/typst-fonts/ --font-path ./assets/fonts/ ./src/ebook.typ
+      - uses: actions/upload-artifact@v4
+        id: artifact-upload-step
+        with:
+          name: ebook
+          path: src/ebook.pdf
+      - run:  echo 'Artifact URL is ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}'

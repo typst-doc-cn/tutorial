@@ -1,7 +1,11 @@
-# tutorial
+# Tutorial
 
 Typst 中文教程
 
+
+[![下载最新版本](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "下载最新版本")](https://nightly.link/typst-doc-cn/tutorial/workflows/build/main/ebook.zip)  **(latest版本)**
+
+[![下载最新版本](https://custom-icon-badges.demolab.com/badge/-Download-blue?style=for-the-badge&logo=download&logoColor=white "下载最新版本")](https://github.com/typst-doc-cn/tutorial/releases/download/v0.1.0/Typst.Tutorial.CN.v0.1.0.pdf) **(0.1.0版本)**
 ## 安装字体
 
 ```bash
