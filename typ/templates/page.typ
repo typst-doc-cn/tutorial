@@ -17,21 +17,35 @@
 #let main-color = rgb(theme-style.at("main-color"))
 #let dash-color = rgb(theme-style.at("dash-color"))
 
-#let main-font-cn = (
-  "Source Han Serif SC",
-  "Source Han Serif TC",
-)
+#let use-fandol-fonts = false
+
+#let main-font-cn = {
+  if use-fandol-fonts {
+    ("FandolSong", )
+  }
+  (
+    "Source Han Serif SC",
+    "Source Han Serif TC",
+  )
+}
 
 #let code-font-cn = (
   "Microsoft YaHei",
 )
 
-#let main-font = (
-  // "Charter",
-  // typst-book's embedded font
-  "Linux Libertine",
-  ..main-font-cn,
-)
+#let main-font = if use-fandol-fonts {
+  (
+    "New Computer Modern",
+    ..main-font-cn,
+  )
+} else {
+  (
+    // "Charter",
+    // typst-book's embedded font
+    "Linux Libertine",
+    ..main-font-cn,
+  )
+}
 
 #let code-font = (
   "BlexMono Nerd Font Mono",
@@ -89,8 +103,9 @@
 #let project(title: "Typst中文教程", authors: (), kind: "page", body) = {
   let is-ref-page = kind == "reference-page"
   let is-page = kind == "page"
+  let main-size = 10.5pt
   let heading-sizes = (
-    26pt, 22pt, 15pt, 14pt, 12pt,
+    26pt, 22pt, 14pt, 12pt, main-size,
   )
 
   // set basic document metadata
@@ -125,7 +140,7 @@
   ) if is-web-target;
 
   // set text style
-  set text(font: main-font, size: 12pt, fill: main-color, lang: "zh", region: "cn")
+  set text(font: main-font, size: main-size, fill: main-color, lang: "zh", region: "cn")
 
   let ld = state("label-disambiguator", (:))
   let update-ld(k) = ld.update(it => {
@@ -153,8 +168,13 @@
   set block(spacing: 0.7em * 1.5)
   show heading : it => {
     set text(size: heading-sizes.at(it.level))
-    set block(spacing: 0.7em * 1.5 * 1.2)
+    set block(spacing: 0.7em * 1.5 * 1.2, below: 0.7em * 1.2)
 
+    // if it.level >= 3 {
+    //   box(text(it, size: main-size, font: "Source Han Sans SC", weight: 500)) + h(0.5em)
+    // } else {
+    //   it
+    // }
     it
     if is-web-target {
       let title = plain-text(it.body).trim();
@@ -163,7 +183,7 @@
         let dest = get-ld(loc, title);
         style(styles => {
           let h = measure(it.body, styles).height;
-          place(left, dx: -20pt, dy: -h - 12pt, [
+          place(left, dx: -20pt, dy: -h - main-size, [
             #set text(fill: dash-color)
             #link(loc)[\#] #dest
           ])
@@ -207,12 +227,11 @@
 
   if title != none {
     if is-web-target {
-      heading(title)
+      [= #title]
     } else {
-      set text(size: 18pt)
+      v(0.5em)
+      align(center, [= #title])
       v(1em)
-      align(center, heading(title))
-      v(2em)
     }
   }
 
@@ -220,9 +239,9 @@
   set par(justify: true)
 
   if is-ref-page {
-    let side-space = 4 * 12pt;
-    let side-overflow = 2 * 12pt;
-    let gutter = 1 * 12pt;
+    let side-space = 4 * main-size;
+    let side-overflow = 2 * main-size;
+    let gutter = 1 * main-size;
     grid(
       columns: (side-space, 100% - side-space - gutter),
       column-gutter: gutter,

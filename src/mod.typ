@@ -180,9 +180,9 @@
 #let show-answer = false
 // #let show-answer = true
 
-#let exercise(c1, c2) = {
-  enum.item(c1 + if show-answer {
-    parbreak() + [答：] + c2
+#let exercise(question, answer) = {
+  enum.item(question + if show-answer {
+    parbreak() + [答：] + answer
   })
 }
 
