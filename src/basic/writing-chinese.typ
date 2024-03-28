@@ -29,13 +29,14 @@
 
 === 首行缩进
 
-#let fake-par = style(styles => {
-  let b = par[#box()]
-  let t = measure(b + b, styles);
+#let empty-par = par[#box()]
+#let fake-par = context empty-par + v(-measure(empty-par + empty-par).height)
 
-  b
-  v(-t.height)
-})
+#let no-indent = context h(-par.first-line-indent)
+
+#let a = {
+  1
+}
 
 === 代码片段与中文文本之间的间距
 

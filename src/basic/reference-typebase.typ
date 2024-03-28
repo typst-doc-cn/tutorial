@@ -131,7 +131,6 @@
 //   )
 // }
 
-
 // 举个例子：十进制的1324相当于十六进制的0x52C。
 
 // + 计算“C”：
@@ -244,7 +243,6 @@
 // #code(```typ
 // #"香辣牛肉粉好吃\u{2665}"
 // ```)
-
 
 // 除了使用简单字面量构造，可以使用以下方法从代码块获得字符串：
 
@@ -373,12 +371,12 @@ Typst的整数是64位宽度的有符号整数。#ref-bookmark[`type:int`]
 
 *64位宽度*整数的意思是，Typst允许你使用的整数是有限大的。正数、负数与整数均分$2^64$个数字。因此：
 - 最大的正整数是$2^63-1$。
-
+  
   #code(```typ
   #int(9223372036854775807)
   ```)
 - 最小的负整数是$-2^63$。
-
+  
   #code(```typ
   #int(-9223372036854775808)
   ```)
@@ -500,28 +498,35 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 
 下表说明了\u{0061}\u{0303}在字节表示下的合法偏移量。
 
-#let to-bytes-array(x) = range(x.len()).map(
-  i => x.at(i))
+#let to-bytes-array(x) = range(x.len()).map(i => x.at(i))
 
 #{
   set align(center)
   let i = text(red, [非法])
   table(
-  columns: (50pt, 95pt, 130pt, 80pt, ),
-  ..(
-    [数据], ..to-bytes-array(bytes("\u{0061}\u{0303}")).map(it => [0x#str(it, base: 16)]),
-    [字节], [第1个字节], [第2个字节], [第3个字节]
-  ).map(it => align(center, it)),
-  [码位], [英文字母a], [#term("tilde diacritical marks")], i,
-  [字素簇], [波浪变音的英文字母a], i, i
-)
+    columns: (50pt, 95pt, 130pt, 80pt),
+    ..(
+      [数据],
+      ..to-bytes-array(bytes("\u{0061}\u{0303}")).map(it => [0x#str(it, base: 16)]),
+      [字节],
+      [第1个字节],
+      [第2个字节],
+      [第3个字节],
+    ).map(it => align(center, it)),
+    [码位],
+    [英文字母a],
+    [#term("tilde diacritical marks")],
+    i,
+    [字素簇],
+    [波浪变音的英文字母a],
+    i,
+    i,
+  )
 }
-
 
 #pro-tip[
   关于#term("grapheme cluster")的定义，请参考#link("https://unicode.org/reports/tr29/")[《Unicode规范：文本分段》]。
 ]
-
 
 字符串的字面量由双引号包裹。你可以在字符串字面量中使用与字符串相关的转义序列。
 
@@ -588,17 +593,17 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 
 #glue-block[
   #ref-method-signature("str.to-unicode")
-
+  
   你可以使用#typst-func("str.to-unicode")#ref-bookmark[`method:to-unicode`\ `of str`]函数获得一个字符的#term("codepoint")表示：
-
+  
   #code(```typ
   #"a".to-unicode(),
   #"我".to-unicode()
   ```)
-
+  
   #pro-tip[
     显然，不是所有的“字符”都可以应用`to-unicode`方法。
-
+    
     #```typ
     #"ã".to-unicode() /* 不能编译 */
     ```
@@ -642,9 +647,9 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 
 #glue-block[
   #ref-method-signature("str.first")
-
+  
   你可以使用#typst-func("str.first")#ref-bookmark[`method:first`\ `of str`]函数获得一个字符串的第一个#term("grapheme cluster")：
-
+  
   #code(```typ
   #"Wee".first(), 
   #"我 们 俩".first(), 
@@ -725,7 +730,6 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 #repr("  A  ".trim(" ", at: end))
 ```)
 
-
 `repeat`参数为false时，#ref-bookmark[`param:repeat`\ of `str.trim`]不会重复运行`pattern`；否则会重复运行。默认`repeat`为`true`。
 
 #code(```typ
@@ -753,15 +757,15 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 
 #glue-block[
   #ref-method-signature("str.rev")
-
+  
   你可以使用#typst-func("str.rev")#ref-bookmark[`method:rev`\ `of str`]函数将一个字符串逆转：
-
+  
   #code(```typ
   #"abcdedfg".rev()
   ```)
-
+  
   逆转时Typst会为你考虑#term("grapheme cluster")。
-
+  
   #code(```typ
   #"ãb".rev()
   ```)

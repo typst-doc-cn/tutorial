@@ -441,6 +441,7 @@ impl typst_ts_compiler::world::CompilerFeat for WasmCompilerFeat {
 type WorldRepr = typst_ts_compiler::world::CompilerWorld<WasmCompilerFeat>;
 
 /// The compiler world in wasm environment.
+#[allow(unused)]
 pub struct TypstWasmWorld(WorldRepr);
 
 impl Default for TypstWasmWorld {

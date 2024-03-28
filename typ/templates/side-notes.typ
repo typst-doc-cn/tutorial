@@ -10,9 +10,20 @@
   //   it.insert(p, arr)
   //   it
   // })
-  box(width: 0pt, box(width: attr.width, place(left, dy: dy, dx: attr.left - loc.position().x, {
-    set text(size: 10.5pt)
-    content
-  })))
+  box(
+    width: 0pt,
+    box(
+      width: attr.width,
+      place(
+        left,
+        dy: dy,
+        dx: attr.left - loc.position().x,
+        {
+          set text(size: 10.5pt)
+          content
+        },
+      ),
+    ),
+  )
 })
 

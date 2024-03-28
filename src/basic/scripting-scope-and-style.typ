@@ -54,7 +54,11 @@
   } else if it.has("text") {
     it.text
   } else if it.func() == smartquote {
-    if it.double { "\"" } else { "'" }
+    if it.double {
+      "\""
+    } else {
+      "'"
+    }
   } else {
     " "
   }
@@ -66,7 +70,7 @@
 
 以下是该函数的表现：
 
-#code(```typ
+#code.with(scope: code-scope)(```typ
 #let show-me-the(it) = {
   repr(plain-text(it))
   [ 的字数统计为 ]
@@ -79,7 +83,7 @@
   - 列表项1
   - 列表项2
 ])
-```, scope: code-scope)
+```)
 
 == 内容类型的特性 <content-type-feature>
 
@@ -91,9 +95,9 @@
 // 用语法构造标题
 #repr([= 123]) \
 // 用函数构造标题
-#repr(heading(level: 1)[123])
+#repr(heading(depth: 1)[123])
 // 展示
-#heading(level: 1)[123]
+#heading(depth: 1)[123]
 ```)
 
 例如列表：
@@ -175,14 +179,14 @@ Typst中一切皆组合，它将所有内容打包成「内容类型」的值以
 `fields()`将部分信息组成字典并返回。如上图所示，我们可以通过这个字典对象进一步访问标题的内容和级别。
 
 #code(```typ
-标题有`level`：#("level" in ([= 123]).fields()) \
-标题的`level`是：#([= 123]).fields().at("level") \
+标题有`depth`：#("depth" in ([= 123]).fields()) \
+标题的`depth`是：#([= 123]).fields().at("depth") \
 ```)
 
 #pro-tip[
   这里的“部分信息”描述稍显模糊。具体来说，Typst只允许你直接访问内容中不受样式影响的信息，至少包含语法属性。如下：
-
-  #code(al: top, ````typ
+  
+  #code.with(al: top)(````typ
   #let x = [= 123]
   #rect([#x <the-heading>])
   #x.fields() \
@@ -360,7 +364,7 @@ Typst对代码块有着的一系列语法设计，让代码块非常适合描述
 
 「内容」是一棵树。一个`main.typ`就是「内容」的一再嵌套。
 
-#code(al: top, ```typ
+#code.with(al: top)(```typ
 #let main-typ() = {
   [= 生活在Content树上]
   {
@@ -475,7 +479,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 
 使用混合语言，在Typst中可以很优雅地画多面体：
 
-#code(al: top, ```typ
+#code.with(al: top)(```typ
 #import "@preview/cetz:0.2.0"
 #align(center, cetz.canvas({
   // 导入cetz的draw方言
@@ -500,7 +504,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 
 通过代码块语法，你可以在Typst中拼接字节，依像素地创建一张PNG格式的图片：
 
-#code(al: top, ```typ
+#code.with(al: top)(```typ
 // Origin: https://typst.app/project/r0SkRmsZYIYNxjs6Q712aP
 #import "png.typ": *
 #let prelude = (0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)
@@ -656,12 +660,12 @@ set text(fill: true)
 
 思考题：为什么在`show`规则影响下，`plain-text`和`word-count`分别输出对应内容？
 
-#code(```typ
+#code.with(scope: code-scope)(```typ
 #let show-me-the(it) = {
   repr(plain-text(it))
   [ 的字数统计为 ]
   repr(word-count(it))
 }
 #show-me-the([#show: it => {"123"; it}; 一段文本]) \
-```, scope: code-scope)
+```)
 

@@ -8,7 +8,11 @@
 #let is-web-target = is-web-target()
 
 // todo: move theme style parser to another lib file
-#let theme-target = if target.contains("-") { target.split("-").at(1) } else { "light" }
+#let theme-target = if target.contains("-") {
+  target.split("-").at(1)
+} else {
+  "light"
+}
 #let theme-style = toml("theme-style.toml").at(theme-target)
 
 #let is-dark-theme = theme-style.at("color-scheme") == "dark"
@@ -21,23 +25,15 @@
 
 #let main-font-cn = {
   if use-fandol-fonts {
-    ("FandolSong", )
+    ("FandolSong",)
   }
-  (
-    "Source Han Serif SC",
-    "Source Han Serif TC",
-  )
+  ("Source Han Serif SC", "Source Han Serif TC")
 }
 
-#let code-font-cn = (
-  "Microsoft YaHei",
-)
+#let code-font-cn = ("Microsoft YaHei",)
 
 #let main-font = if use-fandol-fonts {
-  (
-    "New Computer Modern",
-    ..main-font-cn,
-  )
+  ("New Computer Modern", ..main-font-cn)
 } else {
   (
     // "Charter",
@@ -59,31 +55,25 @@
 
 #let code-extra-colors = if code-theme-file.len() > 0 {
   let data = xml(theme-style.at("code-theme")).first()
-
+  
   let find-child(elem, tag) = {
     elem.children.find(e => "tag" in e and e.tag == tag)
   }
-
+  
   let find-kv(elem, key, tag) = {
     let idx = elem.children.position(e => "tag" in e and e.tag == "key" and e.children.first() == key)
     elem.children.slice(idx).find(e => "tag" in e and e.tag == tag)
   }
-
+  
   let plist-dict = find-child(data, "dict")
   let plist-array = find-child(plist-dict, "array")
   let theme-setting = find-child(plist-array, "dict")
   let theme-setting-items = find-kv(theme-setting, "settings", "dict")
   let background-setting = find-kv(theme-setting-items, "background", "string")
   let foreground-setting = find-kv(theme-setting-items, "foreground", "string")
-  (
-    bg: rgb(background-setting.children.first()),
-    fg: rgb(foreground-setting.children.first()),
-  )
+  (bg: rgb(background-setting.children.first()), fg: rgb(foreground-setting.children.first()))
 } else {
-  (
-    bg: rgb(239, 241, 243),
-    fg: none,
-  )
+  (bg: rgb(239, 241, 243), fg: none)
 }
 
 #let make-unique-label(it, disambiguator: 1) = label({
@@ -104,24 +94,27 @@
   let is-ref-page = kind == "reference-page"
   let is-page = kind == "page"
   let main-size = 10.5pt
-  let heading-sizes = (
-    26pt, 22pt, 14pt, 12pt, main-size,
-  )
-
+  let heading-sizes = (26pt, 22pt, 14pt, 12pt, main-size)
+  
   // set basic document metadata
-  set document(author: authors, title: title) if not is-pdf-target
-
+  set document(
+    author: authors,
+    title: title,
+  ) if not is-pdf-target
+  
   // set web/pdf page properties
-  set page(numbering: if is-pdf-target {
-    "1"
-  })
-
+  set page(
+    numbering: if is-pdf-target {
+      "1"
+    },
+  )
+  
   // set web/pdf page properties
   set page(
     number-align: center,
     width: page-width,
   )
-
+  
   // remove margins for web target
   set page(
     margin: (
@@ -135,20 +128,25 @@
       // remove rest margins.
       rest: 0pt,
     ),
-    // for a website, we don't need pagination.
     height: auto,
-  ) if is-web-target;
-
+  ) if is-web-target
+  
   // set text style
-  set text(font: main-font, size: main-size, fill: main-color, lang: "zh", region: "cn")
-
+  set text(
+    font: main-font,
+    size: main-size,
+    fill: main-color,
+    lang: "zh",
+    region: "cn",
+  )
+  
   let ld = state("label-disambiguator", (:))
   let update-ld(k) = ld.update(it => {
-    it.insert(k, it.at(k, default: 0) + 1);
+    it.insert(k, it.at(k, default: 0) + 1)
     it
   })
   let get-ld(loc, k) = make-unique-label(k, disambiguator: ld.at(loc).at(k))
-
+  
   // show regex("[A-Za-z]+"): set text(font: main-font-en)
   let cjk-markers = regex("[“”‘’．，。、？！：；（）｛｝［］〔〕〖〗《》〈〉「」【】『』─—＿·…\u{30FC}]+")
   show cjk-markers: set text(font: main-font-cn)
@@ -158,18 +156,27 @@
   }
   // show regex("[a-zA-Z\s\#\[\]]+"): set text(baseline: -0.05em)
   // show regex("[“”]+"): set text(font: main-font-cn)
-
+  
   // render a dash to hint headings instead of bolding it.
-  show heading : set text(weight: "regular") if is-web-target
+  show heading: set text(weight: "regular") if is-web-target
   let list-indent = 0.5em
-  set enum(indent: list-indent * 0.618, body-indent: list-indent)
-  set list(indent: list-indent * 0.618, body-indent: list-indent)
+  set enum(
+    indent: list-indent * 0.618,
+    body-indent: list-indent,
+  )
+  set list(
+    indent: list-indent * 0.618,
+    body-indent: list-indent,
+  )
   set par(leading: 0.7em)
   set block(spacing: 0.7em * 1.5)
-  show heading : it => {
+  show heading: it => {
     set text(size: heading-sizes.at(it.level))
-    set block(spacing: 0.7em * 1.5 * 1.2, below: 0.7em * 1.2)
-
+    set block(
+      spacing: 0.7em * 1.5 * 1.2,
+      below: 0.7em * 1.2,
+    )
+    
     // if it.level >= 3 {
     //   box(text(it, size: main-size, font: "Source Han Sans SC", weight: 500)) + h(0.5em)
     // } else {
@@ -177,27 +184,32 @@
     // }
     it
     if is-web-target {
-      let title = plain-text(it.body).trim();
+      let title = plain-text(it.body).trim()
       update-ld(title)
       locate(loc => {
-        let dest = get-ld(loc, title);
+        let dest = get-ld(loc, title)
         style(styles => {
-          let h = measure(it.body, styles).height;
-          place(left, dx: -20pt, dy: -h - main-size, [
-            #set text(fill: dash-color)
-            #link(loc)[\#] #dest
-          ])
+          let h = measure(it.body, styles).height
+          place(
+            left,
+            dx: -20pt,
+            dy: -h - main-size,
+            [
+              #set text(fill: dash-color)
+              #link(loc)[\#] #dest
+            ],
+          )
         })
-      });
+      })
     }
   }
-
+  
   // link setting
-  show link : set text(fill: dash-color)
-
+  show link: set text(fill: dash-color)
+  
   // math setting
   show math.equation: set text(weight: 400)
-
+  
   // code block setting
   show raw: it => {
     if "block" in it.fields() and it.block {
@@ -214,17 +226,20 @@
         ],
       )
     } else {
-      set text(font: code-font, baseline: -0.08em)
+      set text(
+        font: code-font,
+        baseline: -0.08em,
+      )
       it
     }
   }
-
+  
   
   show <typst-raw-func>: it => {
     it.lines.at(0).body.children.slice(0, -2).join()
   }
-
-
+  
+  
   if title != none {
     if is-web-target {
       [= #title]
@@ -234,14 +249,14 @@
       v(1em)
     }
   }
-
+  
   // Main body.
   set par(justify: true)
-
+  
   if is-ref-page {
-    let side-space = 4 * main-size;
-    let side-overflow = 2 * main-size;
-    let gutter = 1 * main-size;
+    let side-space = 4 * main-size
+    let side-overflow = 2 * main-size
+    let gutter = 1 * main-size
     grid(
       columns: (side-space, 100% - side-space - gutter),
       column-gutter: gutter,
@@ -255,10 +270,10 @@
             it.insert("width", side-space + side-overflow)
             it.insert("gutter", gutter)
             it
-          }))
-        )
+          })),
+        ),
       ),
-      body
+      body,
     )
   } else if is-page {
     locate(loc => side-attrs.update(it => {

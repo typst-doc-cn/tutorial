@@ -7,7 +7,7 @@
 #import "/typ/typst-meta/docs.typ": typst-v11
 
 #let refs = {
-  let cl = book.cross-link;
+  let cl = book.cross-link
   (
     writing-markup: cl.with("/basic/writing-markup.typ"),
     writing-scripting: cl.with("/basic/writing-scripting.typ"),
@@ -105,17 +105,20 @@
 )
 
 #let exec-code(cc, res: none, scope: (:), eval: eval) = {
-
-  rect(width: 100%, inset: 10pt, {
-    // Don't corrupt normal headings
-    set heading(outlined: false)
-
-    if res != none {
-      res
-    } else {
-      eval(cc.text, mode: "markup", scope: scope)
-    }
-  })
+  rect(
+    width: 100%,
+    inset: 10pt,
+    {
+      // Don't corrupt normal headings
+      set heading(outlined: false)
+      
+      if res != none {
+        res
+      } else {
+        eval(cc.text, mode: "markup", scope: scope)
+      }
+    },
+  )
 }
 
 // al: alignment
@@ -125,26 +128,28 @@
   } else {
     code-as
   }
-
+  
   let vv = exec-code(cc, res: res, scope: scope, eval: eval)
   if al == left {
     layout(lw => style(styles => {
       let width = lw.width * 0.5 - 0.5em
       let u = box(width: width, code-as)
       let v = box(width: width, vv)
-
-      let u-box = measure(u, styles);
-      let v-box = measure(v, styles);
-
+      
+      let u-box = measure(u, styles)
+      let v-box = measure(v, styles)
+      
       let height = calc.max(u-box.height, v-box.height)
       stack(
         dir: ltr,
         {
           set rect(height: height)
           u
-        }, 1em, {
+        },
+        1em,
+        {
           rect(height: height, width: width, inset: 10pt, vv.body)
-        }
+        },
       )
     }))
   } else {
@@ -157,22 +162,37 @@
 #let pro-tip(content) = locate(loc => {
   let attr = side-attrs.at(loc)
   let ext = attr.width + attr.gutter
-  move(dx: -ext, block(
-    width: 100% + ext,
-    breakable: false,
-    inset: (x: 0.65em, y: 0.65em, left: 0.65em * 0.6),
-    radius: 4pt,
-    fill: rgb("#0074d920"), {
-    set text(fill: fg-blue)
-    stack(
-      dir: ltr,
-      move(dy: 0.1em, image("/assets/files/info-icon.svg", width: 1em)),
-      0.2em,
-      box(width: 100% - 1.2em, v(0.2em) + content)
-    )
-  }))
+  move(
+    dx: -ext,
+    block(
+      width: 100% + ext,
+      breakable: false,
+      inset: (x: 0.65em, y: 0.65em, left: 0.65em * 0.6),
+      radius: 4pt,
+      fill: rgb("#0074d920"),
+      {
+        set text(fill: fg-blue)
+        stack(
+          dir: ltr,
+          move(dy: 0.1em, image("/assets/files/info-icon.svg", width: 1em)),
+          0.2em,
+          box(width: 100% - 1.2em, v(0.2em) + content),
+        )
+      },
+    ),
+  )
 })
 
+/// This function is to render a text string in monospace style and function 
+/// color in your defining themes.
+///
+/// ## Examples
+///
+/// ```typc
+/// typst-func("list.item")
+/// ```
+///
+/// Note: it doesn't check whether input is a valid function identifier or path.
 #let typst-func(it) = [
   #raw(it + "()", lang: "typc") <typst-raw-func>
 ]
@@ -187,11 +207,16 @@
 }
 
 #let term(term, postfix: none, en: none) = _term(term-list, term, en: en, postfix: postfix)
-#let mark(mark, postfix: none) = _term(mark-list, mark, en: if mark == "hyphen" {
-  raw("-")
-} else {
-  raw(mark)
-}, postfix: postfix)
+#let mark(mark, postfix: none) = _term(
+  mark-list,
+  mark,
+  en: if mark == "hyphen" {
+    raw("-")
+  } else {
+    raw(mark)
+  },
+  postfix: postfix,
+)
 
 #let ref-bookmark = side-note
 
@@ -220,12 +245,9 @@
   "array": refs.ref-typebase,
   "dict": refs.ref-typebase,
   "none": refs.ref-typebase,
-
   "ratio": refs.ref-length,
   "alignment": refs.ref-layout,
-
   "version": refs.ref-type-builtin,
-  
   "any": refs.ref-type-builtin,
   "bytes": refs.ref-type-builtin,
   "label": refs.ref-type-builtin,
@@ -237,11 +259,7 @@
   h(3pt)
   ref-ty-locs.at(ty)(
     reference: label("reference-type-" + ty),
-    box(
-      fill: darkify(rgb("eff0f3")),
-      outset: 2pt, radius: 2pt,
-      raw(ty),
-    ),
+    box(fill: darkify(rgb("eff0f3")), outset: 2pt, radius: 2pt, raw(ty)),
   )
   h(3pt)
 }
@@ -255,31 +273,40 @@
   } else {
     typst-v11.funcs.at(name)
   }
-
+  
   locate(loc => {
     let attr = side-attrs.at(loc)
     let ext = attr.width + attr.gutter
-  
-    move(dx: -ext, block(fill: rgb("#add5a220"), radius: 2pt, width: 100% + ext, inset: (x: 1pt, y: 5pt), {
-      set par(justify: false)
-      set text(fill: main-color.mix(rgb("eff0f3").negate()))
-      highlighter("fn", "keyword")
-      raw(" ")
-      highlighter(name, "method")
-      raw("(")
-      fn.params.map(param => {
-        highlighter(param.name, "var")
-        ": "
-        param.types.map(show-type).join()
-      }).join(raw(", "))
-      raw(")")
-      if fn.returns.len() > 0 {
-        raw(" ")
-        box(raw("->"))
-        raw(" ")
-        fn.returns.map(show-type).join()
-      }
-    }))
+    
+    move(
+      dx: -ext,
+      block(
+        fill: rgb("#add5a220"),
+        radius: 2pt,
+        width: 100% + ext,
+        inset: (x: 1pt, y: 5pt),
+        {
+          set par(justify: false)
+          set text(fill: main-color.mix(rgb("eff0f3").negate()))
+          highlighter("fn", "keyword")
+          raw(" ")
+          highlighter(name, "method")
+          raw("(")
+          fn.params.map(param => {
+            highlighter(param.name, "var")
+            ": "
+            param.types.map(show-type).join()
+          }).join(raw(", "))
+          raw(")")
+          if fn.returns.len() > 0 {
+            raw(" ")
+            box(raw("->"))
+            raw(" ")
+            fn.returns.map(show-type).join()
+          }
+        },
+      ),
+    )
   })
 }
 #let ref-func-signature = ref-signature.with(kind: "func")

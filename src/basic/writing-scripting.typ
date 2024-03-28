@@ -86,15 +86,15 @@ Typst总是倾向于更快地退出脚本模式。
 
 #pro-tip[
   具体来说，你几乎可以认为解释器至多解释到一个完整的表达式就会退出「脚本模式」。当然Typst也会在一些情况下特判：
-
+  
   #code(```typ
   #let a = 1; #let b = 2;
   #(a, b) = (4, 5)
   #a, #b
   ```)
-
+  
   按照前面的想法，`(a, b)`已经是一个完整的数组表达式了，应当结束「脚本模式」，但是Typst还会继续检查是否为解构赋值。
-
+  
   个人认为这种属于边缘情况，并且你应该使用括号避免歧义```typ #((a, b) = (4, 5))```。
 ]
 
@@ -108,7 +108,7 @@ Typst总是倾向于更快地退出脚本模式。
 
 #pro-tip[
   唯一的影响是你需要在内容块内部转义右中括号。
-
+  
   #code(```typ
   #[x\]y]
   ```)
@@ -120,11 +120,11 @@ Typst总是倾向于更快地退出脚本模式。
   能否直接像使用「星号」那样，让#term("markup mode")直接将中括号包裹的一段作为内容块的内容？
   
   这是可以的，但是存在一些问题。例如，人们也常常在正文中使用中括号等标记：
-
+  
   #code(```typ
   区间[1, ∞)上几乎所有有理数都可以表示为$x^x$，其中$x$是无理数。
   ```)
-
+  
   如此，「标记模式」下默认将中括号解析为普通文本看起来更为合理。
 ]
 
@@ -206,10 +206,10 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 #pro-tip[
   函数调用可以后接不止一个内容参数。例如下面的例子后接了两个内容参数：
-
+  
   #code(```typ
   #let exercise(question, answer) = strong(question) + parbreak() + answer
-
+    
   #exercise[
     Question: _turing complete_？
   ][
@@ -246,10 +246,10 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 #{
   set text(font: "Source Han Serif SC")
   code(```typ
-平地翻滚：#underline[ጿኈቼዽጿኈቼዽ] \
-施展轻功：#overline[ጿኈቼዽጿኈቼዽ] \
-泥地打滚：#strike[ጿኈቼዽጿኈቼዽ] \
-```)
+  平地翻滚：#underline[ጿኈቼዽጿኈቼዽ] \
+  施展轻功：#overline[ጿኈቼዽጿኈቼዽ] \
+  泥地打滚：#strike[ጿኈቼዽጿኈቼዽ] \
+  ```)
 }
 
 值得注意地是，被划线内容需要保持相同字体才能保证线段同时处于同一水平高度。
@@ -341,21 +341,43 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 其中`pt`是点单位。中文排版中常见的#link("https://ccjktype.fonts.adobe.com/2009/04/post_1.html")[号单位]与点单位有直接换算关系：
 
-#let owo = ([初号], [小初], [一号], [二号], [小二], [三号], [小三], [四号], [小四], [五号], [小五], [六号], [小六], [七号], [八号],)
-#let owo2 = ([42], [36], [26], [22], [18], [16], [15], [14], [12], [10.5], [9], [7.5], [6.5], [5.5], [5],)
-#let owo3 = ([42], [–], [27.5], [21], [–], [16], [–], [13.75], [–], [10.5], [–], [8], [–], [5.25], [4],)
+#let owo = (
+  [初号],
+  [小初],
+  [一号],
+  [二号],
+  [小二],
+  [三号],
+  [小三],
+  [四号],
+  [小四],
+  [五号],
+  [小五],
+  [六号],
+  [小六],
+  [七号],
+  [八号],
+)
+#let owo2 = ([42], [36], [26], [22], [18], [16], [15], [14], [12], [10.5], [9], [7.5], [6.5], [5.5], [5])
+#let owo3 = ([42], [–], [27.5], [21], [–], [16], [–], [13.75], [–], [10.5], [–], [8], [–], [5.25], [4])
 #{
   set align(center)
   table(
     columns: 9,
-
-    [字号], ..owo.slice(0, 8),
-    [中国（单位：点）], ..owo2.slice(0, 8),
-    [日本（单位：点）], ..owo3.slice(0, 8),
-
-    [字号], ..owo.slice(8), [],
-    [中国（单位：点）], ..owo2.slice(8),[],
-    [日本（单位：点）], ..owo3.slice(8),
+    [字号],
+    ..owo.slice(0, 8),
+    [中国（单位：点）],
+    ..owo2.slice(0, 8),
+    [日本（单位：点）],
+    ..owo3.slice(0, 8),
+    [字号],
+    ..owo.slice(8),
+    [],
+    [中国（单位：点）],
+    ..owo2.slice(8),
+    [],
+    [日本（单位：点）],
+    ..owo3.slice(8),
   )
 }
 
@@ -447,8 +469,8 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
   show image: set align(center)
   set image(width: 40%)
   code(```typ
-#image("/assets/files/香風とうふ店.jpg")
-```)
+  #image("/assets/files/香風とうふ店.jpg")
+  ```)
 }
 
 #typst-func("image")有一个很有用的`width`参数，用于限制图片的宽度：
@@ -456,8 +478,8 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 #{
   show image: set align(center)
   code(```typ
-#image("/assets/files/香風とうふ店.jpg", width: 100pt)
-```)
+  #image("/assets/files/香風とうふ店.jpg", width: 100pt)
+  ```)
 }
 
 你还可以相对于父元素设置宽度，例如设置为父元素宽度的`50%`：
@@ -465,8 +487,8 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 #{
   show image: set align(center)
   code(```typ
-#image("/assets/files/香風とうふ店.jpg", width: 50%)
-```)
+  #image("/assets/files/香風とうふ店.jpg", width: 50%)
+  ```)
 }
 
 同理，你也可以用`height`参数限制图片的高度。
@@ -474,8 +496,8 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 #{
   show image: set align(center)
   code(```typ
-#image("/assets/files/香風とうふ店.jpg", height: 100pt)
-```)
+  #image("/assets/files/香風とうふ店.jpg", height: 100pt)
+  ```)
 }
 
 当同时设置了图片的宽度和高度时，图片默认会被裁剪：
@@ -483,8 +505,8 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 #{
   show image: set align(center)
   code(```typ
-#image("/assets/files/香風とうふ店.jpg", width: 100pt, height: 100pt)
-```)
+  #image("/assets/files/香風とうふ店.jpg", width: 100pt, height: 100pt)
+  ```)
 }
 
 如果想要拉伸图片而非裁剪图片，可以同时使用`fit`参数：<grammar-image-stretch>
@@ -492,8 +514,8 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 #{
   show image: set align(center)
   code(```typ
-#image("/assets/files/香風とうふ店.jpg", width: 100pt, height: 100pt, fit: "stretch")
-```)
+  #image("/assets/files/香風とうふ店.jpg", width: 100pt, height: 100pt, fit: "stretch")
+  ```)
 }
 
 “stretch”在英文中是拉伸的意思。
@@ -506,8 +528,8 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
   show image: set align(center)
   set image(width: 40%)
   code(```typ
-#figure(image("/assets/files/香風とうふ店.jpg"), caption: [上世纪90年代，香風とうふ店送外卖的宝贵影像])
-```)
+  #figure(image("/assets/files/香風とうふ店.jpg"), caption: [上世纪90年代，香風とうふ店送外卖的宝贵影像])
+  ```)
 }
 
 #typst-func("figure")不仅仅可以接受#typst-func("image")作为内容，而是可以接受任意内容：
@@ -515,10 +537,10 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 #{
   show raw: set align(left)
   code(````typ
-#figure(```typ 
-#image("/assets/files/香風とうふ店.jpg")
-```, caption: [用于加载香風とうふ店送外卖的宝贵影像的代码])
-````)
+  #figure(```typ 
+  #image("/assets/files/香風とうふ店.jpg")
+  ```, caption: [用于加载香風とうふ店送外卖的宝贵影像的代码])
+  ````)
 }
 
 // == 标签与引用
@@ -576,15 +598,15 @@ https://zh.wikipedia.org
 
 #pro-tip[
   在脚本模式中，标签无法附加到之前的内容。
-
+  
   #code(```typ
   #show <awa>: set text(fill: red)
   #{[a]; [<awa>]}
   #[b] <awa>
   ```)
-
+  
   对比上例，具体来说，标签附加到它的#term("syntactic predecessor")。
-
+  
   这不是问题，但是易用性有可能在将来得到改善。
 ]
 
@@ -657,7 +679,7 @@ $
 一般来说，使用他人的模板需要做两件事：
 + 将`latex-look.typ`放在你的文档文件夹中。
 + 使用以下两行代码应用模板样式：
-
+  
   ```typ
   #import "latex-look.typ": latex-look
   #show: latex-look
