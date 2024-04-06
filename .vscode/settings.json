@@ -6,5 +6,8 @@
   ],
   "tinymist.exportPdf": "onSave",
   "tinymist.outputPath": "$root/target/$dir/$name",
-  "tinymist.formatterMode": "typstyle"
+  "tinymist.formatterMode": "typstyle",
+  "[typst]": {
+    "editor.inlayHints.enabled": "off"
+  }
 }
