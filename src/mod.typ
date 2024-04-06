@@ -86,6 +86,7 @@
   "utf-8 encoding": "UTF-8编码",
   "value": "值",
   "variable identifier": "变量名标识符",
+  "whitespace": "空白字符",
 )
 
 #let mark-list = (
@@ -111,7 +112,7 @@
     {
       // Don't corrupt normal headings
       set heading(outlined: false)
-      
+
       if res != none {
         res
       } else {
@@ -128,17 +129,17 @@
   } else {
     code-as
   }
-  
+
   let vv = exec-code(cc, res: res, scope: scope, eval: eval)
   if al == left {
     layout(lw => style(styles => {
       let width = lw.width * 0.5 - 0.5em
       let u = box(width: width, code-as)
       let v = box(width: width, vv)
-      
+
       let u-box = measure(u, styles)
       let v-box = measure(v, styles)
-      
+
       let height = calc.max(u-box.height, v-box.height)
       stack(
         dir: ltr,
@@ -183,7 +184,7 @@
   )
 })
 
-/// This function is to render a text string in monospace style and function 
+/// This function is to render a text string in monospace style and function
 /// color in your defining themes.
 ///
 /// ## Examples
@@ -273,11 +274,11 @@
   } else {
     typst-v11.funcs.at(name)
   }
-  
+
   locate(loc => {
     let attr = side-attrs.at(loc)
     let ext = attr.width + attr.gutter
-    
+
     move(
       dx: -ext,
       block(

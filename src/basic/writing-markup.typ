@@ -36,19 +36,19 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
       作别西天的云彩。
 ```)
 
-注意：在Typst的中文排版中，另起一行会引入一个小的空格。该问题会在未来修复。
+注意：如下图的蓝框高亮所示，另起一行会引入一个小的空格。该问题会在未来修复。
 
 #code(
   ```typ
   轻轻的我走了，#box(fill: blue, outset: (right: 0.2em), sym.space)
   正如我轻轻的来；
-  
+
   轻轻的我走了，正如我轻轻的来；
   ```,
   code-as: ```typ
   轻轻的我走了，
   正如我轻轻的来；
-  
+
   轻轻的我走了，正如我轻轻的来；
   ```,
 )
@@ -72,12 +72,12 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
 #pro-tip[
   使用show规则可以改变“标题会强制划分新的段落”这个默认规则。
-  
+
   #code(```typ
   #show heading.where(level: 3): box
   = 一级标题
   我走了。
-  
+
   === 三级标题
   我走了又来了。
   ```)
@@ -89,9 +89,9 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
 #pro-tip[
   与HTML一样，Typst总是希望语义先行。所谓语义先行，就是在编写文档时总是首先考虑标记语义。所有样式都是附加到语义上的。
-  
+
   例如在英文排版中，#typst-func("strong")的样式是加粗，#typst-func("emph")的样式是倾斜。你完全可以在中文排版中为它们更换样式。
-  
+
   #code(```typ
   #show strong: content => {
     show regex("\p{Hani}"): it => box(place(text("·", size: 1.3em), dx: 0.3em, dy: 0.5em) + it)
@@ -101,7 +101,7 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
   ```)
 ]
 
-与许多标记语言相同，Typst中使用一系列#term("delimiter")规则确定一段语义的开始和结束。为赋予语义，需要将一个#term("delimiter")置于文本之前，表示某语义的开始；同时将另一个#term("delimiter")置于文本末尾，表示该语义的结束。
+与许多标记语言相同，Typst中使用一系列#term("delimiter")规则确定一段语义的开始和结束。为赋予语义，需要将一个#term("delimiter")置于文本*之前*，表示某语义的开始；同时将另一个#term("delimiter")置于文本*之后*，表示该语义的结束。
 
 例如，#mark("*")作为定界符赋予所包裹的一段文本以#term("strong semantics", postfix: "。") <grammar-strong>
 
@@ -125,7 +125,7 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
 == （计算机）代码片段 <grammar-raw>
 
-Typst的#term("raw block")标记语法与Markdown完全相同。如果你使用过Markdown，那么你应该对以下#term("raw block")的标记方式非常熟悉。
+Typst的#term("raw block")标记语法与Markdown完全相同。
 
 配对的#mark("`")包裹一段内容，表示内容为#term("raw block", postfix: "。")
 
@@ -141,7 +141,7 @@ Typst的#term("raw block")标记语法与Markdown完全相同。如果你使用�
 使用四个反引号包裹：```` ``` ````
 `````)
 
-对于长代码片段，你还可以在起始定界符后*紧接着*指定该代码的语言类别，以便Typst根据语言进行语法高亮。<grammar-lang-raw>
+对于长代码片段，你还可以在起始定界符后*紧接着*指定该代码的语言类别，以便Typst据此完成语法高亮。<grammar-lang-raw>
 
 #code(`````typ
 一段有高亮的代码片段：```javascript function uninstallLaTeX {}```
@@ -150,7 +150,7 @@ Typst的#term("raw block")标记语法与Markdown完全相同。如果你使用�
 `````)
 
 除了定界符的长短，代码片段还有是否成块的区分。如果代码片段符合以下两点，那么它就是一个#term("blocky raw block", postfix: "：") <grammar-blocky-raw>
-+ 是长代码片段，即使用*至少连续*三个#mark("`")。
++ 使用*至少连续*三个#mark("`")，即其需为长代码片段。
 + 内容包含至少一个#term("line break", postfix: "。")
 
 #code(`````typ
@@ -168,15 +168,21 @@ function fibnacci(n) {
 
 == 列表
 
-Typst的列表语法与Markdown非常类似，但不完全相同。如果你使用过Markdown，那么你将可以很快上手。
+Typst的列表语法与Markdown非常类似，但*不完全相同*。
 
-你可以使用一个#mark("-")开启一个无编号列表项： <grammar-enum>
+一行以#mark("-")开头即开启一个无编号列表项： <grammar-enum>
 
 #code(```typ
 - 一级列表项1
 ```)
 
-你使用缩进调整列表项等级：
+与之相对，#mark("+")开启一个有编号列表项。 <grammar-list>
+
+#code(```typ
++ 一级列表项1
+```)
+
+利用缩进控制列表项等级：
 
 #code(```typ
 - 一级列表项1
@@ -185,12 +191,6 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
   - 二级列表项1.2
 - 一级列表项2
   - 二级列表项2.1
-```)
-
-与之相对，#mark("+")开启一个有编号列表项。 <grammar-list>
-
-#code(```typ
-+ 一级列表项1
 ```)
 
 有编号列表项可以与无编号列表项相混合。<grammar-mix-list-emum>
@@ -204,29 +204,33 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
   - 二级列表项2.1
 ```)
 
-和Markdown相同，Typst同样允许使用`1.`开启一个有编号列表项，并且可以从指定编号开始。<grammar-continue-list>
+和Markdown相同，Typst同样允许使用显式的编号`1.`开启列表。这方便对列表继续编号。<grammar-continue-list>
 
 #code(```typ
 1. 列表项1
 1. 列表项2
-1. 列表项3
 ```)
 
 #code(```typ
-4. 列表项4
+1. 列表项1
++  列表项2
+
+列表间插入一段描述。
+
+3. 列表项3
++  列表项4
 +  列表项5
-+  列表项6
 ```)
 
 == 转义序列 <grammar-escape-sequences>
 
-你有时希望直接展示标记符号本身的真实内容。例如，你可能希望在段落中直接展示一个#mark("_", postfix: "。")这时你需要使用#term("escape sequences", postfix: "：")
+你有时希望直接展示标记符号本身。例如，你可能想直接展示一个#mark("_", postfix: "，")而非使用强调语义。这时你需要利用#term("escape sequences")语法：
 
 #code(````typ
 在段落中直接使用下划线 >\_<！
 ````)
 
-遵从了大部分语言的习惯，Typst使用#mark("\\")转义特殊标记。下表给出了部分可以转义的字符：
+遵从许多编程语言的习惯，Typst使用#mark("\\")转义特殊标记。下表给出了部分可以转义的字符：
 
 #let escaped-sequences = (
   (`\\`, [\\]),
@@ -289,25 +293,30 @@ Typst的列表语法与Markdown非常类似，但不完全相同。如果你使�
 
 以上大部分#term("escape sequences")都紧跟单个字符，除了表中的最后一列。 <grammar-unicode-escape-sequences>
 
-`\u{unicode}`的语法也常见于各种语言。你可以通过将`unicode`替换为#link("https://zh.wikipedia.org/zh-cn/%E7%A0%81%E4%BD%8D")[Unicode码位]的值，以输出该特定字符，而无需*输入法支持*。例如，你可以这样输出一句话：
+表中的最后一列所展示的`\u{unicode}`语法被称为Unicode转义序列，也常见于各种语言。你可以通过将`unicode`替换为#link("https://zh.wikipedia.org/zh-cn/%E7%A0%81%E4%BD%8D")[Unicode码位]的值，以输出该特定字符，而无需*输入法支持*。例如，你可以这样输出一句话：
 
-#code(````typ
-\u{9999}\u{8FA3}\u{725B}\u{8089}\u{7C89}\u{597D}\u{5403}\u{2665}
-````)
+#code(
+  ````typ
+  \u{9999}\u{8FA3}\u{725B}\u{8089}\u{7C89}\u{597D}\u{5403}\u{2665}
+  ````,
+  code-as: ````typ
+  \u{9999}\u{8FA3}\u{725B}\u{8089}\u{7C89}
+  \u{597D}\u{5403}\u{2665}
+  ````,
+)
 
 诸多#term("escape sequences")无需死记硬背，你只需要记住：
-+ 请尝试在字符前添加一个#mark("\\", postfix: "，")如果其在Typst中已经被赋予含义。
-+ 请考虑使用`\u{unicode}`，如果其不可见或难以使用输入法获得。
++ 如果其在Typst中已经被赋予含义，请尝试在字符前添加一个#mark("\\", postfix: "。")
++ 如果其不可见或难以使用输入法获得，请考虑使用`\u{unicode}`。
 
 == 输出换行符 <grammar-newline>
 
 输出换行符是一种特殊的#term("escape sequences", postfix: "，")它使得文档输出换行。
 
-使用#mark("\\")加上任意一个空白字符，表示在此处主动插入一个段落内的换行符： <grammar-newline-by-space>
+#mark("\\")后紧接一个任意#term("whitespace", postfix: "，")表示在此处主动插入一个段落内的换行符： <grammar-newline-by-space>
 
 #code(````typ
-转义空格可以换行 \
-转义回车也可以换行 \
+转义空格可以换行 \ 转义回车也可以换行 \
 换行！
 ````)
 
@@ -343,7 +352,9 @@ AB v.s. A~B
 ```)
 
 // - minusi
-// -? soft-hyphen 
+// -? soft-hyphen
+
+完整的速记符号列表参考#link("https://typst.app/docs/reference/symbols/")[Typst Symbols]。
 
 == 注释 <grammar-inline-comment>
 
