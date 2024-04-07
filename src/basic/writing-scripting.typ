@@ -17,7 +17,7 @@
 
 ````)
 
-这可行，但稍显麻烦。如下代码则显得更为整洁：
+这可行，但稍显麻烦。如下代码则显得更为整洁，它不必为每段都打上着重标记：
 
 #code(````typ
 #strong[
@@ -30,8 +30,8 @@
 ````)
 
 例中，```typ #strong[]```这个内容的语法包含三个部分：
-+ `#`使解释器进入#term("code mode")。
-+ #typst-func("strong")调用了赋予#term("strong semantics")函数。
++ `#`使解释器进入#term("code mode", postfix: "。")
++ #typst-func("strong")是赋予#term("strong semantics")函数。
 + `[]`作为#term("content block")标记一段内容，供`strong`使用。
 
 本小节首先讲解第三点，即#term("content block")语法。
@@ -42,13 +42,26 @@
 #[一段文本]#[两段文本] #[三段文本]
 ```)
 
-#term("content block")不会影响包裹的内容——Typst仅仅是解析内部代码作为#term("content block")的内容。
+#term("content block")不会影响包裹的内容——Typst仅仅是解析内部代码作为#term("content block")的内容。#term("content block")也*几乎不影响内容的书写*。
 
-#term("content block")的唯一作用就是“界定内容”。它收集一个或多个#term("content")，以待后续使用。有了#term("content block")，你就可以*准确指定*一段内容，并用#term("scripting")加工。
+#pro-tip[
+  唯一的影响是你需要在内容块内部转义右中括号。
 
-所谓#term("scripting")，就是将原始内容通过各种方式转换、裁剪和重组，最终形成文档的执行过程。因为有了#term("scripting")，Typst才能有远超Markdown的排版能力，在许多情况下不逊于LaTeX排版，将来有望全面超越LaTeX排版。
+  #code(```typ
+  #[x\]y]
+  ```)
+]
 
-在接下来两小节你将看到Typst作为一门*编程语言*的核心设计，也是进行更高级排版必须要掌握的知识点。由于本节的目标仅仅是*编写一篇基本文档*，我们将会尽可能减少引入更多知识点，仅仅介绍其中最简单常用的语法。
+#term("content block")的唯一作用是“界定内容”。它收集一个或多个#term("content")，以待后续使用。有了#term("content block")，你可以*准确指定*一段内容，并用#term("scripting")加工。
+
+#import "../figures.typ": figure-content-decoration
+#align(center + horizon, figure-content-decoration())
+
+#v(1em)
+
+所谓#term("scripting")，就是对原始内容增删查改，进而形成文档的过程描述。因为有了#term("scripting")，Typst才能有远超Markdown的排版能力，在许多情况下不逊于LaTeX排版，将来有望全面超越LaTeX排版。
+
+在接下来两小节你将看到Typst作为一门*编程语言*的核心设计，也是进行更高级排版必须要掌握的知识点。由于我们的目标首先仅是*编写一篇基本文档*，我们将会尽可能减少引入更多知识点，仅仅介绍其中最简单常用的语法。
 
 == 解释模式 <grammar-enter-script>
 
@@ -58,15 +71,19 @@
 #[一段文本]
 ```)
 
-在内容块前，还有一个#mark("#")。它不属于内容块的语法一部分，而是Typst中关于「脚本模式」的定界符。
+这个#mark("#")不属于内容块的语法一部分，而是Typst中关于「脚本模式」的定界符。
 
-作为一个解释器，Typst会从头到尾#term("interpret")你的文档。更进一步，解释器还具备多种#term("interpreting mode")。不同的#term("interpreting mode")下，解释器以不同的语法规则解释你的文档。
+这涉及到Typst的编译原理。Typst程序包含一个解释器，用其从头到尾查看并#term("interpret")你的文档。
+
+其特殊之处在于，解释器还具备多种#term("interpreting mode")。借鉴了LaTeX的文本和数学模式，在不同的#term("interpreting mode")下，解释器以不同的语法规则解释你的文档。Typst中，标记模式的语法更适合你组织文本，代码模式更适合你书写脚本，而数学模式则最适合输入复杂的公式。
+
+// todo 三种解释模式的visualization
 
 === 标记模式
 
-默认情况下，文档处于#term("markup mode")，在这个模式下，你可以使用各种记号创建标题、列表、段落......在这个模式下，Typst语法几乎就和Markdown一样。
+当解释器从头开始解释文档时，其处于#term("markup mode")，在这个模式下，你可以使用各种记号创建标题、列表、段落......在这个模式下，Typst语法几乎就和Markdown一样。
 
-当Typst处于「标记模式」，且遇到一个「井号」时，Typst会立即将后续的一段代码认作「脚本」并执行，即它进入了「脚本模式」（scripting mode）。
+当其处于「标记模式」，且遇到一个「井号」时，Typst会立即将后续的一段代码认作「脚本」并执行，即它进入了「脚本模式」（scripting mode）。
 
 === 脚本模式
 
@@ -85,48 +102,44 @@
 Typst总是倾向于更快地退出脚本模式。
 
 #pro-tip[
-  具体来说，你几乎可以认为解释器至多解释到一个完整的表达式就会退出「脚本模式」。当然Typst也会在一些情况下特判：
-  
-  #code(```typ
-  #let a = 1; #let b = 2;
-  #(a, b) = (4, 5)
-  #a, #b
-  ```)
-  
-  按照前面的想法，`(a, b)`已经是一个完整的数组表达式了，应当结束「脚本模式」，但是Typst还会继续检查是否为解构赋值。
-  
-  个人认为这种属于边缘情况，并且你应该使用括号避免歧义```typ #((a, b) = (4, 5))```。
+  具体来说，你几乎可以认为解释器至多只会解释一个*完整的表达式*，之后就会*立即*退出「脚本模式」。
 ]
 
-特别地，当处于「脚本模式」时，你还可以通过「内容块」语法临时返回「标记模式」，以嵌套复杂的逻辑：
+=== 以另一个视角看待内容块
+
+「内容块」的内容遵从标记语法。这意味着，当处于「脚本模式」时，你还可以通过「内容块」语法临时返回「标记模式」，以嵌套复杂的逻辑：
 
 #code(```typ
 #([== 脚本模式下创建一个标题] + strong[后接一段文本])
 ```)
 
-内容块本身没有任何作用，但是允许你进而标记大段内容供函数使用，而*几乎不影响内容的书写*。
-
-#pro-tip[
-  唯一的影响是你需要在内容块内部转义右中括号。
-  
-  #code(```typ
-  #[x\]y]
-  ```)
-]
-
 如此反复，Typst就同时具备了方便文档创作与脚本编写的能力。
 
 #pro-tip[
   能否直接像使用「星号」那样，让#term("markup mode")直接将中括号包裹的一段作为内容块的内容？
-  
+
   这是可以的，但是存在一些问题。例如，人们也常常在正文中使用中括号等标记：
-  
+
   #code(```typ
   区间[1, ∞)上几乎所有有理数都可以表示为$x^x$，其中$x$是无理数。
   ```)
-  
+
   如此，「标记模式」下默认将中括号解析为普通文本看起来更为合理。
 ]
+
+== 数学模式
+
+Typst解释器一共有三种模式，其中两种我们之前已经介绍。这剩下的最后一种被称为#term("math mode")。很多人认为Typst针对LaTeX的核心竞争点之一就是优美的#term("math mode")。
+
+Typst的数学模式如下：<grammar-inline-math> ~ <grammar-display-math>
+
+#code(````typ
+行内数学公式：$sum_x$
+
+行间数学公式：$ sum_x $
+````)
+
+由于使用#term("math mode")有很多值得注意的地方，且#term("math mode")是一个较为独立的模式，本书将其单列为一章参考，可选阅读。有需要在文档中插入数学公式的同学请移步#(refs.ref-math-mode)[《参考：数学模式》]。
 
 == 函数和函数调用 <grammar-func-call>
 
@@ -149,7 +162,7 @@ Typst总是倾向于更快地退出脚本模式。
 #code(```typ
 #strong([
   And every _fair from fair_ sometime declines,
-  
+
   By chance, or nature's changing course untrimm'd;
 
   But thy _eternal summer_ shall not fade,
@@ -165,7 +178,7 @@ Typst总是倾向于更快地退出脚本模式。
 #code(```typ
 #emph([
   And every *fair from fair* sometime declines,
-  
+
   ......
 ])
 ```)
@@ -206,10 +219,10 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 #pro-tip[
   函数调用可以后接不止一个内容参数。例如下面的例子后接了两个内容参数：
-  
+
   #code(```typ
   #let exercise(question, answer) = strong(question) + parbreak() + answer
-    
+
   #exercise[
     Question: _turing complete_？
   ][
@@ -537,7 +550,7 @@ Typst允许你为元素的「具名参数」设置新的「默认值」，这个
 #{
   show raw: set align(left)
   code(````typ
-  #figure(```typ 
+  #figure(```typ
   #image("/assets/files/香風とうふ店.jpg")
   ```, caption: [用于加载香風とうふ店送外卖的宝贵影像的代码])
   ````)
@@ -598,15 +611,15 @@ https://zh.wikipedia.org
 
 #pro-tip[
   在脚本模式中，标签无法附加到之前的内容。
-  
+
   #code(```typ
   #show <awa>: set text(fill: red)
   #{[a]; [<awa>]}
   #[b] <awa>
   ```)
-  
+
   对比上例，具体来说，标签附加到它的#term("syntactic predecessor")。
-  
+
   这不是问题，但是易用性有可能在将来得到改善。
 ]
 
@@ -634,20 +647,6 @@ https://zh.wikipedia.org
 
 其他可选的对齐有`left`、`right`、`bottom`、`top`、`horizon`等，详见#(refs.ref-layout)[《参考：布局函数》]。
 
-== 数学模式
-
-Typst解释器一共有三种模式，其中两种我们之前已经介绍。这剩下的最后一种被称为#term("math mode")。很多人认为Typst针对LaTeX的核心竞争点之一就是优美的#term("math mode")。
-
-Typst的数学模式如下：<grammar-inline-math> ~ <grammar-display-math>
-
-#code(````typ
-行内数学公式：$sum_x$
-
-行间数学公式：$ sum_x $
-````)
-
-由于使用#term("math mode")有很多值得注意的地方，且#term("math mode")是一个较为独立的模式，本书将其单列为一章参考，可选阅读。有需要在文档中插入数学公式的同学请移步#(refs.ref-math-mode)[《参考：数学模式》]。
-
 == 使用其他人的模板
 
 虽然这是一片教你写基础文档的教程，但是为什么不更进一步？有赖于Typst将样式与内容分离，如果你能找到一个朋友愿意为你分享两行神秘代码，当你粘贴到文档开头时，你的文档将会变得更为美观：
@@ -672,14 +671,14 @@ paragraphs right here!
 + checking the data for biases
 
 $
-  f(x) = integral _(-oo)^oo hat(f)(xi)e^(2 pi i xi x) dif xi 
+  f(x) = integral _(-oo)^oo hat(f)(xi)e^(2 pi i xi x) dif xi
 $
 ````)
 
 一般来说，使用他人的模板需要做两件事：
 + 将`latex-look.typ`放在你的文档文件夹中。
 + 使用以下两行代码应用模板样式：
-  
+
   ```typ
   #import "latex-look.typ": latex-look
   #show: latex-look

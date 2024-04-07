@@ -38,23 +38,26 @@
 
 效果如下：
 
-#frames-cjk(read("./stateful/s1.typ"), code-as: ```typ
-#show: set-heading
+#frames-cjk(
+  read("./stateful/s1.typ"),
+  code-as: ```typ
+  #show: set-heading
 
-== 雨滴书v0.1.2
-=== KiraKira 样式改进
-feat: 改进了样式。
-=== FuwaFuwa 脚本改进
-feat: 改进了脚本。
+  == 雨滴书v0.1.2
+  === KiraKira 样式改进
+  feat: 改进了样式。
+  === FuwaFuwa 脚本改进
+  feat: 改进了脚本。
 
-== 雨滴书v0.1.1
-refactor: 移除了LaTeX。
+  == 雨滴书v0.1.1
+  refactor: 移除了LaTeX。
 
-feat: 删除了一个多余的文件夹。
+  feat: 删除了一个多余的文件夹。
 
-== 雨滴书v0.1.0
-feat: 新建了两个文件夹。
-```)
+  == 雨滴书v0.1.0
+  feat: 新建了两个文件夹。
+  ```,
+)
 
 == 「样式化」内容
 
@@ -108,7 +111,7 @@ feat: 新建了两个文件夹。
 
 如下图所示，Typst大致上分为四个执行阶段。这四个执行阶段并不完全相互独立，但有明显的先后顺序：
 
-#import "./figure-typst-arch.typ": figure-typst-arch
+#import "../figures.typ": figure-typst-arch
 #align(center + horizon, figure-typst-arch())
 
 这里，我们着重讲解“内容评估”阶段与“内容排版”阶段。
@@ -429,28 +432,34 @@ typst也是。
 
 针对特定的`feat`和`refactor`文本，我们使用`emph`修饰：
 
-#frames-cjk(read("./stateful/s2.typ"), code-as: ```typ
-#show regex("feat|refactor"): emph
-```)
+#frames-cjk(
+  read("./stateful/s2.typ"),
+  code-as: ```typ
+  #show regex("feat|refactor"): emph
+  ```,
+)
 
 对于三级标题，我们将中文文本用下划线标记，同时将特定文本替换成emoji：
 
-#frames-cjk(read("./stateful/s3.typ"), code-as: ```typ
-#let set-heading(content) = {
-  show heading.where(level: 3): it => {
-    show regex("[\p{hani}\s]+"): underline
-    it
-  }
-  show heading: it => {
-    show regex("KiraKira"): box("★", baseline: -20%)
-    show regex("FuwaFuwa"): box(text("🪄", size: 0.5em), baseline: -50%)
-    it
-  }
+#frames-cjk(
+  read("./stateful/s3.typ"),
+  code-as: ```typ
+  #let set-heading(content) = {
+    show heading.where(level: 3): it => {
+      show regex("[\p{hani}\s]+"): underline
+      it
+    }
+    show heading: it => {
+      show regex("KiraKira"): box("★", baseline: -20%)
+      show regex("FuwaFuwa"): box(text("🪄", size: 0.5em), baseline: -50%)
+      it
+    }
 
-  content
-}
-#show: set-heading
-```)
+    content
+  }
+  #show: set-heading
+  ```,
+)
 
 == 制作页眉标题的两种方法
 
