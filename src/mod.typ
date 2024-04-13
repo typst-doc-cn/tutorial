@@ -36,6 +36,7 @@
 #let term-list = (
   "blocky raw block": "块代码片段",
   "boolean literal": "布尔字面量",
+  "closure": "闭包",
   "code mode": "脚本模式",
   "codepoint": "码位",
   "codepoint width": "码位宽度",
@@ -76,6 +77,7 @@
   "parser": "解析器",
   "pattern": "模式串",
   "placeholder": "占位符",
+  "positional arguments": "位置参数",
   "shorthand": "速记符号",
   "scripting": "脚本",
   "string literal": "字符串字面量",
@@ -111,7 +113,7 @@
     {
       // Don't corrupt normal headings
       set heading(outlined: false)
-      
+
       if res != none {
         res
       } else {
@@ -128,17 +130,17 @@
   } else {
     code-as
   }
-  
+
   let vv = exec-code(cc, res: res, scope: scope, eval: eval)
   if al == left {
     layout(lw => style(styles => {
       let width = lw.width * 0.5 - 0.5em
       let u = box(width: width, code-as)
       let v = box(width: width, vv)
-      
+
       let u-box = measure(u, styles)
       let v-box = measure(v, styles)
-      
+
       let height = calc.max(u-box.height, v-box.height)
       stack(
         dir: ltr,
@@ -183,7 +185,7 @@
   )
 })
 
-/// This function is to render a text string in monospace style and function 
+/// This function is to render a text string in monospace style and function
 /// color in your defining themes.
 ///
 /// ## Examples
@@ -273,11 +275,11 @@
   } else {
     typst-v11.funcs.at(name)
   }
-  
+
   locate(loc => {
     let attr = side-attrs.at(loc)
     let ext = attr.width + attr.gutter
-    
+
     move(
       dx: -ext,
       block(
