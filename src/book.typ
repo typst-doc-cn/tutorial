@@ -125,12 +125,10 @@
     - #chapter("template/slides.typ")[演示文稿（PPT）]
     - #chapter("template/paper.typ")[论文模板]
     - #chapter("template/book.typ")[书籍模板]
-  ]
+  ],
 )
 
-#build-meta(
-  dest-dir: "../dist",
-)
+#build-meta(dest-dir: "../dist")
 
 // #get-book-meta()
 

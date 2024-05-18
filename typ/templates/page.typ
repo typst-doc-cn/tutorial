@@ -22,6 +22,7 @@
 #let dash-color = rgb(theme-style.at("dash-color"))
 
 #let use-fandol-fonts = false
+#let main-size = 10.5pt
 
 #let main-font-cn = {
   if use-fandol-fonts {
@@ -55,16 +56,16 @@
 
 #let code-extra-colors = if code-theme-file.len() > 0 {
   let data = xml(theme-style.at("code-theme")).first()
-  
+
   let find-child(elem, tag) = {
     elem.children.find(e => "tag" in e and e.tag == tag)
   }
-  
+
   let find-kv(elem, key, tag) = {
     let idx = elem.children.position(e => "tag" in e and e.tag == "key" and e.children.first() == key)
     elem.children.slice(idx).find(e => "tag" in e and e.tag == tag)
   }
-  
+
   let plist-dict = find-child(data, "dict")
   let plist-array = find-child(plist-dict, "array")
   let theme-setting = find-child(plist-array, "dict")
@@ -93,28 +94,25 @@
 #let project(title: "Typst中文教程", authors: (), kind: "page", body) = {
   let is-ref-page = kind == "reference-page"
   let is-page = kind == "page"
-  let main-size = 10.5pt
   let heading-sizes = (26pt, 22pt, 14pt, 12pt, main-size)
-  
+
   // set basic document metadata
   set document(
     author: authors,
     title: title,
   ) if not is-pdf-target
-  
+
   // set web/pdf page properties
-  set page(
-    numbering: if is-pdf-target {
-      "1"
-    },
-  )
-  
+  set page(numbering: if is-pdf-target {
+    "1"
+  })
+
   // set web/pdf page properties
   set page(
     number-align: center,
     width: page-width,
   )
-  
+
   // remove margins for web target
   set page(
     margin: (
@@ -130,7 +128,7 @@
     ),
     height: auto,
   ) if is-web-target
-  
+
   // set text style
   set text(
     font: main-font,
@@ -139,14 +137,14 @@
     lang: "zh",
     region: "cn",
   )
-  
+
   let ld = state("label-disambiguator", (:))
   let update-ld(k) = ld.update(it => {
     it.insert(k, it.at(k, default: 0) + 1)
     it
   })
   let get-ld(loc, k) = make-unique-label(k, disambiguator: ld.at(loc).at(k))
-  
+
   // show regex("[A-Za-z]+"): set text(font: main-font-en)
   let cjk-markers = regex("[“”‘’．，。、？！：；（）｛｝［］〔〕〖〗《》〈〉「」【】『』─—＿·…\u{30FC}]+")
   show cjk-markers: set text(font: main-font-cn)
@@ -156,7 +154,7 @@
   }
   // show regex("[a-zA-Z\s\#\[\]]+"): set text(baseline: -0.05em)
   // show regex("[“”]+"): set text(font: main-font-cn)
-  
+
   // render a dash to hint headings instead of bolding it.
   show heading: set text(weight: "regular") if is-web-target
   let list-indent = 0.5em
@@ -176,7 +174,7 @@
       spacing: 0.7em * 1.5 * 1.2,
       below: 0.7em * 1.2,
     )
-    
+
     // if it.level >= 3 {
     //   box(text(it, size: main-size, font: "Source Han Sans SC", weight: 500)) + h(0.5em)
     // } else {
@@ -203,13 +201,13 @@
       })
     }
   }
-  
+
   // link setting
   show link: set text(fill: dash-color)
-  
+
   // math setting
   show math.equation: set text(weight: 400)
-  
+
   // code block setting
   show raw: it => {
     if "block" in it.fields() and it.block {
@@ -233,13 +231,13 @@
       it
     }
   }
-  
-  
+
+
   show <typst-raw-func>: it => {
     it.lines.at(0).body.children.slice(0, -2).join()
   }
-  
-  
+
+
   if title != none {
     if is-web-target {
       [= #title]
@@ -249,10 +247,10 @@
       v(1em)
     }
   }
-  
+
   // Main body.
   set par(justify: true)
-  
+
   if is-ref-page {
     let side-space = 4 * main-size
     let side-overflow = 2 * main-size

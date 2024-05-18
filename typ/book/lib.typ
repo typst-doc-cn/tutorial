@@ -101,7 +101,7 @@
   if reference != none {
     assert(type(reference) == label, message: "invalid reference")
   }
-  
+
   assert(content != none, message: "invalid label content")
   locate(loc => {
     if reference != none {
@@ -109,17 +109,17 @@
       // whether it is internal link
       if result.len() > 0 {
         link(reference, content)
-        return 
+        return
       }
     }
-    
+
     let link-result = link2page.final(loc)
     if path-lbl in link-result {
       link((page: link-result.at(path-lbl), x: 0pt, y: 0pt), content)
-      return 
+      return
     }
     // assert(read(path) != none, message: "no such file")
-    
+
     let lnk = {
       "cross-link://jump?path-label="
       path-lbl
@@ -203,51 +203,51 @@
   if metadata == elem.func() {
     // convert any metadata elem to its value
     let node = elem.value
-    
+
     // Convert the summary content inside the book elem
     if node.at("kind") == "book" {
       let summary = node.at("summary")
       node.insert("summary", _convert-summary(summary))
     }
-    
+
     return node
   }
-  
+
   // convert a heading element to a part elem
   if heading == elem.func() {
     return (kind: "part", content: elem, title: _store-content(elem.body))
   }
-  
+
   // convert a (possibly nested) list to a part elem
   if list.item == elem.func() {
     // convert children first
     let maybe-children = _convert-summary(elem.body)
-    
+
     if type(maybe-children) == "array" {
       // if the list-item has children, then process subchapters
       if maybe-children.len() <= 0 {
         panic("invalid list-item, no maybe-children")
       }
-      
+
       // the first child is the chapter itself
       let node = maybe-children.at(0)
-      
+
       // the rest are subchapters
       let rest = maybe-children.slice(1)
       node.insert("sub", rest)
-      
+
       return node
     } else {
       // no children, return the list-item itself
       return maybe-children
     }
   }
-  
+
   // convert a sequence of elements to a list of node
   if [].func() == elem.func() {
     return elem.children.map(_convert-summary).filter(it => it != none)
   }
-  
+
   // All of rest are invalid
   none
 }
@@ -264,16 +264,16 @@
       (c,)
       continue
     }
-    
+
     // default incremental section
     let idx = cnt
     cnt += 1
     let num = base + (idx,)
     // c.insert("auto-section", num)
-    
+
     let user-specified = c.at("section")
     // c.insert("raw-section", repr(user-specified))
-    
+
     // update section number if user specified it by str or array
     if user-specified != none and user-specified != auto {
       // update number
@@ -287,26 +287,26 @@
             message: "invalid type of section counter specified " + repr(user-specified) + ", want number in array",
           )
         }
-        
+
         // e.g. (1, 2, 3)
         user-specified
       } else {
         panic("invalid type of manual section specified " + repr(user-specified) + ", want str or array")
       }
-      
+
       // update cnt
       cnt = num.last() + 1
     }
-    
+
     // update section number
     let auto-num = num.map(str).join(".")
     c.at("section") = auto-num
-    
+
     // update sub chapters
     if "sub" in c {
       c.sub = _numbering-sections(c.at("sub"), base: num)
     }
-    
+
     (c,)
   }
 }
@@ -319,18 +319,18 @@
 #let book(content) = {
   // set page(width: 300pt, margin: (left: 10pt, right: 10pt, rest: 0pt))
   [#metadata(toml("typst.toml")) <typst-book-internal-package-meta>]
-  
+
   locate(loc => {
     let data = query(<typst-book-raw-book-meta>, loc).at(0)
     let meta = _convert-summary(data)
     meta.at("summary") = _numbering-sections(meta.at("summary"))
-    
+
     book-meta-state.update(meta)
     [
       #metadata(meta) <typst-book-book-meta>
     ]
   })
-  
+
   // #let sidebar-gen(node) = {
   //   node
   // }
@@ -350,25 +350,25 @@
 #let visit-summary(x, visit) = {
   if x.at("kind") == "chapter" {
     let v = none
-    
+
     let link = x.at("link")
     if link != none {
       let chapter-content = visit.at("inc")(link)
-      
+
       if chapter-content.children.len() > 0 {
         let t = chapter-content.children.at(0)
         if t.func() == [].func() and t.children.len() == 0 {
           chapter-content = chapter-content.children.slice(1).sum()
         }
       }
-      
+
       if "children" in chapter-content.fields() and chapter-content.children.len() > 0 {
         let t = chapter-content.children.at(0)
         if t.func() == parbreak {
           chapter-content = chapter-content.children.slice(1).sum()
         }
       }
-      
+
       show: it => {
         let abs-link = cross-link-path-label("/" + link)
         locate(loc => {
@@ -377,14 +377,14 @@
             it
           })
         })
-        
+
         it
       }
-      
+
       visit.at("chapter")(chapter-content)
     }
-    
-    if "sub" in x {
+
+    if "sub" in x and x.sub != none {
       x.sub.map(it => visit-summary(it, visit)).sum()
     }
   } else if x.at("kind") == "part" {

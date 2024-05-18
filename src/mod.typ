@@ -34,6 +34,7 @@
 }
 
 #let term-list = (
+  "array literal": "数组字面量",
   "blocky raw block": "块代码片段",
   "boolean literal": "布尔字面量",
   "code mode": "脚本模式",
@@ -45,7 +46,8 @@
   "consistency": "一致性",
   "content block": "内容块",
   "delimiter": "定界符",
-  "floating-Point literal": "浮点数字面量",
+  "dictionary literal": "字典字面量",
+  "floating-point literal": "浮点数字面量",
   "function identifier": "函数名标识符",
   "emphasis semantics": "强调语义",
   "escape sequences": "转义序列",
