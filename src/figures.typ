@@ -14,7 +14,7 @@
     axes: (ltr, btt),
     // nodes
     node((0, 0), xd[文件解析\ （Parsing）]),
-    node((1.5, 0), xd[内容求值\ （Evaluation）]),
+    node((1.5, 0), xd[表达式求值\ （Evaluation）]),
     node((3, 0), xd[内容排版\ （Typesetting）]),
     node((3, -1), xd[结构导出\ （Exporting）]),
     // edges
