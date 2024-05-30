@@ -4,6 +4,10 @@
     "${workspaceFolder}/assets/fonts",
     "${workspaceFolder}/assets/typst-fonts"
   ],
+  "tinymist.fontPaths": [
+    "${workspaceFolder}/assets/fonts",
+    "${workspaceFolder}/assets/typst-fonts"
+  ],
   "tinymist.exportPdf": "onSave",
   "tinymist.outputPath": "$root/target/$dir/$name",
   "tinymist.formatterMode": "typstyle",
