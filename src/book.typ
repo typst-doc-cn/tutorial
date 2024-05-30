@@ -24,14 +24,10 @@
     = 排版Ⅰ
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-shape-and-table.typ")[图形与表格]
-    - #chapter("basic/writing-chinese.typ")[中文排版]
-    // 4. 模块
-    // - 模块
-    // - 外部库
-    // - 多文件文档
     = 模块化文档
     - #chapter("basic/modulize-modules.typ")[模块]
     - #chapter("basic/modulize-packages.typ")[外部库]
+    // - 多文件文档
     - #chapter("basic/modulize-multi-files-doc.typ")[多文件架构]
     // 5. 状态化排版
     // - 状态
@@ -40,6 +36,9 @@
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
     - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
     - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
+    // 6. 排版Ⅱ
+    // - #chapter("basic/writing-chinese.typ")[数学排版]
+    - #chapter("basic/writing-chinese.typ")[中文排版]
     // 6. 脚本Ⅱ
     // - IO与数据处理
     // - 内置类型
