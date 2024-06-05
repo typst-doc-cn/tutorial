@@ -14,17 +14,17 @@
   summary: [
     #prefix-chapter("introduction.typ")[导引]
     // 计划修改
-    = 入门
+    = 排版Ⅰ
     - #chapter("basic/writing-markup.typ")[初识标记模式]
     - #chapter("basic/writing-scripting.typ")[初识脚本模式]
     = 脚本Ⅰ
     - #chapter("basic/scripting-literal-and-variable.typ")[常量与变量]
     - #chapter("basic/scripting-block-and-expression.typ")[块与表达式]
     - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
-    = 排版Ⅰ
+    = 排版Ⅱ
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-shape-and-table.typ")[图形与表格]
-    = 模块化文档
+    = 模块化
     - #chapter("basic/modulize-modules.typ")[模块]
     - #chapter("basic/modulize-packages.typ")[外部库]
     // - 多文件文档
@@ -32,11 +32,11 @@
     // 5. 状态化排版
     // - 状态
     // - 计数器
-    = 状态化文档
+    = 状态化
     - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
     - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
     - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
-    // 6. 排版Ⅱ
+    // 6. 排版Ⅲ
     // - #chapter("basic/writing-chinese.typ")[数学排版]
     - #chapter("basic/writing-chinese.typ")[中文排版]
     // 6. 脚本Ⅱ
