@@ -155,6 +155,16 @@ Typst提供了`at`方法帮助我们访问一个内容的`fields`中键对应的
 #warning[警告，你做个人吧]
 ```)
 
+== 上下文有关表达式
+
+// contextual expression
+
+在介绍重要语法之前，我们先来一道开胃菜。
+
+#code(```typ
+#context text.size
+```)
+
 == 「`set`」语法 <grammar-set>
 
 重点2：一个段落主要是一个内容序列，其中有可能很多个文本。
@@ -325,7 +335,7 @@ Typst提供了`at`方法帮助我们访问一个内容的`fields`中键对应的
 
 == 「内容」是一棵树
 
-重点3：内容」是一棵树，这意味着你可以“攀树而行”。
+重点3：「内容」是一棵树，这意味着你可以“攀树而行”。
 
 Typst对代码块有着的一系列语法设计，让代码块非常适合描述内容。又由于作用域的性质，最终代码块让「内容」形成为一颗树。
 
@@ -508,11 +518,13 @@ wink!
 
 以下脚本设置所有数学公式的颜色，但同时也修改代码片段的颜色：
 
+// todo: ugly code
 #code(```typ
-#show raw: set text(fill: red)
-#show math.equation: set text(fill: blue)
+#show raw: set text(red)
+#show math.equation: set text(blue)
 #let dif2(x) = math.op(math.Delta + $x$)
-一个公式：$ sum_(f in S(x)) #[`refl`]\(f) dif2(x) $
+一个公式：$ sum_(f in S(x))
+  #`refl`;(f) dif2(x) $
 ```)
 
 我们说，`show`的右半部分是一个函数，表示选择文档的一部分以作修改。除了直接应用`set`，应该可以有很多其他操作。现在是时候解锁Typst强大能力了。

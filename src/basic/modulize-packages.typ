@@ -2,6 +2,8 @@
 
 #show: book.page.with(title: "外部库")
 
+除此之外，可以从特殊的路径从网络导入外部模块，即外部库（external packages）。Typst的外部库机制可能不是世界上最精简的，但是我所见过当中最精简的。它可能更稍显简陋，但已经有上百个外部库通过官方渠道发布，并足以满足我们日常生活的使用。
+
 在Typst中使用外部库极为简单，你只需要`import`特定的路径就能访问其内部的变量声明。例如你可以导入一个用于绘画自动机的外部库：
 
 #code(```typ
@@ -84,7 +86,7 @@ Typst同时会检查`{data-dir}/`#text(green, `typst/packages`)中是否包含�
   [#text(eastern, `fletcher`)`:`#text(orange, `0.4.0`)],
 )时，Typst会严格*按顺序*做如下事情。
 + 检查数据文件夹。
-  
+
   检查是否包含对应库，其应当位于#breakable-path(
     `{data-dir}`,
     text(green, `typst/packages`),
@@ -93,7 +95,7 @@ Typst同时会检查`{data-dir}/`#text(green, `typst/packages`)中是否包含�
     text(orange, `0.4.0`)
   )。如果有，那么解析路径为对应库路径。
 + 检查缓存文件夹。
-  
+
   检查是否包含对应库，其应当位于#breakable-path(
     `{cache-dir}`,
     text(green, `typst/packages`),

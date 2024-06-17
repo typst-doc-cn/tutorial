@@ -113,13 +113,49 @@ typst watch file.typ
 #{
   set align(center)
   table(
-    columns: (1fr, 1fr, 1fr, 1fr, 48pt, 48pt, 1fr), 
-    [名称], [编辑器], [编译器环境], [预览方案], [是否支持即时编译], [语言服务], [备注],
-    [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀],  align(left)[开箱即用，需要科学上网，无法git], 
-    [VSCode], [VSCode], [native], [webview], [是], [良好],  align(left)[简单上手，定制性差], 
-    [neovim], [neovim], [native], [webview], [是], [良好],  align(left)[不易安装，定制性好], 
-    [Emacs], [Emacs], [native], [webview], [是], [良好],  align(left)[难以安装], 
-    [typst-cli], [任意编辑器], [native], [任意PDF阅读器], [否], [无], align(left)[简单上手，灵活组合], 
+    columns: (1fr, 1fr, 1fr, 1fr, 48pt, 48pt, 1fr),
+    [名称],
+    [编辑器],
+    [编译器环境],
+    [预览方案],
+    [是否支持即时编译],
+    [语言服务],
+    [备注],
+    [WebAPP],
+    [Code Mirror],
+    [wasm],
+    [渲染图片],
+    [是],
+    [优秀],
+    align(left)[开箱即用，需要科学上网，无法git],
+    [VSCode],
+    [VSCode],
+    [native],
+    [webview],
+    [是],
+    [良好],
+    align(left)[简单上手，定制性差],
+    [neovim],
+    [neovim],
+    [native],
+    [webview],
+    [是],
+    [良好],
+    align(left)[不易安装，定制性好],
+    [Emacs],
+    [Emacs],
+    [native],
+    [webview],
+    [是],
+    [良好],
+    align(left)[难以安装],
+    [typst-cli],
+    [任意编辑器],
+    [native],
+    [任意PDF阅读器],
+    [否],
+    [无],
+    align(left)[简单上手，灵活组合],
   )
 }
 
@@ -139,7 +175,7 @@ typst watch file.typ
 
 #pro-tip[
   本书会随时夹带一些“Pro Tip”。这些“Pro Tip”由蓝色框包裹。它们告诉你一些较难理解的知识点。
-  
+
   你可以选择在初次阅读时*跳过*这些框，而不影响对正文的理解。但建议你在阅读完整本书后回头观看所不理解的那些“Pro Tip”。
 ]
 
@@ -162,7 +198,6 @@ typst watch file.typ
 + 接着，同时阅读《基本参考》和《进阶教程》。你可以根据你的需求挑选《基本参考》的部分章节阅读。即便不阅读任何《基本参考》中的内容，你也可以继续阅读《进阶教程》。
 
   经过这一步，你应该已经完全学会了目前Typst的所有理念与内容。
-
 
 = 许可证
 

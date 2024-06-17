@@ -2,6 +2,10 @@
 
 #show: book.page.with(title: "度量与布局")
 
+本章我们再度回到排版专题，拓宽制作文档的能力。
+
+== 长度类型
+
 #show quote: it => {
   box(
     stroke: (
@@ -31,27 +35,8 @@
 Typst有三种长度单位，它们是：绝对长度（absolute length）、相对长度（relative length）与上下文有关长度（context-sensitive length）。
 
 + 绝对长度：人们最熟知的长度单位。例如，```typc 1cm```恰等于真实的一厘米。
-
-  #code(```typ
-  1cm等于#1cm
-  ```)
-
-+ 相对长度：与父元素长度相关联的长度单位，例如```typc 100%```恰等于父元素高度或宽度的100%。下例即获得一个`box(width: 70%)`的实际宽度，其等于父元素`box(width: 123pt)`的`70%`：
-
-  #code(```typ
-  123pt \* 70%等于#(123pt * 70%) \
-  box宽度等于#box(width: 123pt,
-    box(width: 70%, layout(l => l.width)))
-  ```)
-
++ 相对长度：与父元素长度相关联的长度单位，例如```typc 70%```恰等于父元素高度或宽度的70%。
 + 上下文有关长度：与样式等上下文有关的长度单位，例如```typc 1em```恰等于当前位置设定的字体长度。
-
-  #code(```typ
-  #let _1em = context measure(
-    line(length: 1em)).width
-  #text(size: 10pt, [1em等于] + _1em) \
-  #text(size: 20pt, [1em等于] + _1em) \
-  ```)
 
 掌握不同种类的长度单位对构建期望的布局非常重要。它们是相辅相成的。
 
@@ -95,7 +80,7 @@ Typst会将你提供的任意长度单位都统一成点单位，以便进行长
   ```
 )
 
-所谓*保持长度量纲*，即：
+所谓*保持长度量纲*，即它存在一系列判别规则：
 
 - 由于`1cm`与`3in`量纲均为长度量纲（`m`），它们之间*可以*进行*加减*运算。
 - 由于`3`无量纲，`1cm`与`3`之间*不能*进行*加减*运算。
@@ -106,11 +91,24 @@ Typst会将你提供的任意长度单位都统一成点单位，以便进行长
   set align(center)
   table(
     columns: 4,
-    [长度表达式], [量纲运算], [检查合法性], [判断结果],
-    ```typc 1cm * 3```, $bold(sans(m dot 1 = m))$, $bold(sans(m = m))$, [合法],
-    ```typc 1cm / 3```, $bold(sans(m op(slash) 1 = m))$, $bold(sans(m = m))$, [合法],
-    ```typc 3 / 1cm```, $bold(sans(1 op(slash) m = m^(-1)))$, $bold(sans(m^(-1) = m))$, [非法],
-    ```typc 1cm * 1cm```, $bold(sans(m dot m = m^2))$, $bold(sans(m^2 = m))$, [非法],
+    [长度表达式],
+    [量纲运算],
+    [检查合法性],
+    [判断结果],
+    ```typc 1cm * 3```,
+    $bold(sans(m dot 1 = m))$,
+    $bold(sans(m = m))$,
+    table.cell(rowspan: 2, align: horizon)[合法],
+    ```typc 1cm / 3```,
+    $bold(sans(m op(slash) 1 = m))$,
+    $bold(sans(m = m))$,
+    ```typc 3 / 1cm```,
+    $bold(sans(1 op(slash) m = m^(-1)))$,
+    $bold(sans(m^(-1) = m))$,
+    table.cell(rowspan: 2, align: horizon)[非法],
+    ```typc 1cm * 1cm```,
+    $bold(sans(m dot m = m^2))$,
+    $bold(sans(m^2 = m))$,
   )
 }
 
@@ -120,8 +118,6 @@ Typst会将你提供的任意长度单位都统一成点单位，以便进行长
 
 #code(```typ
 #1cm 是 #1cm.pt() 点 \
-#1cm 是 #1cm.mm() 毫米 \
-#1cm 是 #1cm.cm() 厘米 \
 #1cm 是 #1cm.inches() 英尺
 ```)
 
@@ -174,21 +170,18 @@ Typst还支持以「分数比」作长度单位。当分数比作长度单位时
 
 == 上下文有关长度
 
-目前Typst仅提供一种上下文有关长度，即当前上下文中的字体大小。历史上，定义该字体中大写字母`M`的宽度为`1em`，但是现代排版中，`1em`可以比`M`的宽度要更窄或者更宽：
-
-#code(```typ
-#let bm = [#box(move(box(height: 1em, width: 1em, fill: blue), dx: 1em))M]
-#bm
-#text(size: 20pt, bm)
-```)
+目前Typst仅提供一种上下文有关长度，即当前上下文中的字体大小。历史上，定义该字体中大写字母`M`的宽度为`1em`，但是现代排版中，`1em`可以比`M`的宽度要更窄或者更宽。
 
 上下文有关长度是与相对长度相区分的。区别是上下文有关长度的取值从「样式链」获取，而相对长度相对于父元素宽度。事实上`1em`的具体值可以通过上下文有关表达式获取：
 
 #code(```typ
-1em + 1pt等于#context (text.size + 1pt)
+#let _1em = context measure(
+  line(length: 1em)).width
+#text(size: 10pt, [1em等于] + _1em) \
+#text(size: 20pt, [1em等于] + _1em) \
 ```)
 
-但是还是`1em`更好用一点，因为`text.size`只允许在上下文有关表达式内部使用。
+相比较，`1em`更好用一点，因为`text.size`只允许在上下文有关表达式内部使用。
 
 == 混合长度
 
