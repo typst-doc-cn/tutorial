@@ -1,6 +1,6 @@
 // This is important for typst-book to produce a responsive layout
 // and multiple targets.
-#import "/typ/book/lib.typ": get-page-width, target, is-web-target, is-pdf-target, plain-text
+#import "@preview/shiroa:0.1.0": get-page-width, target, is-web-target, is-pdf-target, plain-text
 #import "/typ/templates/side-notes.typ": side-attrs
 
 #let page-width = get-page-width()
@@ -22,7 +22,12 @@
 #let dash-color = rgb(theme-style.at("dash-color"))
 
 #let use-fandol-fonts = false
-#let main-size = 10.5pt
+// Sizes
+#let main-size = if is-web-target {
+  12pt
+} else {
+  10.5pt
+}
 
 #let main-font-cn = {
   if use-fandol-fonts {

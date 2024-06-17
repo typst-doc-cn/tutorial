@@ -1,14 +1,14 @@
-#import "/typ/book/lib.typ": *
+#import "@preview/shiroa:0.1.0": *
 
 #show: book
 
 #let book-info = json("/meta.json")
 
 #book-meta(
-  title: "Typst Tutorial CN",
+  title: "The Raindrop-Blue Book (Typst中文教程)",
   description: "Typst中文教程",
   repository: "https://github.com/typst-doc-cn/tutorial",
-  repository-edit: "https://github.com/typst-doc-cn/tutorial/edit/main/github-pages/docs/{path}",
+  repository-edit: "https://github.com/typst-doc-cn/tutorial/edit/main/src/{path}",
   authors: book-info.contributors,
   language: "zh-cn",
   summary: [
@@ -23,7 +23,7 @@
     - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
     = 排版Ⅱ
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
-    - #chapter("basic/scripting-shape-and-table.typ")[图形与表格]
+    - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
     = 模块化
     - #chapter("basic/modulize-modules.typ")[模块]
     - #chapter("basic/modulize-packages.typ")[外部库]

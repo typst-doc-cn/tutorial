@@ -1,4 +1,4 @@
-#import "/typ/book/lib.typ": *
+#import "@preview/shiroa:0.1.0": *
 #import "/typ/templates/ebook.typ"
 
 #show: ebook.project.with(

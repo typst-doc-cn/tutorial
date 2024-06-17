@@ -1,4 +1,4 @@
-#import "/typ/book/lib.typ": *
+#import "@preview/shiroa:0.1.0": *
 #import "/typ/templates/page.typ": project, part-style, dash-color
 #import "/typ/templates/term.typ": reset-term-state
 
@@ -78,24 +78,24 @@
   if display-title == none {
     display-title = title
   }
-  
+
   // inherit styles
   let styles = default-styles + styles
-  
+
   // set document metadata early
   set document(
     author: authors,
     title: title,
   )
-  
+
   // set web/pdf page properties
   set page(numbering: "1")
-  
+
   // todo: abstraction
   {
     // inherit from page setting
     show: _page-project.with(title: none, kind: none)
-    
+
     //set image(width: 100%, height: 100%)
     set page(
       margin: 0cm,
@@ -109,31 +109,31 @@
         #move(dy: 3%, scale(x: -130%, y: 130%, rotate(38.2deg, image("./rustacean-flat-gesture.svg", width: 130%))))
       ],
     )
-    
+
     // place book meta
     external-book(spec: (styles.inc)(spec))
     (styles.cover)(display-title)
   }
-  
+
   locate(loc => {
     let project-meta = (title: title, display-title: display-title, book: book-meta-state.final(loc), styles: styles)
-    
+
     {
       // inherit from page setting
       show: _page-project.with(title: none, kind: none)
-      
+
       // set web/pdf page properties
       set page(numbering: none)
-      
+
       include "/src/prefaces/license.typ"
       include "/src/prefaces/acknowledgement.typ"
-      
+
       let outline-numbering-base = numbering.with("1.")
       let outline-numbering(a0, ..args) = if a0 > 0 {
         h(1em * args.pos().len())
         outline-numbering-base(a0, ..args) + [ ]
       }
-      
+
       let outline-counter = counter("outline-counter")
       show outline.entry: it => {
         let has-part = if it.body.func() != none and "children" in it.body.fields() {
@@ -143,7 +143,7 @@
             }
           }
         }
-        
+
         if has-part == none {
           outline-counter.step(level: it.level + 1)
           outline-counter.display(outline-numbering)
@@ -152,14 +152,14 @@
         }
         it
       }
-      
+
       outline(depth: 1, fill: repeat[.])
     }
-    
+
     if project-meta.book != none {
       project-meta.book.summary.map(it => visit-summary(it, styles)).sum()
     }
   })
-  
+
   content
 }
