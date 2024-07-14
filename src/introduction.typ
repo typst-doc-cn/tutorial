@@ -42,14 +42,7 @@ Typst 是撰写长篇文本（如论文、文章、书籍、报告和作业）�
 
 == 使用VSCode编辑（推荐）
 
-打开扩展界面，搜索并安装两个插件：
-
-+ `nvarner.typst-lsp`：以获得LSP服务。
-  - 它为你提供语法高亮。
-  - 它为你提供自动的代码补全。
-  - 它为你提供自动的代码格式化。
-+ `mgt19937.typst-preview`：以获得即时预览服务。
-  - 它为你提供预览服务。
+打开扩展界面，搜索并安装 tinymist 插件。它会为你提供语法高亮，代码补全，代码格式化，即时预览等功能。
 
 #figure(image("/assets/files/editor-vscode.png"), caption: [本书作者在VSCode中预览并编辑本文的瞬间])
 
