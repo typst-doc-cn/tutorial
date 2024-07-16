@@ -138,6 +138,7 @@
   ) if is-web-target
 
   // set text style
+  set text(weight: "regular") if is-web-target
   set text(
     font: main-font,
     size: main-size,
@@ -165,7 +166,6 @@
 
   // Set text, spacing for headings
   // Render a hash to hint headings instead of bolding it as well if it's for web.
-  show heading: set text(weight: "regular") if is-web-target
   show heading: it => {
     let it = {
       set text(size: heading-sizes.at(it.level))
