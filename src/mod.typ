@@ -295,11 +295,14 @@
           raw(" ")
           highlighter(name, "method")
           raw("(")
-          fn.params.map(param => {
-            highlighter(param.name, "var")
-            ": "
-            param.types.map(show-type).join()
-          }).join(raw(", "))
+          fn
+            .params
+            .map(param => {
+                highlighter(param.name, "var")
+                ": "
+                param.types.map(show-type).join()
+              })
+            .join(raw(", "))
           raw(")")
           if fn.returns.len() > 0 {
             raw(" ")

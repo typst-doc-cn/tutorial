@@ -1,42 +1,45 @@
 // This is important for typst-book to produce a responsive layout
 // and multiple targets.
-#import "@preview/shiroa:0.1.0": get-page-width, target, is-web-target, is-pdf-target, plain-text
+#import "@preview/shiroa:0.1.0": get-page-width, target, is-web-target, is-pdf-target, plain-text, templates
+#import templates: *
 #import "/typ/templates/side-notes.typ": side-attrs
 
+// Metadata
 #let page-width = get-page-width()
 #let is-pdf-target = is-pdf-target()
 #let is-web-target = is-web-target()
 
-// todo: move theme style parser to another lib file
-#let theme-target = if target.contains("-") {
-  target.split("-").at(1)
-} else {
-  "light"
-}
-#let theme-style = toml("theme-style.toml").at(theme-target)
+// Theme (Colors)
+#let (
+  style: theme-style,
+  is-dark: is-dark-theme,
+  is-light: is-light-theme,
+  main-color: main-color,
+  dash-color: dash-color,
+  code-extra-colors: code-extra-colors,
+) = book-theme-from(toml("theme-style.toml"), xml: it => xml(it))
 
-#let is-dark-theme = theme-style.at("color-scheme") == "dark"
-#let is-light-theme = not is-dark-theme
-
-#let main-color = rgb(theme-style.at("main-color"))
-#let dash-color = rgb(theme-style.at("dash-color"))
-
-#let use-fandol-fonts = false
 // Sizes
 #let main-size = if is-web-target {
-  12pt
+  16pt
 } else {
   10.5pt
 }
+#let heading-sizes = (26pt, 22pt, 14pt, 12pt, main-size)
+#let list-indent = 0.5em
 
+// Fonts
+#let use-fandol-fonts = false
 #let main-font-cn = {
-  if use-fandol-fonts {
+  if is-web-target {
+    ("Noto Sans CJK SC",)
+  } else if use-fandol-fonts {
     ("FandolSong",)
   }
   ("Source Han Serif SC", "Source Han Serif TC")
 }
 
-#let code-font-cn = ("Microsoft YaHei",)
+#let code-font-cn = ("Noto Sans CJK SC",)
 
 #let main-font = if use-fandol-fonts {
   ("New Computer Modern", ..main-font-cn)
@@ -160,51 +163,23 @@
   // show regex("[a-zA-Z\s\#\[\]]+"): set text(baseline: -0.05em)
   // show regex("[“”]+"): set text(font: main-font-cn)
 
-  // render a dash to hint headings instead of bolding it.
+  // Set text, spacing for headings
+  // Render a hash to hint headings instead of bolding it as well if it's for web.
   show heading: set text(weight: "regular") if is-web-target
-  let list-indent = 0.5em
-  set enum(
-    indent: list-indent * 0.618,
-    body-indent: list-indent,
-  )
-  set list(
-    indent: list-indent * 0.618,
-    body-indent: list-indent,
-  )
-  set par(leading: 0.7em)
-  set block(spacing: 0.7em * 1.5)
   show heading: it => {
-    set text(size: heading-sizes.at(it.level))
-    set block(
+    let it = {
+      set text(size: heading-sizes.at(it.level))
+      if is-web-target {
+        heading-hash(it, hash-color: dash-color)
+      }
+      it
+    }
+
+    block(
       spacing: 0.7em * 1.5 * 1.2,
       below: 0.7em * 1.2,
+      it,
     )
-
-    // if it.level >= 3 {
-    //   box(text(it, size: main-size, font: "Source Han Sans SC", weight: 500)) + h(0.5em)
-    // } else {
-    //   it
-    // }
-    it
-    if is-web-target {
-      let title = plain-text(it.body).trim()
-      update-ld(title)
-      locate(loc => {
-        let dest = get-ld(loc, title)
-        style(styles => {
-          let h = measure(it.body, styles).height
-          place(
-            left,
-            dx: -20pt,
-            dy: -h - main-size,
-            [
-              #set text(fill: dash-color)
-              #link(loc)[\#] #dest
-            ],
-          )
-        })
-      })
-    }
   }
 
   // link setting

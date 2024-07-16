@@ -1,9 +1,5 @@
 {
   "typst-preview.invertColors": "auto",
-  "typst-preview.fontPaths": [
-    "${workspaceFolder}/assets/fonts",
-    "${workspaceFolder}/assets/typst-fonts"
-  ],
   "tinymist.fontPaths": [
     "${workspaceFolder}/assets/fonts",
     "${workspaceFolder}/assets/typst-fonts"
@@ -13,5 +9,6 @@
   "tinymist.formatterMode": "typstyle",
   "[typst]": {
     "editor.inlayHints.enabled": "off"
-  }
+  },
+  "tinymist.hoverPeriscope": "enable"
 }
