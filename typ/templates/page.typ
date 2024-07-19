@@ -239,7 +239,9 @@
 
 
   show <typst-raw-func>: it => {
-    it.lines.at(0).body.children.slice(0, -2).join()
+    let children = it.lines.at(0).body.children
+    let rb = children.position(e => e.at("text", default: none) == "(")
+    children.slice(0, rb).join()
   }
 
 
