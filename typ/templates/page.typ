@@ -220,6 +220,7 @@
         width: 100%,
         inset: (x: 4pt, y: 5pt),
         radius: 2pt,
+        stroke: none,
         fill: code-extra-colors.at("bg"),
         [
           #set text(font: code-font)
@@ -237,6 +238,9 @@
     }
   }
 
+  // figure setting
+  set rect(stroke: main-color)
+  set table(stroke: main-color)
 
   show <typst-raw-func>: it => {
     let children = it.lines.at(0).body.children
