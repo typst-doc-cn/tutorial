@@ -2,6 +2,7 @@
 // and multiple targets.
 #import "@preview/shiroa:0.1.0": get-page-width, target, is-web-target, is-pdf-target, plain-text, templates
 #import templates: *
+#import "template-link.typ": *
 #import "/typ/templates/side-notes.typ": side-attrs
 
 // Metadata
@@ -25,8 +26,32 @@
 } else {
   10.5pt
 }
-#let heading-sizes = (26pt, 22pt, 14pt, 12pt, main-size)
+
+#let heading-sizes = if is-web-target {
+  (36pt, 26pt, 22pt, 18pt, main-size)
+} else {
+  (26pt, 22pt, 14pt, 12pt, main-size)
+}
+#assert(
+  heading-sizes.at(-1) < heading-sizes.at(-2),
+  message: "The second smallest heading size should be larger than the paragraph size (main-size).",
+)
+
 #let list-indent = 0.5em
+#let par-leading = if is-web-target {
+  0.8em
+} else {
+  // typst's default
+  0.65em
+}
+// 1.2, 1.5 * this parameter
+#let block-spacing = if is-web-target {
+  par-leading * 1.5
+} else {
+  0.7em
+}
+#let heading-below = block-spacing * 1.
+#let heading-spacing = heading-below * 1.5
 
 // Fonts
 #let use-fandol-fonts = false
@@ -102,7 +127,6 @@
 #let project(title: "Typst中文教程", authors: (), kind: "page", body) = {
   let is-ref-page = kind == "reference-page"
   let is-page = kind == "page"
-  let heading-sizes = (26pt, 22pt, 14pt, 12pt, main-size)
 
   // set basic document metadata
   set document(
@@ -145,6 +169,7 @@
     lang: "zh",
     region: "cn",
   )
+  set block(spacing: block-spacing)
 
   let ld = state("label-disambiguator", (:))
   let update-ld(k) = ld.update(it => {
@@ -176,8 +201,8 @@
     }
 
     block(
-      spacing: 0.7em * 1.5 * 1.2,
-      below: 0.7em * 1.2,
+      spacing: heading-spacing,
+      below: heading-below,
       it,
     )
   }
@@ -229,7 +254,7 @@
   }
 
   // Main body.
-  set par(justify: true)
+  set par(leading: par-leading, justify: true)
 
   if is-ref-page {
     let side-space = 4 * main-size
