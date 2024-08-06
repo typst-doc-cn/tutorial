@@ -25,32 +25,34 @@
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
     = 基础教程 — 脚本Ⅱ
-    - #chapter("basic/modulize-modules.typ")[模块化文档]
+    - #chapter("basic/modulize-modules.typ")[模块化]
       - #chapter("basic/modulize-modules.typ")[文件与模块]
       - #chapter("basic/modulize-packages.typ")[使用外部库]
       - #chapter("basic/modulize-multi-files-doc.typ")[多文件文档]
     // 5. 状态化排版
     // - 状态
     // - 计数器
-    - #chapter("basic/modulize-modules.typ")[状态化文档]
+    - #chapter("basic/modulize-modules.typ")[状态化]
       - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
       - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
       - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
+    = 基础教程 — 附录Ⅰ
+    - #chapter("basic/reference-grammar.typ")[语法示例检索表]
+    - #chapter("basic/reference-utils.typ")[常用函数表]
+    - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
+    - #chapter(none)[特殊Unicode字符]
     = 基础参考
     - #chapter("basic/reference-typebase.typ")[基本类型]
     - #chapter("basic/reference-type-builtin.typ")[内置类型]
     - #chapter("basic/reference-date.typ")[时间类型]
-    - #chapter("basic/reference-data-process.typ")[数据读写与数据处理]
-    - #chapter("basic/reference-visualization.typ")[图形与几何元素]
-    - #chapter("basic/reference-color.typ")[颜色、色彩渐变与模式]
+    // - #chapter("basic/reference-visualization.typ")[图形与几何元素]
+    // - #chapter("basic/reference-color.typ")[颜色、色彩渐变与模式]
+    - #chapter("basic/reference-data-process.typ")[数据读写]
+    - #chapter("basic/reference-data-process.typ")[数据处理]
     - #chapter("basic/reference-calculation.typ")[数值计算]
     - #chapter("basic/reference-math-mode.typ")[数学模式]
-    - #chapter(none)[特殊Unicode字符]
-    - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
+    - #chapter("basic/reference-bibliography.typ")[参考文献]
     - #chapter("basic/reference-wasm-plugin.typ")[WASM插件]
-    - #chapter("basic/reference-bibliography.typ")[导入和使用参考文献]
-    - #chapter("basic/reference-utils.typ")[常用函数表]
-    - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     = 进阶教程 — 排版Ⅲ
     // - #chapter("basic/writing-chinese.typ")[数学排版]
     - #chapter("basic/writing-chinese.typ")[中文排版]
@@ -113,17 +115,17 @@
     - #chapter("graph/statistics.typ")[统计图]
     - #chapter("graph/state-machine.typ")[状态机]
     - #chapter("graph/electronics.typ")[电路图]
+    = 进阶教程 — 附录Ⅱ
+    - #chapter("intermediate/reference-grammar.typ")[语法示例检索表Ⅱ]
+    - #chapter("template/slides.typ")[演示文稿（PPT）]
+    - #chapter("template/paper.typ")[论文模板]
+    - #chapter("template/book.typ")[书籍模板]
     = 进阶参考
     - #chapter("intermediate/reference-counter-state.typ")[计数器和状态]
     - #chapter("intermediate/reference-length.typ")[长度单位]
     - #chapter("intermediate/reference-layout.typ")[布局函数]
     - #chapter("intermediate/reference-table.typ")[表格]
     - #chapter("intermediate/reference-outline.typ")[文档大纲]
-    - #chapter("intermediate/reference-grammar.typ")[语法示例检索表Ⅱ]
-    = 附录：模板
-    - #chapter("template/slides.typ")[演示文稿（PPT）]
-    - #chapter("template/paper.typ")[论文模板]
-    - #chapter("template/book.typ")[书籍模板]
   ],
 )
 
