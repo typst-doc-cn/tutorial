@@ -186,6 +186,32 @@
   )
 })
 
+#let fg-red = main-color.mix(red)
+#let todo-color = fg-red
+#let todo-box(content) = locate(loc => {
+  let attr = side-attrs.at(loc)
+  let ext = attr.width + attr.gutter
+  move(
+    dx: -ext,
+    block(
+      width: 100% + ext,
+      breakable: false,
+      inset: (x: 0.65em, y: 0.65em, left: 0.65em * 0.6),
+      radius: 4pt,
+      fill: fg-red.transparentize(80%),
+      {
+        set text(fill: fg-red)
+        stack(
+          dir: ltr,
+          move(dy: 0.4em, text(size: 0.5em)[todo]),
+          0.2em,
+          box(width: 100% - 1.2em, v(0.2em) + content),
+        )
+      },
+    ),
+  )
+})
+
 /// This function is to render a text string in monospace style and function
 /// color in your defining themes.
 ///
