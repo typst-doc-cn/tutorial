@@ -75,7 +75,7 @@ Typst较LaTeX的一个有趣的特色是内置了很多方法对颜色进行计�
 #square(fill: blue.mix(green))
 ```)
 
-还有一些其他不太常见的颜色计算，详见#link("https://typst.app/docs/reference/visualize/color/#definitions-lighten")[《Typst Docs: Color Operations》]。
+还有一些其他不太常见的颜色计算，详见#link("https://typst.app/docs/reference/visualize/color/#definitions-lighten")[《Typst Docs: Color operations》]。
 
 == 渐变色
 
@@ -93,7 +93,7 @@ Typst较LaTeX的一个有趣的特色是内置了很多方法对颜色进行计�
   sqr(gradient.conic ))
 ```)
 
-从字面意思理解`color.map.rainbow`是Typst为你预定义的一个颜色数组，按顺序给出了彩虹渐变的颜色。还有一些其他预定义的颜色数组，详见《》。
+从字面意思理解`color.map.rainbow`是Typst为你预定义的一个颜色数组，按顺序给出了彩虹渐变的颜色。还有一些其他预定义的颜色数组，详见#link("https://typst.app/docs/reference/visualize/color/#predefined-color-maps")[《Typst Docs: Predefined color maps》]。
 
 == 填充模式
 
