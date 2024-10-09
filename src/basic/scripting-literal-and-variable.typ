@@ -190,7 +190,7 @@ Typst还为你内置了一些特殊的数值，它们都是浮点数：
 $pi$=#calc.pi \
 $tau$=#calc.tau \
 $inf$=#calc.inf \
-NaN=#calc.nan \
+// NaN=#calc.nan \
 ```)
 
 === 字符串字面量 <grammar-string-literal>
@@ -864,3 +864,4 @@ todo参数解构。
 ][
   #q1
 ]
+
