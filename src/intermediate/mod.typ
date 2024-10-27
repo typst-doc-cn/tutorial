@@ -9,9 +9,15 @@
   eval(it.text, mode: "markup", scope: scope)
 }
 #let exec-code(it, scope: (:), res: none, ..args) = _exec-code(
-  it, res: eval-local(it, scope, res),  ..args)
+  it,
+  res: eval-local(it, scope, res),
+  ..args,
+)
 #let code(it, scope: (:), res: none, ..args) = _code(
-  it, res: eval-local(it, scope, res), ..args)
+  it,
+  res: eval-local(it, scope, res),
+  ..args,
+)
 
 #let frames(code, cjk-fonts: false, code-as: none, prelude: none) = {
 

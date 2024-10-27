@@ -9,7 +9,7 @@
 // 空字面量是纯粹抽象的概念，这意味着你在现实中很难找到对应的实体。就像是数学中的零与负数，空字面量自然产生于运算过程中。
 
 // #code(```typ
-// #repr((0, 1).find((_) => false)), 
+// #repr((0, 1).find((_) => false)),
 // #repr(if false [啊？])
 // ```)
 
@@ -371,14 +371,14 @@ Typst的整数是64位宽度的有符号整数。#ref-bookmark[`type:int`]
 
 *64位宽度*整数的意思是，Typst允许你使用的整数是有限大的。正数、负数与整数均分$2^64$个数字。因此：
 - 最大的正整数是$2^63-1$。
-  
+
   #code(```typ
   #int(9223372036854775807)
   ```)
-- 最小的负整数是$-2^63$。
-  
+- 最小的负整数是$-2^63$。（todo: typst v0.12.0这里有一个bug）
+
   #code(```typ
-  #int(-9223372036854775808)
+  #int(-9223372036854775807-1)
   ```)
 
 Typst还允许你使用其他#term("representation")表示整数。借鉴了其他编程语言，使用`0x`、`0o`和`0b`分别可以指定十六进制、八进制和二进制整数：
@@ -593,21 +593,21 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 
 #glue-block[
   #ref-method-signature("str.to-unicode")
-  
+
   你可以使用#typst-func("str.to-unicode")#ref-bookmark[`method:to-unicode`\ `of str`]函数获得一个字符的#term("codepoint")表示：
-  
+
   #code(```typ
   #"a".to-unicode(),
   #"我".to-unicode()
   ```)
-  
+
   #pro-tip[
     显然，不是所有的“字符”都可以应用`to-unicode`方法。
-    
+
     #```typ
     #"ã".to-unicode() /* 不能编译 */
     ```
-    
+
     这是因为视觉上为单个字符的ã是一个#term("grapheme cluster")，包含多个码位。
   ]
 ]
@@ -626,33 +626,33 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 你可以使用#typst-func("str.len")#ref-bookmark[`method:len`\ `of str`]函数获得一个字符串的*字节表示的长度*：
 
 #code(```typ
-#"abc".len(), 
-#"香風とうふ店".len(), 
+#"abc".len(),
+#"香風とうふ店".len(),
 #"ã".len()
 ```)
 
 你可能希望得到一个字符串的#term("codepoint width")，这时你可以组合以下方法：
 #code(```typ
-#"abc".codepoints().len(), 
-#"香風とうふ店".codepoints().len(), 
+#"abc".codepoints().len(),
+#"香風とうふ店".codepoints().len(),
 #"ã".codepoints().len()
 ```)
 
 你可能希望得到一个字符串的#term("grapheme cluster width")，这时你可以组合以下方法：
 #code(```typ
-#"abc".clusters().len(), 
-#"香風とうふ店".clusters().len(), 
+#"abc".clusters().len(),
+#"香風とうふ店".clusters().len(),
 #"ã".clusters().len()
 ```)
 
 #glue-block[
   #ref-method-signature("str.first")
-  
+
   你可以使用#typst-func("str.first")#ref-bookmark[`method:first`\ `of str`]函数获得一个字符串的第一个#term("grapheme cluster")：
-  
+
   #code(```typ
-  #"Wee".first(), 
-  #"我 们 俩".first(), 
+  #"Wee".first(),
+  #"我 们 俩".first(),
   #"\u{0061}\u{0303}\u{0061}".first()
   ```)
 ]
@@ -661,9 +661,9 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 你可以使用#typst-func("str.last")#ref-bookmark[`method:last`\ `of str`]函数获得一个字符串的最后一个#term("grapheme cluster")：
 
 #code(```typ
-#"Wee".last(), 
-#"我 们 俩".last(), 
-#"\u{0061}\u{0303}\u{0061}".last(), 
+#"Wee".last(),
+#"我 们 俩".last(),
+#"\u{0061}\u{0303}\u{0061}".last(),
 #"\u{0061}\u{0061}\u{0303}".last()
 ```)
 
@@ -672,9 +672,9 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 你可以使用#typst-func("str.at")#ref-bookmark[`method:at`\ `of str`]函数获得一个字符串位于*字节偏移量*为`offset`的#term("grapheme cluster")：
 
 #code(```typ
-#"我 们 俩".at(0), 
+#"我 们 俩".at(0),
 #"我 们 俩".at(3),
-#"我 们 俩".at(4), 
+#"我 们 俩".at(4),
 #"我 们 俩".at(8)
 ```)
 
@@ -685,14 +685,14 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 你可以使用#typst-func("str.slice")#ref-bookmark[`method:slice`\ `of str`]函数截取字节偏移量从`start`到`end`的子串：
 
 #code(```typ
-#repr("我 们 俩".slice(0, 11)), 
+#repr("我 们 俩".slice(0, 11)),
 #repr("我 们 俩".slice(4, 8)),
 ```)
 
 `end`参数可以省略：#ref-bookmark[`param:end`\ of `str.slice`]
 
 #code(```typ
-#repr("我 们 俩".slice(0)), 
+#repr("我 们 俩".slice(0)),
 #repr("我 们 俩".slice(4)),
 ```)
 
@@ -752,20 +752,20 @@ Typst的字符串是#term("utf-8 encoding")的字节序列。#ref-bookmark[`type
 你可以使用#typst-func("str.split")#ref-bookmark[`method:split`\ `of str`]函数将一个字符串依照空白字符拆分：
 
 #code(```typ
-#"我 们仨".split(), 
+#"我 们仨".split(),
 ```)
 
 #glue-block[
   #ref-method-signature("str.rev")
-  
+
   你可以使用#typst-func("str.rev")#ref-bookmark[`method:rev`\ `of str`]函数将一个字符串逆转：
-  
+
   #code(```typ
   #"abcdedfg".rev()
   ```)
-  
+
   逆转时Typst会为你考虑#term("grapheme cluster")。
-  
+
   #code(```typ
   #"ãb".rev()
   ```)

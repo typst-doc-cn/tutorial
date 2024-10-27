@@ -59,9 +59,10 @@
               pad(x: 1cm, y: 1cm)[
                 #set text(size: 36pt)
                 #v(1em)
-                #locate(loc => {
+                #context {
+                  let loc = here()
                   heading([Part.#p-num(..p.at(loc))#sym.space] + it)
-                })
+                }
               ],
             ),
           ),
@@ -103,8 +104,8 @@
       background: [
         #place({
           set block(spacing: -0.1em)
-          image("./circuit-board.svg")
-          image("./circuit-board.svg")
+          image("./circuit-board.svg", width: 100%)
+          image("./circuit-board.svg", width: 100%)
         })
         #move(dy: 3%, scale(x: -130%, y: 130%, rotate(38.2deg, image("./rustacean-flat-gesture.svg", width: 130%))))
       ],
@@ -115,8 +116,9 @@
     (styles.cover)(display-title)
   }
 
-  locate(loc => {
-    let project-meta = (title: title, display-title: display-title, book: book-meta-state.final(loc), styles: styles)
+  context {
+    let loc = here()
+    let project-meta = (title: title, display-title: display-title, book: book-meta-state.final(), styles: styles)
 
     {
       // inherit from page setting
@@ -146,7 +148,7 @@
 
         if has-part == none {
           outline-counter.step(level: it.level + 1)
-          outline-counter.display(outline-numbering)
+          context outline-counter.display(outline-numbering)
         } else {
           outline-counter.step(level: 1)
         }
@@ -159,7 +161,7 @@
     if project-meta.book != none {
       project-meta.book.summary.map(it => visit-summary(it, styles)).sum()
     }
-  })
+  }
 
   content
 }

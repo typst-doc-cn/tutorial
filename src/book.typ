@@ -25,17 +25,14 @@
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
     = 基础教程 — 脚本Ⅱ
-    - #chapter("basic/modulize-modules.typ")[模块化]
-      - #chapter("basic/modulize-modules.typ")[文件与模块]
-      - #chapter("basic/modulize-packages.typ")[使用外部库]
-      - #chapter("basic/modulize-multi-files-doc.typ")[多文件文档]
-    // 5. 状态化排版
-    // - 状态
-    // - 计数器
-    - #chapter("basic/modulize-modules.typ")[状态化]
-      - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
-      - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
-      - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
+    - #chapter("intermediate/modulize-modules.typ")[模块化]
+    - #chapter("intermediate/modulize-packages.typ")[外部库]
+    - #chapter("intermediate/modulize-multi-files.typ")[多文件]
+    - #chapter("intermediate/content-stateful-2.typ")[计数器]
+    - #chapter("intermediate/content-stateful.typ")[状态化]
+    // - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
+    // - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
+    // - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
     = 基础教程 — 附录Ⅰ
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     - #chapter("basic/reference-utils.typ")[常用函数表]

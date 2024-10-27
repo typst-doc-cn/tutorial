@@ -58,9 +58,11 @@ Typst会将你提供的任意长度单位都统一成点单位，以便进行长
     columns: 5,
     "",
     ..("pt", "mm", "cm", "in").map(e => raw("=?" + e)),
-    ..units.map(((l, u)) => {
-      (raw("1" + u, lang: "typc"),) + methods.map(method => [#calc.round(method(l), digits: 2)])
-    }).flatten(),
+    ..units
+      .map(((l, u)) => {
+          (raw("1" + u, lang: "typc"),) + methods.map(method => [#calc.round(method(l), digits: 2)])
+        })
+      .flatten(),
   )
 }
 

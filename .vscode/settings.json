@@ -9,6 +9,5 @@
   "tinymist.formatterMode": "typstyle",
   "[typst]": {
     "editor.inlayHints.enabled": "off"
-  },
-  "tinymist.hoverPeriscope": "enable"
+  }
 }
