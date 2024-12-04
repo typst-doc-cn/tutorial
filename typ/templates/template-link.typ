@@ -20,25 +20,25 @@
 
 #let heading-reference(it, d: 1) = make-unique-label(it.body, disambiguator: d)
 
+#let enable-heading-hash = state("enable-heading-hash", true)
+
 #let heading-hash(it, hash-color: blue) = {
   let title = plain-text(it.body)
   if title != none {
     let title = title.trim()
     update-label-disambiguator(title)
-    context (
-      {
-        let loc = here()
-        let dest = get-label-disambiguator(loc, title)
-        let h = measure(it.body).height
-        place(
-          left,
-          dx: -16pt,
-          [
-            #set text(fill: hash-color)
-            #link(loc)[\#] #dest
-          ],
-        )
-      }
-    )
+    context if enable-heading-hash.get() {
+      let loc = here()
+      let dest = get-label-disambiguator(loc, title)
+      let h = measure(it.body).height
+      place(
+        left,
+        dx: -16pt,
+        [
+          #set text(fill: hash-color)
+          #link(loc)[\#] #dest
+        ],
+      )
+    }
   }
 }

@@ -3,6 +3,7 @@
 #import "/typ/templates/term.typ": _term
 #import "/typ/templates/side-notes.typ": side-note, side-attrs
 #import "/typ/templates/page.typ": main-color, get-page-width
+#import "/typ/templates/template-link.typ": enable-heading-hash
 
 #import "/typ/typst-meta/docs.typ": typst-v11
 
@@ -111,15 +112,20 @@
   rect(
     width: 100%,
     inset: 10pt,
-    {
+    context {
       // Don't corrupt normal headings
       set heading(outlined: false)
+
+      let prev = enable-heading-hash.get()
+      enable-heading-hash.update(false)
 
       if res != none {
         res
       } else {
         eval(cc.text, mode: "markup", scope: scope)
       }
+
+      enable-heading-hash.update(prev)
     },
   )
 }
