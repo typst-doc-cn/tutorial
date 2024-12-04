@@ -32,9 +32,6 @@
     - #chapter("intermediate/content-stateful.typ")[Typst架构与原理]
     - #chapter("intermediate/content-stateful-2.typ")[查询文档状态]
     - #chapter("intermediate/content-stateful-3.typ")[维护文档状态]
-    // - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
-    // - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
-    // - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
     = 基础教程 — 附录Ⅰ
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     - #chapter("basic/reference-utils.typ")[常用函数表]

@@ -1,10 +1,10 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "外部库")
+#show: book.page.with(title: "使用外部库")
 
-除此之外，可以从特殊的路径从网络导入外部模块，即外部库（external packages）。Typst的外部库机制可能不是世界上最精简的，但是我所见过当中最精简的。它可能更稍显简陋，但已经有上百个外部库通过官方渠道发布，并足以满足我们日常生活的使用。
+除此之外，可以从特殊的路径从网络导入外部「模块」，即外部「库」（packages）。Typst的外部库机制可能不是世界上最精简的，但是我所见过当中最精简的。它可能更稍显简陋，但已经有上百个外部库通过官方渠道发布，并足以满足我们日常生活的使用。
 
-在Typst中使用外部库极为简单，你只需要`import`特定的路径就能访问其内部的变量声明。例如你可以导入一个用于绘画自动机的外部库：
+你只需要`import`特定的路径就能访问其内部的变量声明。例如，导入一个用于绘画自动机的外部库：
 
 #code(```typ
 #import "@preview/fletcher:0.4.0" as fletcher: node, edge
@@ -69,50 +69,44 @@
 
 首先，Typst会感知你系统上的“数据文件夹”和“缓存文件夹”并在其中存储库代码。
 
-Typst将会在`{cache-dir}/`#text(green, `typst/packages`)中缓存从网络下载的库代码。其中`{cache-dir}`在不同的操作系统上：
-- 在Linux上对应为`$XDG_CACHE_HOME` or `~/.cache`。
-- 在macOS上对应为`~/Library/Caches`。
-- 在Windows上对应为`%LOCALAPPDATA%`。
+Typst将会检查`{data-dir}/`#text(green, `typst/packages`)中是否包含相应的库，*随后*会在`{cache-dir}/`#text(green, `typst/packages`)中检查和缓存从网络下载的库代码。其中数据文件夹（`{data-dir}`）和缓存文件夹（`{cache-dir}`）在不同的操作系统上：
 
-Typst同时会检查`{data-dir}/`#text(green, `typst/packages`)中是否包含相应的库。其中`{data-dir}`在不同的操作系统上：
-- 在Linux上对应为`$XDG_DATA_HOME` or ~/.local/share。
-- 在macOS上对应为`~/Library/Application Support`。
-- 在Windows上对应为`%APPDATA%`。
+#{
+  set align(center)
+  table(
+    columns: 3,
+    [操作系统], [数据文件夹], [缓存文件夹],
+    [Linux], [`$XDG_DATA_HOME`或`~/.local/share`], [`$XDG_CACHE_HOME`或`~/.cache`],
+    [macOS], [`~/Library/Application Support`], [`~/Library/Caches`],
+    [Windows], [`%APPDATA%`], [`%LOCALAPPDATA%`],
+  )
+}
+
 
 #let breakable-path(..contents) = contents.pos().join([#sym.zws`/`#sym.zws])
 
-当你尝试引入`preview`命名空间中的外部库#breakable-path(
+例如，当引入外部库#breakable-path(
   text(red, `@preview`),
   [#text(eastern, `fletcher`)`:`#text(orange, `0.4.0`)],
-)时，Typst会严格*按顺序*做如下事情。
-+ 检查数据文件夹。
+)时，Typst会严格*按顺序*检查并解析路径：数据文件夹中的#breakable-path(
+  `{data-dir}`,
+  text(green, `typst/packages`),
+  text(red, `preview`),
+  text(eastern, `fletcher`),
+  text(orange, `0.4.0`)
+)和缓存文件夹中的#breakable-path(
+  `{cache-dir}`,
+  text(green, `typst/packages`),
+  text(red, `preview`),
+  text(eastern, `fletcher`),
+  text(orange, `0.4.0`)
+)。Typst会将库路径映射到你数据文件夹或缓存文件夹，优先按顺序使用已经存在的库代码，并按需从网络下载外部库。
 
-  检查是否包含对应库，其应当位于#breakable-path(
-    `{data-dir}`,
-    text(green, `typst/packages`),
-    text(red, `preview`),
-    text(eastern, `fletcher`),
-    text(orange, `0.4.0`)
-  )。如果有，那么解析路径为对应库路径。
-+ 检查缓存文件夹。
+这意味着你可以拥有以下几条特性。
 
-  检查是否包含对应库，其应当位于#breakable-path(
-    `{cache-dir}`,
-    text(green, `typst/packages`),
-    text(red, `preview`),
-    text(eastern, `fletcher`),
-    text(orange, `0.4.0`)
-  )。如果有，那么直接解析路径为对应库路径。否则从网络下载库代码至对应位置。并解析路径为对应库路径。
-
-简单来说，Typst会将库路径映射到你数据文件夹或缓存文件夹，优先按顺序使用已经存在的库代码，并按需从网络下载外部库。
-
-Typst的该规则意味着你可以拥有以下几条特性。
-
-其一，若你已经下载了网络库到本地，再次访问将不会再产生网络请求和检查远程库代码的状态。
-
-其二，你可以将本地库存储到数据文件夹。特别地，你可以在数据文件夹中的`preview`文件夹中存储库，以*覆盖*缓存文件夹中已经下载的库。这有利于你调试或临时使用即将发布的外部库。
-
-其三，你可以在本地随意创建新的命名空间，对于#breakable-path(
+- 若你已经下载了网络库到本地，再次访问将不会再产生网络请求和检查远程库代码的状态。
+- 你可以将本地库存储到数据文件夹。特别地，你可以在数据文件夹中的`preview`文件夹中存储库，以*覆盖*缓存文件夹中已经下载的库。这有利于你调试或临时使用即将发布的外部库。
+- 你可以在本地随意创建新的命名空间，对于#breakable-path(
   text(red, `@my-namespace`),
   [#text(eastern, `my-package`)`:`#text(orange, `version`)],
 )，Typst将检查并使用你位于#breakable-path(
@@ -121,15 +115,15 @@ Typst的该规则意味着你可以拥有以下几条特性。
   text(red, `my-namespace`),
   text(eastern, `my-package`),
   text(orange, `version`)
-)的库代码。尽管Typst对命名空间没有限制，但建议你使用#text(red, `@local`)作为所有本地库的命名空间。
+)的库代码。尽管Typst对命名空间没有限制，但建议你使用 #text(red, `@local`)作为所有本地库的命名空间。
 
 == 构建和注册本地库
 
-本小节教你如何构建和注册本地库。由于库代码与文档代码并没有什么本质区别，这一节也供你参考组织多文件结构的Typst项目。
+本小节教你如何构建和注册本地库。
 
 === 元数据文件
 
-在库的根目录下必须有一个名称为`typst.toml`的元数据文件，这是对代码库的描述。内容示例如下：
+在库的*根目录*下必须有一个名称为`typst.toml`的元数据文件，这是对代码库的描述。内容示例如下：
 
 ```toml
 [package]
@@ -138,18 +132,11 @@ version = "0.1.0"
 entrypoint = "lib.typ"
 ```
 
-为了满足Typst对信息描述最低限度的要求，你仅需要填入以下三个字段：
-- `name`：该库的名字。
-- `version`：该库的版本号。
-- `entrypoint`：库的入口文件。
-
-其中，`entrypoint`字段建议始终为`lib.typ`，所以你仅需自行填写`name`和`version`字段即可满足最低要求。
+最低限度你仅需要填入以上三个字段，分别对应其名字、版本号和入口文件的路径。
 
 === 入口文件
 
-你可以在元数据文件中配置入口文件路径。一般来说，该文件对应为库的根目录下的`lib.typ`文件。
-
-你可以使用本节提及的《变量导出的三种方式》编写该文件。当导入该库时，其中的「变量声明」将提供给文档使用。
+一般来说，该文件对应为库的根目录下的`lib.typ`文件。你可以使用本节提及的《变量导出的三种方式》编写该文件。当导入该库时，其中的「变量声明」将提供给文档使用。
 
 === 示例库的文件组织
 
@@ -168,14 +155,7 @@ entrypoint = "lib.typ"
   text(eastern, `example`),
   text(orange, `0.1.0`),
   `typst.toml`
-)文件，并包含以下内容：
-
-```toml
-[package]
-name = "example"
-version = "0.1.0"
-entrypoint = "lib.typ"
-```
+)文件，并包含前文所述内容。
 
 创建#breakable-path(
   `{data-dir}`,
@@ -194,7 +174,7 @@ entrypoint = "lib.typ"
 这样你就可以在本地的任意文档中使用库中的`add`或`sub`函数了：
 
 ```typ
-#import "@local/example:0.1.0" as example: add, sub as subtract
+#import "@local/example:0.1.0" as example: add
 ```
 
 == 发布库到官方源
@@ -203,20 +183,9 @@ entrypoint = "lib.typ"
 
 == 再谈「根目录」
 
-在Typst编译器中，任意文件都被编码为以下两个字段的组合：
-+ `package`，表示该文件所属的库，将决定文件所属的「根目录」。
-+ `path`，表示该文件夹相对于库「根目录」的位置。
-
-如果`package`字段为空（```rs None```），那么表示该文件属于文档本身。这意味着文件路径的根目录为文档的根目录。
-
-否则，表示该文件属于某个库。考虑前面小节中Typst解析库文件夹的过程，文件路径的根目录将改变为你数据文件夹或缓存文件夹中的某个子文件夹。这意味着，如果在库中使用绝对路径或相对路径，「根目录」将发生相应改变。请回忆《绝对路径与相对路径》小节内容。
-
-例如在文件夹`@local/example:0.1.0`的内部，设使内部文件#breakable-path(
+出于安全考虑，每个库都*默认*只能访问其专属的「根目录」，即`typst.toml`文件所在的目录。这意味着，库中的绝对路径或相对路径依其专属的「根目录」解析。请回忆《绝对路径与相对路径》小节内容。例如在文件夹`@local/example:0.1.0`的内部，设使内部文件#breakable-path(
   `{data-dir}`,
-  text(green, `typst/packages`),
-  text(red, `local`),
-  text(eastern, `example`),
-  text(orange, `0.1.0`),
+  text(eastern, `{example-lib}`),
   `src/add-simd.typ`
 )中包含这样的代码。
 
@@ -228,15 +197,11 @@ entrypoint = "lib.typ"
 则「根目录」被解析为#breakable-path(
   `{data-dir}`,
   text(eastern, `{example-lib}`),
-)。
-
-绝对路径`/typst.toml`被解析为#breakable-path(
+)，绝对路径`/typst.toml`被解析为#breakable-path(
   `{data-dir}`,
   text(eastern, `{example-lib}`),
   `typst.toml`
-)
-
-相对路径`../typst.toml`被解析为#breakable-path(
+)，相对路径`../typst.toml`被解析为#breakable-path(
   `{data-dir}`,
   text(eastern, `{example-lib}`),
   `src`,
@@ -246,32 +211,31 @@ entrypoint = "lib.typ"
 
 == 函数与闭包中的路径解析
 
-这里有一个微妙的问题。在函数或闭包中请求解析一个绝对路径或相对路径，Typst会如何做？
+这里有一个微妙的问题。在函数或闭包中请求解析一个绝对路径或相对路径，Typst会如何做？答案是，任何路径解析都依附于路径解析代码所在文件。这句话有些晦涩，但例子却容易懂。这里举两个例子。
 
-答案是，任何路径解析都依附于路径解析代码所在文件。这句话有些晦涩，但例子却容易懂。这里举两个例子。
-
-假设函数在文档相对于根目录的`/packages/m1.typ`中被声明：假设其中有这样一个函数：
+假设函数在文档相对于根目录的#breakable-path(
+  text(eastern, `{example-lib}`),
+  `src`,
+  `m1.typ`
+)中有这样一个函数：
 
 ```typ
-#let parse-code(path) = {
-  let content = read(path)
-  return parse-text(content)
-}
+#let parse-code(path) = parse-text(read(path))
 ```
 
-那么无论我们在哪个文件引入了`parse-code`函数，其`read(path)`的路径解析都是固定的，其绝对路径相对于文档根目录，其相对路径相对于`/packages/m1.typ`的父目录。例如：
-- 调用`parse-code("/abc.typ")`时，该函数始终读取`/abc.typ`文件。
-- 调用`parse-code("../def.typ")`时，始终读取`/packages/../def.typ`文件。
+那么无论我们在哪个文件引入了`parse-code`函数，其`read(path)`的路径解析都是固定的，其绝对路径相对于文档根目录，其相对路径相对于#breakable-path(
+  text(eastern, `{example-lib}`),
+  `src`,
+  `m1.typ`
+)所在目录。例如调用`parse-code("../def.typ")`时，其始终读取#breakable-path(
+  text(eastern, `{example-lib}`),
+  `src/../def.typ`
+)文件。
 
-假设函数在某个库的`/src/m1.typ`中被声明，则其绝对路径相对于*库根目录*，其相对路径相对于`/src/m1.typ`的父目录。
-
-这种行为在有的时候不是你期望的，但你可以同样通过传递一个来自文档的闭包绕过该限制。例如，`parse-code`改写为：
+我们上一小节说过，每个库都*默认*只能访问其专属的「根目录」。这种行为在有的时候不是你期望的，但你可以同样通过传递一个来自文档的闭包绕过该限制。例如，`parse-code`改写为：
 
 ```typ
-#let parse-code(path, read-file: read) = {
-  let content = read-file(path)
-  return parse-text(content)
-}
+#let parse-code(path, read-file: read) = parse-text(read-file(path))
 ```
 
 并且在调用时传入一个读取文件的「回调函数」
