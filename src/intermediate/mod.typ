@@ -20,7 +20,6 @@
 )
 
 #let frames(code, cjk-fonts: false, code-as: none, prelude: none) = {
-
   if code-as != none {
     code-as
   } else {

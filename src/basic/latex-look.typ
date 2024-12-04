@@ -12,6 +12,6 @@
     above: 1.4em,
     below: 1em,
   )
-  
+
   content
 }

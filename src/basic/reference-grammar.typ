@@ -164,7 +164,7 @@
     [图像标题],
     refs.writing-markup.with(reference: <grammar-figure>),
     ````typ
-    #figure(```typ 
+    #figure(```typ
     #image("/assets/files/香風とうふ店.jpg")
     ```, caption: [用于加载香風とうふ店送外卖的宝贵影像的代码])
     ````,
@@ -329,7 +329,7 @@
     [下标],
     refs.writing-markup.with(reference: <grammar-subscript>),
     ````typ
-    威严满满#sub[抱头蹲防] 
+    威严满满#sub[抱头蹲防]
     ````,
   ),
   (
@@ -744,7 +744,7 @@
     ````typ
     #show <一整段话>: set text(fill: blue)
     #[$lambda$语言是世界上最好的语言。] <一整段话>
-    
+
     另一段话。
     ````,
   ),
@@ -761,7 +761,7 @@
     [获取位置],
     refs.content-scope-style.with(reference: <grammar-locate>),
     ````typ
-    #locate(loc => 
+    #locate(loc =>
       loc.position())
     ````,
   ),

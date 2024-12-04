@@ -9,5 +9,8 @@
   "tinymist.formatterMode": "typstyle",
   "[typst]": {
     "editor.inlayHints.enabled": "off"
+  },
+  "files.watcherExclude": {
+    "**/target": true
   }
 }

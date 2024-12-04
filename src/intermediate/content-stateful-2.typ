@@ -71,42 +71,63 @@
 
 使用「#typst-func("query")」函数你可以获得当前文档状态。
 
-#code(```typ
-#locate(loc => query(heading, loc))
-```, res: raw(```typc
-(
-  heading(body: [雨滴书 v0.1.2], level: 2, ..),
-  ..,
+#code(
+  ```typ
+  #locate(loc => query(heading, loc))
+  ```,
+  res: raw(
+    ```typc
+    (
+      heading(body: [雨滴书 v0.1.2], level: 2, ..),
+      ..,
+    )
+    ```.text,
+    lang: "typc",
+    block: false,
+  ),
 )
-```.text, lang: "typc", block: false))
 
 「#typst-func("query")」函数有两个参数。
 
 第一个参数是「选择器」，很好理解。它接受一个选择器，并返回被选中的所有元素的列表。
 
-#code(```typ
-#locate(loc => query(heading, loc))
-```, res: raw(```typc
-(
-  heading(body: [雨滴书 v0.1.2], level: 2, ..),
-  heading(body: [KiraKira 样式改进], level: 3, ..),
-  heading(body: [FuwaFuwa 脚本改进], level: 3, ..),
-  heading(body: [雨滴书 v0.1.1], level: 2, ..),
-  heading(body: [雨滴书 v0.1.0], level: 2, ..),
+#code(
+  ```typ
+  #locate(loc => query(heading, loc))
+  ```,
+  res: raw(
+    ```typc
+    (
+      heading(body: [雨滴书 v0.1.2], level: 2, ..),
+      heading(body: [KiraKira 样式改进], level: 3, ..),
+      heading(body: [FuwaFuwa 脚本改进], level: 3, ..),
+      heading(body: [雨滴书 v0.1.1], level: 2, ..),
+      heading(body: [雨滴书 v0.1.0], level: 2, ..),
+    )
+    ```.text,
+    lang: "typc",
+    block: false,
+  ),
 )
-```.text, lang: "typc", block: false))
 
 我们记得，选择器允许继续指定`where`条件过滤内容：
 
-#code(```typ
-#locate(loc => query(heading.where(level: 2), loc))
-```, res: raw(```typc
-(
-  heading(body: [雨滴书 v0.1.2], level: 2, ..),
-  heading(body: [雨滴书 v0.1.1], level: 2, ..),
-  heading(body: [雨滴书 v0.1.0], level: 2, ..),
+#code(
+  ```typ
+  #locate(loc => query(heading.where(level: 2), loc))
+  ```,
+  res: raw(
+    ```typc
+    (
+      heading(body: [雨滴书 v0.1.2], level: 2, ..),
+      heading(body: [雨滴书 v0.1.1], level: 2, ..),
+      heading(body: [雨滴书 v0.1.0], level: 2, ..),
+    )
+    ```.text,
+    lang: "typc",
+    block: false,
+  ),
 )
-```.text, lang: "typc", block: false))
 
 第二个参数是「位置」，就比较难以理解了。首先说明，`loc`并没有任何作用，即它是一个「哑参数」（Dummy Parameter）。
 
@@ -143,9 +164,12 @@ class Integer {
 
 页眉的设置方法是创建一条```typc set page(header)```规则：
 
-#frames-cjk(read("./stateful/q0.typ"), code-as: ```typ
-#set page(header: [这是页眉])
-```)
+#frames-cjk(
+  read("./stateful/q0.typ"),
+  code-as: ```typ
+  #set page(header: [这是页眉])
+  ```,
+)
 
 既然如此，只需要将`[这是页眉]`替换成一个`locate`内容，就能通过#typst-func("query")函数完成与「位置」相关的页眉设定：
 
@@ -210,83 +234,73 @@ let headings = query(heading.where(level: 2), loc)
 
 接着，该函数遍历给定的`headings`，对每个页码，都首先获取第一个标题元素：
 
-#code(```typc
-for h in headings {
-  if first-headings.at(h.page - 1) == none {
-    first-headings.at(h.page - 1) = h
-  }
-}
-```, res: eval(```typ
-#let fold-headings(headings) = {
-  let max-page-num = calc.max(..headings.map(it => it.page))
-  let first-headings = (none, ) * max-page-num
-
+#code(
+  ```typc
   for h in headings {
     if first-headings.at(h.page - 1) == none {
       first-headings.at(h.page - 1) = h
     }
   }
+  ```,
+  res: eval(
+    ```typ
+    #let fold-headings(headings) = {
+      let max-page-num = calc.max(..headings.map(it => it.page))
+      let first-headings = (none, ) * max-page-num
 
-  first-headings
-}
-#fold-headings((
-  (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 2),
-))
-```.text, mode: "markup"))
+      for h in headings {
+        if first-headings.at(h.page - 1) == none {
+          first-headings.at(h.page - 1) = h
+        }
+      }
+
+      first-headings
+    }
+    #fold-headings((
+      (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 2),
+    ))
+    ```.text,
+    mode: "markup",
+  ),
+)
 
 这里，```typc first-headings.at(h.page - 1)```意即获取当前页码对应在数组中的元素；`if`语句，如果对应页码对应的元素仍是```typc none```，那么就将当前的标题元素填入对应的位置中。
 
 同理，可以获得`last-headings`，存储每页的最后一个标题：
 
-#code(```typc
-let last-headings = (none, ) * max-page-num
-for h in headings {
-  last-headings.at(h.page - 1) = h
-}
-```, res: eval(```typ
-#let fold-headings(headings) = {
-  let max-page-num = calc.max(..headings.map(it => it.page))
+#code(
+  ```typc
   let last-headings = (none, ) * max-page-num
-
   for h in headings {
     last-headings.at(h.page - 1) = h
   }
+  ```,
+  res: eval(
+    ```typ
+    #let fold-headings(headings) = {
+      let max-page-num = calc.max(..headings.map(it => it.page))
+      let last-headings = (none, ) * max-page-num
 
-  last-headings
-}
-#fold-headings((
-  (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 2),
-))
-```.text, mode: "markup"))
+      for h in headings {
+        last-headings.at(h.page - 1) = h
+      }
+
+      last-headings
+    }
+    #fold-headings((
+      (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 2),
+    ))
+    ```.text,
+    mode: "markup",
+  ),
+)
 
 这里`for`语句意即：无论如何，都将当前的标题元素存入数组中。那么每页的最后一个标题总是能被存入到数组中。
 
 但是我们还没有考虑相邻情况。如果我们希望如果当前页面没有标题元素，则显示之前的标题。接下来我们来根据这个思路，组装正确的结果：
 
-#code(```typc
-let res-headings = (none, ) * max-page-num
-for i in range(res-headings.len()) {
-  res-headings.at(i) = if first-headings.at(i) != none {
-    first-headings.at(i)
-  } else {
-    last-headings.at(i) = last-headings.at(
-      calc.max(0, i - 1), default: none)
-    last-headings.at(i)
-  }
-}
-```, res: eval(```typ
-#let fold-headings(headings) = {
-  let max-page-num = calc.max(..headings.map(it => it.page))
-  let first-headings = (none, ) * max-page-num
-  let last-headings = (none, ) * max-page-num
-
-  for h in headings {
-    if first-headings.at(h.page - 1) == none {
-      first-headings.at(h.page - 1) = h
-    }
-    last-headings.at(h.page - 1) = h
-  }
-
+#code(
+  ```typc
   let res-headings = (none, ) * max-page-num
   for i in range(res-headings.len()) {
     res-headings.at(i) = if first-headings.at(i) != none {
@@ -297,20 +311,48 @@ for i in range(res-headings.len()) {
       last-headings.at(i)
     }
   }
+  ```,
+  res: eval(
+    ```typ
+    #let fold-headings(headings) = {
+      let max-page-num = calc.max(..headings.map(it => it.page))
+      let first-headings = (none, ) * max-page-num
+      let last-headings = (none, ) * max-page-num
 
-  res-headings
-}
-#fold-headings((
-  (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 2),
-))
-```.text, mode: "markup"))
+      for h in headings {
+        if first-headings.at(h.page - 1) == none {
+          first-headings.at(h.page - 1) = h
+        }
+        last-headings.at(h.page - 1) = h
+      }
+
+      let res-headings = (none, ) * max-page-num
+      for i in range(res-headings.len()) {
+        res-headings.at(i) = if first-headings.at(i) != none {
+          first-headings.at(i)
+        } else {
+          last-headings.at(i) = last-headings.at(
+            calc.max(0, i - 1), default: none)
+          last-headings.at(i)
+        }
+      }
+
+      res-headings
+    }
+    #fold-headings((
+      (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 2),
+    ))
+    ```.text,
+    mode: "markup",
+  ),
+)
 
 `res-headings`就是我们想要得到的结果。
 
 #let fold-headings(headings) = {
   let max-page-num = calc.max(..headings.map(it => it.page))
-  let first-headings = (none, ) * max-page-num
-  let last-headings = (none, ) * max-page-num
+  let first-headings = (none,) * max-page-num
+  let last-headings = (none,) * max-page-num
 
   for h in headings {
     if first-headings.at(h.page - 1) == none {
@@ -319,13 +361,15 @@ for i in range(res-headings.len()) {
     last-headings.at(h.page - 1) = h
   }
 
-  let res-headings = (none, ) * max-page-num
+  let res-headings = (none,) * max-page-num
   for i in range(res-headings.len()) {
     res-headings.at(i) = if first-headings.at(i) != none {
       first-headings.at(i)
     } else {
       last-headings.at(i) = last-headings.at(
-        calc.max(0, i - 1), default: none)
+        calc.max(0, i - 1),
+        default: none,
+      )
       last-headings.at(i)
     }
   }
@@ -337,27 +381,36 @@ for i in range(res-headings.len()) {
 
 情形一：假设文档的前段没有标题，该函数会将对应下标的结果置空：
 
-#code(```typ
-情形一：#fold-headings((
-  (body:"v2",page:3),(body:"v1",page:3),(body:"v0",page: 3),
-))
-```, scope: (fold-headings: fold-headings))
+#code(
+  ```typ
+  情形一：#fold-headings((
+    (body:"v2",page:3),(body:"v1",page:3),(body:"v0",page: 3),
+  ))
+  ```,
+  scope: (fold-headings: fold-headings),
+)
 
 情形二：假设一页有多个标题，那么，对应下表的结果为该页面的首个标题：
 
-#code(```typ
-情形二：#fold-headings((
-  (body:"v2",page:2),(body:"v1",page:2),(body:"v0",page: 3),
-))
-```, scope: (fold-headings: fold-headings))
+#code(
+  ```typ
+  情形二：#fold-headings((
+    (body:"v2",page:2),(body:"v1",page:2),(body:"v0",page: 3),
+  ))
+  ```,
+  scope: (fold-headings: fold-headings),
+)
 
 情形三：假设中间有页空缺，则对应下表的结果为前页的最后一个标题。
 
-#code(```typ
-情形三：#fold-headings((
-  (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 3),
-))
-```, scope: (fold-headings: fold-headings))
+#code(
+  ```typ
+  情形三：#fold-headings((
+    (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 3),
+  ))
+  ```,
+  scope: (fold-headings: fold-headings),
+)
 
 其中，情形一其实是情形三的特例：假设某一页没有标题，则对应下表的结果为前页的最后一个标题。如果不存在前页包含标题，则对应下表的结果为```typc none```。
 
@@ -376,7 +429,7 @@ for i in range(res-headings.len()) {
       // 否则，我们积累`last-headings`的结果
       last-headings.at(i) = last-headings.at(
         // 始终至少等于前一页的结果
-        calc.max(0, i - 1), 
+        calc.max(0, i - 1),
         // 默认没有结果
         default: none)
       // 其等于前页的最后一个标题
@@ -402,8 +455,8 @@ for i in range(res-headings.len()) {
 
 #let calc-headings(headings) = {
   let max-page-num = calc.max(..headings.map(it => it.page))
-  let first-headings = (none, ) * max-page-num
-  let last-headings = (none, ) * max-page-num
+  let first-headings = (none,) * max-page-num
+  let last-headings = (none,) * max-page-num
 
   for h in headings {
     if first-headings.at(h.page - 1) == none {
@@ -412,20 +465,25 @@ for i in range(res-headings.len()) {
     last-headings.at(h.page - 1) = h
   }
 
-  let res-headings = (none, ) * max-page-num
+  let res-headings = (none,) * max-page-num
   for i in range(res-headings.len()) {
     res-headings.at(i) = if first-headings.at(i) != none {
       first-headings.at(i)
     } else {
       last-headings.at(i) = last-headings.at(
-        calc.max(0, i - 1), default: none)
+        calc.max(0, i - 1),
+        default: none,
+      )
       last-headings.at(i)
     }
   }
 
-  (res-headings, if max-page-num > 0 {
-    last-headings.at(-1)
-  })
+  (
+    res-headings,
+    if max-page-num > 0 {
+      last-headings.at(-1)
+    },
+  )
 }
 
 ```typ
@@ -442,17 +500,20 @@ for i in range(res-headings.len()) {
 
 我们来简单测试一下：
 
-#code(```typ
-情形一：#calc-headings((
-  (body:"v2",page:3),(body:"v1",page:3),(body:"v0",page: 3),
-)).at(1) \
-情形二：#calc-headings((
-  (body:"v2",page:2),(body:"v1",page:2),(body:"v0",page: 3),
-)).at(1) \
-情形三：#calc-headings((
-  (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 3),
-)).at(1)
-```, scope: (calc-headings: calc-headings))
+#code(
+  ```typ
+  情形一：#calc-headings((
+    (body:"v2",page:3),(body:"v1",page:3),(body:"v0",page: 3),
+  )).at(1) \
+  情形二：#calc-headings((
+    (body:"v2",page:2),(body:"v1",page:2),(body:"v0",page: 3),
+  )).at(1) \
+  情形三：#calc-headings((
+    (body:"v2",page:1),(body:"v1",page:1),(body:"v0",page: 3),
+  )).at(1)
+  ```,
+  scope: (calc-headings: calc-headings),
+)
 
 很好，这样，下面的实现就完全正确了：
 
@@ -473,9 +534,12 @@ for i in range(res-headings.len()) {
 
 最后，让我们适配`calc-headings`到真实场景，并应用到页眉规则：
 
-#frames-cjk(read("./stateful/q1.typ"), code-as: ```typ
-// 这里有get-heading-at-page的实现..
+#frames-cjk(
+  read("./stateful/q1.typ"),
+  code-as: ```typ
+  // 这里有get-heading-at-page的实现..
 
-#set page(header: locate(loc => emph(
-  get-heading-at-page(loc))))
-```)
+  #set page(header: locate(loc => emph(
+    get-heading-at-page(loc))))
+  ```,
+)
