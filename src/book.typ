@@ -25,11 +25,13 @@
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
     = 基础教程 — 脚本Ⅱ
-    - #chapter("intermediate/modulize-modules.typ")[模块化]
-    - #chapter("intermediate/modulize-packages.typ")[外部库]
-    - #chapter("intermediate/modulize-multi-files.typ")[多文件]
-    - #chapter("intermediate/content-stateful-2.typ")[计数器]
-    - #chapter("intermediate/content-stateful.typ")[状态化]
+    - #chapter("intermediate/modulize-modules.typ")[文件与模块]
+    - #chapter("intermediate/modulize-packages.typ")[使用外部库]
+    - #chapter("intermediate/modulize-multi-files.typ")[多文件文档]
+    = 基础教程 — 排版Ⅲ
+    - #chapter("intermediate/content-stateful.typ")[Typst架构与原理]
+    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态]
+    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态]
     // - #chapter("intermediate/content-stateful.typ")[维护和查询文档状态]
     // - #chapter("intermediate/content-stateful-2.typ")[查询文档状态 -- 制作页眉标题法一]
     // - #chapter("intermediate/content-stateful-3.typ")[维护文档状态 -- 制作页眉标题法二]
@@ -50,7 +52,7 @@
     - #chapter("basic/reference-math-mode.typ")[数学模式]
     - #chapter("basic/reference-bibliography.typ")[参考文献]
     - #chapter("basic/reference-wasm-plugin.typ")[WASM插件]
-    = 进阶教程 — 排版Ⅲ
+    = 进阶教程 — 排版Ⅳ
     // - #chapter("basic/writing-chinese.typ")[数学排版]
     - #chapter("basic/writing-chinese.typ")[中文排版]
     // 6. 脚本Ⅱ

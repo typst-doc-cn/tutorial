@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "维护文档状态 —— 制作页眉标题法二")
+#show: book.page.with(title: [维护文档状态])
 
 在上一节（法一）中，我们仅靠「#typst-func("query")」函数就完成制作所要求页眉的功能。
 

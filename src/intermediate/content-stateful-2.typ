@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "查询文档状态 —— 制作页眉标题法一")
+#show: book.page.with(title: [查询文档状态])
 
 #import "/typ/embedded-typst/lib.typ": svg-doc, default-fonts, default-cjk-fonts
 
