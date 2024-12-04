@@ -106,8 +106,8 @@ typst watch file.typ
 #{
   set align(center)
   table(
-    columns: if get-page-width() < 600pt {
-      1fr
+    columns: if get-page-width() < 500pt {
+      (1fr, 1fr, 1fr, 1fr, 1fr, 1fr, 1fr)
     } else {
       (1fr, 1fr, 1fr, 5em, 5em, 5em, 10em)
     },
