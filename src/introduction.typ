@@ -106,7 +106,11 @@ typst watch file.typ
 #{
   set align(center)
   table(
-    columns: (1fr, 1fr, 1fr, 5em, 5em, 5em, 10em),
+    columns: if get-page-width() < 600pt {
+      1fr
+    } else {
+      (1fr, 1fr, 1fr, 5em, 5em, 5em, 10em)
+    },
     align: horizon + center,
     [名称], [编辑器], [编译器环境], [预览方案], [是否支持即时编译], [语言服务], [备注],
     [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀], align(left)[开箱即用，需要科学上网，无法git],

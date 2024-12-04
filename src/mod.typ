@@ -2,7 +2,7 @@
 #import "/typ/templates/page.typ"
 #import "/typ/templates/term.typ": _term
 #import "/typ/templates/side-notes.typ": side-note, side-attrs
-#import "/typ/templates/page.typ": main-color
+#import "/typ/templates/page.typ": main-color, get-page-width
 
 #import "/typ/typst-meta/docs.typ": typst-v11
 
