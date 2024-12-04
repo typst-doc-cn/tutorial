@@ -113,7 +113,7 @@ typst watch file.typ
     },
     align: horizon + center,
     [名称], [编辑器], [编译器环境], [预览方案], [是否支持即时编译], [语言服务], [备注],
-    [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀], align(left)[开箱即用，需要科学上网，无法git],
+    [WebAPP], [Code Mirror], [wasm], [渲染图片], [是], [优秀], align(left)[开箱即用],
     [VSCode], [VSCode], [native], [webview], [是], [良好], align(left)[简单上手，定制性差],
     [neovim], [neovim], [native], [webview], [是], [良好], align(left)[不易安装，定制性好],
     [Emacs], [Emacs], [native], [webview], [是], [良好], align(left)[难以安装],
