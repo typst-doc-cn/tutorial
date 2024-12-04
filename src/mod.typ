@@ -124,8 +124,14 @@
   )
 }
 
+#let _code-al = if get-page-width() >= 500pt {
+  left
+} else {
+  top
+}
+
 // al: alignment
-#let code(cc, code-as: none, res: none, scope: (:), eval: eval, exec-code: exec-code, al: left) = {
+#let code(cc, code-as: none, res: none, scope: (:), eval: eval, exec-code: exec-code, al: _code-al) = {
   let code-as = if code-as == none {
     cc
   } else {
@@ -134,13 +140,13 @@
 
   let vv = exec-code(cc, res: res, scope: scope, eval: eval)
   if al == left {
-    layout(lw => style(styles => {
+    layout(lw => context {
       let width = lw.width * 0.5 - 0.5em
       let u = box(width: width, code-as)
       let v = box(width: width, vv)
 
-      let u-box = measure(u, styles)
-      let v-box = measure(v, styles)
+      let u-box = measure(u)
+      let v-box = measure(v)
 
       let height = calc.max(u-box.height, v-box.height)
       stack(
@@ -154,7 +160,7 @@
           rect(height: height, width: width, inset: 10pt, vv.body)
         },
       )
-    }))
+    })
   } else {
     code-as
     vv

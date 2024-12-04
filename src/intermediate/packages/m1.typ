@@ -1,11 +1,5 @@
 
-一段内容
-
+XXX
 #let add(x, y) = x + y
-
-另一段内容
-
-#let sub = {
-  let sub(x, y) = x - y
-  sub
-}
+YYY
+#let sub(x, y) = x - y
