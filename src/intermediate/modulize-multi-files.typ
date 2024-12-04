@@ -8,11 +8,9 @@
 
 ```
 typ/packages
-├── util.typ
-└── util2.typ
+└── util.typ
 typ/templates
-├── book-template.typ
-└── note-template.typ
+└── book-template.typ
 documents/
 └── my-book/
     ├── main.typ
@@ -22,8 +20,7 @@ documents/
     │   └── chap1.typ
     └── part2/
         ├── mod.typ
-        ├── chap2.typ
-        └── chap3.typ
+        └── chapN.typ
 ```
 
 === 工作区内的模板与库

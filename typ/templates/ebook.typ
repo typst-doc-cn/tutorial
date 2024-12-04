@@ -57,7 +57,7 @@
               fill: dash-color.lighten(70%),
               height: 6.2cm,
               pad(x: 1cm, y: 1cm)[
-                #set text(size: 36pt)
+                #set text(size: 32pt)
                 #v(1em)
                 #context {
                   let loc = here()

@@ -67,9 +67,7 @@
 
 #code(```typ
 #repr({
-  [a]
-  set text(fill: blue)
-  [b]
+  [a]; set text(fill: blue); [b]
 })
 ```)
 
@@ -77,14 +75,8 @@
 
 #code(```typ
 #repr({
-  [d]
-  show raw: content => {
-    [c]
-    set text(fill: red)
-    content
-  }
+  [b]; show raw: set text(fill: red)
   [a]
-  `b`
 })
 ```)
 
@@ -109,14 +101,14 @@
 
 当一切布局与样式都计算好后，Typst将最终结果导出为各种格式的文件，例如PDF格式。
 
-如下图所示，Typst大致上分为四个执行阶段。这四个执行阶段并不完全相互独立，但有明显的先后顺序：
+我们回忆上一节讲过的内容，Typst大致上分为四个执行阶段。这四个执行阶段并不完全相互独立，但有明显的先后顺序：
 
 #import "../figures.typ": figure-typst-arch
 #align(center + horizon, figure-typst-arch())
 
-这里，我们着重讲解“内容评估”阶段与“内容排版”阶段。
+我们在上一节着重讲解了前两个阶段。这里，我们着重讲解“表达式求值”阶段与“内容排版”阶段。
 
-事实上，Typst直接在脚本中提供了对应“内容评估”阶段的函数，它就是我们之前已经介绍过的函数`eval`。你可以使用`eval`函数，将一个字符串对象「评估」为「内容」：
+事实上，Typst直接在脚本中提供了对应“求值”阶段的函数，它就是我们之前已经介绍过的函数`eval`。你可以使用`eval`函数，将一个字符串对象「评估」为「内容」：
 
 #code(```typ
 以代码模式评估：#eval("repr(str(1 + 1))") \
@@ -124,7 +116,7 @@
 以标记模式评估2：#eval("#show: it => [c] + it + [t];a", mode: "markup")
 ```)
 
-由于技术原因，Typst并不提供对应“内容排版”阶段的函数，如果有的话这个函数的名称应该为`typeset`。已经有很多迹象表明`typeset`可能产生：
+由于技术原因，Typst并不提供对应“内容排版”阶段的函数，如果有的话这个函数的名称应该为`typeset`。已经有很多地方介绍了潜在的`typeset`函数：
 + #link("https://github.com/andreasKroepelin/polylux")[Polylux], #link("https://github.com/touying-typ/touying")[Touying]等演示文档（PPT）框架需要将一部分内容固定为特定结果的能力。
 + Typst的作者在其博客中提及#link("https://laurmaedje.github.io/posts/frozen-state/")[Frozen State
 ]的可能性。
@@ -132,7 +124,9 @@
   + 即便不涉及用户需求，Typst的排版引擎已经自然存在Frozen State的需求。
 + 本文档也需要`typeset`的能力为你展示特定页面的最终结果而不影响全局状态。
 
-在Typst的源代码中，有一个Rust函数直接对应整个编译流程，其内容非常简短，便是调用了两个阶段对应的函数。“内容评估”阶段（`eval`阶段）对应执行一个Rust函数，它的名称为`typst::eval`；“内容排版”阶段（`typeset`阶段）对应执行另一个Rust函数，它的名称为`typst::typeset`。
+== Typst的主函数
+
+在Typst的源代码中，有一个Rust函数直接对应整个编译流程，其内容非常简短，便是调用了两个阶段对应的函数。“求值”阶段（`eval`阶段）对应执行一个Rust函数，它的名称为`typst::eval`；“内容排版”阶段（`typeset`阶段）对应执行另一个Rust函数，它的名称为`typst::typeset`。
 
 ```rs
 pub fn compile(world: &dyn World) -> SourceResult<Document> {
@@ -145,7 +139,9 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 
 从代码逻辑上来看，它有明显的先后顺序，似乎与我们所展示的架构略有不同。其`typst::eval`的输出为一个文件模块`module`；其`typst::typeset`仅接受文件的内容`module.content()`并产生一个已经排版好的文档对象`typst::Document`。
 
-与架构图对比来看，架构图中还有两个关键的反向箭头，疑问顿生：这两个反向箭头是如何产生的？
+== 延迟执行
+
+架构图中还有两个关键的反向箭头，疑问顿生：这两个反向箭头是如何产生的？
 
 我们首先关注与本节直接相关的「样式化」内容。当`eval`阶段结束时，「`show`」语法将会对应产生一个`styled`元素，其包含了被设置样式的内容，以及设置样式的「回调」：
 
@@ -177,13 +173,15 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 
 我们对每个术语咬文嚼字一番，它们都很准确：
 
-1. *「内容评估」*阶段仅仅“评估”出*「内容排版」*阶段所需的素材.*「评估器」*并不具备排版能力。
-2. 对于依赖排版产生的内容，「内容评估」产生包含*「回调函数」*的内容，让「排版引擎」在合适的时机“回过头来调用”。
+1. *「表达式求值」*阶段仅仅“评估”出*「内容排版」*阶段所需的素材.*「评估器」*并不具备排版能力。
+2. 对于依赖排版产生的内容，「表达式求值」产生包含*「回调函数」*的内容，让「排版引擎」在合适的时机“回过头来调用”。
 3. 相关的计算方法又被称为*「延迟执行」*。因为现在不具备执行条件，所以延迟到条件满足时才继续执行。
 
 现在我们可以理解两个反向箭头是如何产生的了。它们是下一阶段的回调，用于完成阶段之间复杂的协作。评估阶段可能会`import`或`include`文件，这时候会重新让解析器解析文件的字符串内容。排版阶段也可能会继续根据`styled`等元素产生复杂的内容，这时候依靠评估器执行脚本并产生或改变内容。
 
-我们来手动描述一遍上述示例的执行过程，以加深理解：
+== 模拟Typst的执行
+
+我们来模拟一遍上述示例的执行，以加深理解：
 
 #code(```typ
 #show raw: content => layout(parent => if parent.width < 100pt {
@@ -195,7 +193,7 @@ pub fn compile(world: &dyn World) -> SourceResult<Document> {
 `b`
 ```)
 
-首先进行内容评估得到：
+首先进行表达式求值得到：
 
 ```typ
 #styled((box(width: 50pt, `a`), `b`), styles: content => ..)
