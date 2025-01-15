@@ -3,12 +3,15 @@
 #show: book.page.with(title: [参考：语法示例检索表Ⅱ])
 
 #let table-lnk(name, ref, it, scope: (:), res: none, ..args) = (
-  align(center + horizon, ref(name)), 
+  align(center + horizon, ref(name)),
   it,
-  align(horizon, {
-    set heading(bookmarked: false, outlined: false)
-    eval(it.text, mode: "markup", scope: scope)
-  }),
+  align(
+    horizon,
+    {
+      set heading(bookmarked: false, outlined: false)
+      eval(it.text, mode: "markup", scope: scope)
+    },
+  ),
 )
 
 #let ref-table(items) = table(

@@ -11,61 +11,65 @@
 
 == 「locate」<grammar-locate>
 
-有的时候我们会需要获取当前位置的「位置」信息。
-
-在Typst中，获取「位置」的唯一方法是使用「#typst-func("locate")」函数。
-
-#typst-func("locate")的唯一参数是一个「回调函数」，我们在上一节已经学习过这个术语。在排版阶段的过程中，一旦排版引擎为你收集到了足够的信息，就会“回过头来调用”我们传入的该函数。
-
-我们来`repr`一下试试看：
-
-#code(```typ
-当前位置的相关信息：#locate(it => repr(it))
-```)
-
-由于「位置」太过复杂了，`repr`放弃了思考并在这里为我们放了两个点。
-
-我们来简单学习一下Typst为我们提供了哪些位置信息：
-
-#code(```typ
-当前位置的坐标：#locate(loc => loc.position())
-
-当前位置的页码：#locate(loc => loc.page())
-```)
-
-或直接使用方法函数：
-
-#code(```typ
-当前位置的坐标：#locate(location.position)
-
-当前位置的页码：#locate(location.page)
-```)
-
-一个常见的问题是：为什么Typst提供给我的页码信息是「内容」，我无法在内容上做条件判断和计算！<grammar-locate-calc>
-
-#code(```typ
-#repr(locate(location.page)) \
-#type(locate(location.page))
-```)
-
-上面输出的内容告诉我们#typst-func("locate")不仅是一个函数，而且更是一个元素的构造函数。#typst-func("locate")构造出一个`locate`内容。
-
-这其中的关系比较复杂。一个比较好理解的原因是：Typst会调用你的函数多次，因此你理应将所有使用「位置」信息的脚本放在一个内容块中，这样Typst才能更好地合成内容。
-
-#code(```typ
-#locate(loc       =>    [ 当前位置的页码是偶数：#calc.even(loc.page()) ])
-//  根据位置信息  计算得到  我们想要的内容
-```)
-
-#pro-tip[
-  这与Typst的缓存原理相关。由于#typst-func("locate")函数接收的闭包```typc loc => ..```是一个函数，且在Typst中它被认定为*纯函数*，Typst只会针对特定的参数执行一次函数。为了强制让用户书写的函数保持纯性，Typst规定用户必须在函数内部使用「位置」信息。
-
-  因此，例如我们希望在偶数页下让内容为“甲”，否则让内容为“乙”，应当这样书写：
-
-  #code(```typ
-  #locate(loc => if calc.even(loc.page()) [“甲”] else [“乙”])
-  ```)
+#todo-box[
+  新版无法编译。
 ]
+
+// 有的时候我们会需要获取当前位置的「位置」信息。
+
+// 在Typst中，获取「位置」的唯一方法是使用「#typst-func("locate")」函数。
+
+// #typst-func("locate")的唯一参数是一个「回调函数」，我们在上一节已经学习过这个术语。在排版阶段的过程中，一旦排版引擎为你收集到了足够的信息，就会“回过头来调用”我们传入的该函数。
+
+// 我们来`repr`一下试试看：
+
+// #code(```typ
+// 当前位置的相关信息：#locate(it => repr(it))
+// ```)
+
+// 由于「位置」太过复杂了，`repr`放弃了思考并在这里为我们放了两个点。
+
+// 我们来简单学习一下Typst为我们提供了哪些位置信息：
+
+// #code(```typ
+// 当前位置的坐标：#locate(loc => loc.position())
+
+// 当前位置的页码：#locate(loc => loc.page())
+// ```)
+
+// 或直接使用方法函数：
+
+// #code(```typ
+// 当前位置的坐标：#locate(location.position)
+
+// 当前位置的页码：#locate(location.page)
+// ```)
+
+// 一个常见的问题是：为什么Typst提供给我的页码信息是「内容」，我无法在内容上做条件判断和计算！<grammar-locate-calc>
+
+// #code(```typ
+// #repr(locate(location.page)) \
+// #type(locate(location.page))
+// ```)
+
+// 上面输出的内容告诉我们#typst-func("locate")不仅是一个函数，而且更是一个元素的构造函数。#typst-func("locate")构造出一个`locate`内容。
+
+// 这其中的关系比较复杂。一个比较好理解的原因是：Typst会调用你的函数多次，因此你理应将所有使用「位置」信息的脚本放在一个内容块中，这样Typst才能更好地合成内容。
+
+// #code(```typ
+// #locate(loc       =>    [ 当前位置的页码是偶数：#calc.even(loc.page()) ])
+// //  根据位置信息  计算得到  我们想要的内容
+// ```)
+
+// #pro-tip[
+//   这与Typst的缓存原理相关。由于#typst-func("locate")函数接收的闭包```typc loc => ..```是一个函数，且在Typst中它被认定为*纯函数*，Typst只会针对特定的参数执行一次函数。为了强制让用户书写的函数保持纯性，Typst规定用户必须在函数内部使用「位置」信息。
+
+//   因此，例如我们希望在偶数页下让内容为“甲”，否则让内容为“乙”，应当这样书写：
+
+//   #code(```typ
+//   #locate(loc => if calc.even(loc.page()) [“甲”] else [“乙”])
+//   ```)
+// ]
 
 == 「query」<grammar-query>
 

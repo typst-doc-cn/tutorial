@@ -1,4 +1,4 @@
-#import "@preview/cetz:0.2.0"
+#import "@preview/cetz:0.3.1"
 #import "/typ/templates/page.typ": main-color, is-light-theme
 
 #let std-scale = scale

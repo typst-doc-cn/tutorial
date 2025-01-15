@@ -138,7 +138,7 @@
     [$dots.down$], [`dots.down`], [$planck.reduce$], [`planck.reduce`], [$dotless.i$], [`dotless.i`],
     [$dotless.j$], [`dotless.j`], [$ell$], [`ell`], [$Re$], [`Re`],
     [$Im$], [`Im`], [$aleph$], [`aleph`], [$forall$], [`forall`],
-    [$exists$], [`exists`], [$ohm.inv$], [`ohm.inv`], [$diff$], [`diff`],
+    [$exists$], [`exists`], [$ohm.inv$], [`ohm.inv`], [$partial$], [`partial`],
     [$prime$], [`', prime`], [$emptyset$], [`emptyset`], [$infinity$], [`infinity`],
     [$nabla$], [`nabla`], [$triangle.stroked.t$], [`triangle.stroked.t`], [$square.stroked$], [`square.stroked`],
     [$diamond.stroked$], [`diamond.stroked`], [$bot$], [`bot`], [$top$], [`top`],

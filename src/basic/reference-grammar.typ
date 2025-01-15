@@ -108,7 +108,6 @@
   (
     [短代码片段],
     refs.writing-markup.with(reference: <grammar-raw>),
-    // @typstyle off
     ````typ
     `code`
     ````,
@@ -116,7 +115,6 @@
   (
     [长代码片段],
     refs.writing-markup.with(reference: <grammar-long-raw>),
-    // @typstyle off
     ````typ
     ``` code```
     ````,
@@ -124,7 +122,6 @@
   (
     [语法高亮],
     refs.writing-markup.with(reference: <grammar-lang-raw>),
-    // @typstyle off
     ````typ
     ```rs  trait World```
     ````,
@@ -132,7 +129,6 @@
   (
     [块代码片段],
     refs.writing-markup.with(reference: <grammar-blocky-raw>),
-    // @typstyle off
     ````typ
     ```typ
     = Heading
@@ -709,7 +705,6 @@
   (
     [`show`语句],
     refs.content-scope-style.with(reference: <grammar-show>),
-    // @typstyle off
     ````typ
     #show raw: it => it.lines.at(1)
     获取代码片段第二行内容：```typ
@@ -761,22 +756,21 @@
     [获取位置],
     refs.content-scope-style.with(reference: <grammar-locate>),
     ````typ
-    #locate(loc =>
-      loc.position())
+    #context here().position()
     ````,
   ),
   (
     [检测当前页面是否为偶数页（位置相关计算）],
     refs.content-scope-style.with(reference: <grammar-locate-calc>),
     ````typ
-    #locate(loc => [ 页码是偶数：#calc.even(loc.page()) ])
+    #context [ 页码是偶数：#calc.even(here().page()) ]
     ````,
   ),
   (
     [查询文档内容],
     refs.content-scope-style.with(reference: <grammar-query>),
     ````typ
-    #locate(loc => query(<ref-internal-link>, loc).at(0).body)
+    #context query(<ref-internal-link>).at(0).body
     ````,
   ),
   (

@@ -1,4 +1,4 @@
-#import "@preview/fletcher:0.4.0" as fletcher: node, edge
+#import "@preview/fletcher:0.5.4" as fletcher: node, edge
 #import "/typ/templates/page.typ": main-color, is-light-theme
 #import "mod.typ": typst-func
 
@@ -39,7 +39,7 @@
     // nodes
     node((0, 0), xd[```typ 左#[一段文本]右```]),
     node((1.5, 0), xd(```typc text(blue)```)),
-    node((3, 0), xd([左]+text(blue)[一段文本]+[右])),
+    node((3, 0), xd([左] + text(blue)[一段文本] + [右])),
     node((0, -0.5), xd[选中内容]),
     node((1.5, -0.5), xd[对内容块应用#typst-func("text")函数]),
     node((3, -0.5), xd[最终效果]),

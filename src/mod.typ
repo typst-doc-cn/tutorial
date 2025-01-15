@@ -174,8 +174,8 @@
 }
 
 #let fg-blue = main-color.mix(rgb("#0074d9"))
-#let pro-tip(content) = locate(loc => {
-  let attr = side-attrs.at(loc)
+#let pro-tip(content) = context {
+  let attr = side-attrs.get()
   let ext = attr.width + attr.gutter
   move(
     dx: -ext,
@@ -196,12 +196,12 @@
       },
     ),
   )
-})
+}
 
 #let fg-red = main-color.mix(red)
 #let todo-color = fg-red
-#let todo-box(content) = locate(loc => {
-  let attr = side-attrs.at(loc)
+#let todo-box(content) = context {
+  let attr = side-attrs.get()
   let ext = attr.width + attr.gutter
   move(
     dx: -ext,
@@ -222,7 +222,7 @@
       },
     ),
   )
-})
+}
 
 /// This function is to render a text string in monospace style and function
 /// color in your defining themes.
@@ -241,13 +241,28 @@
 #let show-answer = false
 // #let show-answer = true
 
+/// Make an exercise item.
+///
+/// - question (content): The question to ask.
+/// - answer (content): The answer to the question.
+/// -> content
 #let exercise(question, answer) = {
-  enum.item(question + if show-answer {
-    parbreak() + [答：] + answer
-  })
+  enum.item(
+    question
+      + if show-answer {
+        parbreak() + [答：] + answer
+      },
+  )
 }
 
+/// Make a term item.
+///
+/// - term (string): The name of the term.
+/// - postfix (string): The postfix to conform typst bug.
+/// - en (bool): Whether to show the English name.
+/// -> content
 #let term(term, postfix: none, en: none) = _term(term-list, term, en: en, postfix: postfix)
+
 #let mark(mark, postfix: none) = _term(
   mark-list,
   mark,
@@ -315,8 +330,8 @@
     typst-v11.funcs.at(name)
   }
 
-  locate(loc => {
-    let attr = side-attrs.at(loc)
+  context {
+    let attr = side-attrs.get()
     let ext = attr.width + attr.gutter
 
     move(
@@ -336,10 +351,10 @@
           fn
             .params
             .map(param => {
-                highlighter(param.name, "var")
-                ": "
-                param.types.map(show-type).join()
-              })
+              highlighter(param.name, "var")
+              ": "
+              param.types.map(show-type).join()
+            })
             .join(raw(", "))
           raw(")")
           if fn.returns.len() > 0 {
@@ -351,8 +366,10 @@
         },
       ),
     )
-  })
+  }
 }
 #let ref-func-signature = ref-signature.with(kind: "func")
 #let ref-cons-signature = ref-signature.with(kind: "cons")
 #let ref-method-signature = ref-signature
+
+#let f() = { }

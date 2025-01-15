@@ -7,7 +7,7 @@
 你只需要`import`特定的路径就能访问其内部的变量声明。例如，导入一个用于绘画自动机的外部库：
 
 #code(```typ
-#import "@preview/fletcher:0.4.0" as fletcher: node, edge
+#import "@preview/fletcher:0.5.4" as fletcher: node, edge
 
 #align(center, fletcher.diagram(
   node((0, 0), $S_1$),

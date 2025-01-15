@@ -14,8 +14,7 @@ crate-type = ["cdylib"]
 [dependencies]
 typst.workspace = true
 typst-svg.workspace = true
-typst-ts-core.workspace = true
-typst-ts-compiler.workspace = true
+reflexo-typst.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 comemo = "0.3.0"

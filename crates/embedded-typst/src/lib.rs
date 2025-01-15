@@ -6,28 +6,25 @@ use std::{
     collections::HashMap,
     hash::Hash,
     io::Read,
-    ops::Deref,
     path::{Path, PathBuf},
     str::FromStr,
     sync::{Arc, Mutex},
 };
 
 use base64::Engine;
+use reflexo_typst::{
+    font::{pure::MemoryFontBuilder, FontResolverImpl},
+    hash::{FingerprintHasher, FingerprintSipHasher},
+    package::{dummy::DummyRegistry, PackageRegistry, PackageSpec},
+    typst::prelude::EcoVec,
+    vfs::dummy::DummyAccessModel,
+    CompilerUniverse, EntryManager, EntryReader, EntryState, ShadowApi, TypstFileId,
+};
 use serde::{Deserialize, Serialize, Serializer};
 use typst::{
     diag::{eco_format, PackageError},
     foundations::Bytes,
-    syntax::{PackageSpec, VirtualPath},
-};
-use typst_ts_compiler::{
-    font::pure::MemoryFontBuilder, service::WorkspaceProvider, vfs::dummy::DummyAccessModel,
-    ShadowApi,
-};
-use typst_ts_core::{
-    hash::{FingerprintHasher, FingerprintSipHasher},
-    package::{dummy::DummyRegistry, Registry},
-    typst::prelude::EcoVec,
-    TypstFileId,
+    syntax::VirtualPath,
 };
 
 use wasm_minimal_protocol::*;
@@ -105,7 +102,7 @@ impl DataRef {
     }
 }
 
-/// Alloccates a data reference
+/// Allocates a data reference
 fn allocate_data_inner(kind: &[u8], data: &[u8], path: Option<&[u8]>) -> StrResult<Vec<u8>> {
     let kind = std::str::from_utf8(kind).map_err(|e| e.to_string())?;
     let data = ImmutBytes(Bytes::from(data));
@@ -162,7 +159,7 @@ pub fn encode_base64(data: &[u8]) -> Vec<u8> {
         .into_bytes()
 }
 
-/// Alloccates a data reference, return the key of the data reference.
+/// Allocates a data reference, return the key of the data reference.
 ///
 /// # Panics
 ///
@@ -176,7 +173,7 @@ pub fn allocate_data(kind: &[u8], data: &[u8]) -> StrResult<Vec<u8>> {
     allocate_data_inner(kind, data, None)
 }
 
-/// Alloccates a file reference, return the key of the data reference.
+/// Allocates a file reference, return the key of the data reference.
 ///
 /// # Panics
 ///
@@ -295,7 +292,7 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
         let mut fb = MemoryFontBuilder::new();
         let mut pb = MemoryPackageBuilder::default();
 
-        let vfs = typst_ts_compiler::vfs::Vfs::new(DummyAccessModel);
+        let mut vfs = reflexo_typst::vfs::Vfs::new(DummyAccessModel);
 
         for data in ctx.data {
             match data {
@@ -321,7 +318,13 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
         }
 
         // Creates a world.
-        let world = WorldRepr::new_raw(PathBuf::from("/"), vfs, DummyRegistry, fb.into());
+        let world = WorldRepr::new_raw(
+            EntryState::new_workspace(PathBuf::from("/").into()),
+            None,
+            vfs,
+            DummyRegistry,
+            Arc::new(fb.into()),
+        );
 
         Ok(Arc::new(Mutex::new(world)))
     }
@@ -343,7 +346,7 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
     let world = resolve_world_inner(ctx)?;
 
     // Adds files to the world.
-    let world_mut = world.lock().unwrap();
+    let mut world_mut = world.lock().unwrap();
     for f in files.into_iter() {
         let path = match &f {
             DataRef::File { path, .. } => path,
@@ -382,34 +385,38 @@ pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
             return Ok(t);
         }
     };
-    let mut world = world.lock().unwrap();
-    world.reset();
+    let mut verse = world.lock().unwrap();
+    verse.reset();
 
     // Prepare main file.
     let entry_file = Path::new("/main.typ");
-    world.set_main_id(TypstFileId::new(None, VirtualPath::new(entry_file)));
-    world
+    let entry = verse
+        .entry_state()
+        .select_in_workspace(TypstFileId::new(None, VirtualPath::new(entry_file)));
+    let _ = verse.mutate_entry(entry);
+    verse
         .map_shadow(entry_file, Bytes::from(input.to_owned()))
         .map_err(|e| e.to_string())?;
 
     // Compile.
-    let mut tracer = Default::default();
-    let doc = typst::compile(world.deref(), &mut tracer).map_err(
-        |e: EcoVec<typst::diag::SourceDiagnostic>| {
-            let mut error_log = String::new();
-            for c in e.into_iter() {
-                error_log.push_str(&format!(
-                    "{:?}\n",
-                    typst_ts_core::error::diag_from_std(c, Some(world.deref()))
-                ));
-            }
-            error_log
-        },
-    )?;
+    let world = &verse.snapshot();
+    // todo: warning
+    let doc =
+        typst::compile(world)
+            .output
+            .map_err(|e: EcoVec<typst::diag::SourceDiagnostic>| {
+                let mut error_log = String::new();
+                for c in e.into_iter() {
+                    error_log.push_str(&format!(
+                        "{:?}\n",
+                        reflexo_typst::error::diag_from_std(c, Some(world))
+                    ));
+                }
+                error_log
+            })?;
 
     // Query header.
-    let header =
-        typst_ts_compiler::service::query::retrieve(world.deref(), "<embedded-typst>", &doc);
+    let header = reflexo_typst::query::retrieve(world, "<embedded-typst>", &doc);
     let header = match header {
         Ok(header) => serde_json::to_vec(&header).map_err(|e| e.to_string())?,
         Err(e) => serde_json::to_vec(&e).map_err(|e| e.to_string())?,
@@ -431,14 +438,16 @@ pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
 #[derive(Debug, Clone, Copy)]
 pub struct WasmCompilerFeat;
 
-impl typst_ts_compiler::world::CompilerFeat for WasmCompilerFeat {
+impl reflexo_typst::world::CompilerFeat for WasmCompilerFeat {
+    /// It accesses no file system.
+    type FontResolver = FontResolverImpl;
     /// It accesses no file system.
     type AccessModel = DummyAccessModel;
     /// It cannot load any package.
     type Registry = DummyRegistry;
 }
 
-type WorldRepr = typst_ts_compiler::world::CompilerWorld<WasmCompilerFeat>;
+type WorldRepr = reflexo_typst::world::CompilerUniverse<WasmCompilerFeat>;
 
 /// The compiler world in wasm environment.
 #[allow(unused)]
@@ -454,7 +463,7 @@ impl TypstWasmWorld {
     /// Create a new [`TypstWasmWorld`].
     pub fn new() -> Self {
         // Creates a virtual file system.
-        let vfs = typst_ts_compiler::vfs::Vfs::new(DummyAccessModel);
+        let vfs = reflexo_typst::vfs::Vfs::new(DummyAccessModel);
 
         // Adds embedded fonts.
         let mut fb = MemoryFontBuilder::new();
@@ -463,11 +472,12 @@ impl TypstWasmWorld {
         }
 
         // Creates a world.
-        Self(WorldRepr::new_raw(
-            PathBuf::from("/"),
+        Self(CompilerUniverse::new_raw(
+            EntryState::new_workspace(PathBuf::from("/").into()),
+            None,
             vfs,
             DummyRegistry,
-            fb.into(),
+            Arc::new(fb.into()),
         ))
     }
 }
@@ -495,7 +505,7 @@ impl MemoryPackageBuilder {
 #[derive(Default, Debug)]
 pub struct MemoryPackageRegistry(HashMap<PackageSpec, Arc<Path>>);
 
-impl Registry for MemoryPackageRegistry {
+impl PackageRegistry for MemoryPackageRegistry {
     /// Resolves a package.
     fn resolve(&self, spec: &PackageSpec) -> Result<Arc<Path>, PackageError> {
         self.0

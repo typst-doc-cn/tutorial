@@ -34,11 +34,11 @@ Typst文档可以很高效，但有些人写出的Typst代码更高效。本节�
 #state("my-state", 1)
 ```)
 
-你可以使用```typc state.display()```函数展示其「内容」：
+你可以使用```typc context state.get()```函数展示其「内容」：
 
 #code(```typ
 #let s1 = state("my-state", 1)
-s1: #s1.display()
+s1: #context s1.get()
 ```)
 
 你可以使用```typc state.update()```方法更新其状态。`update`函数接收一个「回调函数」，该回调函数接收`state`在某时刻的状态，并返回对应下一时刻的状态：
@@ -47,9 +47,9 @@ s1: #s1.display()
 
 #code(```typ
 #let s1 = state("my-state", 1)
-s1: #s1.display() \
+s1: #context s1.get() \
 #s1.update(it => it + 1)
-s1: #s1.display()
+s1: #context s1.get()
 ```)
 
 #s.update(it => 1)
@@ -58,11 +58,11 @@ s1: #s1.display()
 
 #code(```typ
 #let s1 = state("my-state", 1)
-s1: #s1.display() \
+s1: #context s1.get() \
 #let s2 = state("my-state", 1)
-s1: #s1.display(), s2: #s2.display() \
+s1: #context s1.get(), s2: #context s2.get() \
 #s2.update(it => it + 1)
-s1: #s1.display(), s2: #s2.display()
+s1: #context s1.get(), s2: #context s2.get()
 ```)
 
 同时，请注意状态的*全局*特性，即便处于不同文件、不同库的状态，只要字符串对应相同，那么其都会共享更新。
@@ -75,11 +75,11 @@ s1: #s1.display(), s2: #s2.display()
 
 #code(```typ
 #let s1 = state("my-state", 1)
-s1: #s1.display() \
+s1: #context s1.get() \
 #let s2 = state("my-state", 2)
-s1: #s1.display(), s2: #s2.display() \
+s1: #context s1.get(), s2: #context s2.get() \
 #s2.update(it => it + 1)
-s1: #s1.display(), s2: #s2.display()
+s1: #context s1.get(), s2: #context s2.get()
 ```)
 
 尽管`s2`指定了状态的默认值为`2`，因为之前已经在文档中创建了该状态，默认值并不会应用。请注意：你不应该利用这个特性，该特性是Typst中的「未定义行为」。
@@ -97,7 +97,7 @@ s1: #s1.display(), s2: #s2.display()
 #code(```typ
 #let s1 = state("my-state", 1)
 #((s1.update(it => it + 1), ) * 3).join()
-s1: #s1.display()
+s1: #context s1.get()
 ```)
 
 这告诉我们下面一件事情，当`eval`阶段结束时，其对应产生下面的一段内容：

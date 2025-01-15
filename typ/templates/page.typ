@@ -1,3 +1,4 @@
+
 // This is important for typst-book to produce a responsive layout
 // and multiple targets.
 #import "@preview/shiroa:0.1.2": get-page-width, target, is-web-target, is-pdf-target, plain-text, templates
@@ -135,9 +136,11 @@
   ) if not is-pdf-target
 
   // set web/pdf page properties
-  set page(numbering: if is-pdf-target {
-    "1"
-  })
+  set page(
+    numbering: if is-pdf-target {
+      "1"
+    },
+  )
 
   // set web/pdf page properties
   set page(
@@ -274,23 +277,26 @@
         block(
           breakable: true,
           width: side-space + side-overflow,
-          locate(loc => side-attrs.update(it => {
-            it.insert("left", loc.position().x)
-            it.insert("width", side-space + side-overflow)
-            it.insert("gutter", gutter)
-            it
-          })),
+          context {
+            let loc = here()
+            side-attrs.update(it => {
+              it.insert("left", loc.position().x)
+              it.insert("width", side-space + side-overflow)
+              it.insert("gutter", gutter)
+              it
+            })
+          },
         ),
       ),
       body,
     )
   } else if is-page {
-    locate(loc => side-attrs.update(it => {
+    side-attrs.update(it => {
       it.insert("left", 0pt)
       it.insert("width", 0pt)
       it.insert("gutter", 0pt)
       it
-    }))
+    })
     body
   } else {
     body

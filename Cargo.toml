@@ -14,18 +14,14 @@ resolver = "2"
 members = ["crates/*"]
 
 [workspace.dependencies]
-typst = "0.10.0"
-typst-svg = "0.10.0"
+typst = "0.12.0"
+typst-svg = "0.12.0"
 
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
-typst-ts-compiler = { version = "0.4.2-rc6", default-features = false, features = [
-] }
-typst-ts-core = { version = "0.4.2-rc6", default-features = false, features = [
-    "flat-vector",
-    "vector-bbox",
-    "no-content-hint",
+reflexo-typst = { version = "=0.5.1", default-features = false, features = [
+    "browser-compile",
 ] }
 
 [profile.release]
@@ -36,10 +32,9 @@ codegen-units = 1 # Reduce number of codegen units to increase optimizations
 panic = 'abort'   # Abort on panic
 
 [patch.crates-io]
-typst = { git = "https://github.com/Myriad-Dreamin/typst.git", branch = "typst.ts-v0.10.0-half" }
-typst-svg = { git = "https://github.com/Myriad-Dreamin/typst.git", branch = "typst.ts-v0.10.0-half" }
-typst-ts-core = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-core" }
-typst-ts-compiler = { git = "https://github.com/Myriad-Dreamin/typst.ts", branch = "fix-wasm-host", package = "typst-ts-compiler" }
+typst = { git = "https://github.com/Myriad-Dreamin/typst.git", tag = "typst.ts/v0.5.0-rc9" }
+typst-svg = { git = "https://github.com/Myriad-Dreamin/typst.git", tag = "typst.ts/v0.5.0-rc9" }
+reflexo-typst = { git = "https://github.com/Myriad-Dreamin/typst.ts", tag = "v0.5.1", package = "reflexo-typst" }
 # typst-ts-core = { path = "../../rust/typst.ts/core" }
 # typst-ts-compiler = { path = "../../rust/typst.ts/compiler" }
 
