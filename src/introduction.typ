@@ -63,31 +63,26 @@ Typst的性能很好，是撰写长篇文本的极佳选择，例如书籍和报
 
 == 使用typst-cli与PDF阅读器
 
-Typst 的 CLI 可从不同的来源获得：
+Typst 的 CLI 可从不同的来源获得。你可以在#link("https://github.com/typst/typst/releases/")[发布页面]获得最新版本的 Typst 的源代码和预构建的二进制文件。下载适合你平台的存档并将其放在“ PATH ” 中的目录中。及时了解未来发布后，你只需运行```bash typst update```即可。
 
-- 你可以获得最新版本的 Typst 的源代码和预构建的二进制文件来自#link("https://github.com/typst/typst/releases/")[发布页面]。下载适合你平台的存档并将其放在“ PATH ” 中的目录中。及时了解未来发布后，你只需运行```bash typst update```即可。
-- 你可以通过不同的包管理器安装Typst。请注意，包管理器中的版本可能落后于最新版本。
-  - Linux：查看#link("https://repology.org/project/typst/versions")[Typst on Repology]。
-  - macOS：```bash brew install typst```。
-  - Windows：```bash winget install --id Typst.Typst ```。
-- 如果您安装了#link("https://rustup.rs/")[Rust]工具链，您还可以安装最新开发版本```bash cargo --git https://github.com/typst/typst --locked typst-cli```。请注意，这将是一个“夜间”版本，可能已损坏或尚未正确记录。
-- Nix用户可以将`typst`包与```bash nix-shell -p typst```一起使用，或者构建并使用```bash nix run github:typst/typst -- --version```运行前沿版本。
-- Docker用户可以运行预构建的镜像```bash docker run -it ghcr.io/typst/typst:latest ```.
+你可以通过不同的包管理器安装Typst。请注意，包管理器中的版本可能落后于最新版本。
+- Linux：查看#link("https://repology.org/project/typst/versions")[Typst on Repology。]
+- macOS：使用brew：\
+  ```bash brew install typst```
+- Windows：使用winget：\
+  ```bash winget install --id Typst.Typst```
 
-安装好CLI之后，你就可以在命令行里运行Typst编译器了：
+你还可以使用#link("https://rustup.rs/")[Rust]、Nix或Docker安装Typst。更多信息请查看#link("https://github.com/typst/typst?tab=readme-ov-file#usage")[官方英文说明]。
+
+安装好CLI之后，你就可以在命令行里运行Typst编译器了。以下命令将工作目录下的文件编译为`file.pdf`：
 
 ```bash
-# Creates `file.pdf` in working directory.
 typst compile file.typ
-
-# Creates PDF file at the desired path.
-typst compile path/to/source.typ path/to/output.pdf
 ```
 
-为了提供预览服务，你需要让Typst编译器运行在监视模式（watch）下：
+为了增量编译和预览PDF，你需要让Typst编译器运行在监视模式（watch）下：
 
 ```bash
-# Watches source files and recompiles on changes.
 typst watch file.typ
 ```
 
