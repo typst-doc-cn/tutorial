@@ -63,14 +63,18 @@ Typst的性能很好，是撰写长篇文本的极佳选择，例如书籍和报
 
 == 使用typst-cli与PDF阅读器
 
-Typst 的 CLI 可从不同的来源获得。你可以在#link("https://github.com/typst/typst/releases/")[发布页面]获得最新版本的 Typst 的源代码和预构建的二进制文件。下载适合你平台的存档并将其放在“ PATH ” 中的目录中。及时了解未来发布后，你只需运行```bash typst update```即可。
+Typst 的 CLI 可从不同的来源获得。你可以在#link("https://github.com/typst/typst/releases/")[发布页面]获得最新版本的 Typst 的源代码和预构建的二进制文件。下载适合你平台的存档并将其放在“PATH”中的目录中。及时了解未来发布后，你只需运行```bash typst update```即可。
 
 你可以通过不同的包管理器安装Typst。请注意，包管理器中的版本可能落后于最新版本。
 - Linux：查看#link("https://repology.org/project/typst/versions")[Typst on Repology。]
-- macOS：使用brew：\
-  ```bash brew install typst```
-- Windows：使用winget：\
-  ```bash winget install --id Typst.Typst```
+- macOS：使用brew：
+  ```bash
+  brew install typst
+  ```
+- Windows：使用winget：
+  ```bash
+  winget install --id Typst.Typst
+  ```
 
 你还可以使用#link("https://rustup.rs/")[Rust]、Nix或Docker安装Typst。更多信息请查看#link("https://github.com/typst/typst?tab=readme-ov-file#usage")[官方英文说明]。
 
