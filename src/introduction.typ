@@ -2,15 +2,19 @@
 
 #show: book.page.with(title: [导引])
 
-本教程面向所有Typst用户，循序渐进，供以中文为母语的Typst语言初学者和爱好者查阅和参考。本教程希望弥补Typst相关资料的缺失，作为官方文档的补充，帮助大家入门和学习Typst。
+本书面向所有Typst用户，按三种方式讲解Typst语言。《教程》等章节循序渐进，讲述了Typst的排版方式和原理；《参考》等章节拓展广度；《专题》等则专注解决具体问题。本书希望缓解Typst相关资料严重缺失的问题，与官方文档相互补充，帮助大家入门和学习Typst。
 
-本教程的首要定位是，即便你没有学习过任何编程语言，也能通过在本教程中学到的知识上手使用Typst，在日常生活中使用Typst编写各式各样的文档。同时，本教程也会总结在使用Typst编写文档的过程中遇到的一系列问题。
+其中，《教程》的主要定位是较低的阅读门槛。即使你没有编程语言基础，也能通过《教程》上手使用Typst，在日常生活中编写各式各样的文档。
+
+《教程》的另一个作用是串联知识。有很多排版技巧和问题缺乏深度，不适合放在《教程》内。为了避免让章节冗长，这些知识会被单独列在《参考》或《专题》中，供《教程》引用。这样，擅于编程的同学也可以略读《教程》，重点阅读放在关联的章节上。
+
+同时，本书也会不时总结在使用Typst时的疑难杂症。
 
 == 为什么学习Typst？
 
-在开始之前，让我们考虑一下 Typst 到底是什么，以及我们在什么时候应该使用它。 Typst 是一种用于排版文档的标记语言，它旨在易于学习、快速且用途广泛。 Typst 输入带有标记的文本文件，并将其输出为 PDF 格式。
+在开始之前，让我们考虑Typst的名称解释和用途。Typst首先是一种用于排版文档的标记语言，它旨在易于学习、快速且用途广泛。Typst还同时指代编译器本身。Typst编译器读取并解释带有标记的文本文件，产生适合不同终端阅读的PDF文档。Typst也支持导出其他格式，例如SVG和PNG。
 
-Typst 是撰写长篇文本（如论文、文章、书籍、报告和作业）的极佳选择。 并且，Typst 非常适合书写包含数学公式的文档，例如数学、物理和工程领域的论文。 此外，由于其强大的样式和自动化功能，它是编写具有相同样式的一系列文档（例如丛书）的绝佳选择。
+Typst的性能很好，是撰写长篇文本的极佳选择，例如书籍和报告。 并且，Typst 非常适合书写包含数学公式的文档，例如数学、物理和工程领域的论文。 由于其编程特性，它也适用于自动化生成一系列相同样式的文档（例如作业、丛书和发票）。
 
 == 阅读本教程前，您需要了解的知识
 
@@ -27,73 +31,62 @@ Typst 是撰写长篇文本（如论文、文章、书籍、报告和作业）�
 
 == 使用官方的webapp（推荐）
 
-官方提供了*在线且免费*的多人协作编辑器。该编辑器会从远程下载WASM编译器，并在你的浏览器内运行编辑器，为你提供预览服务。
+官方提供了*在线且免费*的多人协作编辑器。该编辑器会从远程下载WASM编译器，并在你的浏览器内运行编辑器，为你提供预览服务。你可以注册一个账户并开箱即用该编辑器。
 
 #figure(image("/assets/files/editor-webapp.png"), caption: [本书作者在网页中打开webapp的瞬间])
 
 该编辑器的速度相比许多LaTeX编辑器都有显著优势。这是因为：
-- 你的大部分编辑操作不会导致阻塞的网络请求。
-- 所有计算都在本地浏览器中运行。
-- 编译器本身性能极其优越。
+- 编辑文档后，即时预览基本不会被网络请求阻塞。
+- Typst脚本皆在本地浏览器中运行。
+- Typst编译器本身性能极其优越。
 
-你可以注册一个账户并开箱即用该编辑器。
-
-*注意：你需要检测你的网络环境，如有必要请使用科学上网工具（VPN等）。*
+*注意：如果遇到无法加载的问题，你需要检查你的网络环境，如有必要请使用科学上网工具。*
 
 == 使用VSCode编辑（推荐）
 
-打开扩展界面，搜索并安装 tinymist 插件。它会为你提供语法高亮，代码补全，代码格式化，即时预览等功能。
+打开扩展界面，搜索并安装 Tinymist 插件。它会为你提供语法高亮，代码补全，代码格式化，即时预览等功能。
 
 #figure(image("/assets/files/editor-vscode.png"), caption: [本书作者在VSCode中预览并编辑本文的瞬间])
 
-该编辑器的速度相比webapp略慢。这是因为：
-- 编译器与预览程序是两个不同的进程，有通信开销。
+该编辑器的性能不如webapp。这是因为：
+- 编译器与预览器是两个不同的进程，有通信开销。
 - 用户事件和文件IO有可能增加E2E延时。
 
 但是：
 - 大部分时间下，你感受不到和webapp之间的性能差异。Typst真的非常快。
 - 你可以离线编辑Typst文档，无需任何网络连接，例如本书的部分章节是在飞机上完成的。
-- 你可以在文件系统中管理你所有的源代码，实施包括但不限于使用git等源码管理软件等操作。
+- 你可以免费使用部分Typst Pro的功能。你可以在文件系统中管理你所有的源代码，实施包括但不限于使用git等源码管理软件等操作。
 
-== 使用neovim编辑
+== 使用其他编辑器编辑
 
-细节可以问群友。
-
-自去年年底，该编辑器与VSCode一样，已经可以有很好的Typst编辑体验。
-
-== 使用Emacs编辑
-
-可以问群友。
-
-自今年年初，该编辑器与VSCode一样，已经可以有很好的Typst编辑体验。
+你可以在这些编辑器中手动安装Tinymist LSP服务或Typst相关插件。自2024年初，Neovim和Emacs已经可以与VSCode一样，已经可以有很好的Typst编辑体验。
 
 == 使用typst-cli与PDF阅读器
 
-Typst 的 CLI 可从不同的来源获得：
+Typst 的 CLI 可从不同的来源获得。你可以在#link("https://github.com/typst/typst/releases/")[发布页面]获得最新版本的 Typst 的源代码和预构建的二进制文件。下载适合你平台的存档并将其放在“PATH”中的目录中。及时了解未来发布后，你只需运行```bash typst update```即可。
 
-- 你可以获得最新版本的 Typst 的源代码和预构建的二进制文件来自#link("https://github.com/typst/typst/releases/")[发布页面]。下载适合你平台的存档并将其放在“ PATH ” 中的目录中。及时了解未来发布后，你只需运行```bash typst update```即可。
-- 你可以通过不同的包管理器安装Typst。请注意，包管理器中的版本可能落后于最新版本。
-  - Linux：查看#link("https://repology.org/project/typst/versions")[Typst on Repology]。
-  - macOS：```bash brew install typst```。
-  - Windows：```bash winget install --id Typst.Typst ```。
-- 如果您安装了#link("https://rustup.rs/")[Rust]工具链，您还可以安装最新开发版本```bash cargo --git https://github.com/typst/typst --locked typst-cli```。请注意，这将是一个“夜间”版本，可能已损坏或尚未正确记录。
-- Nix用户可以将`typst`包与```bash nix-shell -p typst```一起使用，或者构建并使用```bash nix run github:typst/typst -- --version```运行前沿版本。
-- Docker用户可以运行预构建的镜像```bash docker run -it ghcr.io/typst/typst:latest ```.
+你可以通过不同的包管理器安装Typst。请注意，包管理器中的版本可能落后于最新版本。
+- Linux：查看#link("https://repology.org/project/typst/versions")[Typst on Repology。]
+- macOS：使用brew：
+  ```bash
+  brew install typst
+  ```
+- Windows：使用winget：
+  ```bash
+  winget install --id Typst.Typst
+  ```
 
-安装好CLI之后，你就可以在命令行里运行Typst编译器了：
+你还可以使用#link("https://rustup.rs/")[Rust]、Nix或Docker安装Typst。更多信息请查看#link("https://github.com/typst/typst?tab=readme-ov-file#usage")[官方英文说明]。
+
+安装好CLI之后，你就可以在命令行里运行Typst编译器了。以下命令将工作目录下的文件编译为`file.pdf`：
 
 ```bash
-# Creates `file.pdf` in working directory.
 typst compile file.typ
-
-# Creates PDF file at the desired path.
-typst compile path/to/source.typ path/to/output.pdf
 ```
 
-为了提供预览服务，你需要让Typst编译器运行在监视模式（watch）下：
+为了增量编译和预览PDF，你需要让Typst编译器运行在监视模式（watch）下：
 
 ```bash
-# Watches source files and recompiles on changes.
 typst watch file.typ
 ```
 
