@@ -1,5 +1,5 @@
 #import "/src/book.typ"
-#import "/typ/templates/page.typ": main-color
+#import "/typ/templates/page.typ": main-color, is-web-target
 
 #import "../mod.typ": (
   code as _code,

@@ -92,13 +92,23 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
   例如在英文排版中，#typst-func("strong")的样式是加粗，#typst-func("emph")的样式是倾斜。你完全可以在中文排版中为它们更换样式。
 
-  #code(```typ
-  #show strong: content => {
-    show regex("\p{Hani}"): it => box(place(text("·", size: 1.3em), dx: 0.3em, dy: 0.5em) + it)
-    content.body
+  #if is-web-target {
+    code(```typ
+    #show strong: content => {
+      show regex("\p{Hani}"): it => box(place(text("·", size: 0.8em), dx: 0.1em, dy: 0.75em) + it)
+      content.body
+    }
+    *中文排版的着重语义用加点表示。*
+    ```)
+  } else {
+    code(```typ
+    #show strong: content => {
+      show regex("\p{Hani}"): it => box(place(text("·", size: 1.3em), dx: 0.3em, dy: 0.5em) + it)
+      content.body
+    }
+    *中文排版的着重语义用加点表示。*
+    ```)
   }
-  *中文排版的着重语义用加点表示。*
-  ```)
 ]
 
 与许多标记语言相同，Typst中使用一系列#term("delimiter")规则确定一段语义的开始和结束。为赋予语义，需要将一个#term("delimiter")置于文本*之前*，表示某语义的开始；同时将另一个#term("delimiter")置于文本*之后*，表示该语义的结束。
@@ -400,7 +410,7 @@ Typst的#term("comment")直接采用C语言风格的注释语法，有两种表�
 
 == 总结
 
-基于《编写一篇基本文档》前半部分掌握的知识，你应该编写一些非常简单的文档。
+基于《初识标记模式》掌握的知识，你应该编写一些非常简单的文档。
 
 == 习题
 
