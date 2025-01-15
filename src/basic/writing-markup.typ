@@ -113,13 +113,13 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
 与许多标记语言相同，Typst中使用一系列#term("delimiter")规则确定一段语义的开始和结束。为赋予语义，需要将一个#term("delimiter")置于文本*之前*，表示某语义的开始；同时将另一个#term("delimiter")置于文本*之后*，表示该语义的结束。
 
-例如，#mark("*")作为定界符赋予所包裹的一段文本以#term("strong semantics", postfix: "。") <grammar-strong>
+例如，#mark("*")作为定界符赋予所包裹的一段文本以#term("strong semantics")。 <grammar-strong>
 
 #code(```typ
 着重语义：这里有一个*重点！*
 ```)
 
-与#term("strong semantics")类似，#mark("_")作为定界符将赋予#term("emphasis semantics", postfix: "：") <grammar-emph>
+与#term("strong semantics")类似，#mark("_")作为定界符将赋予#term("emphasis semantics")： <grammar-emph>
 
 #code(```typ
 强调语义：_emphasis_
@@ -137,13 +137,13 @@ Typst希望你总是尽可能少的配置样式，就获得一个排版精良的
 
 Typst的#term("raw block")标记语法与Markdown完全相同。
 
-配对的#mark("`")包裹一段内容，表示内容为#term("raw block", postfix: "。")
+配对的#mark("`")包裹一段内容，表示内容为#term("raw block")。
 
 #code(````typ
 短代码片段：`code`
 ````)
 
-有时候你希望允许代码内容包含换行或#mark("`", postfix: "。")这时候，你需要使用*至少连续*三个#mark("`")组成定界符标记#term("raw block", postfix: "：")<grammar-long-raw>
+有时候你希望允许代码内容包含换行或#mark("`")。这时候，你需要使用*至少连续*三个#mark("`")组成定界符标记#term("raw block")：<grammar-long-raw>
 
 #code(`````typ
 使用三个反引号包裹：``` ` ```
@@ -159,9 +159,9 @@ Typst的#term("raw block")标记语法与Markdown完全相同。
 另一段有高亮的代码片段：````typst 包含反引号的长代码片段：``` ` ``` ````
 `````)
 
-除了定界符的长短，代码片段还有是否成块的区分。如果代码片段符合以下两点，那么它就是一个#term("blocky raw block", postfix: "：") <grammar-blocky-raw>
+除了定界符的长短，代码片段还有是否成块的区分。如果代码片段符合以下两点，那么它就是一个#term("blocky raw block")： <grammar-blocky-raw>
 + 使用*至少连续*三个#mark("`")，即其需为长代码片段。
-+ 内容包含至少一个#term("line break", postfix: "。")
++ 内容包含至少一个#term("line break")。
 
 #code(`````typ
 非块代码片段：```rust trait World```
@@ -234,7 +234,7 @@ Typst的列表语法与Markdown非常类似，但*不完全相同*。
 
 == 转义序列 <grammar-escape-sequences>
 
-你有时希望直接展示标记符号本身。例如，你可能想直接展示一个#mark("_", postfix: "，")而非使用强调语义。这时你需要利用#term("escape sequences")语法：
+你有时希望直接展示标记符号本身。例如，你可能想直接展示一个#mark("_")，而非使用强调语义。这时你需要利用#term("escape sequences")语法：
 
 #code(````typ
 在段落中直接使用下划线 >\_<！
@@ -316,14 +316,14 @@ Typst的列表语法与Markdown非常类似，但*不完全相同*。
 )
 
 诸多#term("escape sequences")无需死记硬背，你只需要记住：
-+ 如果其在Typst中已经被赋予含义，请尝试在字符前添加一个#mark("\\", postfix: "。")
++ 如果其在Typst中已经被赋予含义，请尝试在字符前添加一个#mark("\\")。
 + 如果其不可见或难以使用输入法获得，请考虑使用`\u{unicode}`。
 
 == 输出换行符 <grammar-newline>
 
-输出换行符是一种特殊的#term("escape sequences", postfix: "，")它使得文档输出换行。
+输出换行符是一种特殊的#term("escape sequences")，它使得文档输出换行。
 
-#mark("\\")后紧接一个任意#term("whitespace", postfix: "，")表示在此处主动插入一个段落内的换行符： <grammar-newline-by-space>
+#mark("\\")后紧接一个任意#term("whitespace")，表示在此处主动插入一个段落内的换行符： <grammar-newline-by-space>
 
 #code(````typ
 转义空格可以换行 \ 转义回车也可以换行 \
@@ -334,9 +334,9 @@ Typst的列表语法与Markdown非常类似，但*不完全相同*。
 
 == 速记符号 <grammar-shorthand>
 
-在#term("markup mode")下，一些符号需要用特殊的符号组合打出，这种符号组合被称为#term("shorthand", postfix: "。")它们是：
+在#term("markup mode")下，一些符号需要用特殊的符号组合打出，这种符号组合被称为#term("shorthand")。它们是：
 
-空格（`U+0020`）的#term("shorthand")是#mark("~", postfix: "：") <grammar-shorthand-space>
+空格（`U+0020`）的#term("shorthand")是#mark("~")： <grammar-shorthand-space>
 
 #code(```typ
 AB v.s. A~B
@@ -426,7 +426,7 @@ Typst的#term("comment")直接采用C语言风格的注释语法，有两种表�
 ]
 
 #exercise[
-  输出一个#mark("*", postfix: "，")期望的输出：#rect(width: 100%)[\*]
+  输出一个#mark("*")，期望的输出：#rect(width: 100%)[\*]
 ][
   ```typ
   \*

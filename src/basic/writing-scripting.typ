@@ -30,7 +30,7 @@
 ````)
 
 例中，```typ #strong[]```这个内容的语法包含三个部分：
-+ `#`使解释器进入#term("code mode", postfix: "。")
++ `#`使解释器进入#term("code mode")。
 + #typst-func("strong")是赋予#term("strong semantics")函数。
 + `[]`作为#term("content block")标记一段内容，供`strong`使用。
 

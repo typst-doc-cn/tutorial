@@ -261,9 +261,9 @@
 /// - postfix (string): The postfix to conform typst bug.
 /// - en (bool): Whether to show the English name.
 /// -> content
-#let term(term, postfix: none, en: none) = _term(term-list, term, en: en, postfix: postfix)
+#let term(term, en: none) = _term(term-list, term, en: en)
 
-#let mark(mark, postfix: none) = _term(
+#let mark(mark) = _term(
   mark-list,
   mark,
   en: if mark == "hyphen" {
@@ -271,7 +271,6 @@
   } else {
     raw(mark)
   },
-  postfix: postfix,
 )
 
 #let ref-bookmark = side-note
