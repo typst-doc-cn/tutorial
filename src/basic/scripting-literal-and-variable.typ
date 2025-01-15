@@ -2,11 +2,7 @@
 
 #show: book.page.with(title: "常量与变量")
 
-本章前两节适用于没有编程经验的同学。以前接触过编程的同学可以快速浏览并跳至第三节。
-
 Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊世的执行性能，而是语言特性本身适合缓存优化。
-
-// 经简单测试，与LaTeX作对比，单线程LaTeX宏引擎的*计算效率*甚至要优于Typst解释器。然而，这种计算的速度优势在Typst的良好架构下立即消弭了。由于较好的缓存策略，光是在Text Shaping方面，Typst单次编译就已然快于LaTeX。架构上，Typst是较优的；随着时间积累，Typst还可以积累和打磨更多程序优化。由于缓存优势，Typst不仅单次编译很快，增量编译的速度更是达到了惊人的毫秒级，甚至微秒级。
 
 自本节起，本教程将进入第二阶段，希望不仅让你了解如何使用脚本，还一并讲解Typst的执行原理。当然，我们不会陷入Typst的细节。所有在教程中出现的原理都是为了更好地了解语言本身。
 
@@ -81,11 +77,11 @@ Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊�
 本小节我们将具体介绍所有基本字面量，这是脚本的“一加一”。其实在上一节，我们已经见过了一部分字面量，但皆凭直觉使用：```typc 1```不就是数字吗，那么在Typst中，它就是数字。（PS：与之相对，TeX根本没有数字和字符串的概念。）
 
 如果你学过Python等语言，那么这将对你来说不是问题。在Typst中，常用的字面量并不多，它们是：
-+ #term("none literal", postfix: "。")
-+ #term("boolean literal", postfix: "。")
-+ #term("integer literal", postfix: "。")
-+ #term("floating-point literal", postfix: "。")
-+ #term("string literal", postfix: "。")
++ #term("none literal")。
++ #term("boolean literal")。
++ #term("integer literal")。
++ #term("floating-point literal")。
++ #term("string literal")。
 
 === 空字面量 <grammar-none-literal>
 

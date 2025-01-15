@@ -381,14 +381,14 @@ Typst实际上不限制代码块的每个语句将会产生什么结果，只要
   none; // let world = "World";
   "Hello"; " "; "World"; // hello; space; world;
   none; // let destroy = ", Destroy"
-  ", Destroy"; " "; "Wrold"; "." // destroy; space; world; "."
+  ", Destroy"; " "; "World"; "." // destroy; space; world; "."
 }
 ```
 
 将结果收集并“折叠”，得到结果：
 
 #code(```typc
-#(none + none + none + "Hello" + " " + "World" + none + ", Destroy" + " " + "Wrold" + ".")
+#(none + none + none + "Hello" + " " + "World" + none + ", Destroy" + " " + "World" + ".")
 ```)
 
 #pro-tip[
