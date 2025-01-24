@@ -71,19 +71,17 @@
 #[一段文本]
 ```)
 
-这个#mark("#")不属于内容块的语法一部分，而是Typst中关于「脚本模式」的定界符。
+这个#mark("#")不属于内容块的语法一部分，而是模式转换的标志。
 
-这涉及到Typst的编译原理。Typst程序包含一个解释器，用其从头到尾查看并#term("interpret")你的文档。
+这涉及到Typst的编译原理。Typst是一个动态解释器，其按顺序查看并#term("interpret")你的文档源码。而#mark("#")就是告诉这个当前处于「标记模式」的解释器，接下来请转为「脚本模式」。
 
-其特殊之处在于，解释器还具备多种#term("interpreting mode")。借鉴了LaTeX的文本和数学模式，在不同的#term("interpreting mode")下，解释器以不同的语法规则解释你的文档。Typst中，标记模式的语法更适合你组织文本，代码模式更适合你书写脚本，而数学模式则最适合输入复杂的公式。
+实际上，相比python等语言，Typst的确有些特殊。它的解释器可以在不同#term("interpreting mode")下运行。在不同模式下，解释器以不同的语法规则解释你的文档。这便是借鉴了LaTeX的文本和数学模式。Typst一共有三种#term("interpreting mode")：标记模式的语法更适合你组织文本，代码模式更适合你书写脚本，而数学模式则最适合输入复杂的公式。
 
 // todo 三种解释模式的visualization
 
 === 标记模式
 
-当解释器从头开始解释文档时，其处于#term("markup mode")，在这个模式下，你可以使用各种记号创建标题、列表、段落......在这个模式下，Typst语法几乎就和Markdown一样。
-
-当其处于「标记模式」，且遇到一个「井号」时，Typst会立即将后续的一段代码认作「脚本」并执行，即它进入了「脚本模式」（scripting mode）。
+当解释器解释一个文件时，其默认就处于#term("markup mode")，在这个模式下，你可以使用各种记号创建标题、列表、段落......在这个模式下，Typst语法几乎就和Markdown一样。这些标记，我们大多在之前的章节已经学过。
 
 === 脚本模式
 
@@ -107,7 +105,7 @@ Typst总是倾向于更快地退出脚本模式。
 
 === 以另一个视角看待内容块
 
-「内容块」的内容遵从标记语法。这意味着，当处于「脚本模式」时，你还可以通过「内容块」语法临时返回「标记模式」，以嵌套复杂的逻辑：
+「内容块」是表达式，其括号内遵从标记语法。这意味着，当处于「脚本模式」时，你还可以通过「内容块」语法临时又返回「标记模式」，以嵌套复杂的逻辑：
 
 #code(```typ
 #([== 脚本模式下创建一个标题] + strong[后接一段文本])
@@ -143,35 +141,29 @@ Typst的数学模式如下：<grammar-inline-math> ~ <grammar-display-math>
 
 == 函数和函数调用 <grammar-func-call>
 
-这里仅作最基础的介绍。#(refs.scripting-base)[《基本字面量、变量和简单函数》]和#(refs.scripting-complex)[《复合字面量、控制流和复杂函数》]中有对函数和函数调用更详细的介绍。
+这里仅作最基础的介绍。#(refs.scripting-base)[《常量与变量》]和#(refs.scripting-complex)[《块与表达式》]中有对函数和函数调用更详细的介绍。
 
-在Typst中，函数与函数调用同样归属#term("code mode")，所以在调用函数前，你需要先使用#mark("#")让Typst先进入#term("code mode")。
+函数与函数调用同样归属#term("code mode")，所以在调用函数前，你需要先使用#mark("#")让Typst先进入#term("code mode")。
 
-与大部分语言相同的是，在调用Typst函数时，你可以向其传递以逗号分隔的#term("value")，这些#term("value")被称为参数。
+与大部分语言相同的是，在调用Typst函数时，你可以向其传递以逗号分隔的#term("value")，这些#term("value")被称为函数的参数。
 
 #code(```typ
 四的三次方为#calc.pow(4, 3)。
 ```)
 
-这里#typst-func("calc.pow")是内置的幂计算函数，其接受两个参数：
+这里#typst-func("calc.pow")是编译器内置的幂计算函数，其接受两个参数：
 + 一为```typc 4```，为幂的底
 + 一为```typc 3```，为幂的指数。
 
-你可以使用函数修饰#term("content block")。例如，你可以使用着重函数 #typst-func("strong") 标记一整段内容：
+你可以使用函数修饰#term("content block")。例如，你可以使用着重函数#typst-func("strong") 标记一整段内容：
 
 #code(```typ
 #strong([
   And every _fair from fair_ sometime declines,
-
-  By chance, or nature's changing course untrimm'd;
-
-  But thy _eternal summer_ shall not fade,
-
-  Nor lose possession of that fair thou ow'st;
 ])
 ```)
 
-虽然示例很长，但请认真观察，它很简单。首先，中括号包裹的是一大段内容。在之前已经学到，这是一个#term("content block")。然后#term("content block")在参数列表中，说明它是#typst-func("strong")的参数。#typst-func("strong")与幂函数没有什么不同，无非是接受了一个#term("content block")作为参数。
+首先，中括号包裹的是一段内容。在之前已经学到，这是一个#term("content block")。然后#term("content block")在参数列表中，说明它是#typst-func("strong")的参数。#typst-func("strong")与幂函数调用没有什么语法上的区别，无非是接受了一个#term("content block")作为参数。
 
 类似地，#typst-func("emph")可以标记一整段内容为强调语义：
 
@@ -183,7 +175,9 @@ Typst的数学模式如下：<grammar-inline-math> ~ <grammar-display-math>
 ])
 ```)
 
-Typst强调#term("consistency")，因此无论是通过标记还是通过函数，最终效果都必定是一样的。你可以根据实际情况任意组合方式。
+你应该也注意到了#typst-func("strong")事实上就是《初识标记模式》中讲过的着重标记，#typst-func("emph")就是强调标记。
+
+Typst强调#term("consistency")，因此无论是使用标记还是使用函数修饰内容，最终效果都是一样的。你可以根据实际情况选择合适的方法修饰内容。
 
 == 内容参数的糖 <grammar-content-param>
 
@@ -237,7 +231,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 
 === 背景高亮 <grammar-highlight>
 
-你可以使用`highlight`高亮一段内容：
+你可以使用#typst-func(`highlight`)高亮一段内容：
 
 #code(```typ
 #highlight[高亮一段内容]
@@ -250,7 +244,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 //         ^^^^^^^^^^^^ 具名传参
 ```)
 
-这种传参方式被称为#(refs.scripting-base)[「具名传参」]。
+这种传参方式被称为#(refs.scripting-base)[「具名传参」。]冒号的左侧写`fill`，代表是令`fill`参数为冒号右边的`orange`（橘色）。
 
 === 修饰线
 
@@ -265,7 +259,7 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
   ```)
 }
 
-值得注意地是，被划线内容需要保持相同字体才能保证线段同时处于同一水平高度。
+值得注意地是，线段的高度受到被修饰文本的字体影响。
 
 #code(```typ
 #set text(font: ("Linux Libertine", "Source Han Serif SC"))
@@ -274,9 +268,19 @@ Typst强调#term("consistency")，因此无论是通过标记还是通过函数�
 下划线效果：#underline[空格 字体一致] \
 ```)
 
-该限制可能会在将来被解除。
+这是因为#typst-func("underline")的`offset`参数默认与字体有关。这个参数决定了下划线相对于「基线」的偏移量。令其默认与字体有关是合理的，但是在一行文本混合多个字体的情况下表现不佳。
 
-#typst-func("underline")有一个很有用的`offset`参数，通过它你可以修改下划线相对于「基线」的偏移量：
+#code(
+  ```typ
+  #set text(font: ("Linux Libertine", "Source Han Serif SC"))
+  #underline(offset: 1.5pt)[空格 字体的下划线offset均为1.5pt]
+  ```,
+  code-as: ```typ
+  #underline(offset: 1.5pt)[空格 字体的下划线offset均为1.5pt]
+  ```,
+)
+
+你也可以通过`offset`参数制作双下划线：
 
 #code(```typ
 #underline(offset: 1.5pt, underline(offset: 3pt, [双下划线]))
