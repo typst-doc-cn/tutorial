@@ -738,9 +738,9 @@ Typst提供了一系列「成员」和「方法」访问字面量、变量与函
 #g([一个俩个], [仨个四个], [五六七八个])
 ```)
 
-```typc args.pos()```的类型是`Argument`。
-+ 使用`args.pos()`得到按顺序传入的参数
-+ 使用`args.at(name)`访问名称为`name`的具名参数。
+```typc args```的类型是`arguments`。
++ 使用`args.pos()`得到传入的位置参数数组；使用`args.named()`得到传入的具名参数字典。
++ 使用`args.at(i)`访问索引为整数`i`的位置参数；使用`args.at(name)`访问名称为字符串`name`的具名参数。
 
 === 参数解构 <grammar-destructing-param>
 
@@ -804,7 +804,7 @@ todo参数解构。
 #let c = [江]
 #let f(x, y) = a + x + a + y
 #let g(x, y, z, u, v) = [#f(x, y + a + z)，#f(u, v)。]
-#g([帆], [浆], [#(b)舟], [个#(b)翁], [钓钩]) \
+#g([帆], [桨], [#(b)舟], [个#(b)翁], [钓钩]) \
 #g([俯], [仰], [场笑], [#(c)明月], [#(c)秋])
 ````
 
@@ -837,7 +837,7 @@ todo参数解构。
 #let q1 = ````typ
 #set align(center)
 #let matrix-fmt(..args) = table(
-  columns: args.pos().at(0).len(),
+  columns: args.at(0).len(),
   ..args.pos().flatten().flatten().map(str)
 )
 #matrix-fmt(
