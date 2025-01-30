@@ -602,7 +602,7 @@ B
   scope: (rects: rects, box: box.with(baseline: 50% - 0.25em)),
 )
 
-其二是排列的间距，参数对应位`spacing`。你可以使用各种长度为`stack`内部元素制定合适的间距。
+其二是排列的间距，参数对应为`spacing`。你可以使用各种长度为`stack`内部元素制定合适的间距。
 
 #code(
   ```typ
