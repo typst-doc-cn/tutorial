@@ -173,7 +173,7 @@ Typst不仅支持颜色填充，还支持按照固定的模式将其他图形对
 
 == 闭合图形
 
-Typst为你预定义了一些基于贝塞尔曲线的闭合图形元素。下例子种，`#circle`、`#ellipse`、`#square`、`#rect`、`#polygon`分别展示了圆、椭圆、正方形、矩形、多边形的构造方法。
+Typst为你预定义了一些基于贝塞尔曲线的闭合图形元素。下例子中，`#circle`、`#ellipse`、`#square`、`#rect`、`#polygon`分别展示了圆、椭圆、正方形、矩形、多边形的构造方法。
 
 #code(```typ
 #box(circle(radius: 12.5pt, fill: blue))
