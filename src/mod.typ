@@ -2,7 +2,7 @@
 #import "/typ/templates/page.typ"
 #import "/typ/templates/term.typ": _term
 #import "/typ/templates/side-notes.typ": side-note, side-attrs
-#import "/typ/templates/page.typ": main-color, get-page-width
+#import "/typ/templates/page.typ": main-color, get-page-width, plain-text
 #import "/typ/templates/template-link.typ": enable-heading-hash
 
 #import "/typ/typst-meta/docs.typ": typst-v11
@@ -12,8 +12,8 @@
   (
     writing-markup: cl.with("/basic/writing-markup.typ"),
     writing-scripting: cl.with("/basic/writing-scripting.typ"),
-    scripting-base: cl.with("/basic/scripting-base.typ"),
-    scripting-complex: cl.with("/basic/scripting-complex.typ"),
+    scripting-base: cl.with("/basic/scripting-literal-and-variable.typ"),
+    scripting-complex: cl.with("/basic/scripting-block-and-expression.typ"),
     scripting-modules: cl.with("/intermediate/scripting-modules.typ"),
     content-scope-style: cl.with("/intermediate/content-scope-and-style.typ"),
     content-stateful: cl.with("/intermediate/content-stateful.typ"),
@@ -235,7 +235,7 @@
 ///
 /// Note: it doesn't check whether input is a valid function identifier or path.
 #let typst-func(it) = [
-  #raw(it + "()", lang: "typc") <typst-raw-func>
+  #raw(plain-text(it) + "()", lang: "typc") <typst-raw-func>
 ]
 
 #let show-answer = false
