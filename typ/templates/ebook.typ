@@ -1,4 +1,4 @@
-#import "@preview/shiroa:0.1.2": *
+#import "@preview/shiroa:0.2.0": *
 #import "/typ/templates/page.typ": project, part-style, dash-color
 #import "/typ/templates/term.typ": reset-term-state
 
