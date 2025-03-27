@@ -37,6 +37,6 @@
     (..default-cjk-fonts(), ..default-fonts())
   }
 
-  grid(columns: (1fr, 1fr), ..svg-doc(code, fonts: fonts).pages.map(data => image.decode(data)).map(rect))
+  grid(columns: (1fr, 1fr), ..svg-doc(code, fonts: fonts).pages.map(data => image(bytes(data))).map(rect))
 }
 #let frames-cjk = frames.with(cjk-fonts: true)

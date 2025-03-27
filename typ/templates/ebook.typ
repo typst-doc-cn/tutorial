@@ -138,8 +138,8 @@
 
       let outline-counter = counter("outline-counter")
       show outline.entry: it => {
-        let has-part = if it.body.func() != none and "children" in it.body.fields() {
-          for ch in it.body.children {
+        let has-part = if it.body().func() != none and "children" in it.body().fields() {
+          for ch in it.body().children {
             if "text" in ch.fields() and ch.text.contains("Part") {
               ch.text
             }
@@ -155,7 +155,8 @@
         it
       }
 
-      outline(depth: 1, fill: repeat[.])
+      set outline.entry(fill: repeat[.])
+      outline(depth: 1)
     }
 
     if project-meta.book != none {

@@ -9,7 +9,7 @@
   let data = read(data, encoding: none)
   let fingerprint = typst.allocate_data(bytes("font"), data)
   let data = str(typst.encode_base64(data))
-  
+
   (kind: "font", hash: str(fingerprint), data: data)
 }
 
@@ -47,12 +47,12 @@
   // Pass only hash references at first time
   let partial-ctx = resolve-context(..make-partial-ref(fonts))
   let (header, ..pages) = str(typst.svg(partial-ctx, code)).split(separator)
-  
+
   // In case of cache miss
   if not header.starts-with("code-trapped") {
     return (header, pages)
   }
-  
+
   // Pass full data
   let full-ctx = resolve-context(fonts)
   let (header, ..pages) = str(typst.svg(full-ctx, code)).split(separator)
@@ -69,6 +69,6 @@
     fonts = default-fonts()
   }
   let (header, pages) = _svg-doc(code, fonts)
-  (header: json.decode(header), pages: pages)
+  (header: json(bytes(header)), pages: pages)
 }
 
