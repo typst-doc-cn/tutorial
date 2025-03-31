@@ -4,85 +4,51 @@
 
 use std::{
     collections::HashMap,
-    hash::Hash,
     io::Read,
     path::{Path, PathBuf},
     str::FromStr,
     sync::{Arc, Mutex},
+    vec,
 };
 
-use base64::Engine;
 use reflexo_typst::{
+    compat::utils::once_cell::sync::Lazy,
     font::{pure::MemoryFontBuilder, FontResolverImpl},
-    hash::{FingerprintHasher, FingerprintSipHasher},
-    package::{dummy::DummyRegistry, PackageRegistry, PackageSpec},
+    package::{dummy::DummyRegistry, PackageRegistry, PackageSpec, RegistryPathMapper},
     typst::prelude::EcoVec,
-    vfs::dummy::DummyAccessModel,
-    CompilerUniverse, EntryManager, EntryReader, EntryState, ShadowApi, TypstFileId,
+    vfs::{dummy::DummyAccessModel, FileSnapshot},
+    CompilerUniverse, EntryManager, EntryReader, EntryState, ShadowApi, TypstDocument,
+    TypstPagedDocument,
 };
-use serde::{Deserialize, Serialize, Serializer};
 use typst::{
-    diag::{eco_format, PackageError},
+    diag::{eco_format, FileResult, PackageError},
     foundations::Bytes,
-    syntax::VirtualPath,
 };
 
 use wasm_minimal_protocol::*;
 initiate_protocol!();
 
 /// A bytes object that is cheap to clone.
-#[derive(Clone, Hash)]
+#[derive(Clone)]
 struct ImmutBytes(Bytes);
 
-impl Serialize for ImmutBytes {
-    fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        serializer.serialize_str(&base64::engine::general_purpose::STANDARD.encode(&self.0))
-    }
-}
-
-impl<'de> Deserialize<'de> for ImmutBytes {
-    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let string = String::deserialize(deserializer)?;
-        let bytes = base64::engine::general_purpose::STANDARD
-            .decode(string.as_bytes())
-            .map_err(|e| serde::de::Error::custom(e.to_string()))?;
-        Ok(Self(Bytes::from(bytes)))
-    }
-}
-
 /// A data reference in global data storage.
-#[derive(Clone, Deserialize, Serialize, Hash)]
-#[serde(tag = "kind")]
+#[derive(Clone)]
 enum DataRef {
-    #[serde(rename = "font")]
     Font {
-        hash: String,
         data: Option<ImmutBytes>,
     },
-    #[serde(rename = "package")]
     Package {
-        hash: String,
         spec: String,
         data: Option<ImmutBytes>,
     },
-    #[serde(rename = "file")]
     File {
-        hash: String,
         path: String,
         data: Option<ImmutBytes>,
     },
 }
 
 impl DataRef {
-    /// Gets the key of the object.
-    pub fn key(&self) -> &String {
-        match self {
-            Self::Font { hash, .. } => hash,
-            Self::Package { hash, .. } => hash,
-            Self::File { hash, .. } => hash,
-        }
-    }
-
     /// Gets the data of the object.
     pub fn data(&self) -> Option<&ImmutBytes> {
         match self {
@@ -91,37 +57,18 @@ impl DataRef {
             Self::File { data, .. } => data.as_ref(),
         }
     }
-
-    /// Sets the data of the object.
-    pub fn set_data(&mut self, data: ImmutBytes) {
-        match self {
-            Self::Font { data: d, .. } => *d = Some(data),
-            Self::Package { data: d, .. } => *d = Some(data),
-            Self::File { data: d, .. } => *d = Some(data),
-        }
-    }
 }
 
 /// Allocates a data reference
 fn allocate_data_inner(kind: &[u8], data: &[u8], path: Option<&[u8]>) -> StrResult<Vec<u8>> {
     let kind = std::str::from_utf8(kind).map_err(|e| e.to_string())?;
-    let data = ImmutBytes(Bytes::from(data));
-    let hash = {
-        let mut hasher = FingerprintSipHasher::default();
-        kind.hash(&mut hasher);
-        data.hash(&mut hasher);
-        hasher.finish_fingerprint().0.as_svg_id("")
-    };
+    let data = ImmutBytes(Bytes::new(data.to_owned()));
 
     let data_ref = match kind {
-        "font" => DataRef::Font {
-            hash: hash.clone(),
-            data: Some(data),
-        },
+        "font" => DataRef::Font { data: Some(data) },
         "package" => {
             let path = std::str::from_utf8(path.unwrap()).map_err(|e| e.to_string())?;
             DataRef::Package {
-                hash: hash.clone(),
                 spec: path.to_string(),
                 data: Some(data),
             }
@@ -129,7 +76,6 @@ fn allocate_data_inner(kind: &[u8], data: &[u8], path: Option<&[u8]>) -> StrResu
         "file" => {
             let path = std::str::from_utf8(path.unwrap()).map_err(|e| e.to_string())?;
             DataRef::File {
-                hash: hash.clone(),
                 path: path.to_owned(),
                 data: Some(data),
             }
@@ -137,26 +83,11 @@ fn allocate_data_inner(kind: &[u8], data: &[u8], path: Option<&[u8]>) -> StrResu
         _ => return Err(format!("Unknown data kind: {kind}")),
     };
 
-    let mut data = DATA
-        .get_or_init(|| Mutex::new(HashMap::new()))
-        .lock()
-        .unwrap();
+    let mut data = DATA.lock().unwrap();
 
-    data.insert(hash.clone(), data_ref);
+    data.data.push(data_ref);
 
-    Ok(hash.into_bytes())
-}
-
-/// Encodes a string to base64.
-///
-/// # Errors
-///
-/// Error if there is an error
-#[cfg_attr(feature = "typst-plugin", wasm_func)]
-pub fn encode_base64(data: &[u8]) -> Vec<u8> {
-    base64::engine::general_purpose::STANDARD
-        .encode(data)
-        .into_bytes()
+    Ok(vec![0])
 }
 
 /// Allocates a data reference, return the key of the data reference.
@@ -187,8 +118,7 @@ pub fn allocate_file(kind: &[u8], path: &[u8], data: &[u8]) -> StrResult<Vec<u8>
     allocate_data_inner(kind, data, Some(path))
 }
 
-/// The global data storage.
-static DATA: std::sync::OnceLock<Mutex<HashMap<String, DataRef>>> = std::sync::OnceLock::new();
+static DATA: Lazy<Mutex<Context>> = Lazy::new(|| Mutex::new(Context { data: vec![] }));
 
 /// Makes `instant::SystemTime::now` happy
 pub extern "C" fn now() -> f64 {
@@ -196,7 +126,6 @@ pub extern "C" fn now() -> f64 {
 }
 
 /// A context that is used to resolve a world context.
-#[derive(Deserialize, Serialize, Hash)]
 pub struct Context {
     /// The data that are used in the main file.
     data: Vec<DataRef>,
@@ -204,47 +133,8 @@ pub struct Context {
 
 type StrResult<T> = Result<T, String>;
 
-/// Resolves data references.
-fn resolve_data(mut ctx: Context) -> StrResult<Context> {
-    // The missing data will cause an exception.
-    let mut missing_data = Vec::new();
-
-    let mut data = DATA
-        .get_or_init(|| Mutex::new(HashMap::new()))
-        .lock()
-        .unwrap();
-
-    for f in ctx.data.iter_mut() {
-        let data_entry = data.get(f.key().as_str());
-
-        match (data_entry, f.data()) {
-            // Borrow data from the global storage.
-            (Some(data_entry), None) => {
-                f.set_data(data_entry.data().unwrap().clone());
-            }
-            // Add data to the global storage.
-            (None, Some(..)) => {
-                data.insert(f.key().clone(), f.clone());
-            }
-            // Error if there is no data.
-            (None, None) => {
-                missing_data.push(f.key().clone());
-            }
-            (Some(_), Some(_)) => {}
-        }
-    }
-
-    // All data are resolved.
-    if missing_data.is_empty() {
-        return Ok(ctx);
-    }
-
-    // Some data are missing.
-    Err(missing_data.join(", "))
-}
-
-/// Resolves a world by context.
-fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
+/// Resolves a world
+fn resolve_world() -> StrResult<Arc<Mutex<WorldRepr>>> {
     /// Extracts a package.
     fn extract_package(
         data: &[u8],
@@ -286,26 +176,31 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
     }
 
     /// Creates a world based on the context.
-    #[comemo::memoize]
-    fn resolve_world_inner(ctx: Context) -> StrResult<Arc<Mutex<WorldRepr>>> {
+    fn resolve_world_inner() -> StrResult<Arc<Mutex<WorldRepr>>> {
         // Adds embedded fonts.
         let mut fb = MemoryFontBuilder::new();
         let mut pb = MemoryPackageBuilder::default();
 
-        let mut vfs = reflexo_typst::vfs::Vfs::new(DummyAccessModel);
+        let registry = Arc::new(DummyRegistry::default());
+        let resolver = Arc::new(RegistryPathMapper::new(registry.clone()));
+        let mut vfs = reflexo_typst::vfs::Vfs::new(resolver, DummyAccessModel);
 
-        for data in ctx.data {
+        for data in &DATA.lock().unwrap().data {
             match data {
                 DataRef::Font { data, .. } => {
-                    fb.add_memory_font(data.unwrap().0);
+                    fb.add_memory_font(data.clone().unwrap().0);
                 }
                 DataRef::Package { data, spec, .. } => {
                     let spec = PackageSpec::from_str(&spec).map_err(|e| e.to_string())?;
                     let path = pb.add_memory_package(spec);
 
-                    let data = data.unwrap().0;
+                    let data = data.clone().unwrap().0;
                     extract_package(&data, |key, value, _mtime| {
-                        vfs.map_shadow(&path.join(key.as_str()), Bytes::from(value.to_owned()))
+                        vfs.revise()
+                            .map_shadow(
+                                &path.join(key.as_str()),
+                                FileSnapshot::from(FileResult::Ok(Bytes::new(value.to_owned()))),
+                            )
                             .map_err(|e| e.to_string())
                     })?;
                 }
@@ -314,39 +209,35 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
         }
 
         for data in EMBEDDED_FONT {
-            fb.add_memory_font(Bytes::from_static(data));
+            fb.add_memory_font(Bytes::new(data));
         }
 
         // Creates a world.
         let world = WorldRepr::new_raw(
             EntryState::new_workspace(PathBuf::from("/").into()),
+            false,
             None,
             vfs,
-            DummyRegistry,
+            registry,
             Arc::new(fb.into()),
         );
 
         Ok(Arc::new(Mutex::new(world)))
     }
 
-    // Deserializes context.
-    let ctx = serde_json::from_slice::<Context>(ctx).map_err(|e| e.to_string())?;
-    let mut ctx = resolve_data(ctx)?;
-
     // Removes files from the context as they are not used for resolving a world.
     let mut files = Vec::new();
-    ctx.data.retain(|f| match f {
+    let _ = &DATA.lock().unwrap().data.retain(|f| match f {
         DataRef::File { .. } => {
             files.push(f.clone());
             false
         }
         _ => true,
     });
-
-    let world = resolve_world_inner(ctx)?;
-
+    let world = resolve_world_inner()?;
     // Adds files to the world.
     let mut world_mut = world.lock().unwrap();
+
     for f in files.into_iter() {
         let path = match &f {
             DataRef::File { path, .. } => path,
@@ -359,7 +250,6 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
             .map_err(|e| e.to_string())?;
     }
     drop(world_mut);
-
     Ok(world)
 }
 
@@ -373,9 +263,9 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
 ///
 /// Error if there is an error
 #[cfg_attr(feature = "typst-plugin", wasm_func)]
-pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
+pub fn svg(input: &[u8]) -> StrResult<Vec<u8>> {
     // Resolves the world.
-    let world = resolve_world(context);
+    let world = resolve_world();
     let world = match world {
         Ok(world) => world,
         // Traps the function if not all data are resolved.
@@ -390,18 +280,17 @@ pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
 
     // Prepare main file.
     let entry_file = Path::new("/main.typ");
-    let entry = verse
-        .entry_state()
-        .select_in_workspace(TypstFileId::new(None, VirtualPath::new(entry_file)));
+    let entry = verse.entry_state().select_in_workspace(entry_file);
     let _ = verse.mutate_entry(entry);
     verse
-        .map_shadow(entry_file, Bytes::from(input.to_owned()))
+        .map_shadow(entry_file, Bytes::new(input.to_owned()))
         .map_err(|e| e.to_string())?;
 
     // Compile.
     let world = &verse.snapshot();
+
     // todo: warning
-    let doc =
+    let doc: TypstPagedDocument =
         typst::compile(world)
             .output
             .map_err(|e: EcoVec<typst::diag::SourceDiagnostic>| {
@@ -415,8 +304,16 @@ pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
                 error_log
             })?;
 
+    let pages_data: Vec<_> = doc
+        .pages
+        .iter()
+        .map(|page| typst_svg::svg(page).into_bytes())
+        .collect();
+
+    let doc = Arc::new(doc);
+    let typ_doc = TypstDocument::Paged(doc);
     // Query header.
-    let header = reflexo_typst::query::retrieve(world, "<embedded-typst>", &doc);
+    let header = reflexo_typst::query::retrieve(world, "<embedded-typst>", &typ_doc);
     let header = match header {
         Ok(header) => serde_json::to_vec(&header).map_err(|e| e.to_string())?,
         Err(e) => serde_json::to_vec(&e).map_err(|e| e.to_string())?,
@@ -424,14 +321,9 @@ pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
 
     // Build payload.
     Ok((Some(header).into_iter())
-        .chain(
-            doc.pages
-                .iter()
-                .map(|page| typst_svg::svg(page).into_bytes()),
-        )
+        .chain(pages_data)
         .collect::<Vec<_>>()
         .join(&b"\n\n\n\n\n\n\n\n"[..]))
-    // Ok(b"Hello world".to_vec())
 }
 
 /// type trait of [`TypstWasmWorld`].
@@ -463,20 +355,24 @@ impl TypstWasmWorld {
     /// Create a new [`TypstWasmWorld`].
     pub fn new() -> Self {
         // Creates a virtual file system.
-        let vfs = reflexo_typst::vfs::Vfs::new(DummyAccessModel);
+        let registry = Arc::new(DummyRegistry::default());
+        let resolver = Arc::new(RegistryPathMapper::new(registry.clone()));
+        let vfs = reflexo_typst::vfs::Vfs::new(resolver, DummyAccessModel);
 
         // Adds embedded fonts.
         let mut fb = MemoryFontBuilder::new();
+
         for data in EMBEDDED_FONT {
-            fb.add_memory_font(Bytes::from_static(data));
+            fb.add_memory_font(Bytes::new(data));
         }
 
         // Creates a world.
         Self(CompilerUniverse::new_raw(
             EntryState::new_workspace(PathBuf::from("/").into()),
+            false,
             None,
             vfs,
-            DummyRegistry,
+            registry,
             Arc::new(fb.into()),
         ))
     }
