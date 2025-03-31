@@ -543,7 +543,7 @@ for i in range(res-headings.len()) {
   code-as: ```typ
   // 这里有get-heading-at-page的实现..
 
-  #set page(header: locate(loc => emph(
-    get-heading-at-page(loc))))
+  #set page(header: context emph(
+    get-heading-at-page(here())))
   ```,
 )

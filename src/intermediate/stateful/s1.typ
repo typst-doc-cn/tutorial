@@ -11,15 +11,15 @@
 }
 
 #let get-heading-at-page(loc) = {
-  let first-headings = first-heading.final(loc)
+  let first-headings = first-heading.final()
   let last-headings = last-heading.at(loc)
   let page-num = loc.page()
 
   first-headings.at(str(page-num), default: find-headings(last-headings, page-num))
 }
 
-#let update-heading-at-page(h) = locate(loc => {
-  let k = str(loc.page())
+#let update-heading-at-page(h) = context {
+  let k = str(here().page())
   last-heading.update(it => {
     it.insert(k, h)
     it
@@ -30,7 +30,7 @@
     }
     it
   })
-})
+}
 
 #let set-heading(content) = {
   show heading.where(level: 2): it => {
@@ -47,10 +47,12 @@
     it
   }
 
-  set page(header: locate(loc => {
-    set text(size: 5pt);
-    emph(get-heading-at-page(loc))
-  }))
+  set page(
+    header: context {
+      set text(size: 5pt)
+      emph(get-heading-at-page(here()))
+    },
+  )
 
   content
 }

@@ -1,16 +1,12 @@
 
-#let typst = plugin("/assets/artifacts/embedded_typst.wasm")
-
 #let separator = "\n\n\n\n\n\n\n\n"
 
 #let allocate-fonts(data) = (kind: "font", hash: none, data: data)
 
 #let create-font-ref(data) = {
   let data = read(data, encoding: none)
-  let fingerprint = typst.allocate_data(bytes("font"), data)
-  let data = str(typst.encode_base64(data))
 
-  (kind: "font", hash: str(fingerprint), data: data)
+  (kind: "font", data: data)
 }
 
 #let default-fonts() = (
@@ -28,34 +24,27 @@
   "/assets/typst-fonts/DejaVuSansMono-Bold.ttf",
   "/assets/typst-fonts/DejaVuSansMono-Oblique.ttf",
   "/assets/typst-fonts/DejaVuSansMono-BoldOblique.ttf",
-).map(create-font-ref)
+)
 
 #let default-cjk-fonts() = (
   "/assets/fonts/SourceHanSerifSC-Regular.otf",
   "/assets/fonts/SourceHanSerifSC-Bold.otf",
-).map(create-font-ref)
+)
 
-#let resolve-context(fonts) = {
-  bytes(json.encode((data: (..fonts,))))
-}
-
-#let make-partial-ref(fonts) = {
-  (fonts.map(e => (kind: e.kind, hash: e.hash)),)
+#let load-fonts(fonts) = {
+  let base = plugin("/assets/artifacts/embedded_typst.wasm")
+  fonts.fold(
+    base,
+    (pre, path) => {
+      let data = read(path, encoding: none)
+      plugin.transition(pre.allocate_data, bytes("font"), data)
+    },
+  )
 }
 
 #let _svg-doc(code, fonts) = {
-  // Pass only hash references at first time
-  let partial-ctx = resolve-context(..make-partial-ref(fonts))
-  let (header, ..pages) = str(typst.svg(partial-ctx, code)).split(separator)
-
-  // In case of cache miss
-  if not header.starts-with("code-trapped") {
-    return (header, pages)
-  }
-
-  // Pass full data
-  let full-ctx = resolve-context(fonts)
-  let (header, ..pages) = str(typst.svg(full-ctx, code)).split(separator)
+  let typst-with-fonts = load-fonts(fonts)
+  let (header, ..pages) = str(typst-with-fonts.svg(code)).split(separator)
   (header, pages)
 }
 
