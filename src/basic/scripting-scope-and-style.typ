@@ -405,7 +405,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 例如它的`line`函数的返回值，就完全不是一个内容，而是一个无法窥视的函数。
 
 #code(```typ
-#import "@preview/cetz:0.3.2"
+#import "@preview/cetz:0.3.4"
 #repr(cetz.draw.line((0, 0), (1, 1), fill: blue))
 ```)
 
@@ -414,7 +414,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 使用混合语言，在Typst中可以很优雅地画多面体：
 
 #code.with(al: top)(```typ
-#import "@preview/cetz:0.3.2"
+#import "@preview/cetz:0.3.4"
 #align(center, cetz.canvas({
   // 导入cetz的draw方言
   import cetz.draw: *; import cetz.vector: add
