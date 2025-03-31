@@ -146,13 +146,13 @@
           }
         }
 
-        if has-part == none {
+        let numbering = if has-part == none {
           outline-counter.step(level: it.level + 1)
           context outline-counter.display(outline-numbering)
         } else {
           outline-counter.step(level: 1)
         }
-        it
+        link(it.element.location(), text(black, it.indented(numbering + it.prefix(), it.inner())))
       }
 
       set outline.entry(fill: repeat[.])
