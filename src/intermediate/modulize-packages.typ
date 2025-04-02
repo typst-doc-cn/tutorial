@@ -7,7 +7,7 @@
 你只需要`import`特定的路径就能访问其内部的变量声明。例如，导入一个用于绘画自动机的外部库：
 
 #code(```typ
-#import "@preview/fletcher:0.5.4" as fletcher: node, edge
+#import "@preview/fletcher:0.5.7" as fletcher: node, edge
 
 #align(center, fletcher.diagram(
   node((0, 0), $S_1$),
@@ -21,10 +21,10 @@
 其中，以下一行代码完成了导入外部库的所有工作。我们注意到其完全为`import`语法，唯一陌生的是其中的路径格式：
 
 ```typ
-#import "@preview/fletcher:0.4.0" as fletcher: node, edge
+#import "@preview/fletcher:0.5.7" as fletcher: node, edge
 ```
 
-解读路径#text(red, `@preview`)`/`#text(eastern, `fletcher`)`:`#text(orange, `0.4.0`)的格式，它由三部分组成。
+解读路径#text(red, `@preview`)`/`#text(eastern, `fletcher`)`:`#text(orange, `0.5.7`)的格式，它由三部分组成。
 
 === 「命名空间」，#text(red, `@preview`)
 
@@ -40,7 +40,7 @@
 
 例如`OvO`、`O_O`、`O-O`都是合法的库名。但是`0v0`不是合法库名，因为其以数字零开头。
 
-=== 「版本号」，#text(orange, `0.4.0`)
+=== 「版本号」，#text(orange, `0.5.7`)
 
 必须符合#link("https://semver.org/")[SemVer]规范。
 
@@ -54,7 +54,7 @@
 一般来说，使用外部库与导入本地模块一样简单。当你尝试导入一个外部库时，Typst会立即启动下载线程为你从网络下载外部库代码：
 
 ```typ
-#import "@preview/fletcher:0.4.0" as fletcher: node, edge
+#import "@preview/fletcher:0.5.7" as fletcher: node, edge
 ```
 
 一般情况下，从网络下载外部库的时间不会超过十秒钟，并且不需要任何额外配置。但由于不可描述的原因，你有可能需要为下载线程配置代理。当你希望通过网络代理下载外部库时，请检查全局环境变量`HTTP_PROXY`和`HTTPS_PROXY`是否成功设置。
@@ -87,19 +87,19 @@ Typst将会检查`{data-dir}/`#text(green, `typst/packages`)中是否包含相�
 
 例如，当引入外部库#breakable-path(
   text(red, `@preview`),
-  [#text(eastern, `fletcher`)`:`#text(orange, `0.4.0`)],
+  [#text(eastern, `fletcher`)`:`#text(orange, `0.5.7`)],
 )时，Typst会严格*按顺序*检查并解析路径：数据文件夹中的#breakable-path(
   `{data-dir}`,
   text(green, `typst/packages`),
   text(red, `preview`),
   text(eastern, `fletcher`),
-  text(orange, `0.4.0`)
+  text(orange, `0.5.7`)
 )和缓存文件夹中的#breakable-path(
   `{cache-dir}`,
   text(green, `typst/packages`),
   text(red, `preview`),
   text(eastern, `fletcher`),
-  text(orange, `0.4.0`)
+  text(orange, `0.5.7`)
 )。Typst会将库路径映射到你数据文件夹或缓存文件夹，优先按顺序使用已经存在的库代码，并按需从网络下载外部库。
 
 这意味着你可以拥有以下几条特性。

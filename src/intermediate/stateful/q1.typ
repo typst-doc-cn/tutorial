@@ -3,8 +3,8 @@
 
 #let calc-headings(headings) = {
   let max-page-num = calc.max(..headings.map(it => it.location().page()))
-  let first-headings = (none, ) * max-page-num
-  let last-headings = (none, ) * max-page-num
+  let first-headings = (none,) * max-page-num
+  let last-headings = (none,) * max-page-num
 
   for h in headings {
     if first-headings.at(h.location().page() - 1) == none {
@@ -13,26 +13,30 @@
     last-headings.at(h.location().page() - 1) = h
   }
 
-  let res-headings = (none, ) * max-page-num
+  let res-headings = (none,) * max-page-num
   for i in range(res-headings.len()) {
     res-headings.at(i) = if first-headings.at(i) != none {
       first-headings.at(i)
     } else {
       last-headings.at(i) = last-headings.at(
-        calc.max(0, i - 1), default: none)
+        calc.max(0, i - 1),
+        default: none,
+      )
       last-headings.at(i)
     }
   }
 
-  (res-headings, if max-page-num > 0 {
-    last-headings.at(-1)
-  })
+  (
+    res-headings,
+    if max-page-num > 0 {
+      last-headings.at(-1)
+    },
+  )
 }
 
-#let get-heading-at-page(loc) = {
-  let (headings, last-heading) = calc-headings(
-    query(heading.where(level: 2), loc))
-  headings.at(loc.page() - 1, default: last-heading)
+#let get-heading-at-page() = {
+  let (headings, last-heading) = calc-headings(query(heading.where(level: 2)))
+  headings.at(here().page() - 1, default: last-heading)
 }
 
 #let set-heading(content) = {
@@ -46,10 +50,12 @@
     it
   }
 
-  set page(header: locate(loc => {
-    set text(size: 5pt);
-    emph(get-heading-at-page(loc))
-  }))
+  set page(
+    header: context {
+      set text(size: 5pt)
+      emph(get-heading-at-page())
+    },
+  )
 
   content
 }

@@ -1,4 +1,4 @@
-#import "@preview/fletcher:0.5.4" as fletcher: node, edge
+#import "@preview/fletcher:0.5.7" as fletcher: node, edge
 #import "/typ/templates/page.typ": main-color, is-light-theme, page-width
 #import "mod.typ": typst-func
 

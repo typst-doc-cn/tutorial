@@ -1,5 +1,5 @@
 #import "mod.typ": *
-#import "@preview/cetz:0.2.0": *
+#import "@preview/cetz:0.3.4": *
 
 #show: book.page.with(title: "立体几何")
 
@@ -8,7 +8,7 @@
 在绘制立体图形（以及其他抽象图形）时，最重要的思路是变换「坐标系」（Viewport），以方便绘制。
 
 #code(```typ
-#import "@preview/cetz:0.2.0": *
+#import "@preview/cetz:0.3.4": *
 #canvas({
   import draw: *
   let axis-line(p) = {
@@ -67,7 +67,7 @@
 
 #code(
   ```typ
-  #import "@preview/cetz:0.2.0": *
+  #import "@preview/cetz:0.3.4": *
   #align(center, canvas(六面体))
   ```,
   scope: (六面体: 六面体),
@@ -79,7 +79,7 @@
 
 #code(
   ```typ
-  #import "@preview/cetz:0.2.0": *
+  #import "@preview/cetz:0.3.4": *
   #align(center, canvas({
     import draw: *
     set-viewport((0, 0, 0), (4, 4, -4), bounds: (1, 1, 1))

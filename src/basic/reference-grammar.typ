@@ -754,14 +754,14 @@
   ),
   (
     [获取位置],
-    refs.content-scope-style.with(reference: <grammar-locate>),
+    refs.content-scope-style.with(reference: <grammar-here>),
     ````typ
     #context here().position()
     ````,
   ),
   (
     [检测当前页面是否为偶数页（位置相关计算）],
-    refs.content-scope-style.with(reference: <grammar-locate-calc>),
+    refs.content-scope-style.with(reference: <grammar-here-calc>),
     ````typ
     #context [ 页码是偶数：#calc.even(here().page()) ]
     ````,
