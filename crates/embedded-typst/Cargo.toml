@@ -15,10 +15,7 @@ crate-type = ["cdylib"]
 typst.workspace = true
 typst-svg.workspace = true
 reflexo-typst.workspace = true
-serde.workspace = true
 serde_json.workspace = true
-comemo = "0.3.0"
-base64 = "0.21.2"
 flate2 = "1"
 tar = "0.4"
 
