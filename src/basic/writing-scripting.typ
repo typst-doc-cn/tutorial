@@ -44,14 +44,6 @@
 
 #term("content block")不会影响包裹的内容——Typst仅仅是解析内部代码作为#term("content block")的内容。#term("content block")也*几乎不影响内容的书写*。
 
-#pro-tip[
-  唯一的影响是你需要在内容块内部转义右中括号。
-
-  #code(```typ
-  #[x\]y]
-  ```)
-]
-
 #term("content block")的唯一作用是“界定内容”。它收集一个或多个#term("content")，以待后续使用。有了#term("content block")，你可以*准确指定*一段内容，并用#term("scripting")加工。
 
 #import "../figures.typ": figure-content-decoration
@@ -119,7 +111,7 @@ Typst总是倾向于更快地退出脚本模式。
   这是可以的，但是存在一些问题。例如，人们也常常在正文中使用中括号等标记：
 
   #code(```typ
-  区间[1, ∞)上几乎所有有理数都可以表示为$x^x$，其中$x$是无理数。
+  遇事不决睡大觉 (¦3[▓▓]
   ```)
 
   如此，「标记模式」下默认将中括号解析为普通文本看起来更为合理。

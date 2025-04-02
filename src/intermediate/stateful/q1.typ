@@ -34,9 +34,9 @@
   )
 }
 
-#let get-heading-at-page(loc) = {
+#let get-heading-at-page() = {
   let (headings, last-heading) = calc-headings(query(heading.where(level: 2)))
-  headings.at(loc.page() - 1, default: last-heading)
+  headings.at(here().page() - 1, default: last-heading)
 }
 
 #let set-heading(content) = {
@@ -53,7 +53,7 @@
   set page(
     header: context {
       set text(size: 5pt)
-      emph(get-heading-at-page(here()))
+      emph(get-heading-at-page())
     },
   )
 

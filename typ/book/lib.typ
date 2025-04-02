@@ -9,8 +9,8 @@
 #let is-web-target() = target.starts-with("web")
 #let is-pdf-target() = target.starts-with("pdf")
 
-#let _labeled-meta(label) = locate(loc => {
-  let res = query(label, loc)
+#let _labeled-meta(label) = context {
+  let res = query(label)
   if res.len() <= 0 {
     none
   } else if res.len() == 1 {
@@ -18,7 +18,7 @@
   } else {
     res.map(it => it.value)
   }
-})
+}
 
 #let book-meta-state = state("book-meta", none)
 
@@ -103,9 +103,9 @@
   }
 
   assert(content != none, message: "invalid label content")
-  locate(loc => {
+  context {
     if reference != none {
-      let result = query(reference, loc)
+      let result = query(reference)
       // whether it is internal link
       if result.len() > 0 {
         link(reference, content)
@@ -113,7 +113,7 @@
       }
     }
 
-    let link-result = link2page.final(loc)
+    let link-result = link2page.final()
     if path-lbl in link-result {
       link((page: link-result.at(path-lbl), x: 0pt, y: 0pt), content)
       return
@@ -129,7 +129,7 @@
       }
     }
     link(lnk, content)
-  })
+  }
 }
 
 // Collect text content of element recursively into a single string
@@ -320,8 +320,8 @@
   // set page(width: 300pt, margin: (left: 10pt, right: 10pt, rest: 0pt))
   [#metadata(toml("typst.toml")) <typst-book-internal-package-meta>]
 
-  locate(loc => {
-    let data = query(<typst-book-raw-book-meta>, loc).at(0)
+  context {
+    let data = query(<typst-book-raw-book-meta>).at(0)
     let meta = _convert-summary(data)
     meta.at("summary") = _numbering-sections(meta.at("summary"))
 
@@ -329,7 +329,7 @@
     [
       #metadata(meta) <typst-book-book-meta>
     ]
-  })
+  }
 
   // #let sidebar-gen(node) = {
   //   node
@@ -371,12 +371,12 @@
 
       show: it => {
         let abs-link = cross-link-path-label("/" + link)
-        locate(loc => {
+        context {
           link2page.update(it => {
-            it.insert(abs-link, loc.page())
+            it.insert(abs-link, here().page())
             it
           })
-        })
+        }
 
         it
       }

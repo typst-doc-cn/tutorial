@@ -10,10 +10,10 @@
   headings.at(str(page-num), default: find-headings(headings, page-num - 1))
 }
 
-#let get-heading-at-page(loc) = {
+#let get-heading-at-page() = {
   let first-headings = first-heading.final()
-  let last-headings = last-heading.at(loc)
-  let page-num = loc.page()
+  let last-headings = last-heading.at(here())
+  let page-num = here().page()
 
   first-headings.at(str(page-num), default: find-headings(last-headings, page-num))
 }
@@ -50,7 +50,7 @@
   set page(
     header: context {
       set text(size: 5pt)
-      emph(get-heading-at-page(here()))
+      emph(get-heading-at-page())
     },
   )
 

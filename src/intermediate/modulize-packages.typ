@@ -40,7 +40,7 @@
 
 例如`OvO`、`O_O`、`O-O`都是合法的库名。但是`0v0`不是合法库名，因为其以数字零开头。
 
-=== 「版本号」，#text(orange, `0.4.0`)
+=== 「版本号」，#text(orange, `0.5.7`)
 
 必须符合#link("https://semver.org/")[SemVer]规范。
 
