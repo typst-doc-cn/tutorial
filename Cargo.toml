@@ -18,7 +18,7 @@ typst-svg = "0.13.1"
 
 serde_json = "1"
 
-reflexo-typst = { git = "https://github.com/Myriad-Dreamin/typst.ts", rev = "5cdaded77bfd667818d1b8e95f29e3dd5e493089", default-features = false }
+reflexo-typst = { git = "https://github.com/Myriad-Dreamin/typst.ts", rev = "3a08a0e66e9d2523e5497c77277d2da76da8ccf2", default-features = false }
 
 [profile.release]
 # to satisfy stubber
@@ -37,6 +37,12 @@ typst-svg = { git = "https://github.com/Myriad-Dreamin/typst.git", tag = "typst.
 # reflexo-typst = { git = "https://github.com/Myriad-Dreamin/typst.ts", tag = "v0.5.5-rc7" }
 # typst-ts-core = { path = "../../rust/typst.ts/core" }
 # typst-ts-compiler = { path = "../../rust/typst.ts/compiler" }
+
+typst-shim = { git = "https://github.com/Myriad-Dreamin/tinymist", rev = "2ca6e7f62d7064d7d584ed360fb11cec4c67d810" }
+tinymist-std = { git = "https://github.com/Myriad-Dreamin/tinymist", rev = "2ca6e7f62d7064d7d584ed360fb11cec4c67d810" }
+tinymist-task = { git = "https://github.com/Myriad-Dreamin/tinymist", rev = "2ca6e7f62d7064d7d584ed360fb11cec4c67d810" }
+tinymist-world = { git = "https://github.com/Myriad-Dreamin/tinymist", rev = "2ca6e7f62d7064d7d584ed360fb11cec4c67d810" }
+tinymist-project = { git = "https://github.com/Myriad-Dreamin/tinymist", rev = "2ca6e7f62d7064d7d584ed360fb11cec4c67d810" }
 
 [workspace.lints.rust]
 missing_docs = "warn"
