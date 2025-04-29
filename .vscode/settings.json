@@ -7,6 +7,11 @@
   "tinymist.exportPdf": "onSave",
   "tinymist.outputPath": "$root/target/$dir/$name",
   "tinymist.formatterMode": "typstyle",
+  "editor.pasteAs.preferences": [
+    "typst.link.uri",
+    "typst.link.image",
+    "typst.link"
+  ],
   "[typst]": {
     "editor.inlayHints.enabled": "off"
   },
