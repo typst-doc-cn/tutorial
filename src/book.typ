@@ -31,6 +31,9 @@
     - #chapter("intermediate/modulize-multi-files.typ")[多文件文档]
     - #chapter("intermediate/content-stateful-2.typ")[查询文档状态]
     - #chapter("intermediate/content-stateful-3.typ")[维护文档状态]
+    = 基础教程 — 排版Ⅲ
+    - #chapter("basic/writing-math.typ")[数学排版]
+    - #chapter("basic/writing-chinese.typ")[中文排版]
     = 基础教程 — 附录Ⅰ
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     - #chapter("basic/reference-utils.typ")[常用函数表]
