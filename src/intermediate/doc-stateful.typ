@@ -2,7 +2,7 @@
 
 #import "/typ/embedded-typst/lib.typ": svg-doc, default-fonts, default-cjk-fonts
 
-#show: book.page.with(title: [文档状态与文档查询])
+#show: book.page.with(title: [状态化])
 
 在上一节中我们理解了作用域，也知道如何简单把「`show`」规则应用于文档中的部分内容。
 

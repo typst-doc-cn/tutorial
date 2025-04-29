@@ -27,13 +27,13 @@
     = 基础教程 — 排版Ⅱ
     - #chapter("basic/scripting-scope.typ")[文档树]
     - #chapter("basic/scripting-style.typ")[样式链]
-    - #chapter("basic/scripting-length.typ")[度量]
-    - #chapter("basic/scripting-layout.typ")[布局]
     - #chapter("basic/scripting-color.typ")[色彩]
     - #chapter("basic/scripting-shape.typ")[图表]
+    - #chapter("basic/scripting-length.typ")[度量]
+    - #chapter("basic/scripting-layout.typ")[布局]
     = 基础教程 — 脚本Ⅱ
-    - #chapter("intermediate/doc-modulize.typ")[文件、模块与外部库]
-    - #chapter("intermediate/doc-stateful.typ")[文档状态与文档查询]
+    - #chapter("intermediate/doc-modulize.typ")[模块化（多文件）]
+    - #chapter("intermediate/doc-stateful.typ")[状态化]
     = 基础教程 — 排版Ⅲ
     - #chapter("intermediate/writing-math.typ")[数学排版]
     - #chapter("intermediate/writing-chinese.typ")[中文排版]
