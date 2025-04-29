@@ -25,12 +25,8 @@
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
     = 基础教程 — 脚本Ⅱ
-    - #chapter("intermediate/content-stateful.typ")[Typst架构与原理]
-    - #chapter("intermediate/modulize-modules.typ")[文件与模块]
-    - #chapter("intermediate/modulize-packages.typ")[使用外部库]
-    - #chapter("intermediate/modulize-multi-files.typ")[多文件文档]
-    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态]
-    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态]
+    - #chapter("intermediate/doc-modulize.typ")[文件、模块与外部库]
+    - #chapter("intermediate/doc-stateful.typ")[文档状态与文档查询]
     = 基础教程 — 排版Ⅲ
     - #chapter("basic/writing-math.typ")[数学排版]
     - #chapter("basic/writing-chinese.typ")[中文排版]
