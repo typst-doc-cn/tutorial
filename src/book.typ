@@ -28,8 +28,8 @@
     - #chapter("intermediate/doc-modulize.typ")[文件、模块与外部库]
     - #chapter("intermediate/doc-stateful.typ")[文档状态与文档查询]
     = 基础教程 — 排版Ⅲ
-    - #chapter("basic/writing-math.typ")[数学排版]
-    - #chapter("basic/writing-chinese.typ")[中文排版]
+    - #chapter("intermediate/writing-math.typ")[数学排版]
+    - #chapter("intermediate/writing-chinese.typ")[中文排版]
     = 基础教程 — 附录Ⅰ
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     - #chapter("basic/reference-utils.typ")[常用函数表]
