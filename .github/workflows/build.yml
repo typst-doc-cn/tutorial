@@ -9,7 +9,7 @@ jobs:
       - run: git submodule update --init --recursive
       - name: Download & install shiroa
         run: |
-          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/Myriad-Dreamin/shiroa/releases/download/v0.2.0/shiroa-installer.sh | sh
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/Myriad-Dreamin/shiroa/releases/download/v0.3.1-rc2/shiroa-installer.sh | sh
       - name: Build Book
         run: |
           shiroa build --font-path ./assets/typst-fonts/ --font-path ./assets/fonts/ --path-to-root /tutorial/ -w . src

@@ -86,6 +86,9 @@ s1: #context s1.get(), s2: #context s2.get()
 
 == 「state.update」也是「内容」
 
+#todo-box[
+  不再有 `locate` 了, 此处需要修正
+]
 一个值得注意的地方是，似乎与#typst-func("locate")函数相似，#typst-func("state.update")也接收一个闭包。
 
 事实上，与#typst-func("locate")函数相同，#typst-func("state.update")也具备延迟执行的特性。
@@ -149,15 +152,21 @@ s1: #context s1.get()
 
 == 查询特定时间点的「状态」
 
+
+#todo-box[
+  `state.final` 不再需要 `loc` 了
+]
+
 Typst提供两个方法查询特定时间点的「状态」：
 
 一个方法是```typc state.at(loc)```方法，其接收一个「位置」，返回在该位置对应的状态「值」。
 
-另一个方法是```typc state.final(loc)```方法，其接收一个「位置」，返回在文档结束一切排版时对应的状态「值」。
+另一个方法是```typc state.final()```方法，返回在文档结束一切排版时对应的状态「值」。
 
 熟悉的剧情再次发生了。让我们回想之前介绍#typst-func("query")时讲述的知识点。
 
-这两个方法都只能在#typst-func("locate")内部调用。对于#typst-func("state.at")方法，其「位置」参数是有用的；对于#typst-func("state.final")方法，其「位置」参数仅仅作为「哑参数」。
+
+这两个方法都只能在#typst-func("context")内部调用。对于#typst-func("state.at")方法，其「位置」参数是有用的/*；对于#typst-func("state.final")方法，其「位置」参数仅仅作为「哑参数」*/。
 
 我们回想上一小节，由于文档的每个位置「状态」都会存有对应的值，而且当你使用状态的时候至少会指定一个默认值，我们可以知道在我们文档的任意位置使用文档的任意其他位置的状态的内容。
 
@@ -187,26 +196,26 @@ Typst提供两个方法查询特定时间点的「状态」：
 ```typc
 show heading.where(level: 2): curr-heading => {
   curr-heading
-  locate(loc => ..)
+  context ..
 }
 ```
 
 对于`last-heading`状态，我们可以非常简单地如此更新内容：
 
 ```typc
-last-heading.update(headings => {
-  headings.insert(str(loc.page()), curr-heading.body)
+context last-heading.update(headings => {
+  headings.insert(str(here().page()), curr-heading.body)
   headings
 })
 ```
 
-每页的最后一个标题总能最后触发状态更新，所以`str(loc.page())`总是能对应到每页的最后一个标题的内容。
+每页的最后一个标题总能最后触发状态更新，所以`str(here().page())`总是能对应到每页的最后一个标题的内容。
 
 对于`first-heading`状态，稍微复杂但也好理解：
 
 ```typc
-first-heading.update(headings => {
-  let k = str(loc.page())
+context first-heading.update(headings => {
+  let k = str(here().page())
   if k not in headings {
     headings.insert(k, curr-heading.body)
   }
@@ -214,14 +223,14 @@ first-heading.update(headings => {
 })
 ```
 
-对于每页靠后的一级标题，都不能使`if`条件成立。所以`str(loc.page())`总是能对应到每页的第一个一级标题的内容。
+对于每页靠后的一级标题，都不能使`if`条件成立。所以`str(here().page())`总是能对应到每页的第一个一级标题的内容。
 
 接下来便是简单的查询了，我们回忆之前`get-heading-at-page`的逻辑，它首先判断是否存在本页的第一个标题，否则取前页的最后一个标题。以下函数完成了前半部分：
 
 ```typc
-let get-heading-at-page(loc) = {
-  let page-num = loc.page()
-  let first-headings = first-heading.final(loc)
+let get-heading-at-page() = {
+  let page-num = here().page()
+  let first-headings = first-heading.final(here())
 
   first-headings.at(str(page-num))
 }
@@ -230,9 +239,9 @@ let get-heading-at-page(loc) = {
 我们为`at`函数添加`default`函数，其取前页的最后一个标题。
 
 ```typc
-let get-heading-at-page(loc) = {
+let get-heading-at-page() = {
   ..
-  let last-headings = last-heading.at(loc)
+  let last-headings = last-heading.at(here())
 
   first-headings.at(str(page-num), default: find-headings(last-headings, page-num))
 }
@@ -263,7 +272,6 @@ let find-headings(headings, page-num) = if page-num > 0 {
   code-as: ```typ
   // 这里有get-heading-at-page的实现..
 
-  #set page(header: locate(loc => emph(
-    get-heading-at-page(loc))))
+  #set page(header: emph(get-heading-at-page()))
   ```,
 )

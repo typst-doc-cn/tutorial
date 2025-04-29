@@ -405,7 +405,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 例如它的`line`函数的返回值，就完全不是一个内容，而是一个无法窥视的函数。
 
 #code(```typ
-#import "@preview/cetz:0.3.1"
+#import "@preview/cetz:0.3.4"
 #repr(cetz.draw.line((0, 0), (1, 1), fill: blue))
 ```)
 
@@ -414,7 +414,7 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 使用混合语言，在Typst中可以很优雅地画多面体：
 
 #code.with(al: top)(```typ
-#import "@preview/cetz:0.3.1"
+#import "@preview/cetz:0.3.4"
 #align(center, cetz.canvas({
   // 导入cetz的draw方言
   import cetz.draw: *; import cetz.vector: add
@@ -429,30 +429,34 @@ CeTZ利用内容树制作“内嵌的DSL”。CeTZ的`canvas`函数接收的不�
 }))
 ```)
 
-=== PNG.typ的树
+=== curryst的「树」
 
 我们知道「内容块」与「代码块」没有什么本质区别。
 
-如果我们可以基于「代码块」描述一棵「内容」的树，那么一张PNG格式的图片似乎也可以被描述为一棵「字节」的树。
+如果我们可以基于「代码块」描述一棵「内容」的树，那么逻辑推理的过程也可以被描述为条件、规则、结论的树。
 
-通过代码块语法，你可以在Typst中拼接字节，依像素地创建一张PNG格式的图片：
+#link("https://typst.app/universe/package/curryst/")[curryst]包提供了接收条件、规则、结论参数的`rule`函数，其返回一个包含传入信息的`dict`，并且允许把`rule`函数返回的`dict`作为`rule`的部分参数。于是我们可以通过嵌套`rule`函数建立描述推理过程的树，并通过该包提供的`prooftree`函数把包含推理过程的`dict`树画出来：
 
-#code.with(al: top)(```typ
-// Origin: https://typst.app/project/r0SkRmsZYIYNxjs6Q712aP
-#import "png.typ": *
-#let prelude = (0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)
-#let ihdr(w, h) = chunk("IHDR", be32(w) + be32(h) + (8, 2, 0, 0, 0))
-#let idat(lines) = chunk("IDAT", {
-    let data = lines.map(line => (0x00,) + line).flatten()
-    let len = le32(data.len()).slice(0, 2)
-    (0x08, 0x1D, 0x01); len; len.map(xor.with(0xFF)); data; be32(adler32(data))
-})
-#align(center, box(width: 25%, image.decode(bytes({
-  let (w, h) = (8, 8)
-  prelude; ihdr(w, h); idat( for y in range(h) {( for x in range(w) {
-      (calc.floor(256 * x / w), 128, calc.floor(256 * y / h))
-  }, )} ); chunk("IEND", ())
-}))))
+#code(```typ
+#import "@preview/curryst:0.5.0": rule, prooftree
+#let tree-dict = rule(
+  name: $R$,
+  $C_1 or C_2 or C_3$,
+  rule(
+    name: $A$,
+    $C_1 or C_2 or L$,
+    rule(
+      $C_1 or L$,
+      $Pi_1$,
+    ),
+  ),
+  rule(
+    $C_2 or overline(L)$,
+    $Pi_2$,
+  ),
+)
+`tree-dict`的类型：#type(tree-dict) \
+`tree-dict`代表的树：#prooftree(tree-dict)
 ```)
 
 == 「`show`」语法 <grammar-show>

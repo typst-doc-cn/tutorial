@@ -1,7 +1,7 @@
 
 // This is important for typst-book to produce a responsive layout
 // and multiple targets.
-#import "@preview/shiroa:0.1.2": get-page-width, target, is-web-target, is-pdf-target, plain-text, templates
+#import "@preview/shiroa:0.2.3": get-page-width, target, is-web-target, is-pdf-target, plain-text, templates
 #import templates: *
 #import "template-link.typ": *
 #import "/typ/templates/side-notes.typ": side-attrs

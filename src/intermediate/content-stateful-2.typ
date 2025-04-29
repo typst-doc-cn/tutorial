@@ -9,57 +9,47 @@
 // #locate(loc => query(heading, loc))
 // #locate(loc => query(heading.where(level: 2), loc))
 
-== 「locate」<grammar-locate>
+== 「here」<grammar-here>
 
 #todo-box[
-  新版无法编译。
+  修改以适配全面 context 化的 0.12+ 语法
 ]
 
-// 有的时候我们会需要获取当前位置的「位置」信息。
+有的时候我们会需要获取当前位置的「位置」信息。
 
-// 在Typst中，获取「位置」的唯一方法是使用「#typst-func("locate")」函数。
+在Typst中，获取当前「位置」的唯一方法是使用「#typst-func("here")」函数。
 
-// #typst-func("locate")的唯一参数是一个「回调函数」，我们在上一节已经学习过这个术语。在排版阶段的过程中，一旦排版引擎为你收集到了足够的信息，就会“回过头来调用”我们传入的该函数。
+我们来`repr`一下试试看：
 
-// 我们来`repr`一下试试看：
+#code(```typ
+当前位置的相关信息：#context repr(here())
+```)
 
-// #code(```typ
-// 当前位置的相关信息：#locate(it => repr(it))
-// ```)
+由于「位置」太过复杂了，`repr`放弃了思考并在这里为我们放了两个点。
 
-// 由于「位置」太过复杂了，`repr`放弃了思考并在这里为我们放了两个点。
+我们来简单学习一下Typst为我们提供了哪些位置信息：
 
-// 我们来简单学习一下Typst为我们提供了哪些位置信息：
+#code(```typ
+当前位置的坐标：#context here().position()
 
-// #code(```typ
-// 当前位置的坐标：#locate(loc => loc.position())
+当前位置的页码：#context here().page()
+```)
 
-// 当前位置的页码：#locate(loc => loc.page())
-// ```)
-
-// 或直接使用方法函数：
+一个常见的问题是：为什么Typst提供给我的页码信息是「内容」，我无法在内容上做条件判断和计算！<grammar-here-calc>
 
 // #code(```typ
-// 当前位置的坐标：#locate(location.position)
-
-// 当前位置的页码：#locate(location.page)
+// #repr(context here().page()) \
+// #type(context here().page())
 // ```)
 
-// 一个常见的问题是：为什么Typst提供给我的页码信息是「内容」，我无法在内容上做条件判断和计算！<grammar-locate-calc>
+// 上面输出的内容告诉我们#typst-func("here")不仅是一个函数，而且更是一个元素的构造函数。#typst-func("here")构造出一个`locate`内容。
 
-// #code(```typ
-// #repr(locate(location.page)) \
-// #type(locate(location.page))
-// ```)
+这其中的关系比较复杂。一个比较好理解的原因是：Typst会调用你的函数多次，因此你理应将所有使用「位置」信息的脚本放在一个上下文块中，这样Typst才能更好地合成内容。
 
-// 上面输出的内容告诉我们#typst-func("locate")不仅是一个函数，而且更是一个元素的构造函数。#typst-func("locate")构造出一个`locate`内容。
-
-// 这其中的关系比较复杂。一个比较好理解的原因是：Typst会调用你的函数多次，因此你理应将所有使用「位置」信息的脚本放在一个内容块中，这样Typst才能更好地合成内容。
-
-// #code(```typ
-// #locate(loc       =>    [ 当前位置的页码是偶数：#calc.even(loc.page()) ])
-// //  根据位置信息  计算得到  我们想要的内容
-// ```)
+#code(```typ
+#context [ 当前位置的页码是偶数：#calc.even(here().page()) ]
+//  根据位置信息  计算得到  我们想要的内容
+```)
 
 // #pro-tip[
 //   这与Typst的缓存原理相关。由于#typst-func("locate")函数接收的闭包```typc loc => ..```是一个函数，且在Typst中它被认定为*纯函数*，Typst只会针对特定的参数执行一次函数。为了强制让用户书写的函数保持纯性，Typst规定用户必须在函数内部使用「位置」信息。
@@ -67,7 +57,7 @@
 //   因此，例如我们希望在偶数页下让内容为“甲”，否则让内容为“乙”，应当这样书写：
 
 //   #code(```typ
-//   #locate(loc => if calc.even(loc.page()) [“甲”] else [“乙”])
+//   #context if calc.even(here().page()) [“甲”] else [“乙”]
 //   ```)
 // ]
 
@@ -77,7 +67,7 @@
 
 #code(
   ```typ
-  #locate(loc => query(heading, loc))
+  #context query(heading)
   ```,
   res: raw(
     ```typc
@@ -91,13 +81,11 @@
   ),
 )
 
-「#typst-func("query")」函数有两个参数。
-
-第一个参数是「选择器」，很好理解。它接受一个选择器，并返回被选中的所有元素的列表。
+「#typst-func("query")」函数的唯一参数是「选择器」，很好理解。它接受一个选择器，并返回被选中的所有元素的列表。
 
 #code(
   ```typ
-  #locate(loc => query(heading, loc))
+  #context query(heading)
   ```,
   res: raw(
     ```typc
@@ -118,7 +106,7 @@
 
 #code(
   ```typ
-  #locate(loc => query(heading.where(level: 2), loc))
+  #context query(heading.where(level: 2))
   ```,
   res: raw(
     ```typc
@@ -133,36 +121,36 @@
   ),
 )
 
-第二个参数是「位置」，就比较难以理解了。首先说明，`loc`并没有任何作用，即它是一个「哑参数」（Dummy Parameter）。
+// 第二个参数是「位置」，就比较难以理解了。首先说明，`loc`并没有任何作用，即它是一个「哑参数」（Dummy Parameter）。
 
-如果你学过C++，以下两个方法分别匹配到前缀自增操作函数和后缀自增操作函数。
+// 如果你学过C++，以下两个方法分别匹配到前缀自增操作函数和后缀自增操作函数。
 
-```cpp
-class Integer {
-  Integer& operator++();   // 前缀自增操作函数
-  Integer operator++(int); // 后缀自增操作函数
-};
-```
+// ```cpp
+// class Integer {
+//   Integer& operator++();   // 前缀自增操作函数
+//   Integer operator++(int); // 后缀自增操作函数
+// };
+// ```
 
-```cpp class Integer```类中的`int`就是一个所谓的哑参数。
+// ```cpp class Integer```类中的`int`就是一个所谓的哑参数。
 
-「哑参数」在实际函数执行中并未被使用，而仅仅作为标记以区分函数调用。我们知道以下两点：其一，只有#typst-func("locate")函数会返回「位置」信息；其二，#typst-func("query")函数需要我们传入「位置」信息。
+// 「哑参数」在实际函数执行中并未被使用，而仅仅作为标记以区分函数调用。我们知道以下两点：其一，只有#typst-func("locate")函数会返回「位置」信息；其二，#typst-func("query")函数需要我们传入「位置」信息。
 
-有了：那么Typst就是在告诉我们，#typst-func("query")函数只能在#typst-func("locate")函数内部调用。正如示例中的那样：
+// 有了：那么Typst就是在告诉我们，#typst-func("query")函数只能在#typst-func("locate")函数内部调用。正如示例中的那样：
 
-```typ
-#locate(loc => query(heading.where(level: 2), loc))
-```
+// ```typ
+// #locate(loc => query(heading.where(level: 2), loc))
+// ```
 
-这个规则有些隐晦，并且Typst的设计者也已经注意到了这一点，所以他们正在计划改进这一点。当然在这之前，你只需要记住：#typst-func("query")函数的第二个「位置」参数用于限制该函数仅在#typst-func("locate")函数内部使用。
+// 这个规则有些隐晦，并且Typst的设计者也已经注意到了这一点，所以他们正在计划改进这一点。当然在这之前，你只需要记住：#typst-func("query")函数的第二个「位置」参数用于限制该函数仅在#typst-func("locate")函数内部使用。
 
-#pro-tip[
-  这与Typst的缓存原理相关。为了加速#typst-func("query")函数，Typst需要对其缓存。Typst合理做出以下假设：在文档每处的查询（`loc`），都单独缓存对应选择器的查询结果。
+// #pro-tip[
+//   这与Typst的缓存原理相关。为了加速#typst-func("query")函数，Typst需要对其缓存。Typst合理做出以下假设：在文档每处的查询（`loc`），都单独缓存对应选择器的查询结果。
 
-  更细致地描述如下：将```typc query(selector, loc)```的参数为「键」，执行结果为「值」构造一个哈希映射表。若使用`(selector, loc)`作为「键」，查询该表：
-  + 未对应结果，则执行查询，缓存并返回结果。
-  + 已经存在对应结果，则不会重新执行查询，而是使用表中的值作为结果。
-]
+//   更细致地描述如下：将```typc query(selector, loc)```的参数为「键」，执行结果为「值」构造一个哈希映射表。若使用`(selector, loc)`作为「键」，查询该表：
+//   + 未对应结果，则执行查询，缓存并返回结果。
+//   + 已经存在对应结果，则不会重新执行查询，而是使用表中的值作为结果。
+// ]
 
 == 回顾其二
 
@@ -175,11 +163,10 @@ class Integer {
   ```,
 )
 
-既然如此，只需要将`[这是页眉]`替换成一个`locate`内容，就能通过#typst-func("query")函数完成与「位置」相关的页眉设定：
+既然如此，只需要将`[这是页眉]`替换成一个`context`表达式，就能通过#typst-func("query")函数完成与「位置」相关的页眉设定：
 
 ```typ
-#set page(header: locate(loc => emph(
-  get-heading-at-page(loc))))
+#set page(header: context emph(get-heading-at-page()))
 ```
 
 现在让我们来编写`get-heading-at-page`函数。
@@ -187,14 +174,14 @@ class Integer {
 首先，通过`query`函数查询得到整个文档的*所有二级标题*：
 
 ```typc
-let headings = query(heading, loc).
+let headings = query(heading).
   filter(it => it.level == 2)
 ```
 
 如果你熟记`where`方法，你可以更高效地做到这件事。以下函数调用也可以得到整个文档的*所有二级标题*：
 
 ```typc
-let headings = query(heading.where(level: 2), loc)
+let headings = query(heading.where(level: 2))
 ```
 
 很好，Typst文档可以很高效，但有些人写出的Typst代码天生更高效，而我们正在向他们靠近。
@@ -446,10 +433,10 @@ for i in range(res-headings.len()) {
 最后，我们将`query`与`fold-headings`结合起来，便得到了目标函数：
 
 ```typ
-#let get-heading-at-page(loc) = {
+#let get-heading-at-page() = {
   let headings = fold-headings(query(
-    heading.where(level: 2), loc))
-  headings.at(loc.page() - 1)
+    heading.where(level: 2)))
+  headings.at(here().page() - 1)
 }
 ```
 
@@ -522,17 +509,17 @@ for i in range(res-headings.len()) {
 很好，这样，下面的实现就完全正确了：
 
 ```typ
-#let get-heading-at-page(loc) = {
+#let get-heading-at-page() = {
   let (headings, last-heading) = calc-headings(
-    query(heading.where(level: 2), loc))
-  headings.at(loc.page() - 1, default: last-heading)
+    query(heading.where(level: 2)))
+  headings.at(here().page() - 1, default: last-heading)
 }
 ```
 
 #pro-tip[
   将`calc-headings`与`get-heading-at-page`分离可以改进脚本性能。这是因为Typst是以函数为粒度缓存你的计算。在最后的实现：
 
-  + ```typc query(heading.where(level: 2), loc)```会被缓存，如果二级标题的结果不变，则#typst-func("query")函数不会重新执行（不会重新查询文档状态）。
+  + ```typc query(heading.where(level: 2))```会被缓存，如果二级标题的结果不变，则#typst-func("query")函数不会重新执行（不会重新查询文档状态）。
   + ```typc calc-headings(..)```会被缓存。如果查询的结果不变。则其不会重新执行。
 ]
 
@@ -543,7 +530,6 @@ for i in range(res-headings.len()) {
   code-as: ```typ
   // 这里有get-heading-at-page的实现..
 
-  #set page(header: locate(loc => emph(
-    get-heading-at-page(loc))))
+  #set page(header: context emph(get-heading-at-page()))
   ```,
 )

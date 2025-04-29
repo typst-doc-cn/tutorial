@@ -1,6 +1,6 @@
 
 // #import "supports-text.typ": plain-text
-#import "@preview/shiroa:0.1.2": plain-text
+#import "@preview/shiroa:0.2.3": plain-text
 
 #let make-unique-label(it, disambiguator: 1) = label({
   let k = plain-text(it).trim()

@@ -2,6 +2,8 @@
 
 #show: book.page.with(title: [文件与模块])
 
+#set page(height: auto)
+
 正如我们在《初识脚本模式》中所说的，Typst提供了脚本语言方便排版。但事实上，写作时若能少写甚至不写脚本，这才算真正的便捷。我们总希望Typst能够允许我们以一种优雅的方式#strike[复制粘贴]引入已有代码。理想情况下，只需两行代码便可引入前辈写好的模板：
 
 #```typ
@@ -30,7 +32,7 @@ Typst的模块（module）机制非常简单：每个文件都是一个独立的
     ```bash
     typst c --root ..
     ```
-  + 当你使用VSCode的tinymist或typst-preview程序时，为了方便多文件的编写，根目录默认为你所打开的文件夹。如果你打开一个VSCode工作区，则根目录相对于离你所编辑文件最近的工作目录。
+  + 当你使用VSCode的tinymist程序时，为了方便多文件的编写，根目录默认为你所打开的文件夹。如果你打开一个VSCode工作区，则根目录相对于离你所编辑文件最近的工作目录。
 ]
 
 一个常见的错误做法是，为了共享本地代码或模板，在使用`typst-cli`的时候将根目录指定为系统的根目录。以下使用方法将有可能导致个人隐私泄露：
@@ -52,22 +54,22 @@ typst c --root / # Linux或macOS
 
 我们已经讲解过`read`函数和`include`语法，其中都有路径的概念。
 
-如果路径以字符`/`开头，则其为「绝对路径」。绝对路径相对于「根目录」解析。若设置了根目录为#text(red, `/OwO/`)，则路径`/a/b/c`对应路径#text(red, `/OwO/`)`a/b/c`。
+如果路径以字符`/`开头，则其为「绝对路径」。绝对路径相对于「根目录」解析。若设置了根目录为#text(red, `/OwO/`)，则路径`/src/chapter1.typ`对应文件系统中的#text(red, `/OwO/`)`src/chapter1.typ`。
 
 #code(
   ```typ
-  #include "/src/intermediate/chapter1.typ"
+  #include "/src/chapter1.typ"
   ```,
-  res: [我是`/OwO/src/intermediate/chapter1.typ`文件！],
+  res: [我是#text(red, `/OwO/`)`src/chapter1.typ`文件！],
 )
 
-否则，路径不以字符`/`开头，则其「相对路径」。相对路径相对于当前文件的父文件夹解析。若我们正在编辑#text(red, `/OwO/src/intermediate/`)`main.typ`文件，则路径`d/e/f`对应路径#text(red, `/OwO/src/intermediate/`)`d/e/f`。
+否则，路径不以字符`/`开头，则其「相对路径」。相对路径相对于当前文件的父文件夹解析。若我们正在编辑#text(red, `/OwO/`)#text(blue, `src/`)`main.typ`文件，则路径`chapter2.typ`对应文件系统中的#text(red, `/OwO/`)#text(blue, `src/`)`chapter2.typ`。
 
 #code(
   ```typ
   #include "chapter2.typ"
   ```,
-  res: [我是`/OwO/src/intermediate/chapter2.typ`文件！],
+  res: [我是#text(red, `/OwO/`)#text(blue, `src/`)`chapter2.typ`文件！],
 )
 
 == 「import」语法与「模块」

@@ -1,4 +1,4 @@
-#import "@preview/shiroa:0.1.2": *
+#import "@preview/shiroa:0.2.3": *
 #import "/typ/templates/page.typ": project, part-style, dash-color
 #import "/typ/templates/term.typ": reset-term-state
 
@@ -138,24 +138,25 @@
 
       let outline-counter = counter("outline-counter")
       show outline.entry: it => {
-        let has-part = if it.body.func() != none and "children" in it.body.fields() {
-          for ch in it.body.children {
+        let has-part = if it.body().func() != none and "children" in it.body().fields() {
+          for ch in it.body().children {
             if "text" in ch.fields() and ch.text.contains("Part") {
               ch.text
             }
           }
         }
 
-        if has-part == none {
+        let numbering = if has-part == none {
           outline-counter.step(level: it.level + 1)
           context outline-counter.display(outline-numbering)
         } else {
           outline-counter.step(level: 1)
         }
-        it
+        link(it.element.location(), text(black, it.indented(numbering + it.prefix(), it.inner())))
       }
 
-      outline(depth: 1, fill: repeat[.])
+      set outline.entry(fill: repeat[.])
+      outline(depth: 1)
     }
 
     if project-meta.book != none {

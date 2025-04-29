@@ -34,7 +34,7 @@ Typst只有一种颜色类型，其由两部分组成。
 
 == 色彩空间
 
-RGB是我们最使用的色彩空间，对应Typst的`color.rgb`函数或`rgb`函数：
+RGB是我们使用最多的色彩空间，对应Typst的`color.rgb`函数或`rgb`函数：
 
 #code(```typ
 #box(square(fill: color.rgb("#b1f2eb")))
@@ -121,12 +121,15 @@ Typst不仅支持颜色填充，还支持按照固定的模式将其他图形对
   length: 30%, stroke: 2pt + maroon)
 ```)
 
-除了直线，Typst还支持贝塞尔曲线。贝塞尔曲线是一种光滑的曲线，由一系列点和控制点组成。
+除了直线，Typst还支持二次、三次贝塞尔曲线，以及它们和直线的组合。贝塞尔曲线是一种光滑的曲线，由一系列点和控制点组成。
 
 #code(```typ
-#path(
+#curve(
   stroke: blue,
-  ((100%, 0pt), (60%, 0pt)), (0pt, 20pt),
+  curve.move((0pt, 20pt)),
+  curve.quad((40%, 0pt), (100%, 0pt)),
+  curve.line((100%, 20pt)),
+  curve.close()
 )
 ```)
 
@@ -161,13 +164,13 @@ Typst不仅支持颜色填充，还支持按照固定的模式将其他图形对
 填充样式（fill）是另一个重要的图形属性。如果一个路径是闭合的，那么它可以被填充。
 
 #code(```typ
-#path(
+#curve(
   fill: blue.lighten(80%),
   stroke: blue,
-  closed: true,
-  (0pt, 50pt),
-  (100%, 50pt),
-  ((50%, 0pt), (40pt, 0pt)),
+  curve.move((0pt, 50pt)),
+  curve.line((100pt, 50pt)),
+  curve.cubic(none, (90pt, 0pt), (50pt, 0pt)),
+  curve.close(),
 )
 ```)
 
@@ -193,7 +196,7 @@ Typst为你预定义了一些基于贝塞尔曲线的闭合图形元素。下例
 
 == 多边形
 
-多边形是唯一一个使用直线组合而成的闭合图形。你可以使用`polygon`函数构造一个多边形。
+多边形是仅使用直线组合而成的闭合图形。你可以使用`polygon`函数构造一个多边形。
 
 #code(```typ
 #polygon(
