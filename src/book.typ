@@ -25,7 +25,8 @@
     - #chapter("basic/scripting-block-and-expression.typ")[表达式]
     - #chapter("basic/scripting-control-flow.typ")[控制流]
     = 基础教程 — 排版Ⅱ
-    - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
+    - #chapter("basic/scripting-scope.typ")[文档树]
+    - #chapter("basic/scripting-style.typ")[样式链]
     - #chapter("basic/scripting-length.typ")[度量]
     - #chapter("basic/scripting-layout.typ")[布局]
     - #chapter("basic/scripting-color.typ")[色彩]
