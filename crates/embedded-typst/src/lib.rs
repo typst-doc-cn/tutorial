@@ -4,160 +4,31 @@
 
 use std::{
     collections::HashMap,
-    hash::Hash,
     io::Read,
     path::{Path, PathBuf},
     str::FromStr,
-    sync::{Arc, Mutex},
+    sync::{Arc, Mutex, RwLock},
+    vec,
 };
 
-use base64::Engine;
 use reflexo_typst::{
-    font::{pure::MemoryFontBuilder, FontResolverImpl},
-    hash::{FingerprintHasher, FingerprintSipHasher},
-    package::{dummy::DummyRegistry, PackageRegistry, PackageSpec},
+    font::{pure::MemoryFontSearcher, FontResolverImpl},
+    package::{PackageRegistry, PackageSpec, RegistryPathMapper},
     typst::prelude::EcoVec,
-    vfs::dummy::DummyAccessModel,
-    CompilerUniverse, EntryManager, EntryReader, EntryState, ShadowApi, TypstFileId,
+    vfs::{dummy::DummyAccessModel, FileSnapshot},
+    CompilerUniverse, EntryReader, EntryState, ShadowApi, TaskInputs, TypstDocument,
+    TypstPagedDocument,
 };
-use serde::{Deserialize, Serialize, Serializer};
 use typst::{
-    diag::{eco_format, PackageError},
+    diag::{eco_format, FileResult, PackageError},
     foundations::Bytes,
-    syntax::VirtualPath,
+    Features,
 };
 
 use wasm_minimal_protocol::*;
 initiate_protocol!();
 
-/// A bytes object that is cheap to clone.
-#[derive(Clone, Hash)]
-struct ImmutBytes(Bytes);
-
-impl Serialize for ImmutBytes {
-    fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        serializer.serialize_str(&base64::engine::general_purpose::STANDARD.encode(&self.0))
-    }
-}
-
-impl<'de> Deserialize<'de> for ImmutBytes {
-    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        let string = String::deserialize(deserializer)?;
-        let bytes = base64::engine::general_purpose::STANDARD
-            .decode(string.as_bytes())
-            .map_err(|e| serde::de::Error::custom(e.to_string()))?;
-        Ok(Self(Bytes::from(bytes)))
-    }
-}
-
-/// A data reference in global data storage.
-#[derive(Clone, Deserialize, Serialize, Hash)]
-#[serde(tag = "kind")]
-enum DataRef {
-    #[serde(rename = "font")]
-    Font {
-        hash: String,
-        data: Option<ImmutBytes>,
-    },
-    #[serde(rename = "package")]
-    Package {
-        hash: String,
-        spec: String,
-        data: Option<ImmutBytes>,
-    },
-    #[serde(rename = "file")]
-    File {
-        hash: String,
-        path: String,
-        data: Option<ImmutBytes>,
-    },
-}
-
-impl DataRef {
-    /// Gets the key of the object.
-    pub fn key(&self) -> &String {
-        match self {
-            Self::Font { hash, .. } => hash,
-            Self::Package { hash, .. } => hash,
-            Self::File { hash, .. } => hash,
-        }
-    }
-
-    /// Gets the data of the object.
-    pub fn data(&self) -> Option<&ImmutBytes> {
-        match self {
-            Self::Font { data, .. } => data.as_ref(),
-            Self::Package { data, .. } => data.as_ref(),
-            Self::File { data, .. } => data.as_ref(),
-        }
-    }
-
-    /// Sets the data of the object.
-    pub fn set_data(&mut self, data: ImmutBytes) {
-        match self {
-            Self::Font { data: d, .. } => *d = Some(data),
-            Self::Package { data: d, .. } => *d = Some(data),
-            Self::File { data: d, .. } => *d = Some(data),
-        }
-    }
-}
-
-/// Allocates a data reference
-fn allocate_data_inner(kind: &[u8], data: &[u8], path: Option<&[u8]>) -> StrResult<Vec<u8>> {
-    let kind = std::str::from_utf8(kind).map_err(|e| e.to_string())?;
-    let data = ImmutBytes(Bytes::from(data));
-    let hash = {
-        let mut hasher = FingerprintSipHasher::default();
-        kind.hash(&mut hasher);
-        data.hash(&mut hasher);
-        hasher.finish_fingerprint().0.as_svg_id("")
-    };
-
-    let data_ref = match kind {
-        "font" => DataRef::Font {
-            hash: hash.clone(),
-            data: Some(data),
-        },
-        "package" => {
-            let path = std::str::from_utf8(path.unwrap()).map_err(|e| e.to_string())?;
-            DataRef::Package {
-                hash: hash.clone(),
-                spec: path.to_string(),
-                data: Some(data),
-            }
-        }
-        "file" => {
-            let path = std::str::from_utf8(path.unwrap()).map_err(|e| e.to_string())?;
-            DataRef::File {
-                hash: hash.clone(),
-                path: path.to_owned(),
-                data: Some(data),
-            }
-        }
-        _ => return Err(format!("Unknown data kind: {kind}")),
-    };
-
-    let mut data = DATA
-        .get_or_init(|| Mutex::new(HashMap::new()))
-        .lock()
-        .unwrap();
-
-    data.insert(hash.clone(), data_ref);
-
-    Ok(hash.into_bytes())
-}
-
-/// Encodes a string to base64.
-///
-/// # Errors
-///
-/// Error if there is an error
-#[cfg_attr(feature = "typst-plugin", wasm_func)]
-pub fn encode_base64(data: &[u8]) -> Vec<u8> {
-    base64::engine::general_purpose::STANDARD
-        .encode(data)
-        .into_bytes()
-}
+type StrResult<T> = Result<T, String>;
 
 /// Allocates a data reference, return the key of the data reference.
 ///
@@ -187,64 +58,94 @@ pub fn allocate_file(kind: &[u8], path: &[u8], data: &[u8]) -> StrResult<Vec<u8>
     allocate_data_inner(kind, data, Some(path))
 }
 
-/// The global data storage.
-static DATA: std::sync::OnceLock<Mutex<HashMap<String, DataRef>>> = std::sync::OnceLock::new();
+/// Allocates a data reference
+fn allocate_data_inner(kind: &[u8], data: &[u8], path: Option<&[u8]>) -> StrResult<Vec<u8>> {
+    let kind = std::str::from_utf8(kind).map_err(|e| e.to_string())?;
+    let data = ImmutBytes(Bytes::new(data.to_owned()));
 
-/// Makes `instant::SystemTime::now` happy
-pub extern "C" fn now() -> f64 {
-    0.0
+    let data_ref = match kind {
+        "font" => DataRef::Font { data: Some(data) },
+        "package" => {
+            let path = std::str::from_utf8(path.unwrap()).map_err(|e| e.to_string())?;
+            DataRef::Package {
+                spec: path.to_string(),
+                data: Some(data),
+            }
+        }
+        "file" => {
+            let path = std::str::from_utf8(path.unwrap()).map_err(|e| e.to_string())?;
+            DataRef::File {
+                path: path.to_owned(),
+                data: Some(data),
+            }
+        }
+        _ => return Err(format!("Unknown data kind: {kind}")),
+    };
+
+    let mut data = DATA.lock().unwrap();
+
+    data.data.push(data_ref);
+
+    Ok(vec![0])
 }
 
 /// A context that is used to resolve a world context.
-#[derive(Deserialize, Serialize, Hash)]
 pub struct Context {
     /// The data that are used in the main file.
     data: Vec<DataRef>,
 }
 
-type StrResult<T> = Result<T, String>;
+static DATA: Mutex<Context> = Mutex::new(Context { data: vec![] });
 
-/// Resolves data references.
-fn resolve_data(mut ctx: Context) -> StrResult<Context> {
-    // The missing data will cause an exception.
-    let mut missing_data = Vec::new();
+/// A bytes object that is cheap to clone.
+#[derive(Clone)]
+struct ImmutBytes(Bytes);
 
-    let mut data = DATA
-        .get_or_init(|| Mutex::new(HashMap::new()))
-        .lock()
-        .unwrap();
-
-    for f in ctx.data.iter_mut() {
-        let data_entry = data.get(f.key().as_str());
-
-        match (data_entry, f.data()) {
-            // Borrow data from the global storage.
-            (Some(data_entry), None) => {
-                f.set_data(data_entry.data().unwrap().clone());
-            }
-            // Add data to the global storage.
-            (None, Some(..)) => {
-                data.insert(f.key().clone(), f.clone());
-            }
-            // Error if there is no data.
-            (None, None) => {
-                missing_data.push(f.key().clone());
-            }
-            (Some(_), Some(_)) => {}
-        }
-    }
-
-    // All data are resolved.
-    if missing_data.is_empty() {
-        return Ok(ctx);
-    }
-
-    // Some data are missing.
-    Err(missing_data.join(", "))
+/// A data reference in global data storage.
+#[derive(Clone)]
+enum DataRef {
+    Font {
+        data: Option<ImmutBytes>,
+    },
+    Package {
+        spec: String,
+        data: Option<ImmutBytes>,
+    },
+    File {
+        path: String,
+        data: Option<ImmutBytes>,
+    },
 }
 
-/// Resolves a world by context.
-fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
+impl DataRef {
+    /// Gets the data of the object.
+    pub fn data(&self) -> Option<&ImmutBytes> {
+        match self {
+            Self::Font { data, .. } => data.as_ref(),
+            Self::Package { data, .. } => data.as_ref(),
+            Self::File { data, .. } => data.as_ref(),
+        }
+    }
+}
+
+static VERSE: RwLock<Option<WorldRepr>> = RwLock::new(None);
+
+/// Resolves a world
+#[cfg_attr(feature = "typst-plugin", wasm_func)]
+pub fn resolve_world() -> StrResult<Vec<u8>> {
+    let resolved = create_world()?;
+    let mut world = VERSE.write().unwrap();
+    if world.is_some() {
+        return Err("World is already initialized".to_string());
+    }
+
+    *world = Some(resolved);
+
+    Ok(vec![])
+}
+
+/// Creates a world
+fn create_world() -> StrResult<WorldRepr> {
     /// Extracts a package.
     fn extract_package(
         data: &[u8],
@@ -286,67 +187,78 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
     }
 
     /// Creates a world based on the context.
-    #[comemo::memoize]
-    fn resolve_world_inner(ctx: Context) -> StrResult<Arc<Mutex<WorldRepr>>> {
+    fn resolve_world_inner() -> StrResult<WorldRepr> {
+        let data_guard = DATA.lock().unwrap();
+
         // Adds embedded fonts.
-        let mut fb = MemoryFontBuilder::new();
-        let mut pb = MemoryPackageBuilder::default();
+        let mut fb = MemoryFontSearcher::new();
+        let mut pb = MemoryRegistry::default();
 
-        let mut vfs = reflexo_typst::vfs::Vfs::new(DummyAccessModel);
-
-        for data in ctx.data {
+        for data in &data_guard.data {
             match data {
                 DataRef::Font { data, .. } => {
-                    fb.add_memory_font(data.unwrap().0);
+                    fb.add_memory_font(data.clone().unwrap().0);
                 }
-                DataRef::Package { data, spec, .. } => {
-                    let spec = PackageSpec::from_str(&spec).map_err(|e| e.to_string())?;
-                    let path = pb.add_memory_package(spec);
-
-                    let data = data.unwrap().0;
-                    extract_package(&data, |key, value, _mtime| {
-                        vfs.map_shadow(&path.join(key.as_str()), Bytes::from(value.to_owned()))
-                            .map_err(|e| e.to_string())
-                    })?;
+                DataRef::Package { spec, .. } => {
+                    let spec = PackageSpec::from_str(spec).map_err(|e| e.to_string())?;
+                    pb.add_memory_package(spec);
                 }
                 DataRef::File { .. } => {}
             }
         }
 
+        let registry = Arc::new(pb);
+        let resolver = Arc::new(RegistryPathMapper::new(registry.clone()));
+        let mut vfs = reflexo_typst::vfs::Vfs::new(resolver, DummyAccessModel);
+
+        for data in &data_guard.data {
+            match data {
+                DataRef::Package { data, spec, .. } => {
+                    let spec = PackageSpec::from_str(spec).map_err(|e| e.to_string())?;
+                    let path = registry.resolve(&spec).map_err(|e| e.to_string())?;
+
+                    let data = data.clone().unwrap().0;
+                    extract_package(&data, |key, value, _mtime| {
+                        vfs.revise()
+                            .map_shadow(
+                                &path.join(key.as_str()),
+                                FileSnapshot::from(FileResult::Ok(Bytes::new(value.to_owned()))),
+                            )
+                            .map_err(|e| e.to_string())
+                    })?;
+                }
+                DataRef::Font { .. } | DataRef::File { .. } => {}
+            }
+        }
+
         for data in EMBEDDED_FONT {
-            fb.add_memory_font(Bytes::from_static(data));
+            fb.add_memory_font(Bytes::new(data));
         }
 
         // Creates a world.
         let world = WorldRepr::new_raw(
             EntryState::new_workspace(PathBuf::from("/").into()),
+            Features::default(),
             None,
             vfs,
-            DummyRegistry,
-            Arc::new(fb.into()),
+            registry,
+            Arc::new(fb.build()),
         );
 
-        Ok(Arc::new(Mutex::new(world)))
+        Ok(world)
     }
-
-    // Deserializes context.
-    let ctx = serde_json::from_slice::<Context>(ctx).map_err(|e| e.to_string())?;
-    let mut ctx = resolve_data(ctx)?;
 
     // Removes files from the context as they are not used for resolving a world.
     let mut files = Vec::new();
-    ctx.data.retain(|f| match f {
+    let _ = &DATA.lock().unwrap().data.retain(|f| match f {
         DataRef::File { .. } => {
             files.push(f.clone());
             false
         }
         _ => true,
     });
+    let mut world = resolve_world_inner()?;
 
-    let world = resolve_world_inner(ctx)?;
-
-    // Adds files to the world.
-    let mut world_mut = world.lock().unwrap();
     for f in files.into_iter() {
         let path = match &f {
             DataRef::File { path, .. } => path,
@@ -354,12 +266,8 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
         };
         let path = Path::new(path);
         let data = f.data().cloned().unwrap().0;
-        world_mut
-            .map_shadow(path, data)
-            .map_err(|e| e.to_string())?;
+        world.map_shadow(path, data).map_err(|e| e.to_string())?;
     }
-    drop(world_mut);
-
     Ok(world)
 }
 
@@ -373,50 +281,50 @@ fn resolve_world(ctx: &[u8]) -> StrResult<Arc<Mutex<WorldRepr>>> {
 ///
 /// Error if there is an error
 #[cfg_attr(feature = "typst-plugin", wasm_func)]
-pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
-    // Resolves the world.
-    let world = resolve_world(context);
-    let world = match world {
-        Ok(world) => world,
-        // Traps the function if not all data are resolved.
-        Err(e) => {
-            let mut t = b"code-trapped, ".to_vec();
-            t.append(&mut e.into_bytes());
-            return Ok(t);
-        }
+pub fn svg(input: &[u8]) -> StrResult<Vec<u8>> {
+    let verse = VERSE.read().unwrap();
+    let Some(verse) = verse.as_ref() else {
+        return Err("World is not initialized".to_string());
     };
-    let mut verse = world.lock().unwrap();
-    verse.reset();
 
     // Prepare main file.
     let entry_file = Path::new("/main.typ");
-    let entry = verse
-        .entry_state()
-        .select_in_workspace(TypstFileId::new(None, VirtualPath::new(entry_file)));
-    let _ = verse.mutate_entry(entry);
-    verse
-        .map_shadow(entry_file, Bytes::from(input.to_owned()))
-        .map_err(|e| e.to_string())?;
+    let entry = verse.entry_state().select_in_workspace(entry_file);
 
     // Compile.
-    let world = &verse.snapshot();
+    let mut world = verse.snapshot_with(Some(TaskInputs {
+        entry: Some(entry),
+        inputs: None,
+    }));
+    world
+        .map_shadow(entry_file, Bytes::new(input.to_owned()))
+        .map_err(|e| e.to_string())?;
+
     // todo: warning
-    let doc =
-        typst::compile(world)
+    let doc: TypstPagedDocument =
+        typst::compile(&world)
             .output
             .map_err(|e: EcoVec<typst::diag::SourceDiagnostic>| {
                 let mut error_log = String::new();
                 for c in e.into_iter() {
                     error_log.push_str(&format!(
                         "{:?}\n",
-                        reflexo_typst::error::diag_from_std(c, Some(world))
+                        reflexo_typst::error::diag_from_std(c, Some(&world))
                     ));
                 }
                 error_log
             })?;
 
+    let pages_data: Vec<_> = doc
+        .pages
+        .iter()
+        .map(|page| typst_svg::svg(page).into_bytes())
+        .collect();
+
+    let doc = Arc::new(doc);
+    let typ_doc = TypstDocument::Paged(doc);
     // Query header.
-    let header = reflexo_typst::query::retrieve(world, "<embedded-typst>", &doc);
+    let header = reflexo_typst::query::retrieve(&world, "<embedded-typst>", &typ_doc);
     let header = match header {
         Ok(header) => serde_json::to_vec(&header).map_err(|e| e.to_string())?,
         Err(e) => serde_json::to_vec(&e).map_err(|e| e.to_string())?,
@@ -424,14 +332,9 @@ pub fn svg(context: &[u8], input: &[u8]) -> StrResult<Vec<u8>> {
 
     // Build payload.
     Ok((Some(header).into_iter())
-        .chain(
-            doc.pages
-                .iter()
-                .map(|page| typst_svg::svg(page).into_bytes()),
-        )
+        .chain(pages_data)
         .collect::<Vec<_>>()
         .join(&b"\n\n\n\n\n\n\n\n"[..]))
-    // Ok(b"Hello world".to_vec())
 }
 
 /// type trait of [`TypstWasmWorld`].
@@ -444,7 +347,7 @@ impl reflexo_typst::world::CompilerFeat for WasmCompilerFeat {
     /// It accesses no file system.
     type AccessModel = DummyAccessModel;
     /// It cannot load any package.
-    type Registry = DummyRegistry;
+    type Registry = MemoryRegistry;
 }
 
 type WorldRepr = reflexo_typst::world::CompilerUniverse<WasmCompilerFeat>;
@@ -463,32 +366,36 @@ impl TypstWasmWorld {
     /// Create a new [`TypstWasmWorld`].
     pub fn new() -> Self {
         // Creates a virtual file system.
-        let vfs = reflexo_typst::vfs::Vfs::new(DummyAccessModel);
+        let registry = Arc::new(MemoryRegistry::default());
+        let resolver = Arc::new(RegistryPathMapper::new(registry.clone()));
+        let vfs = reflexo_typst::vfs::Vfs::new(resolver, DummyAccessModel);
 
         // Adds embedded fonts.
-        let mut fb = MemoryFontBuilder::new();
+        let mut fb = MemoryFontSearcher::new();
+
         for data in EMBEDDED_FONT {
-            fb.add_memory_font(Bytes::from_static(data));
+            fb.add_memory_font(Bytes::new(data));
         }
 
         // Creates a world.
         Self(CompilerUniverse::new_raw(
             EntryState::new_workspace(PathBuf::from("/").into()),
+            Features::default(),
             None,
             vfs,
-            DummyRegistry,
-            Arc::new(fb.into()),
+            registry,
+            Arc::new(fb.build()),
         ))
     }
 }
 
 pub static EMBEDDED_FONT: &[&[u8]] = &[];
 
-/// A builder of memory package.
+/// Creates a memory package registry from the builder.
 #[derive(Default, Debug)]
-pub struct MemoryPackageBuilder(HashMap<PackageSpec, Arc<Path>>);
+pub struct MemoryRegistry(HashMap<PackageSpec, Arc<Path>>);
 
-impl MemoryPackageBuilder {
+impl MemoryRegistry {
     /// Adds a memory package.
     pub fn add_memory_package(&mut self, spec: PackageSpec) -> Arc<Path> {
         let package_root: Arc<Path> = PathBuf::from("/internal-packages")
@@ -502,10 +409,7 @@ impl MemoryPackageBuilder {
     }
 }
 
-#[derive(Default, Debug)]
-pub struct MemoryPackageRegistry(HashMap<PackageSpec, Arc<Path>>);
-
-impl PackageRegistry for MemoryPackageRegistry {
+impl PackageRegistry for MemoryRegistry {
     /// Resolves a package.
     fn resolve(&self, spec: &PackageSpec) -> Result<Arc<Path>, PackageError> {
         self.0
@@ -513,4 +417,9 @@ impl PackageRegistry for MemoryPackageRegistry {
             .cloned()
             .ok_or_else(|| PackageError::NotFound(spec.clone()))
     }
+}
+
+/// Makes `instant::SystemTime::now` happy
+pub extern "C" fn now() -> f64 {
+    0.0
 }
