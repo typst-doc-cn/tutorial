@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "内容与样式")
+#show: book.page.with(title: "样式链")
 
 == 内容的「样式」
 
