@@ -20,8 +20,8 @@
     = 基础教程 — 脚本Ⅰ
     - #chapter("basic/scripting-literal-and-variable.typ")[常量与变量]
     - #chapter("basic/scripting-block-and-expression.typ")[块与表达式]
-    - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
     = 基础教程 — 排版Ⅱ
+    - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
     - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
     = 基础教程 — 脚本Ⅱ
