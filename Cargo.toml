@@ -18,7 +18,7 @@ typst-svg = "0.13.1"
 
 serde_json = "1"
 
-reflexo-typst = { git = "https://github.com/Myriad-Dreamin/typst.ts", rev = "5cdaded77bfd667818d1b8e95f29e3dd5e493089", default-features = false }
+reflexo-typst = { version = "0.6.0-rc1", default-features = false }
 
 [profile.release]
 # to satisfy stubber

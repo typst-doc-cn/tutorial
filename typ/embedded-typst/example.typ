@@ -20,4 +20,4 @@
 The selected element is:
 #query-result.func#[[#[#query-result.body.text]]]
 
-#grid(columns: (1fr, 1fr), column-gutter: 0.6em, row-gutter: 1em, ..doc.pages.map(data => image.decode(data)).map(rect))
+#grid(columns: (1fr, 1fr), column-gutter: 0.6em, row-gutter: 1em, ..doc.pages.map(data => image(bytes(data))).map(rect))

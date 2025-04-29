@@ -12,8 +12,8 @@ use std::{
 };
 
 use reflexo_typst::{
-    font::{pure::MemoryFontBuilder, FontResolverImpl},
-    package::{dummy::DummyRegistry, PackageRegistry, PackageSpec, RegistryPathMapper},
+    font::{pure::MemoryFontSearcher, FontResolverImpl},
+    package::{PackageRegistry, PackageSpec, RegistryPathMapper},
     typst::prelude::EcoVec,
     vfs::{dummy::DummyAccessModel, FileSnapshot},
     CompilerUniverse, EntryReader, EntryState, ShadowApi, TaskInputs, TypstDocument,
@@ -188,22 +188,34 @@ fn create_world() -> StrResult<WorldRepr> {
 
     /// Creates a world based on the context.
     fn resolve_world_inner() -> StrResult<WorldRepr> {
+        let data_guard = DATA.lock().unwrap();
+
         // Adds embedded fonts.
-        let mut fb = MemoryFontBuilder::new();
-        let mut pb = MemoryPackageBuilder::default();
+        let mut fb = MemoryFontSearcher::new();
+        let mut pb = MemoryRegistry::default();
 
-        let registry = Arc::new(DummyRegistry);
-        let resolver = Arc::new(RegistryPathMapper::new(registry.clone()));
-        let mut vfs = reflexo_typst::vfs::Vfs::new(resolver, DummyAccessModel);
-
-        for data in &DATA.lock().unwrap().data {
+        for data in &data_guard.data {
             match data {
                 DataRef::Font { data, .. } => {
                     fb.add_memory_font(data.clone().unwrap().0);
                 }
+                DataRef::Package { spec, .. } => {
+                    let spec = PackageSpec::from_str(spec).map_err(|e| e.to_string())?;
+                    pb.add_memory_package(spec);
+                }
+                DataRef::File { .. } => {}
+            }
+        }
+
+        let registry = Arc::new(pb);
+        let resolver = Arc::new(RegistryPathMapper::new(registry.clone()));
+        let mut vfs = reflexo_typst::vfs::Vfs::new(resolver, DummyAccessModel);
+
+        for data in &data_guard.data {
+            match data {
                 DataRef::Package { data, spec, .. } => {
                     let spec = PackageSpec::from_str(spec).map_err(|e| e.to_string())?;
-                    let path = pb.add_memory_package(spec);
+                    let path = registry.resolve(&spec).map_err(|e| e.to_string())?;
 
                     let data = data.clone().unwrap().0;
                     extract_package(&data, |key, value, _mtime| {
@@ -215,7 +227,7 @@ fn create_world() -> StrResult<WorldRepr> {
                             .map_err(|e| e.to_string())
                     })?;
                 }
-                DataRef::File { .. } => {}
+                DataRef::Font { .. } | DataRef::File { .. } => {}
             }
         }
 
@@ -230,7 +242,7 @@ fn create_world() -> StrResult<WorldRepr> {
             None,
             vfs,
             registry,
-            Arc::new(fb.into()),
+            Arc::new(fb.build()),
         );
 
         Ok(world)
@@ -335,7 +347,7 @@ impl reflexo_typst::world::CompilerFeat for WasmCompilerFeat {
     /// It accesses no file system.
     type AccessModel = DummyAccessModel;
     /// It cannot load any package.
-    type Registry = DummyRegistry;
+    type Registry = MemoryRegistry;
 }
 
 type WorldRepr = reflexo_typst::world::CompilerUniverse<WasmCompilerFeat>;
@@ -354,12 +366,12 @@ impl TypstWasmWorld {
     /// Create a new [`TypstWasmWorld`].
     pub fn new() -> Self {
         // Creates a virtual file system.
-        let registry = Arc::new(DummyRegistry);
+        let registry = Arc::new(MemoryRegistry::default());
         let resolver = Arc::new(RegistryPathMapper::new(registry.clone()));
         let vfs = reflexo_typst::vfs::Vfs::new(resolver, DummyAccessModel);
 
         // Adds embedded fonts.
-        let mut fb = MemoryFontBuilder::new();
+        let mut fb = MemoryFontSearcher::new();
 
         for data in EMBEDDED_FONT {
             fb.add_memory_font(Bytes::new(data));
@@ -372,18 +384,18 @@ impl TypstWasmWorld {
             None,
             vfs,
             registry,
-            Arc::new(fb.into()),
+            Arc::new(fb.build()),
         ))
     }
 }
 
 pub static EMBEDDED_FONT: &[&[u8]] = &[];
 
-/// A builder of memory package.
+/// Creates a memory package registry from the builder.
 #[derive(Default, Debug)]
-pub struct MemoryPackageBuilder(HashMap<PackageSpec, Arc<Path>>);
+pub struct MemoryRegistry(HashMap<PackageSpec, Arc<Path>>);
 
-impl MemoryPackageBuilder {
+impl MemoryRegistry {
     /// Adds a memory package.
     pub fn add_memory_package(&mut self, spec: PackageSpec) -> Arc<Path> {
         let package_root: Arc<Path> = PathBuf::from("/internal-packages")
@@ -397,10 +409,7 @@ impl MemoryPackageBuilder {
     }
 }
 
-#[derive(Default, Debug)]
-pub struct MemoryPackageRegistry(HashMap<PackageSpec, Arc<Path>>);
-
-impl PackageRegistry for MemoryPackageRegistry {
+impl PackageRegistry for MemoryRegistry {
     /// Resolves a package.
     fn resolve(&self, spec: &PackageSpec) -> Result<Arc<Path>, PackageError> {
         self.0
