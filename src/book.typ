@@ -26,8 +26,10 @@
     - #chapter("basic/scripting-control-flow.typ")[控制流]
     = 基础教程 — 排版Ⅱ
     - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
-    - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
-    - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
+    - #chapter("basic/scripting-length.typ")[度量]
+    - #chapter("basic/scripting-layout.typ")[布局]
+    - #chapter("basic/scripting-color.typ")[色彩]
+    - #chapter("basic/scripting-shape.typ")[图表]
     = 基础教程 — 脚本Ⅱ
     - #chapter("intermediate/doc-modulize.typ")[文件、模块与外部库]
     - #chapter("intermediate/doc-stateful.typ")[文档状态与文档查询]
