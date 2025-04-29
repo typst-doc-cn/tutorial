@@ -51,9 +51,7 @@
     - #chapter("basic/reference-math-mode.typ")[数学模式]
     - #chapter("basic/reference-bibliography.typ")[参考文献]
     - #chapter("basic/reference-wasm-plugin.typ")[WASM插件]
-    = 进阶教程 — 排版Ⅳ
-    // - #chapter("basic/writing-chinese.typ")[数学排版]
-    - #chapter("basic/writing-chinese.typ")[中文排版]
+    // = 进阶教程 — 排版Ⅳ
     // 6. 脚本Ⅱ
     // - IO与数据处理
     // - 内置类型
