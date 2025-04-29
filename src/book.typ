@@ -18,8 +18,12 @@
     - #chapter("basic/writing-markup.typ")[初识标记模式]
     - #chapter("basic/writing-scripting.typ")[初识脚本模式]
     = 基础教程 — 脚本Ⅰ
-    - #chapter("basic/scripting-literal-and-variable.typ")[常量与变量]
-    - #chapter("basic/scripting-block-and-expression.typ")[块与表达式]
+    - #chapter("basic/scripting-literal.typ")[基本类型]
+    - #chapter("basic/scripting-access.typ")[成员与方法]
+    - #chapter("basic/scripting-variable.typ")[变量与函数]
+    - #chapter("basic/scripting-destruct.typ")[解构赋值]
+    - #chapter("basic/scripting-block-and-expression.typ")[表达式]
+    - #chapter("basic/scripting-control-flow.typ")[控制流]
     = 基础教程 — 排版Ⅱ
     - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
     - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
