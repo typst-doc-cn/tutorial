@@ -2,6 +2,8 @@
 
 #show: book.page.with(title: "变量与函数")
 
+#todo-box[引言]
+
 == 变量声明 <grammar-var-decl>
 
 变量是存储“字面量”的一个个容器。它相当于为一个个字面量取名，以方便在脚本中使用。
@@ -204,11 +206,7 @@
 // #(x = 2)
 // #f()
 
-== 高级参数语法
-
-学会了「数组」和「字典」，我们可以学习更加高级的参数语法。这些高级语法让参数声明更灵活。
-
-=== 具名参数声明 <grammar-named-param>
+== 具名参数声明 <grammar-named-param>
 
 以上两种函数都允许包含「具名参数」，其看起来就像字典的一项，冒号右侧则是参数的*默认值*：
 
@@ -217,7 +215,7 @@
 #g(/* 不传就是问号 */); #g(name: "OwO。")
 ```)
 
-=== 变长参数 <grammar-variadic-param>
+== 变长参数 <grammar-variadic-param>
 
 「函数声明」和「闭包声明」都允许包含「变长参数」。
 
@@ -232,118 +230,8 @@
 
 == 总结
 
-// Typst如何保证一个简单函数甚至是一个闭包是“纯函数”？
-
-// 答：1. 禁止修改外部变量，则捕获的变量的值是“纯的”或不可变的；2. 折叠的对象是纯的，且「折叠」操作是纯的。
-
-// Typst的多文件特性从何而来？
-
-// 答：1. import函数产生一个模块对象，而模块其实是文件顶层的scope。2. include函数即执行该文件，获得该文件对应的内容块。
-
-// 基于以上两个特性，Typst为什么快？
-
-// + Typst支持增量解析文件。
-// + Typst所有由*用户声明*的函数都是纯的，在其上的调用都是纯的。例如Typst天生支持快速计算递归实现的fibnacci函数：
-
-//   #code(```typ
-//   #let fib(n) = if n <= 1 { n } else { fib(n - 1) + fib(n - 2) }
-//   #fib(42)
-//   ```)
-// + Typst使用`include`导入其他文件的顶层「内容块」。当其他文件内容未改变时，内容块一定不变，而所有使用到对应内容块的函数的结果也一定不会因此改变。
-
-// 这意味着，如果你发现了Typst中与一般语言的不同之处，可以思考以上种种优势对用户脚本的增强或限制。
-
-基于《字面量、变量和函数》掌握的知识你应该可以：
-+ 查看#(refs.ref-type-builtin)[《参考：内置类型》]，以掌握内置类型的使用方法。
-+ 查看#(refs.ref-visualization)[《参考：图形与几何元素》]，以掌握图形和几何元素的使用方法。
-+ 查看#(refs.ref-wasm-plugin)[《参考：WASM插件》]，以掌握在Typst中使用Rust、JavaScript、Python等语言编写插件库。
-+ 阅读#(refs.ref-grammar)[《参考：语法示例检索表》]，以检查自己的语法掌握程度。
-+ 查看#(refs.ref-typebase)[《参考：基本类型》]，以掌握基本类型的使用方法。
-+ 查看#(refs.ref-color)[《参考：颜色、色彩渐变与模式》]，以掌握色彩的高级管理方法。
-+ 查看#(refs.ref-data-process)[《参考：数据读写与数据处理》]，以助你从外部读取数据或将文档数据输出到文件。
-+ 查看#(refs.ref-bibliography)[《参考：导入和使用参考文献》]，以助你导入和使用参考文献。
-+ 阅读基本参考部分中的所有内容。
+#todo-box[总结]
 
 == 习题
 
-#let q1 = ````typ
-#let a0 = 2
-#let a1 = a0 * a0
-#let a2 = a1 * a1
-#let a3 = a2 * a2
-#let a4 = a3 * a3
-#let a5 = a4 * a4
-#a5
-````
-
-#exercise[
-  使用本节所讲述的语法，计算$2^32$的值：#rect(width: 100%, eval(q1.text, mode: "markup"))
-][
-  #q1
-]
-
-#let q1 = ````typ
-#let a = [一]
-#let b = [渔]
-#let c = [江]
-#let f(x, y) = a + x + a + y
-#let g(x, y, z, u, v) = [#f(x, y + a + z)，#f(u, v)。]
-#g([帆], [桨], [#(b)舟], [个#(b)翁], [钓钩]) \
-#g([俯], [仰], [场笑], [#(c)明月], [#(c)秋])
-````
-
-#exercise[
-  输出下面的诗句，但你的代码中至多只能出现17个汉字：#rect(width: 100%, eval(q1.text, mode: "markup"))
-][
-  #q1
-]
-
-#let q1 = ````typ
-#let calc-fib() = {
-  let res = range(2).map(float)
-  for i in range(2, 201) {
-    res.push(res.at(i - 1) + res.at(i - 2))
-  }
-
-  res
-}
-#let fib(n) = calc-fib().at(n)
-
-#fib(75)
-````
-
-#exercise[
-  已知斐波那契数列的递推式为$F_n = F_(n-1) + F_(n-2)$，且$F_0 = 0, F_1 = 1$。使用本节所讲述的语法，计算$F_75$的值：#rect(width: 100%, eval(q1.text, mode: "markup"))
-][
-  #q1
-]
-
-#let q1 = ````typ
-#set align(center)
-#let matrix-fmt(..args) = table(
-  columns: args.at(0).len(),
-  ..args.pos().flatten().flatten().map(str)
-)
-#matrix-fmt(
-  (1, 2, 3),
-  (4, 5, 6),
-  (7, 8, 9),
-)
-````
-
-#exercise[
-  编写函数，使用`table`（表格）元素打印任意$N times M$矩阵，例如：
-
-  ```typ
-  #matrix-fmt(
-    (1, 2, 3),
-    (4, 5, 6),
-    (7, 8, 9),
-  )
-  ```
-
-  #rect(width: 100%, eval(q1.text, mode: "markup"))
-][
-  #q1
-]
-
+#todo-box[习题]

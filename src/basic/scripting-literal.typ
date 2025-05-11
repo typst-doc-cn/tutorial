@@ -25,7 +25,7 @@ Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊�
   #term("introspection function")是指那些为你获取解释器内部状态的函数。它们往往接受一些语言对象，而返回存储在解释器内部的相关信息。在这里，#typst-func("repr")接受任意值，而返回对应的代码表示。
 ]
 
-== 类型的自省函数 <grammar-type>
+== `type`函数 <grammar-type>
 
 与#typst-func("repr")类似，一个特殊的函数#typst-func("type")可以获得任意值的#term("type")。所谓#term("type")，就是这个值归属的分类。例如：
 - `1`是整数数字，类型就对应于整数类型（integer）。
@@ -34,8 +34,10 @@ Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊�
   ```)
 - `一段内容`是文本内容，类型就对应于内容类型（content）。
   #code(```typ
-  #type([一段内容])
+  #type[一段内容]
   ```)
+
+=== 类型 <type-type>
 
 一个值只会属于一种类型，因此类型是可以比较的：
 
@@ -54,7 +56,7 @@ Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊�
 #(type(type(str)) == type) \
 ```)
 
-== 求值函数 <grammar-eval>
+== `eval`函数 <grammar-eval>
 
 `eval`函数接受一个字符串，把字符串当作代码执行并求出结果：
 
@@ -74,7 +76,7 @@ Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊�
 
 == 基本字面量
 
-本小节我们将具体介绍所有基本字面量，这是脚本的“一加一”。其实在上一节，我们已经见过了一部分字面量，但皆凭直觉使用：```typc 1```不就是数字吗，那么在Typst中，它就是数字。（PS：与之相对，TeX根本没有数字和字符串的概念。）
+我们将介绍所有基本字面量，这是脚本的“一加一”。其实在上一节，我们已经见过了一部分字面量，但皆凭直觉使用：```typc 1```不就是数字吗，那么在Typst中，它就是数字。与之相对，TeX底层没有数字和字符串的概念。
 
 如果你学过Python等语言，那么这将对你来说不是问题。在Typst中，常用的字面量并不多，它们是：
 + #term("none literal")。
@@ -85,16 +87,16 @@ Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊�
 
 === 空字面量 <grammar-none-literal>
 
-空字面量是纯粹抽象的概念，这意味着你在现实中很难找到对应的实体。就像是数学中的零与负数，空字面量自然产生于运算过程中。
+就像是数学中的零与负数，空字面量自然产生于运算过程中。
 
 #code(```typ
 #repr((0, 1).find((_) => false)),
 #repr(if false [啊？])
 ```)
 
-上例第一行，当在「数组」中查找一个不存在的元素时，“没有”就是```typc none```。
+上例第一行，当在「数组」中查找一个不存在的元素时，“没有”就是```typc none```。第二行，当条件不满足，且没有`false`分支时，“没有内容”就是```typc none```。
 
-上例第二行，当条件不满足，且没有`false`分支时，“没有内容”就是```typc none```。
+空字面量是纯粹抽象的概念，这意味着你在现实中很难找到对应的实体。
 
 // #pro-tip[
 //   空字面量自然产生于运算过程中。除上所述，以下是其他会产生```typc none```的自然场景：
@@ -126,7 +128,7 @@ Typst很快，并非因为它的#term("parser")和#term("interpreter")具有惊�
 
 === 布尔字面量
 
-一个布尔字面量表示逻辑的确否。它要么为`false`（真）<grammar-true-literal>要么为`true`（假）<grammar-false-literal>。
+一个布尔字面量表示逻辑的确否。它要么为```typc false```（真）<grammar-true-literal>要么为```typc true```（假）<grammar-false-literal>。
 
 #code(```typ
 假设 #false 那么一切为 #true。
@@ -140,14 +142,14 @@ $1 < 2$的结果为：#(1 < 2)
 
 === 整数字面量 <grammar-integer-literal>
 
-一个整数字面量代表一个整数。相信你一定知道整数的含义。Typst中的整数默认为十进制：
+一个整数字面量代表一个整数。Typst中的整数默认为十进制：
 
 #code(```typ
 三个值 #(-1)、#0 和 #1 偷偷混入了我们内容之中。
 ```)
 
 #pro-tip[
-  有的时候Typst不支持在#mark("#")后直接跟一个值。这个时候无论值有多么复杂，都可以将值用一对圆括号包裹起来，从而允许Typst轻松解析该值。例如，Typst无法处理#mark("#")后直接跟随一个#mark("hyphen")的情况：
+  有的时候Typst不支持在#mark("#")后直接跟一个值。例如，Typst无法处理#mark("#")后直接跟随一个#mark("hyphen")的情况。这个时候无论多么复杂，都可以用括号包裹值：
 
   #code(```typ
   #(-1), #(0), #(1)
@@ -157,12 +159,8 @@ $1 < 2$的结果为：#(1 < 2)
 有些数字使用其他进制表示更为方便。你可以分别使用`0x`、`0o`和`0b`前缀加上进制内容表示十六进制数、八进制数和二进制数：<grammar-n-adecimal-literal>
 
 #code(```typ
-十六进制数：#(0xdeadbeef)、#(-0xdeadbeef) \
-八进制数：#(0o755)、#(-0o644) \
-二进制数：#(0b1001)、#(-0b1001)
+#(0xbeef)、#(0o755)、#(-0b1001)
 ```)
-
-上例中，当数字被输出到文档时，Typst将数字都转换成了十进制表示。
 
 整数的有效取值范围是$[-2^63,2^63)$，其中$2^63=9223372036854775808$。
 
@@ -171,10 +169,10 @@ $1 < 2$的结果为：#(1 < 2)
 浮点数与整数非常类似。最常见的浮点数由至少一个整数部分或小数部分组成：
 
 #code(```typ
-三个值 #(0.001)、#(.1) 和 #(2.) 偷偷混入了我们内容之中。
+浮点数#(1.001)、小数部分#(.1) 和整数部分#(2.)。
 ```)
 
-有些数字使用#term("exponential notation")更为方便。你可以使用标准的#term("exponential notation")创建浮点数：<grammar-exp-repr-float>
+有些数字使用#term("exponential notation")更为方便：<grammar-exp-repr-float>
 
 #code(```typ
 #(1e2)、#(1.926e3)、#(-1e-3)
@@ -183,11 +181,11 @@ $1 < 2$的结果为：#(1 < 2)
 Typst还为你内置了一些特殊的数值，它们都是浮点数：
 
 #code(```typ
-$pi$=#calc.pi \
-$tau$=#calc.tau \
-$inf$=#calc.inf \
-// NaN=#calc.nan \
+$inf$=#calc.inf,
+$pi$=#calc.round(calc.pi, digits: 5),
+$tau$=#calc.round(calc.tau, digits: 5)
 ```)
+// NaN=#calc.nan \
 
 === 字符串字面量 <grammar-string-literal>
 
@@ -230,7 +228,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 
 == 数组字面量 <grammar-array-literal>
 
-脚本模式中有两类核心复合字面量。
+脚本模式中有两类核心复合字面量。一曰「数组」，一曰「字典」。
 
 「数组」是按照顺序存储的一些「值」，你可以在「数组」中存放*任意内容*而不拘泥于类型。你可以使用圆括号与一个逗号分隔的列表创建一个*数组字面量*：
 
@@ -321,6 +319,8 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 // + Typst使用`include`导入其他文件的顶层「内容块」。当其他文件内容未改变时，内容块一定不变，而所有使用到对应内容块的函数的结果也一定不会因此改变。
 
 // 这意味着，如果你发现了Typst中与一般语言的不同之处，可以思考以上种种优势对用户脚本的增强或限制。
+
+#todo-box[重写总结]
 
 基于《字面量、变量和函数》掌握的知识你应该可以：
 + 查看#(refs.ref-type-builtin)[《参考：内置类型》]，以掌握内置类型的使用方法。

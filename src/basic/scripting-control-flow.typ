@@ -2,14 +2,6 @@
 
 #show: book.page.with(title: "控制流")
 
-#pro-tip[
-  Typst借鉴了Rust，遵从「面向表达式编程」（expression-oriented programming）的哲学。它将所有的语句都根据可折叠规则（见后文）设计为表达式。
-  + 如果一个语句能产生值，那么该语句的结果是按*控制流*顺序所产生所有值的折叠。
-  + 否则，如果一个语句不能产生值，那么该语句的结果是```typc none```。
-  + 特别地，任意类型 $T$ 的值 $v$ 与```typc none```折叠仍然是值本身。
-  $ forall v in T union {"none"}, op("fold")_T (v, "none") = v $
-]
-
 == `none`类型和`if`语句 <grammar-if>
 
 默认情况下，在逻辑上，Typst按照顺序执行执行你的代码，即先执行前面的语句，再执行后面的语句。开发者如果想要控制程序执行的流程，就必须使用流程控制的语法结构，主要是条件执行和循环执行。

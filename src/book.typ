@@ -15,18 +15,17 @@
     #prefix-chapter("introduction.typ")[导引]
     // 计划修改
     = 基础教程 — 排版Ⅰ
-    - #chapter("basic/writing-markup.typ")[初识标记模式]
-    - #chapter("basic/writing-scripting.typ")[初识脚本模式]
+    - #chapter("basic/writing-markup.typ")[标记模式]
+    - #chapter("basic/writing-scripting.typ")[脚本模式]
+    // - #chapter("basic/writing-math.typ")[数学模式]
     = 基础教程 — 脚本Ⅰ
     - #chapter("basic/scripting-literal.typ")[基本类型]
     - #chapter("basic/scripting-access.typ")[成员与方法]
     - #chapter("basic/scripting-variable.typ")[变量与函数]
-    - #chapter("basic/scripting-destruct.typ")[解构赋值]
     - #chapter("basic/scripting-block-and-expression.typ")[表达式]
     - #chapter("basic/scripting-control-flow.typ")[控制流]
     = 基础教程 — 排版Ⅱ
-    - #chapter("basic/scripting-scope.typ")[文档树]
-    - #chapter("basic/scripting-style.typ")[样式链]
+    - #chapter("basic/scripting-style.typ")[样式]
     - #chapter("basic/scripting-color.typ")[色彩]
     - #chapter("basic/scripting-shape.typ")[图表]
     - #chapter("basic/scripting-length.typ")[度量]
