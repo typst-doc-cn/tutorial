@@ -22,8 +22,6 @@
     - #chapter("basic/scripting-literal.typ")[基本类型]
     - #chapter("basic/scripting-access.typ")[成员与方法]
     - #chapter("basic/scripting-variable.typ")[变量与函数]
-    - #chapter("basic/scripting-block-and-expression.typ")[表达式]
-    - #chapter("basic/scripting-control-flow.typ")[控制流]
     = 基础教程 — 排版Ⅱ
     - #chapter("basic/scripting-style.typ")[样式]
     - #chapter("basic/scripting-color.typ")[色彩]
@@ -31,11 +29,13 @@
     - #chapter("basic/scripting-length.typ")[度量]
     - #chapter("basic/scripting-layout.typ")[布局]
     = 基础教程 — 脚本Ⅱ
-    - #chapter("intermediate/doc-modulize.typ")[模块化（多文件）]
+    - #chapter("basic/scripting-block-and-expression.typ")[表达式]
+    - #chapter("basic/scripting-control-flow.typ")[控制流]
+    - #chapter("intermediate/doc-modulize.typ")[模块化]
     - #chapter("intermediate/doc-stateful.typ")[状态化]
     = 基础教程 — 排版Ⅲ
-    - #chapter("intermediate/writing-math.typ")[数学排版]
     - #chapter("intermediate/writing-chinese.typ")[中文排版]
+    - #chapter("intermediate/writing-math.typ")[数学排版]
     = 基础教程 — 附录Ⅰ
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     - #chapter("basic/reference-utils.typ")[常用函数表]
