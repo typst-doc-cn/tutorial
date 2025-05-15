@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [初识标记模式])
+#show: book.page.with(title: [标记模式])
 
 Typst是一门简明但强大的现代排版语言，你可以使用简洁直观的语法排版出好看的文档。
 
