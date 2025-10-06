@@ -15,23 +15,27 @@
     #prefix-chapter("introduction.typ")[导引]
     // 计划修改
     = 基础教程 — 排版Ⅰ
-    - #chapter("basic/writing-markup.typ")[初识标记模式]
-    - #chapter("basic/writing-scripting.typ")[初识脚本模式]
+    - #chapter("basic/writing-markup.typ")[标记模式]
+    - #chapter("basic/writing-scripting.typ")[脚本模式]
+    // - #chapter("basic/writing-math.typ")[数学模式]
     = 基础教程 — 脚本Ⅰ
-    - #chapter("basic/scripting-literal-and-variable.typ")[常量与变量]
-    - #chapter("basic/scripting-block-and-expression.typ")[块与表达式]
-    - #chapter("basic/scripting-scope-and-style.typ")[内容与样式]
+    - #chapter("basic/scripting-literal.typ")[基本类型]
+    - #chapter("basic/scripting-access.typ")[成员与方法]
+    - #chapter("basic/scripting-variable.typ")[变量与函数]
     = 基础教程 — 排版Ⅱ
-    - #chapter("basic/scripting-length-and-layout.typ")[度量与布局]
-    - #chapter("basic/scripting-color-and-shape.typ")[色彩与图表]
+    - #chapter("basic/scripting-style.typ")[样式]
+    - #chapter("basic/scripting-color.typ")[色彩]
+    - #chapter("basic/scripting-shape.typ")[图表]
+    - #chapter("basic/scripting-length.typ")[度量]
+    - #chapter("basic/scripting-layout.typ")[布局]
     = 基础教程 — 脚本Ⅱ
-    - #chapter("intermediate/modulize-modules.typ")[文件与模块]
-    - #chapter("intermediate/modulize-packages.typ")[使用外部库]
-    - #chapter("intermediate/modulize-multi-files.typ")[多文件文档]
+    - #chapter("basic/scripting-block-and-expression.typ")[表达式]
+    - #chapter("basic/scripting-control-flow.typ")[控制流]
+    - #chapter("intermediate/doc-modulize.typ")[模块化]
+    - #chapter("intermediate/doc-stateful.typ")[状态化]
     = 基础教程 — 排版Ⅲ
-    - #chapter("intermediate/content-stateful.typ")[Typst架构与原理]
-    - #chapter("intermediate/content-stateful-2.typ")[查询文档状态]
-    - #chapter("intermediate/content-stateful-3.typ")[维护文档状态]
+    - #chapter("intermediate/writing-chinese.typ")[中文排版]
+    - #chapter("intermediate/writing-math.typ")[数学排版]
     = 基础教程 — 附录Ⅰ
     - #chapter("basic/reference-grammar.typ")[语法示例检索表]
     - #chapter("basic/reference-utils.typ")[常用函数表]
@@ -49,9 +53,7 @@
     - #chapter("basic/reference-math-mode.typ")[数学模式]
     - #chapter("basic/reference-bibliography.typ")[参考文献]
     - #chapter("basic/reference-wasm-plugin.typ")[WASM插件]
-    = 进阶教程 — 排版Ⅳ
-    // - #chapter("basic/writing-chinese.typ")[数学排版]
-    - #chapter("basic/writing-chinese.typ")[中文排版]
+    // = 进阶教程 — 排版Ⅳ
     // 6. 脚本Ⅱ
     // - IO与数据处理
     // - 内置类型

@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: [初识脚本模式])
+#show: book.page.with(title: [脚本模式])
 
 从现在开始，示例将会逐渐开始出现脚本。不要担心，它们都仅涉及脚本的简单用法。
 
