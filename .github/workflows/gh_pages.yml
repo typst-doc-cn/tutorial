@@ -24,7 +24,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - run: git submodule update --init --recursive
       - name: Download font assets
         # use fonts in stable releases
@@ -38,12 +38,11 @@ jobs:
         run: |
           shiroa build --font-path ./assets/typst-fonts/ --font-path ./assets/fonts/ --path-to-root /tutorial/ -w . src 
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          # Upload `/github-pages` sub directory
-          path: './dist'
+          path: "./dist"
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
