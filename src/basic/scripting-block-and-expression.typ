@@ -9,7 +9,6 @@ Typst中绝大部分语法结构都可作表达式，可以说学习完了所有
   + 如果一个语句能产生值，那么该语句的结果是按*控制流*顺序所产生所有值的折叠。
   + 否则，如果一个语句不能产生值，那么该语句的结果是```typc none```。
   + 特别地，任意类型 $T$ 的值 $v$ 与```typc none```折叠仍然是值本身。
-  $ forall v in T union {"none"}, op("fold")_T (v, "none") = v $
 ]
 
 #pro-tip[
@@ -181,31 +180,11 @@ Typst支持对数字的算数运算，其中浮点运算遵守IEEE-754标准。�
   table(
     columns: (33pt * 0.6,) * 2 + (33pt,) * 3,
     stroke: 0.5pt,
-    $p$,
-    $q$,
-    $not p$,
-    $p or q$,
-    $p and q$,
-    $0$,
-    $0$,
-    $1$,
-    $0$,
-    $0$,
-    $0$,
-    $1$,
-    $1$,
-    $1$,
-    $0$,
-    $1$,
-    $0$,
-    $0$,
-    $1$,
-    $0$,
-    $1$,
-    $1$,
-    $0$,
-    $1$,
-    $1$,
+    $p$, $q$, $not p$, $p or q$, $p and q$,
+    $0$, $0$, $1$, $0$, $0$,
+    $0$, $1$, $1$, $1$, $0$,
+    $1$, $0$, $0$, $1$, $0$,
+    $1$, $1$, $0$, $1$, $1$,
   )
 }
 
@@ -228,48 +207,6 @@ Typst支持对数字的算数运算，其中浮点运算遵守IEEE-754标准。�
 #let a = 1; #a,
 #repr(a += 2), #a, #repr(a -= 2), #a, #repr(a *= 2), #a, #repr(a /= 2), #a
 ```)
-
-== 数组和字典的「解构赋值」
-
-除了使用字面量「构造」元素，Typst还支持「构造」的反向操作：「解构赋值」。顾名思义，你可以在左侧用相似的语法从数组<grammar-destruct-array>或字典中获取值并赋值到*对应*的变量上。<grammar-destruct-dict>
-
-#code(```typ
-#let (attr: a) = (attr: [kawaii\~])
-#a
-```)
-
-「解构赋值」必须一一对应，但你也可以使用「占位符」（`_`）或「延展符」（`..`）以作*部分*解构：<grammar-destruct-array-eliminate>
-
-#code(```typ
-#let (first, ..) = (1, 2, 3)
-#let (.., second-last, _) = (7, 8, 9, 10)
-#first, #second-last
-```)
-
-数组的「解构赋值」有一个妙用，那就是重映射内容。<grammar-array-remapping>
-
-#code(```typ
-#let (a, b, c) = (1, 2, 3)
-#let (b, c, a) = (a, b, c); #a, #b, #c
-```)
-
-特别地，如果两个变量相互重映射，这种操作被称为「交换」：<grammar-array-swap>
-
-#code(```typ
-#let (a, b) = (1, 2)
-#((a, b) = (b, a)); #a, #b
-```)
-
-// field access
-// - dictionary
-// - symbol
-// - module
-// - content
-
-=== 参数解构 <grammar-destructing-param>
-
-#todo-box[写完]
-todo参数解构。
 
 == 代码块 <grammar-code-block>
 

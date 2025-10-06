@@ -20,8 +20,8 @@
     // - #chapter("basic/writing-math.typ")[数学模式]
     = 基础教程 — 脚本Ⅰ
     - #chapter("basic/scripting-literal.typ")[基本类型]
-    - #chapter("basic/scripting-access.typ")[成员与方法]
     - #chapter("basic/scripting-variable.typ")[变量与函数]
+    - #chapter("basic/scripting-composite.typ")[复合类型]
     = 基础教程 — 排版Ⅱ
     - #chapter("basic/scripting-style.typ")[样式]
     - #chapter("basic/scripting-color.typ")[色彩]
@@ -132,7 +132,7 @@
 // #get-book-meta()
 
 // re-export page template
-#import "/typ/templates/page.typ": project, heading-reference
+#import "/typ/templates/page.typ": heading-reference, project
 #let page = project
 #let ref-page = project.with(kind: "reference-page")
 #let cross-link = cross-link
