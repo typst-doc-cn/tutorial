@@ -1,9 +1,5 @@
 {
-  "typst-preview.invertColors": "auto",
-  "tinymist.fontPaths": [
-    "${workspaceFolder}/assets/fonts",
-    "${workspaceFolder}/assets/typst-fonts"
-  ],
+  "tinymist.fontPaths": ["${workspaceFolder}/assets/fonts"],
   "tinymist.exportPdf": "onSave",
   "tinymist.outputPath": "$root/target/$dir/$name",
   "tinymist.formatterMode": "typstyle",
@@ -12,6 +8,9 @@
     "typst.link.image",
     "typst.link"
   ],
+  "tinymist.preview.invertColors": "auto",
+  "tinymist.lint.enabled": true,
+  "tinymist.lint.when": "onSave",
   "[typst]": {
     "editor.inlayHints.enabled": "off"
   },

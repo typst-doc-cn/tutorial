@@ -1,5 +1,5 @@
-#import "@preview/fletcher:0.5.7" as fletcher: node, edge
-#import "/typ/templates/page.typ": main-color, is-light-theme, page-width
+#import "@preview/fletcher:0.5.7" as fletcher: edge, node
+#import "/typ/templates/page.typ": is-light-theme, main-color, page-width
 #import "mod.typ": typst-func
 
 #let figure-typst-arch(
