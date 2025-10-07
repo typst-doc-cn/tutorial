@@ -27,7 +27,7 @@
     - #chapter("tutorial/scripting-layout.typ")[布局模型]
     - #chapter("tutorial/scripting-content.typ")[文档模型]
     - #chapter("tutorial/scripting-style.typ")[样式模型]
-    = 脚本Ⅱ — 语言概念
+    = 脚本Ⅱ — 语言核心
     - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
     - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]
     - #chapter("tutorial/scripting-control-flow.typ")[控制流]
