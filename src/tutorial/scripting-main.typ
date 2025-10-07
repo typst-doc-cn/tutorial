@@ -49,6 +49,21 @@
 
 但是对于整个文档，要如何理解对内容块的求值？这就引入了「可折叠」的值（Foldable）的概念。「可折叠」成为块作为表达式的基础。
 
+== Typst的主函数
+
+在Typst的源代码中，有一个Rust函数直接对应整个编译流程，其内容非常简短，便是调用了两个阶段对应的函数。“求值”阶段（`eval`阶段）对应执行一个Rust函数，它的名称为`typst::eval`；“内容排版”阶段（`typeset`阶段）对应执行另一个Rust函数，它的名称为`typst::typeset`。
+
+```rs
+pub fn compile(world: &dyn World) -> SourceResult<Document> {
+    // Try to evaluate the source file into a module.
+    let module = crate::eval::eval(world, &world.main())?;
+    // Typeset the module's content, relayouting until convergence.
+    typeset(world, &module.content())
+}
+```
+
+从代码逻辑上来看，它有明显的先后顺序，似乎与我们所展示的架构略有不同。其`typst::eval`的输出为一个文件模块`module`；其`typst::typeset`仅接受文件的内容`module.content()`并产生一个已经排版好的文档对象`typst::Document`。
+
 == 「`eval`阶段」与「`typeset`阶段」
 
 现在我们介绍Typst的完整架构。
@@ -79,21 +94,6 @@
   + 他提及数学公式的编号在演示文档框架。
   + 即便不涉及用户需求，Typst的排版引擎已经自然存在Frozen State的需求。
 + 本文档也需要`typeset`的能力为你展示特定页面的最终结果而不影响全局状态。
-
-== Typst的主函数
-
-在Typst的源代码中，有一个Rust函数直接对应整个编译流程，其内容非常简短，便是调用了两个阶段对应的函数。“求值”阶段（`eval`阶段）对应执行一个Rust函数，它的名称为`typst::eval`；“内容排版”阶段（`typeset`阶段）对应执行另一个Rust函数，它的名称为`typst::typeset`。
-
-```rs
-pub fn compile(world: &dyn World) -> SourceResult<Document> {
-    // Try to evaluate the source file into a module.
-    let module = crate::eval::eval(world, &world.main())?;
-    // Typeset the module's content, relayouting until convergence.
-    typeset(world, &module.content())
-}
-```
-
-从代码逻辑上来看，它有明显的先后顺序，似乎与我们所展示的架构略有不同。其`typst::eval`的输出为一个文件模块`module`；其`typst::typeset`仅接受文件的内容`module.content()`并产生一个已经排版好的文档对象`typst::Document`。
 
 == 延迟执行
 
