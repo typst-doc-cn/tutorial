@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "图表")
+#show: book.page.with(title: "图形排版")
 
 == 线条
 

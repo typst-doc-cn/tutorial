@@ -34,7 +34,7 @@
     - #chapter("tutorial/scripting-control-flow.typ")[控制流]
     - #chapter("tutorial/doc-stateful.typ")[状态化]
     = 教程 — 排版Ⅲ
-    - #chapter("tutorial/scripting-shape.typ")[图表]
+    - #chapter("tutorial/scripting-shape.typ")[图形排版]
     - #chapter("tutorial/writing-chinese.typ")[中文排版]
     - #chapter("tutorial/writing-math.typ")[数学排版]
     = 教程 — 附录Ⅰ
