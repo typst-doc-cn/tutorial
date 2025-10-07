@@ -24,10 +24,9 @@
     - #chapter("tutorial/scripting-composite.typ")[复合类型]
     = 教程 — 排版Ⅱ
     - #chapter("tutorial/scripting-main.typ")[编译流程]
-    - #chapter("tutorial/scripting-layout.typ")[长度与布局]
-    - #chapter("tutorial/scripting-content.typ")[文档树]
-    - #chapter("tutorial/scripting-color.typ")[颜色类型]
-    - #chapter("tutorial/scripting-style.typ")[选择器与样式]
+    - #chapter("tutorial/scripting-layout.typ")[布局模型]
+    - #chapter("tutorial/scripting-content.typ")[文档模型]
+    - #chapter("tutorial/scripting-style.typ")[样式模型]
     = 教程 — 脚本Ⅱ
     - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
     - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]

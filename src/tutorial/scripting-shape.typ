@@ -2,6 +2,112 @@
 
 #show: book.page.with(title: "图形排版")
 
+== 颜色类型
+
+Typst只有一种颜色类型，其由两部分组成。
+
+#figure([
+  #block(
+    width: 200pt,
+    align(left)[
+      ```typ
+      #color.rgb(87, 127, 230)
+       --------- ------------
+           |           +-- 色坐标
+           +-- 色彩空间对应的构造函数
+      ```
+    ],
+  )
+  #text(todo-color)[这里有个图注解]
+])
+
+
+「色彩空间」（color space）是人们主观确定的色彩模型。Typst为不同的色彩空间提供了专门的构造函数。
+
+「色坐标」（chromaticity coordinate）是客观颜色在「色彩空间」中的坐标。给定一个色彩空间，如果某种颜色*在空间内*，那么颜色能分解到不同坐标分量上，并确定每个坐标分量上的数值。反之，选择一个构造函数，并提供坐标分量上的数值，就能构造出这个颜色。
+
+#todo-box[
+  chromaticity coordinate这个名词是对的吗，每种色彩空间中的坐标都是这个名字吗？
+]
+
+习惯上，颜色的坐标分量又称为颜色的「通道」。从物理角度，Typst使用`f32`存储颜色每通道的值，这允许你对颜色进行较复杂的计算，且计算结果仍然保证较好的误差。
+
+== 色彩空间
+
+RGB是我们使用最多的色彩空间，对应Typst的`color.rgb`函数或`rgb`函数：
+
+#code(```typ
+#box(square(fill: color.rgb("#b1f2eb")))
+#box(square(fill: rgb(87, 127, 230)))
+#box(square(fill: rgb(25%, 13%, 65%)))
+```)
+
+除此之外，还支持HSL（`hsl`）、CMYK（`cmyk`）、Luma（`luma`）、Oklab（`oklab`）、Oklch（`oklch`）、Linear RGB（`color.linear-rgb`）、HSV（`color.hsv`）等色彩空间。感兴趣的可以自行搜索并使用。
+
+#pro-tip[
+  尽管你可以随意使用这些构造器，但是可能会导致PDF阅读器或浏览器的兼容性问题。它们可能不支持某些色彩空间（或色彩模式）。
+]
+
+== 预定义颜色
+
+除此之外，你还可以使用一些预定义的颜色，详见#link("https://typst.app/docs/reference/visualize/color/#predefined-colors")[《Typst Docs: Predefined colors》。]
+
+#code(```typ
+#box(square(fill: red, size: 7pt))
+#box(square(fill: blue, size: 7pt))
+```)
+
+== 颜色计算
+
+Typst较LaTeX的一个有趣的特色是内置了很多方法对颜色进行计算。这允许你基于某个颜色主题（Theme）配置更丰富的颜色方案。这里给出几个常用的函数：
+
+- `lighten/darken`：增减颜色的亮度，参数为绝对的百分比。
+- `saturate/desaturate`：增减颜色的饱和度，参数为绝对的百分比。
+- `mix`：参数为两个待混合的颜色。
+
+#code(```typ
+#show square: box
+#set square(size: 15pt)
+#square(fill: red.lighten(20%))
+#square(fill: red.darken(20%)) \
+#square(fill: red.saturate(20%))
+#square(fill: red.desaturate(20%)) \
+#square(fill: blue.mix(green))
+```)
+
+还有一些其他不太常见的颜色计算，详见#link("https://typst.app/docs/reference/visualize/color/#definitions-lighten")[《Typst Docs: Color operations》]。
+
+== 渐变色
+
+你可以以某种方式对Typst中的元素进行渐变填充。这有时候对科学作图很有帮助。
+
+有三种渐变色的构造函数，可以分别构造出线性渐变（Linear Gradient），径向渐变（Radial Gradient），锥形渐变（Conic Gradient）。他们都接受一组颜色，对元素进行颜色填充。
+
+#code(```typ
+#let sqr(f) = square(fill: f(
+    ..color.map.rainbow))
+#stack(
+  dir: ltr, spacing: 10pt,
+  sqr(gradient.linear),
+  sqr(gradient.radial),
+  sqr(gradient.conic ))
+```)
+
+从字面意思理解`color.map.rainbow`是Typst为你预定义的一个颜色数组，按顺序给出了彩虹渐变的颜色。还有一些其他预定义的颜色数组，详见#link("https://typst.app/docs/reference/visualize/color/#predefined-color-maps")[《Typst Docs: Predefined color maps》]。
+
+== 填充模式
+
+Typst不仅支持颜色填充，还支持按照固定的模式将其他图形对元素进行填充。例如下面的pat定义了一个长为`61.8pt`，宽为`50pt`的图形。将其填充进一个矩形中，填充图形从左至右，从上至下布满矩形内容中。
+
+#code(```typ
+#let pat = pattern(size: (61.8pt, 50pt))[
+  #place(line(start: (0%, 0%), end: (100%, 100%)))
+  #place(line(start: (0%, 100%), end: (100%, 0%)))
+]
+
+#rect(fill: pat, width: 100%, height: 60pt, stroke: 1pt)
+```)
+
 == 线条
 
 我们学习的第一个图形元素是直线。
