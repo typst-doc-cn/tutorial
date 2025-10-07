@@ -26,81 +26,95 @@
 #import "../tutorial/figure-time-travel.typ": figure-time-travel
 #align(center + horizon, figure-time-travel())
 
+「状态」基本上是教程中最难的部分。它涉及教程之前所有的知识。具体而言，我们需要理解透排版Ⅱ中的「编译流程」。整个「编译流程」中，排版引擎会储存一个「上下文」（context）状态。首先，「解析器」（Parser）将源代码字符串解析为待求值的「抽象语法树」（AST），接着「表达式求值」（Evaluation）阶段将「抽象语法树」转换为「内容」,然后「排版」（typeset）阶段将「内容」转换为布局好的结果。
+
+== 「`typeset`」阶段的迭代收敛
+
+一个容易值得思考的问题是，如果我在文档的开始位置调用了#typst-func("state.final")方法，那么Typst要如何做才能把文档的最终状态返回给我呢？
+
+容易推测出，原来Typst并不会只对内容执行一遍「`typeset`」。仅考虑我们使用#typst-func("state.final")方法的情况。初始情况下#typst-func("state.final")方法会返回状态默认值，并完成一次布局。接下来的迭代，#typst-func("state.final")方法会返回上一次迭代布局完成时的。直到布局的内容不再发生变化。#typst-func("state.at")会导致相似的布局迭代，只不过情况更为复杂，这里便不再展开细节。
+
+所有对文档的查询都会导致布局的迭代：`query`函数可能会导致布局的迭代；`state.at`函数可能会导致布局的迭代；`state.final`函数一定会导致布局的迭代。
+
+// 延迟执行
+
 // This section mainly talks about `selector` and `state` step by step, to teach how to locate content, create and manipulate states.
 
-本节教你使用选择器（selector）定位到文档的任意部分；也教你创建与查询二维文档状态（state）。
+// 本节教你使用选择器（selector）定位到文档的任意部分；也教你创建与查询二维文档状态（state）。
 
-// == 自定义标题样式
+== 时间维度 -- 控制流
 
-// 本节讲解的程序是如何在Typst中设置标题样式。我们的目标是：
-// + 为每级标题单独设置样式。
-// + 设置标题为内容的页眉：
-//   + 如果当前页眉有二级标题，则是当前页面的第一个二级标题。
-//   + 否则是之前所有页面的最后一个二级标题。
+== 空间维度 -- 文档（内容）树
 
-// 效果如下：
+// == 回顾其一
+
+// 针对特定的`feat`和`refactor`文本，我们使用`emph`修饰：
 
 // #frames-cjk(
-//   read("./stateful/s1.typ"),
+//   read("./stateful/s2.typ"),
 //   code-as: ```typ
-//   #show: set-heading
-
-//   == 雨滴书v0.1.2
-//   === KiraKira 样式改进
-//   feat: 改进了样式。
-//   === FuwaFuwa 脚本改进
-//   feat: 改进了脚本。
-
-//   == 雨滴书v0.1.1
-//   refactor: 移除了LaTeX。
-
-//   feat: 删除了一个多余的文件夹。
-
-//   == 雨滴书v0.1.0
-//   feat: 新建了两个文件夹。
+//   #show regex("feat|refactor"): emph
 //   ```,
 // )
 
-== 回顾其一
+// 对于三级标题，我们将中文文本用下划线标记，同时将特定文本替换成emoji：
 
-针对特定的`feat`和`refactor`文本，我们使用`emph`修饰：
+// #frames-cjk(
+//   read("./stateful/s3.typ"),
+//   code-as: ```typ
+//   #let set-heading(content) = {
+//     show heading.where(level: 3): it => {
+//       show regex("[\p{hani}\s]+"): underline
+//       it
+//     }
+//     show heading: it => {
+//       show regex("KiraKira"): box("★", baseline: -20%)
+//       show regex("FuwaFuwa"): box(text("🪄", size: 0.5em), baseline: -50%)
+//       it
+//     }
+
+//     content
+//   }
+//   #show: set-heading
+//   ```,
+// )
+
+== 任务描述
+
+为举例说明，本节讲解的程序是如何在Typst中设置标题样式。我们的目标是设置标题为内容的页眉：
++ 如果当前页眉有二级标题，则是当前页面的第一个二级标题。
++ 否则是之前所有页面的最后一个二级标题。
+
+效果如下：
 
 #frames-cjk(
-  read("./stateful/s2.typ"),
+  read("./stateful/s1.typ"),
   code-as: ```typ
-  #show regex("feat|refactor"): emph
-  ```,
-)
-
-对于三级标题，我们将中文文本用下划线标记，同时将特定文本替换成emoji：
-
-#frames-cjk(
-  read("./stateful/s3.typ"),
-  code-as: ```typ
-  #let set-heading(content) = {
-    show heading.where(level: 3): it => {
-      show regex("[\p{hani}\s]+"): underline
-      it
-    }
-    show heading: it => {
-      show regex("KiraKira"): box("★", baseline: -20%)
-      show regex("FuwaFuwa"): box(text("🪄", size: 0.5em), baseline: -50%)
-      it
-    }
-
-    content
-  }
   #show: set-heading
+
+  == 雨滴书v0.1.2
+  === KiraKira 样式改进
+  feat: 改进了样式。
+  === FuwaFuwa 脚本改进
+  feat: 改进了脚本。
+
+  == 雨滴书v0.1.1
+  refactor: 移除了LaTeX。
+
+  feat: 删除了一个多余的文件夹。
+
+  == 雨滴书v0.1.0
+  feat: 新建了两个文件夹。
   ```,
 )
 
-== 制作页眉标题的两种方法
+// == 制作页眉标题的两种方法
 
-制作页眉标题至少有两种方法。一是直接查询文档内容；二是创建状态，利用布局迭代收敛的特性获得每个页面的首标题。
+// 制作页眉标题至少有两种方法。一是直接查询文档内容；二是创建状态，利用布局迭代收敛的特性获得每个页面的首标题。
 
-在接下来的两节中我们将分别介绍这两种方法。
+// 在接下来的两节中我们将分别介绍这两种方法。
 
-本节我们讲解制作页眉标题的第一种方法，即通过查询文档状态直接估计当前页眉应当填入的内容。
+// 本节我们讲解制作页眉标题的第一种方法，即通过查询文档状态直接估计当前页眉应当填入的内容。
 
 // #locate(loc => query(heading, loc))
 // #locate(loc => query(heading.where(level: 2), loc))
@@ -248,7 +262,7 @@
 //   + 已经存在对应结果，则不会重新执行查询，而是使用表中的值作为结果。
 // ]
 
-== 回顾其二
+== 通过查询内置状态制作页眉
 
 页眉的设置方法是创建一条```typc set page(header)```规则：
 
@@ -630,7 +644,9 @@ for i in range(res-headings.len()) {
   ```,
 )
 
-在上一节（法一）中，我们仅靠「#typst-func("query")」函数就完成制作所要求页眉的功能。
+== 自定义「状态」（state）<grammar-state>
+
+在法一中，我们仅靠「#typst-func("query")」函数就完成制作所要求页眉的功能。
 
 思考下面函数：
 
@@ -653,8 +669,6 @@ for i in range(res-headings.len()) {
 本节将介绍法二，它基于「#typst-func("state")」函数，持续维护页眉状态。
 
 Typst文档可以很高效，但有些人写出的Typst代码更高效。本节所介绍的法二，让我们变得更接近这种人。
-
-== 「state」函数<grammar-state>
 
 `state`接收一个名称，并创建该名称对应*全局*唯一的状态变量。
 
@@ -800,15 +814,7 @@ Typst提供两个方法查询特定时间点的「状态」：
 
 这就是允许我们进行时光回溯的基础。
 
-== 「`typeset`」阶段的迭代收敛
-
-一个容易值得思考的问题是，如果我在文档的开始位置调用了#typst-func("state.final")方法，那么Typst要如何做才能把文档的最终状态返回给我呢？
-
-容易推测出，原来Typst并不会只对内容执行一遍「`typeset`」。仅考虑我们使用#typst-func("state.final")方法的情况。初始情况下#typst-func("state.final")方法会返回状态默认值，并完成一次布局。接下来的迭代，#typst-func("state.final")方法会返回上一次迭代布局完成时的。直到布局的内容不再发生变化。#typst-func("state.at")会导致相似的布局迭代，只不过情况更为复杂，这里便不再展开细节。
-
-所有对文档的查询都会导致布局的迭代：`query`函数可能会导致布局的迭代；`state.at`函数可能会导致布局的迭代；`state.final`函数一定会导致布局的迭代。
-
-== 回顾其三
+== 通过自定义状态制作页眉
 
 本节使用递归的方法完成状态的构建，其更为巧妙。
 
