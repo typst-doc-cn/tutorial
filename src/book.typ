@@ -23,17 +23,18 @@
     - #chapter("basic/scripting-variable.typ")[变量与函数]
     - #chapter("basic/scripting-composite.typ")[复合类型]
     = 基础教程 — 排版Ⅱ
-    - #chapter("basic/scripting-style.typ")[样式]
-    - #chapter("basic/scripting-color.typ")[色彩]
-    - #chapter("basic/scripting-shape.typ")[图表]
-    - #chapter("basic/scripting-length.typ")[度量]
-    - #chapter("basic/scripting-layout.typ")[布局]
+    - #chapter("basic/scripting-main.typ")[编译流程]
+    - #chapter("basic/scripting-layout.typ")[长度与布局]
+    - #chapter("basic/scripting-content.typ")[文档树]
+    - #chapter("basic/scripting-color.typ")[颜色类型]
+    - #chapter("basic/scripting-style.typ")[选择器与样式]
     = 基础教程 — 脚本Ⅱ
     - #chapter("basic/scripting-block-and-expression.typ")[表达式]
     - #chapter("basic/scripting-control-flow.typ")[控制流]
-    - #chapter("intermediate/doc-modulize.typ")[模块化]
+    - #chapter("intermediate/doc-modulize.typ")[模块化（多文件）]
     - #chapter("intermediate/doc-stateful.typ")[状态化]
     = 基础教程 — 排版Ⅲ
+    - #chapter("basic/scripting-shape.typ")[图表]
     - #chapter("intermediate/writing-chinese.typ")[中文排版]
     - #chapter("intermediate/writing-math.typ")[数学排版]
     = 基础教程 — 附录Ⅰ

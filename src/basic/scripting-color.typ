@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "色彩")
+#show: book.page.with(title: "颜色类型")
 
 == 颜色类型
 
