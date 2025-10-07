@@ -14,29 +14,29 @@
   summary: [
     #prefix-chapter("introduction.typ")[导引]
     // 计划修改
-    = 教程 — 排版Ⅰ
+    = 排版Ⅰ — 模式
     - #chapter("tutorial/writing-markup.typ")[标记模式]
     - #chapter("tutorial/writing-scripting.typ")[脚本模式]
     // - #chapter("tutorial/writing-math.typ")[数学模式]
-    = 教程 — 脚本Ⅰ
+    = 脚本Ⅰ — 类型
     - #chapter("tutorial/scripting-literal.typ")[基本类型]
     - #chapter("tutorial/scripting-variable.typ")[变量与函数]
     - #chapter("tutorial/scripting-composite.typ")[复合类型]
-    = 教程 — 排版Ⅱ
+    = 排版Ⅱ — 模型（子系统）
     - #chapter("tutorial/scripting-main.typ")[编译流程]
     - #chapter("tutorial/scripting-layout.typ")[布局模型]
     - #chapter("tutorial/scripting-content.typ")[文档模型]
     - #chapter("tutorial/scripting-style.typ")[样式模型]
-    = 教程 — 脚本Ⅱ
+    = 脚本Ⅱ — 语言概念
     - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
     - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]
     - #chapter("tutorial/scripting-control-flow.typ")[控制流]
     - #chapter("tutorial/doc-stateful.typ")[状态化]
-    = 教程 — 排版Ⅲ
+    = 排版Ⅲ — 特殊格式
     - #chapter("tutorial/scripting-shape.typ")[图形排版]
     - #chapter("tutorial/writing-chinese.typ")[中文排版]
     - #chapter("tutorial/writing-math.typ")[数学排版]
-    = 教程 — 附录Ⅰ
+    = 附录
     // - #chapter("tutorial/reference-grammar.typ")[语法示例检索表]
     - #chapter("tutorial/reference-utils.typ")[常用函数表]
     - #chapter("tutorial/reference-math-symbols.typ")[常用数学符号]
