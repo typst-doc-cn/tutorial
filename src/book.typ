@@ -14,46 +14,46 @@
   summary: [
     #prefix-chapter("introduction.typ")[导引]
     // 计划修改
-    = 基础教程 — 排版Ⅰ
-    - #chapter("basic/writing-markup.typ")[标记模式]
-    - #chapter("basic/writing-scripting.typ")[脚本模式]
-    // - #chapter("basic/writing-math.typ")[数学模式]
-    = 基础教程 — 脚本Ⅰ
-    - #chapter("basic/scripting-literal.typ")[基本类型]
-    - #chapter("basic/scripting-variable.typ")[变量与函数]
-    - #chapter("basic/scripting-composite.typ")[复合类型]
-    = 基础教程 — 排版Ⅱ
-    - #chapter("basic/scripting-main.typ")[编译流程]
-    - #chapter("basic/scripting-layout.typ")[长度与布局]
-    - #chapter("basic/scripting-content.typ")[文档树]
-    - #chapter("basic/scripting-color.typ")[颜色类型]
-    - #chapter("basic/scripting-style.typ")[选择器与样式]
-    = 基础教程 — 脚本Ⅱ
-    - #chapter("basic/scripting-block-and-expression.typ")[表达式]
-    - #chapter("basic/scripting-control-flow.typ")[控制流]
-    - #chapter("intermediate/doc-modulize.typ")[模块化（多文件）]
-    - #chapter("intermediate/doc-stateful.typ")[状态化]
-    = 基础教程 — 排版Ⅲ
-    - #chapter("basic/scripting-shape.typ")[图表]
-    - #chapter("intermediate/writing-chinese.typ")[中文排版]
-    - #chapter("intermediate/writing-math.typ")[数学排版]
-    = 基础教程 — 附录Ⅰ
-    - #chapter("basic/reference-grammar.typ")[语法示例检索表]
-    - #chapter("basic/reference-utils.typ")[常用函数表]
-    - #chapter("basic/reference-math-symbols.typ")[常用数学符号]
+    = 教程 — 排版Ⅰ
+    - #chapter("tutorial/writing-markup.typ")[标记模式]
+    - #chapter("tutorial/writing-scripting.typ")[脚本模式]
+    // - #chapter("tutorial/writing-math.typ")[数学模式]
+    = 教程 — 脚本Ⅰ
+    - #chapter("tutorial/scripting-literal.typ")[基本类型]
+    - #chapter("tutorial/scripting-variable.typ")[变量与函数]
+    - #chapter("tutorial/scripting-composite.typ")[复合类型]
+    = 教程 — 排版Ⅱ
+    - #chapter("tutorial/scripting-main.typ")[编译流程]
+    - #chapter("tutorial/scripting-layout.typ")[长度与布局]
+    - #chapter("tutorial/scripting-content.typ")[文档树]
+    - #chapter("tutorial/scripting-color.typ")[颜色类型]
+    - #chapter("tutorial/scripting-style.typ")[选择器与样式]
+    = 教程 — 脚本Ⅱ
+    - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
+    - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]
+    - #chapter("tutorial/scripting-control-flow.typ")[控制流]
+    - #chapter("tutorial/doc-stateful.typ")[状态化]
+    = 教程 — 排版Ⅲ
+    - #chapter("tutorial/scripting-shape.typ")[图表]
+    - #chapter("tutorial/writing-chinese.typ")[中文排版]
+    - #chapter("tutorial/writing-math.typ")[数学排版]
+    = 教程 — 附录Ⅰ
+    // - #chapter("tutorial/reference-grammar.typ")[语法示例检索表]
+    - #chapter("tutorial/reference-utils.typ")[常用函数表]
+    - #chapter("tutorial/reference-math-symbols.typ")[常用数学符号]
     - #chapter(none)[特殊Unicode字符]
-    = 基础参考
-    - #chapter("basic/reference-typebase.typ")[基本类型]
-    - #chapter("basic/reference-type-builtin.typ")[内置类型]
-    - #chapter("basic/reference-date.typ")[时间类型]
-    // - #chapter("basic/reference-visualization.typ")[图形与几何元素]
-    // - #chapter("basic/reference-color.typ")[颜色、色彩渐变与模式]
-    - #chapter("basic/reference-data-process.typ")[数据读写]
-    - #chapter("basic/reference-data-process.typ")[数据处理]
-    - #chapter("basic/reference-calculation.typ")[数值计算]
-    - #chapter("basic/reference-math-mode.typ")[数学模式]
-    - #chapter("basic/reference-bibliography.typ")[参考文献]
-    - #chapter("basic/reference-wasm-plugin.typ")[WASM插件]
+    = 参考
+    - #chapter("tutorial/reference-typebase.typ")[基本类型]
+    - #chapter("tutorial/reference-type-builtin.typ")[内置类型]
+    - #chapter("tutorial/reference-date.typ")[时间类型]
+    // - #chapter("tutorial/reference-visualization.typ")[图形与几何元素]
+    // - #chapter("tutorial/reference-color.typ")[颜色、色彩渐变与模式]
+    - #chapter("tutorial/reference-data-process.typ")[数据读写]
+    - #chapter("tutorial/reference-data-process.typ")[数据处理]
+    - #chapter("tutorial/reference-calculation.typ")[数值计算]
+    - #chapter("tutorial/reference-math-mode.typ")[数学模式]
+    - #chapter("tutorial/reference-bibliography.typ")[参考文献]
+    - #chapter("tutorial/reference-wasm-plugin.typ")[WASM插件]
     // = 进阶教程 — 排版Ⅳ
     // 6. 脚本Ⅱ
     // - IO与数据处理
@@ -83,7 +83,7 @@
     // - 长度单位
     // 12. 参考Ⅱ
     // - 图形
-    = 进阶教程 — 专题
+    = 专题
     - #chapter("topics/writing-math.typ")[编写一篇数学文档]
     // https://github.com/PgBiel/typst-oxifmt/blob/main/oxifmt.typ
     // - #chapter("topics/format-lib.typ")[制作一个格式化库]
@@ -97,34 +97,34 @@
     - #chapter("topics/template-cv.typ")[制作一个CV模板]
     // official template
     - #chapter("topics/template-paper.typ")[制作一个IEEE模板]
-    = 进阶教程 — 公式和定理
+    = 专题 — 公式和定理
     - #chapter("science/chemical.typ")[化学方程式]
     - #chapter("science/algorithm.typ")[伪算法]
     - #chapter("science/theorem.typ")[定理环境]
-    = 进阶教程 — 杂项
+    = 专题 — 杂项
     - #chapter("misc/font-setting.typ")[字体设置]
     // - #chapter("misc/font-style.typ")[伪粗体、伪斜体]
     - #chapter("misc/code-syntax.typ")[自定义代码高亮规则]
     - #chapter("misc/code-theme.typ")[自定义代码主题]
     - #chapter("misc/text-processing.typ")[读取外部文件和文本处理]
-    = 进阶教程 — 绘制图表
+    = 专题 — 绘制图表
     - #chapter("graph/table.typ")[制表]
     - #chapter("graph/solid-geometry.typ")[立体几何]
     - #chapter("graph/digraph.typ")[拓扑图]
     - #chapter("graph/statistics.typ")[统计图]
     - #chapter("graph/state-machine.typ")[状态机]
     - #chapter("graph/electronics.typ")[电路图]
-    = 进阶教程 — 附录Ⅱ
-    - #chapter("intermediate/reference-grammar.typ")[语法示例检索表Ⅱ]
+    = 专题 — 附录Ⅱ
+    - #chapter("tutorial/reference-grammar.typ")[语法示例检索表Ⅱ]
     - #chapter("template/slides.typ")[演示文稿（PPT）]
     - #chapter("template/paper.typ")[论文模板]
     - #chapter("template/book.typ")[书籍模板]
-    = 进阶参考
-    - #chapter("intermediate/reference-counter-state.typ")[计数器和状态]
-    - #chapter("intermediate/reference-length.typ")[长度单位]
-    - #chapter("intermediate/reference-layout.typ")[布局函数]
-    - #chapter("intermediate/reference-table.typ")[表格]
-    - #chapter("intermediate/reference-outline.typ")[文档大纲]
+    = 专题参考
+    - #chapter("tutorial/reference-counter-state.typ")[计数器和状态]
+    - #chapter("tutorial/reference-length.typ")[长度单位]
+    - #chapter("tutorial/reference-layout.typ")[布局函数]
+    - #chapter("tutorial/reference-table.typ")[表格]
+    - #chapter("tutorial/reference-outline.typ")[文档大纲]
   ],
 )
 

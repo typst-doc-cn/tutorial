@@ -23,7 +23,7 @@
 
 // The following figure shows how a state is arranged. First, Typst executes the document with scripting from S1 to S4, as #text(fill: red, "red lines") shown. Then, you can locate some content in the document (at the _start position_ of #text(fill: blue, "blue arcs")) and query the past state or future state (at the _end position_ of #text(fill: blue, "blue arcs")).
 
-#import "./figure-time-travel.typ": figure-time-travel
+#import "../tutorial/figure-time-travel.typ": figure-time-travel
 #align(center + horizon, figure-time-travel())
 
 // This section mainly talks about `selector` and `state` step by step, to teach how to locate content, create and manipulate states.
