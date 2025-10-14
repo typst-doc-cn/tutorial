@@ -13,29 +13,26 @@
   language: "zh-cn",
   summary: [
     #prefix-chapter("introduction.typ")[导引]
-    // 计划修改
-    = 排版Ⅰ — 模式
+    = 模式
     - #chapter("tutorial/writing-markup.typ")[标记模式]
     - #chapter("tutorial/writing-scripting.typ")[脚本模式]
-    // - #chapter("tutorial/writing-math.typ")[数学模式]
-    = 脚本Ⅰ — 类型
+    = 脚本
     - #chapter("tutorial/scripting-literal.typ")[基本类型]
     - #chapter("tutorial/scripting-variable.typ")[变量与函数]
     - #chapter("tutorial/scripting-composite.typ")[复合类型]
-    = 排版Ⅱ — 模型（子系统）
-    - #chapter("tutorial/scripting-main.typ")[编译流程]
-    - #chapter("tutorial/scripting-layout.typ")[布局模型]
-    - #chapter("tutorial/scripting-content.typ")[文档模型]
-    - #chapter("tutorial/scripting-style.typ")[样式模型]
-    = 脚本Ⅱ — 语言核心
     - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
     - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]
     - #chapter("tutorial/scripting-control-flow.typ")[控制流]
     - #chapter("tutorial/doc-stateful.typ")[状态化]
-    = 排版Ⅲ — 特殊格式
-    - #chapter("tutorial/scripting-shape.typ")[图形排版]
+    = 中文排版
+    - #chapter("tutorial/scripting-main.typ")[编译流程]
     - #chapter("tutorial/writing-chinese.typ")[中文排版]
+    - #chapter("tutorial/scripting-style.typ")[样式模型]
+    = 科技排版
     - #chapter("tutorial/writing-math.typ")[数学排版]
+    - #chapter("tutorial/scripting-shape.typ")[图形排版]
+    - #chapter("tutorial/scripting-layout.typ")[布局模型]
+    - #chapter("tutorial/scripting-content.typ")[文档模型]
     = 附录
     // - #chapter("tutorial/reference-grammar.typ")[语法示例检索表]
     - #chapter("tutorial/reference-utils.typ")[常用函数表]
