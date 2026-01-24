@@ -131,12 +131,12 @@ A gradient can be used for the following purposes:
 
 == 填充模式
 
-A repeating pattern fill. #ref-bookmark[`pattern`]
+A repeating pattern fill. #ref-bookmark[`tiling`]
 
 Typst supports the most common pattern type of tiled patterns, where a pattern is repeated in a grid-like fashion, covering the entire area of an element that is filled or stroked. The pattern is defined by a tile size and a body defining the content of each cell. You can also add horizontal or vertical spacing between the cells of the patterng.
 
 #code(```typ
-#let pat = pattern(size: (30pt, 30pt))[
+#let pat = tiling(size: (30pt, 30pt))[
   #place(line(start: (0%, 0%), end: (100%, 100%)))
   #place(line(start: (0%, 100%), end: (100%, 0%)))
 ]
