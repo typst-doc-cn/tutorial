@@ -85,7 +85,9 @@ def repo_relative(path: Path, repo_root: Path) -> str:
         return path.resolve().as_posix()
 
 
-def parse_categories(source_text: str, source_path: Path, repo_root: Path) -> list[dict]:
+def parse_categories(
+    source_text: str, source_path: Path, repo_root: Path
+) -> list[dict]:
     categories = []
     category_matches = list(CATEGORY_PATTERN.finditer(source_text))
     if not category_matches:
@@ -100,7 +102,9 @@ def parse_categories(source_text: str, source_path: Path, repo_root: Path) -> li
         )
         section_text = source_text[section_start:section_end]
         source_heading = match.group("source_heading")
-        english_heading = CATEGORY_MAP.get(source_heading, {}).get("title", source_heading)
+        english_heading = CATEGORY_MAP.get(source_heading, {}).get(
+            "title", source_heading
+        )
         category_id = CATEGORY_MAP.get(source_heading, {}).get(
             "id",
             f"category-{index + 1}",
@@ -180,9 +184,9 @@ def grouped_entries(entries: list[dict]) -> list[dict]:
 
 def render_example_block(code: str) -> list[str]:
     return [
-        "~~~typ",
+        "```typ",
         code,
-        "~~~",
+        "```",
     ]
 
 
@@ -196,7 +200,9 @@ def render_skill_lookup(catalog: dict) -> str:
             ]
         )
         for group in grouped_entries(category["entries"]):
-            inline_examples = [code for code in group["examples"] if is_inline_safe(code)]
+            inline_examples = [
+                code for code in group["examples"] if is_inline_safe(code)
+            ]
             if len(inline_examples) == len(group["examples"]):
                 joined = "; ".join(f"`{code}`" for code in inline_examples)
                 lines.append(f"- `{group['lookup_key']}`: {joined}")
