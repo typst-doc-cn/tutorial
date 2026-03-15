@@ -218,11 +218,15 @@ def render_skill_lookup(catalog: dict) -> str:
 def update_skill(skill_path: Path, generated_lookup: str) -> None:
     skill_text = skill_path.read_text(encoding="utf-8")
     pattern = re.compile(
-        rf"{re.escape(GENERATED_BEGIN)}\n.*?{re.escape(GENERATED_END)}",
+        rf"{re.escape(GENERATED_BEGIN)}(?P<newline>\r?\n).*?{re.escape(GENERATED_END)}",
         re.DOTALL,
     )
-    replacement = f"{GENERATED_BEGIN}\n{generated_lookup}{GENERATED_END}"
-    updated_text, count = pattern.subn(lambda _: replacement, skill_text, count=1)
+
+    def _replacement(match: re.Match[str]) -> str:
+        newline = match.group("newline")
+        return f"{GENERATED_BEGIN}{newline}{generated_lookup}{GENERATED_END}"
+
+    updated_text, count = pattern.subn(_replacement, skill_text, count=1)
     if count != 1:
         raise ValueError(f"Could not find generated section markers in {skill_path}")
     skill_path.write_text(updated_text, encoding="utf-8")
