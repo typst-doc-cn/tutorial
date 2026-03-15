@@ -2,6 +2,9 @@
 
 ## Purpose
 Define the canonical requirements for a portable, English-facing Typst authoring skill and the updater and validation workflows that maintain it.
+
+This specification defines the `typst-document-authoring-skill` capability, which is concretely implemented by the portable `typst-grammar-authoring` skill (distributed as `typst-grammar-authoring/SKILL.md`) and its repo-local updater workflow `update-typst-grammar-authoring`.
+
 ## Requirements
 ### Requirement: Portable authoring skill is English-facing and self-contained
 The distributed `typst-grammar-authoring` skill SHALL be complete as a
