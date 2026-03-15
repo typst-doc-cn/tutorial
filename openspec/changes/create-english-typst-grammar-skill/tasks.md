@@ -1,22 +1,23 @@
-## 1. Skill setup
+## 1. Split the skill topology
 
-- [x] 1.1 Audit any existing Typst skill or prototype files and choose the final repo-local skill target under `.codex/skills/`
-- [x] 1.2 Create or update the repo-local skill scaffold and English-facing agent metadata for the Typst document authoring skill
+- [x] 1.1 Create a repo-local `update-typst-grammar-authoring` skill target under `.codex/skills/`
+- [x] 1.2 Move generator scripts, traceability artifacts, and updater-only metadata out of `typst-grammar-authoring` and into `update-typst-grammar-authoring`
+- [x] 1.3 Reduce `.codex/skills/typst-grammar-authoring/` to a distributable single-file skill that contains only `SKILL.md`
 
-## 2. Grammar reference resources
+## 2. Rewrite the portable authoring skill
 
-- [x] 2.1 Implement or update the extraction flow that reads `src/tutorial/reference-grammar.typ` and produces skill reference material
-- [x] 2.2 Generate an English-facing grammar reference catalog that preserves traceability back to the canonical source examples
-- [x] 2.3 Write the final English-only `SKILL.md` and reference guidance for grammar-first authoring
+- [x] 2.1 Rewrite `typst-grammar-authoring/SKILL.md` to remove Windows-specific command paths and use platform-neutral path examples
+- [x] 2.2 Keep grammar lookup and validation guidance self-contained inside the distributed `typst-grammar-authoring/SKILL.md`
+- [x] 2.3 Remove repo-local maintenance instructions, source-path dependencies, and sidecar-file assumptions from the distributed `typst-grammar-authoring/SKILL.md`
 
-## 3. Compile-based validation workflow
+## 3. Build the updater skill workflow
 
-- [x] 3.1 Replace any editor-specific validation requirement with a `typst compile`-based grammar validation workflow
-- [x] 3.2 Add documented HTML validation commands and guidance for checking rendered text output
-- [x] 3.3 Add documented SVG generation and Playwright MCP guidance for visual inspection of rendered output
+- [x] 3.1 Add updater instructions for regenerating `typst-grammar-authoring/SKILL.md` from `src/tutorial/reference-grammar.typ`
+- [x] 3.2 Keep exact source traceability available as updater-owned artifacts without expanding the portable skill context
+- [x] 3.3 Add updater validation guidance for refreshing, reviewing, and diffing the distributed skill output
 
-## 4. Verification and cleanup
+## 4. Verify the split
 
-- [x] 4.1 Smoke-test successful and failing `typst compile` runs on representative `.typ` files
-- [ ] 4.2 Smoke-test HTML and SVG output generation plus a Playwright-based visual inspection path
-- [x] 4.3 Validate the final skill contents and retire or overwrite any superseded Typst skill prototype
+- [x] 4.1 Verify `.codex/skills/typst-grammar-authoring/` contains only `SKILL.md`
+- [x] 4.2 Verify the distributed `SKILL.md` contains no Windows-specific or absolute repo-local paths in command examples
+- [x] 4.3 Smoke-test the updater workflow and the portable skill after the split

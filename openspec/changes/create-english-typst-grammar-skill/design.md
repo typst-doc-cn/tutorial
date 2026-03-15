@@ -1,108 +1,155 @@
 ## Context
 
-This repository contains a detailed Typst grammar catalog in `src/tutorial/reference-grammar.typ`. The proposed change turns that tutorial asset into a repo-local Codex skill that helps author user Typst documents by selecting valid grammar patterns from canonical examples instead of inventing syntax ad hoc.
+This repository contains a detailed Typst grammar catalog in
+`src/tutorial/reference-grammar.typ`. The original change turned that tutorial
+asset into a Codex skill, but the first implementation blended portable author
+guidance with repo-local maintenance machinery. As a result,
+`typst-grammar-authoring` now includes updater scripts, traceability artifacts,
+and path examples that are not ideal for copying into another repository.
 
-The skill needs to be English-only from Codex's perspective, even though the source tutorial and some example literals are Chinese. The same change also needs a validation workflow that does not depend on IDE-specific language services. The user explicitly wants grammar validation to come from Typst compilation, then separate validation passes for text output through HTML and visual output through SVG plus Playwright MCP inspection.
+The revised direction is to separate those responsibilities:
+
+- `typst-grammar-authoring` is the portable skill that authors use.
+- `update-typst-grammar-authoring` is the repo-local maintenance skill that
+  updates the portable one from canonical tutorial examples.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Create a repo-local Codex skill for user Typst document authoring.
-- Ground the skill in canonical grammar examples extracted from `src/tutorial/reference-grammar.typ`.
-- Keep all skill-authored prose, metadata, navigation, and workflow documentation in English.
-- Make `typst compile` the authoritative validation path for grammar and compile-time failures.
-- Define a repeatable text-validation workflow using Typst HTML output.
-- Define a repeatable visual-validation workflow using Typst SVG output and Playwright MCP.
+- Keep `typst-grammar-authoring` as a self-contained, English-only,
+  distributable skill with only `SKILL.md`.
+- Keep grammar lookup and validation workflows available inside the portable
+  `SKILL.md`.
+- Move generator scripts, traceability data, and repo-specific maintenance
+  instructions into `update-typst-grammar-authoring`.
+- Eliminate Windows-specific command paths and other platform-specific path
+  examples from the distributed `SKILL.md`.
+- Preserve the ability to regenerate the portable skill from
+  `src/tutorial/reference-grammar.typ`.
 
 **Non-Goals:**
 - Translate the full Chinese tutorial into English.
 - Replace Typst's own compiler diagnostics with a custom parser or validator.
-- Depend on Tinymist, VS Code, or any specific editor integration for the required validation path.
-- Build a general-purpose Typst skill for all repositories outside this repo's structure and assets.
+- Depend on Tinymist, VS Code, or any specific editor integration for required
+  validation.
+- Create a package manager or external publishing workflow for distributing the
+  portable skill.
 
 ## Decisions
 
-### Decision: Build the skill around extracted grammar references
+### Decision: Split authoring and maintenance into two skills
 
-The skill will not point Codex at the full tutorial file every time. Instead, it will maintain generated reference material derived from `src/tutorial/reference-grammar.typ` so Codex can search a compact catalog first and only open the source file when deeper context is needed.
+The repository will contain two skills with different responsibilities:
 
-Why this approach:
-- It keeps the skill's active context smaller than loading the full tutorial source.
-- It preserves direct traceability back to the source grammar table.
-- It allows English-facing headings and navigation even when the source material is not in English.
-
-Alternative considered:
-- Read `src/tutorial/reference-grammar.typ` directly on every use. Rejected because it is larger, noisier, and less friendly to repeated low-context lookups.
-
-### Decision: Treat English-only as a requirement for skill-authored materials, not for verbatim source code blocks
-
-The skill's `SKILL.md`, generated headings, navigation labels, validation guidance, and agent metadata will be written in English. Verbatim code examples may still contain non-English literals when they come directly from canonical source examples.
+- `typst-grammar-authoring` for portable author guidance
+- `update-typst-grammar-authoring` for repo-local regeneration and maintenance
 
 Why this approach:
-- It satisfies the requirement that the skill itself is written in English.
-- It avoids mutating canonical Typst examples in ways that could accidentally change grammar or semantics.
-- It keeps the extracted references trustworthy as grammar sources.
+- It keeps the distributed skill easy to copy into other repositories.
+- It lets the updater skill retain repo-specific scripts and source references
+  without polluting the authoring skill.
+- It makes it clearer which instructions are for end users versus maintainers.
 
 Alternative considered:
-- Rewrite all source examples into English text. Rejected because it introduces translation work and risks changing the exact shape of canonical grammar examples.
+- Keep one repo-local skill with embedded updater logic. Rejected because it
+  mixes portability and maintenance concerns in the same artifact.
 
-### Decision: Use `typst compile` as the mandatory validation source of truth
+### Decision: Make the portable skill a single-file skill
 
-The skill will validate authored Typst documents with `typst compile`, not with editor-specific LSP diagnostics. Compiler exit status and compiler diagnostics will be treated as the required pass/fail signal for grammar and compile-time correctness.
+`typst-grammar-authoring` will consist only of `SKILL.md`. It must not depend
+on sibling scripts, references, or optional UI metadata to function after being
+copied to another repository.
 
 Why this approach:
-- It matches the requested workflow.
-- It works consistently outside any specific IDE.
-- It keeps the validation path aligned with the actual renderer and compiler used for outputs.
+- A single file is the easiest form to distribute and review.
+- It minimizes accidental coupling to repo-local layout and helper artifacts.
+- It keeps the authoring experience simple for downstream repositories.
 
 Alternative considered:
-- Use Tinymist or another LSP as the main validator. Rejected because the requested change explicitly prefers Typst compilation over IDE tooling.
+- Keep `agents/`, `references/`, or `scripts/` alongside the distributed skill.
+  Rejected because the user explicitly wants the authoring skill to remain only
+  a Markdown file.
 
-### Decision: Split validation into compile, text, and visual passes
+### Decision: Put all repo-specific updater assets under `update-typst-grammar-authoring`
 
-The skill will define three validation layers:
-- compile validation with `typst compile`
-- text validation with `typst compile --features html`
-- visual validation with `typst compile ... a.svg` plus Playwright MCP inspection
+The updater skill will own:
+
+- regeneration scripts
+- traceability artifacts
+- repo-specific instructions that mention `src/tutorial/reference-grammar.typ`
+- any maintenance-only metadata
 
 Why this approach:
-- Grammar correctness does not guarantee correct text output.
-- Correct text output does not guarantee correct layout or rendering.
-- The separation maps directly to the user's requested workflow and keeps the skill operationally clear.
+- It centralizes maintenance behavior in one place.
+- It keeps downstream consumers from carrying unnecessary repo-specific files.
+- It preserves exact source traceability without expanding the portable skill
+  context.
 
 Alternative considered:
-- Treat a successful PDF or SVG compile as sufficient validation. Rejected because it misses easy-to-inspect text structure issues that HTML surfaces well.
+- Leave traceability JSON and generator scripts under the portable skill folder.
+  Rejected because those files are maintenance artifacts, not distributed
+  authoring guidance.
 
-### Decision: Make Playwright an inspection layer over generated SVG, not the rendering source
+### Decision: Use platform-neutral path examples in the portable skill
 
-The skill will rely on Typst to generate SVG and on Playwright MCP to inspect that output in a browser-compatible context. The browser step is observational only; it will not replace Typst rendering.
+The distributed `SKILL.md` will use forward-slash, repo-relative, or placeholder
+paths such as `path/to/document.typ` and `target/typst-grammar-authoring-check/document.html`.
+It must not use Windows absolute paths or Windows-style backslash-only command
+examples.
 
 Why this approach:
-- Typst remains the authoritative renderer.
-- Playwright is strong at visual verification and DOM/screenshot workflows.
-- It keeps the boundary between generation and inspection simple.
+- It keeps the skill readable across operating systems.
+- It avoids downstream users mistaking repo-local Windows commands for required
+  syntax.
+- It makes the portable skill genuinely portable instead of just copyable.
 
 Alternative considered:
-- Use Playwright to render HTML instead of inspecting SVG. Rejected because the requested visual path is explicitly based on Typst SVG output.
+- Keep PowerShell-oriented backslash paths because the repo is currently being
+  edited on Windows. Rejected because the distributed skill should not inherit a
+  single machine's path style.
+
+### Decision: Keep the portable skill self-contained, but keep verbose traceability out of it
+
+The portable skill will still embed a compact grammar lookup and validation
+workflow inside `SKILL.md`, but verbose canonical references and source-line
+traceability will live in updater-owned artifacts instead.
+
+Why this approach:
+- It preserves low-context usability for authors.
+- It keeps the portable skill smaller than a fully traceable catalog.
+- It still gives maintainers a way to audit generated entries precisely.
+
+Alternative considered:
+- Remove all generated grammar data from the portable skill and require a sidecar
+  reference file. Rejected because the portable skill must remain single-file.
 
 ## Risks / Trade-offs
 
-- Strict English-only expectations may conflict with verbatim source examples that include Chinese literals. → Mitigation: keep all authored guidance in English and document that canonical code blocks are source data, not translated prose.
-- HTML export is still an in-development Typst feature and may emit warnings or change behavior over time. → Mitigation: treat HTML as a validation aid for text structure, not as a production output contract.
-- SVG inspection can depend on the execution environment and how Playwright accesses generated files. → Mitigation: document a browser-compatible inspection path and keep SVG generation itself independent from Playwright.
-- Grammar extraction logic can drift if `src/tutorial/reference-grammar.typ` changes structure. → Mitigation: keep extraction logic small, source-specific, and covered by representative regeneration checks.
+- A single-file portable skill is still larger than a minimal skill because it
+  embeds grammar lookup content. → Mitigation: keep examples compact and keep
+  verbose traceability in the updater skill only.
+- Splitting the skills adds another artifact to maintain. → Mitigation: make the
+  updater skill the clear owner of regeneration and validation steps.
+- Portable path examples may drift back toward platform-specific syntax during
+  updates. → Mitigation: add explicit tasks and verification for path style.
 
 ## Migration Plan
 
-1. Add or replace the repo-local skill under `.codex/skills/`.
-2. Generate English-facing reference material from `src/tutorial/reference-grammar.typ`.
-3. Switch validation guidance from any editor-specific path to `typst compile`.
-4. Add HTML and SVG validation guidance and any supporting scripts needed for repeatable execution.
-5. If a previous prototype skill exists, retire or overwrite it so only the new English-only workflow remains.
+1. Create a repo-local `update-typst-grammar-authoring` skill under
+   `.codex/skills/`.
+2. Move generator scripts, traceability artifacts, and repo-specific update
+   instructions into the updater skill.
+3. Reduce `.codex/skills/typst-grammar-authoring/` to a single distributable
+   `SKILL.md`.
+4. Rewrite distributed validation commands and examples to use platform-neutral
+   paths.
+5. Verify the updater still regenerates the distributed skill correctly.
 
 Rollback strategy:
-- Remove the new skill folder and generated references, then restore the previous repo-local skill state if needed.
+- Restore the previous single-skill folder layout if the split causes an
+  unacceptable maintenance burden.
 
 ## Open Questions
 
-- None at proposal time. The current request is specific enough to proceed with implementation planning.
+- None at proposal update time. The split between portable and maintenance
+  skills is the intended direction.

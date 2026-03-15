@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Typst grammar data and sync the compact lookup into SKILL.md."""
+"""Generate Typst grammar data and sync it into the portable skill."""
 
 from __future__ import annotations
 
@@ -224,9 +224,7 @@ def update_skill(skill_path: Path, generated_lookup: str) -> None:
     replacement = f"{GENERATED_BEGIN}\n{generated_lookup}{GENERATED_END}"
     updated_text, count = pattern.subn(lambda _: replacement, skill_text, count=1)
     if count != 1:
-        raise ValueError(
-            f"Could not find generated section markers in {skill_path}"
-        )
+        raise ValueError(f"Could not find generated section markers in {skill_path}")
     skill_path.write_text(updated_text, encoding="utf-8")
 
 
@@ -251,7 +249,7 @@ def default_source(script_path: Path) -> Path:
 
 
 def default_skill_path(script_path: Path) -> Path:
-    return script_path.parent.parent / "SKILL.md"
+    return script_path.parents[2] / "typst-grammar-authoring" / "SKILL.md"
 
 
 def main() -> int:
@@ -275,7 +273,7 @@ def main() -> int:
         "--skill-path",
         type=Path,
         default=default_skill_path(script_path),
-        help="Path to the SKILL.md file to sync",
+        help="Path to the portable SKILL.md file to sync",
     )
     args = parser.parse_args()
 

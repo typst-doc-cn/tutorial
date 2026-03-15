@@ -1,20 +1,43 @@
 ## Why
 
-Codex can already edit Typst files, but it still benefits from a repo-specific skill that teaches it to prefer canonical grammar patterns over improvised syntax. This repository already contains a rich grammar example table in `src/tutorial/reference-grammar.typ`, so now is a good time to turn that material into an English-only skill that reliably guides authoring and validation for user Typst documents.
+The current `typst-grammar-authoring` implementation mixes two different jobs:
+portable Typst authoring guidance for end users and repo-local maintenance
+logic for regenerating that guidance from `src/tutorial/reference-grammar.typ`.
+That coupling makes the distributed skill harder to copy into another
+repository, and it has already allowed Windows-style command paths and
+repo-specific maintenance details to leak into `SKILL.md`.
+
+We want to split those concerns cleanly:
+
+- `typst-grammar-authoring` should become the portable skill that users can copy
+  to another repository as a single `SKILL.md` file.
+- `update-typst-grammar-authoring` should become the repo-local maintenance
+  skill that regenerates and validates the portable skill from this tutorial's
+  canonical grammar source.
 
 ## What Changes
 
-- Create a new Codex skill that teaches Typst document authoring by adapting examples from `src/tutorial/reference-grammar.typ` instead of inventing grammar from scratch.
-- Require the skill itself to be written in English, including `SKILL.md`, generated references, validation guidance, and UI metadata.
-- Add reusable resources that extract and organize grammar examples from `src/tutorial/reference-grammar.typ` for low-context lookup during authoring.
-- Standardize grammar validation around `typst compile` so syntax and semantic failures are detected through Typst’s own compiler output instead of editor-specific tooling.
-- Define a text-validation workflow based on Typst HTML output, for example `typst compile --features html a.typ a.html`.
-- Define a visual-validation workflow based on Typst SVG output plus Playwright MCP inspection, for example `typst compile a.typ a.svg`.
+- Split the current single skill implementation into two separate skills:
+  `typst-grammar-authoring` and `update-typst-grammar-authoring`.
+- Make `typst-grammar-authoring` a self-contained, English-only, distributable
+  skill consisting only of `SKILL.md`.
+- Move generator scripts, traceability artifacts, repo-specific update
+  instructions, and any maintenance-only metadata into
+  `update-typst-grammar-authoring`.
+- Require the distributed `typst-grammar-authoring/SKILL.md` to use
+  platform-neutral path examples instead of Windows-specific command paths.
+- Keep compile, HTML, and SVG validation guidance in the portable skill while
+  keeping verbose traceability data outside its default context.
 
 ## Capabilities
 
 ### New Capabilities
-- `typst-document-authoring-skill`: Provide an English-only Codex skill that teaches Typst authoring from canonical grammar examples and validates authored documents with Typst compilation, HTML output, and SVG plus Playwright review.
+- `typst-document-authoring-skill`: Provide a portable, single-file Typst
+  authoring skill with embedded grammar lookup and compile-based validation
+  guidance.
+- `typst-document-authoring-skill-maintenance`: Provide a repo-local updater
+  skill that regenerates the portable Typst authoring skill from
+  `src/tutorial/reference-grammar.typ`.
 
 ### Modified Capabilities
 - None.
@@ -22,6 +45,9 @@ Codex can already edit Typst files, but it still benefits from a repo-specific s
 ## Impact
 
 - Affects repo-local skill content under `.codex/skills/`.
-- Adds or updates scripts and references used to extract grammar examples from `src/tutorial/reference-grammar.typ`.
-- Defines compile-based validation workflows for `.typ`, `.html`, and `.svg` outputs.
-- Shapes how Codex authoring guidance is presented for user Typst documents in this repository.
+- Changes `typst-grammar-authoring` from a repo-local folder with support files
+  into a portable single-file skill.
+- Adds or updates a separate `update-typst-grammar-authoring` skill for
+  generation, validation, and traceability workflows.
+- Removes Windows-specific command path examples from the distributed authoring
+  skill.
