@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update Typst Grammar Authoring"
+  short_description: "Regenerate the portable Typst grammar skill"
+  default_prompt: "Use $update-typst-grammar-authoring to refresh the portable Typst grammar skill and its traceability artifacts from src/tutorial/reference-grammar.typ."
