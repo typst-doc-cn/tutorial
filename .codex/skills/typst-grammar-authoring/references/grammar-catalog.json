@@ -1,0 +1,2220 @@
+{
+  "source_path": "src/tutorial/reference-grammar.typ",
+  "category_count": 6,
+  "entry_count": 127,
+  "categories": [
+    {
+      "id": "base-elements",
+      "english_heading": "Base Elements",
+      "source_heading": "基本元素",
+      "source_anchor": "grammar-table:base-elements",
+      "heading_line": 30,
+      "entries": [
+        {
+          "lookup_key": "paragraph",
+          "source_label": "段落",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-paragraph>)",
+            "module": "writing-markup",
+            "anchor": "grammar-paragraph"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 33,
+            "entry_line_end": 39,
+            "code_line_start": 37,
+            "code_line_end": 37
+          },
+          "code": "writing-markup"
+        },
+        {
+          "lookup_key": "heading",
+          "source_label": "标题",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-heading>)",
+            "module": "writing-markup",
+            "anchor": "grammar-heading"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 40,
+            "entry_line_end": 46,
+            "code_line_start": 44,
+            "code_line_end": 44
+          },
+          "code": "= Heading"
+        },
+        {
+          "lookup_key": "heading",
+          "source_label": "二级标题",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-heading>)",
+            "module": "writing-markup",
+            "anchor": "grammar-heading"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 47,
+            "entry_line_end": 53,
+            "code_line_start": 51,
+            "code_line_end": 51
+          },
+          "code": "== Heading"
+        },
+        {
+          "lookup_key": "strong",
+          "source_label": "着重标记",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-strong>)",
+            "module": "writing-markup",
+            "anchor": "grammar-strong"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 54,
+            "entry_line_end": 60,
+            "code_line_start": 58,
+            "code_line_end": 58
+          },
+          "code": "*Strong*"
+        },
+        {
+          "lookup_key": "emph",
+          "source_label": "强调标记",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-emph>)",
+            "module": "writing-markup",
+            "anchor": "grammar-emph"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 61,
+            "entry_line_end": 67,
+            "code_line_start": 65,
+            "code_line_end": 65
+          },
+          "code": "_emphasis_"
+        },
+        {
+          "lookup_key": "emph",
+          "source_label": "着重且强调标记",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-emph>)",
+            "module": "writing-markup",
+            "anchor": "grammar-emph"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 68,
+            "entry_line_end": 74,
+            "code_line_start": 72,
+            "code_line_end": 72
+          },
+          "code": "*_emphasis_*"
+        },
+        {
+          "lookup_key": "list",
+          "source_label": "有序列表",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-list>)",
+            "module": "writing-markup",
+            "anchor": "grammar-list"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 75,
+            "entry_line_end": 82,
+            "code_line_start": 79,
+            "code_line_end": 80
+          },
+          "code": "+ List 1\n+ List 2"
+        },
+        {
+          "lookup_key": "continue-list",
+          "source_label": "有序列表（重新开始标号）",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-continue-list>)",
+            "module": "writing-markup",
+            "anchor": "grammar-continue-list"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 83,
+            "entry_line_end": 90,
+            "code_line_start": 87,
+            "code_line_end": 88
+          },
+          "code": "4. List 1\n+ List 2"
+        },
+        {
+          "lookup_key": "emum",
+          "source_label": "无序列表",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-emum>)",
+            "module": "writing-markup",
+            "anchor": "grammar-emum"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 91,
+            "entry_line_end": 98,
+            "code_line_start": 95,
+            "code_line_end": 96
+          },
+          "code": "- Enum 1\n- Enum 2"
+        },
+        {
+          "lookup_key": "mix-list-emum",
+          "source_label": "交替有序与无序列表",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-mix-list-emum>)",
+            "module": "writing-markup",
+            "anchor": "grammar-mix-list-emum"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 99,
+            "entry_line_end": 107,
+            "code_line_start": 103,
+            "code_line_end": 105
+          },
+          "code": "- Enum 1\n  + Item 1\n- Enum 2"
+        },
+        {
+          "lookup_key": "raw",
+          "source_label": "短代码片段",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-raw>)",
+            "module": "writing-markup",
+            "anchor": "grammar-raw"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 108,
+            "entry_line_end": 114,
+            "code_line_start": 112,
+            "code_line_end": 112
+          },
+          "code": "`code`"
+        },
+        {
+          "lookup_key": "long-raw",
+          "source_label": "长代码片段",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-long-raw>)",
+            "module": "writing-markup",
+            "anchor": "grammar-long-raw"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 115,
+            "entry_line_end": 121,
+            "code_line_start": 119,
+            "code_line_end": 119
+          },
+          "code": "``` code```"
+        },
+        {
+          "lookup_key": "lang-raw",
+          "source_label": "语法高亮",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-lang-raw>)",
+            "module": "writing-markup",
+            "anchor": "grammar-lang-raw"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 122,
+            "entry_line_end": 128,
+            "code_line_start": 126,
+            "code_line_end": 126
+          },
+          "code": "```rs  trait World```"
+        },
+        {
+          "lookup_key": "blocky-raw",
+          "source_label": "块代码片段",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-blocky-raw>)",
+            "module": "writing-markup",
+            "anchor": "grammar-blocky-raw"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 129,
+            "entry_line_end": 137,
+            "code_line_start": 133,
+            "code_line_end": 135
+          },
+          "code": "```typ\n= Heading\n```"
+        },
+        {
+          "lookup_key": "image",
+          "source_label": "图像",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-image>)",
+            "module": "writing-markup",
+            "anchor": "grammar-image"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 138,
+            "entry_line_end": 144,
+            "code_line_start": 142,
+            "code_line_end": 142
+          },
+          "code": "#image(\"/assets/files/香風とうふ店.jpg\", width: 50pt)"
+        },
+        {
+          "lookup_key": "image-stretch",
+          "source_label": "拉伸图像",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-image-stretch>)",
+            "module": "writing-markup",
+            "anchor": "grammar-image-stretch"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 145,
+            "entry_line_end": 151,
+            "code_line_start": 149,
+            "code_line_end": 149
+          },
+          "code": "#image(\"/assets/files/香風とうふ店.jpg\", width: 50pt, height: 50pt, fit: \"stretch\")"
+        },
+        {
+          "lookup_key": "image-inline",
+          "source_label": "内联图像（盒子法）",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-image-inline>)",
+            "module": "writing-markup",
+            "anchor": "grammar-image-inline"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 152,
+            "entry_line_end": 158,
+            "code_line_start": 156,
+            "code_line_end": 156
+          },
+          "code": "在一段话中插入一个#box(baseline: 0.15em, image(\"/assets/files/info-icon.svg\", width: 1em))图片。"
+        },
+        {
+          "lookup_key": "figure",
+          "source_label": "图像标题",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-figure>)",
+            "module": "writing-markup",
+            "anchor": "grammar-figure"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 159,
+            "entry_line_end": 167,
+            "code_line_start": 163,
+            "code_line_end": 165
+          },
+          "code": "#figure(```typ\n#image(\"/assets/files/香風とうふ店.jpg\")\n```, caption: [用于加载香風とうふ店送外卖的宝贵影像的代码])"
+        },
+        {
+          "lookup_key": "link",
+          "source_label": "链接",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-link>)",
+            "module": "writing-markup",
+            "anchor": "grammar-link"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 168,
+            "entry_line_end": 174,
+            "code_line_start": 172,
+            "code_line_end": 172
+          },
+          "code": "#link(\"https://zh.wikipedia.org\")[维基百科]"
+        },
+        {
+          "lookup_key": "http-link",
+          "source_label": "HTTP(S)链接",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-http-link>)",
+            "module": "writing-markup",
+            "anchor": "grammar-http-link"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 175,
+            "entry_line_end": 181,
+            "code_line_start": 179,
+            "code_line_end": 179
+          },
+          "code": "https://zh.wikipedia.org"
+        },
+        {
+          "lookup_key": "internal-link",
+          "source_label": "内部链接",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-internal-link>)",
+            "module": "writing-markup",
+            "anchor": "grammar-internal-link"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 182,
+            "entry_line_end": 189,
+            "code_line_start": 186,
+            "code_line_end": 187
+          },
+          "code": "== 某个标题 <ref-internal-link>\n#link(<ref-internal-link>)[链接到某个标题]"
+        },
+        {
+          "lookup_key": "table",
+          "source_label": "表格",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-table>)",
+            "module": "writing-markup",
+            "anchor": "grammar-table"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 190,
+            "entry_line_end": 196,
+            "code_line_start": 194,
+            "code_line_end": 194
+          },
+          "code": "#table(columns: 2, [111], [2], [3])"
+        },
+        {
+          "lookup_key": "table-align",
+          "source_label": "对齐表格",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-table-align>)",
+            "module": "writing-markup",
+            "anchor": "grammar-table-align"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 197,
+            "entry_line_end": 203,
+            "code_line_start": 201,
+            "code_line_end": 201
+          },
+          "code": "#table(columns: 2, align: center, [111], [2], [3])"
+        },
+        {
+          "lookup_key": "inline-math",
+          "source_label": "行内数学公式",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-inline-math>)",
+            "module": "writing-markup",
+            "anchor": "grammar-inline-math"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 204,
+            "entry_line_end": 210,
+            "code_line_start": 208,
+            "code_line_end": 208
+          },
+          "code": "$sum_x$"
+        },
+        {
+          "lookup_key": "display-math",
+          "source_label": "行间数学公式",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-display-math>)",
+            "module": "writing-markup",
+            "anchor": "grammar-display-math"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 211,
+            "entry_line_end": 217,
+            "code_line_start": 215,
+            "code_line_end": 215
+          },
+          "code": "$ sum_x $"
+        },
+        {
+          "lookup_key": "escape-sequences",
+          "source_label": "标记转义序列",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-escape-sequences>)",
+            "module": "writing-markup",
+            "anchor": "grammar-escape-sequences"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 218,
+            "entry_line_end": 224,
+            "code_line_start": 222,
+            "code_line_end": 222
+          },
+          "code": ">\\_<"
+        },
+        {
+          "lookup_key": "unicode-escape-sequences",
+          "source_label": "标记的Unicode转义序列",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-unicode-escape-sequences>)",
+            "module": "writing-markup",
+            "anchor": "grammar-unicode-escape-sequences"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 225,
+            "entry_line_end": 231,
+            "code_line_start": 229,
+            "code_line_end": 229
+          },
+          "code": "\\u{9999}"
+        },
+        {
+          "lookup_key": "newline-by-space",
+          "source_label": "换行符（转义序列）",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-newline-by-space>)",
+            "module": "writing-markup",
+            "anchor": "grammar-newline-by-space"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 232,
+            "entry_line_end": 238,
+            "code_line_start": 236,
+            "code_line_end": 236
+          },
+          "code": "A \\ B"
+        },
+        {
+          "lookup_key": "newline",
+          "source_label": "换行符情形二",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-newline>)",
+            "module": "writing-markup",
+            "anchor": "grammar-newline"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 239,
+            "entry_line_end": 246,
+            "code_line_start": 243,
+            "code_line_end": 244
+          },
+          "code": "A \\\nB"
+        },
+        {
+          "lookup_key": "shorthand",
+          "source_label": "速记符",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-shorthand>)",
+            "module": "writing-markup",
+            "anchor": "grammar-shorthand"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 247,
+            "entry_line_end": 253,
+            "code_line_start": 251,
+            "code_line_end": 251
+          },
+          "code": "北京--上海"
+        },
+        {
+          "lookup_key": "shorthand-space",
+          "source_label": "空格（速记符）",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-shorthand-space>)",
+            "module": "writing-markup",
+            "anchor": "grammar-shorthand-space"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 254,
+            "entry_line_end": 260,
+            "code_line_start": 258,
+            "code_line_end": 258
+          },
+          "code": "A~B"
+        },
+        {
+          "lookup_key": "inline-comment",
+          "source_label": "行内注释",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-inline-comment>)",
+            "module": "writing-markup",
+            "anchor": "grammar-inline-comment"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 261,
+            "entry_line_end": 267,
+            "code_line_start": 265,
+            "code_line_end": 265
+          },
+          "code": "// 行内注释"
+        },
+        {
+          "lookup_key": "cross-line-comment",
+          "source_label": "行间注释",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-cross-line-comment>)",
+            "module": "writing-markup",
+            "anchor": "grammar-cross-line-comment"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 268,
+            "entry_line_end": 275,
+            "code_line_start": 272,
+            "code_line_end": 273
+          },
+          "code": "/* 行间注释\n  */"
+        },
+        {
+          "lookup_key": "box",
+          "source_label": "行内盒子",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-box>)",
+            "module": "writing-markup",
+            "anchor": "grammar-box"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 276,
+            "entry_line_end": 282,
+            "code_line_start": 280,
+            "code_line_end": 280
+          },
+          "code": "在一段话中插入一个#box(baseline: 0.15em, image(\"/assets/files/info-icon.svg\", width: 1em))图片。"
+        }
+      ]
+    },
+    {
+      "id": "text-styling",
+      "english_heading": "Text Styling",
+      "source_heading": "修饰文本",
+      "source_anchor": "grammar-table:text",
+      "heading_line": 285,
+      "entries": [
+        {
+          "lookup_key": "highlight",
+          "source_label": "背景高亮",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-highlight>)",
+            "module": "writing-markup",
+            "anchor": "grammar-highlight"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 288,
+            "entry_line_end": 294,
+            "code_line_start": 292,
+            "code_line_end": 292
+          },
+          "code": "#highlight[高亮一段内容]"
+        },
+        {
+          "lookup_key": "underline",
+          "source_label": "下划线",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-underline>)",
+            "module": "writing-markup",
+            "anchor": "grammar-underline"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 295,
+            "entry_line_end": 301,
+            "code_line_start": 299,
+            "code_line_end": 299
+          },
+          "code": "#underline[Language]"
+        },
+        {
+          "lookup_key": "underline-evade",
+          "source_label": "无驱逐效果的下划线",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-underline-evade>)",
+            "module": "writing-markup",
+            "anchor": "grammar-underline-evade"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 302,
+            "entry_line_end": 309,
+            "code_line_start": 306,
+            "code_line_end": 307
+          },
+          "code": "#underline(\n  evade: false)[ጿኈቼዽ]"
+        },
+        {
+          "lookup_key": "overline",
+          "source_label": "上划线",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-overline>)",
+            "module": "writing-markup",
+            "anchor": "grammar-overline"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 310,
+            "entry_line_end": 316,
+            "code_line_start": 314,
+            "code_line_end": 314
+          },
+          "code": "#overline[ጿኈቼዽ]"
+        },
+        {
+          "lookup_key": "strike",
+          "source_label": "中划线（删除线）",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-strike>)",
+            "module": "writing-markup",
+            "anchor": "grammar-strike"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 317,
+            "entry_line_end": 323,
+            "code_line_start": 321,
+            "code_line_end": 321
+          },
+          "code": "#strike[ጿኈቼዽ]"
+        },
+        {
+          "lookup_key": "subscript",
+          "source_label": "下标",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-subscript>)",
+            "module": "writing-markup",
+            "anchor": "grammar-subscript"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 324,
+            "entry_line_end": 330,
+            "code_line_start": 328,
+            "code_line_end": 328
+          },
+          "code": "威严满满#sub[抱头蹲防]"
+        },
+        {
+          "lookup_key": "superscript",
+          "source_label": "上标",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-superscript>)",
+            "module": "writing-markup",
+            "anchor": "grammar-superscript"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 331,
+            "entry_line_end": 337,
+            "code_line_start": 335,
+            "code_line_end": 335
+          },
+          "code": "香風とうふ店#super[TM]"
+        },
+        {
+          "lookup_key": "text-size",
+          "source_label": "设置文本大小",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-text-size>)",
+            "module": "writing-markup",
+            "anchor": "grammar-text-size"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 338,
+            "entry_line_end": 344,
+            "code_line_start": 342,
+            "code_line_end": 342
+          },
+          "code": "#text(size: 24pt)[一斤鸭梨]"
+        },
+        {
+          "lookup_key": "text-fill",
+          "source_label": "设置文本颜色",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-text-fill>)",
+            "module": "writing-markup",
+            "anchor": "grammar-text-fill"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 345,
+            "entry_line_end": 351,
+            "code_line_start": 349,
+            "code_line_end": 349
+          },
+          "code": "#text(fill: blue)[蓝色鸭梨]"
+        },
+        {
+          "lookup_key": "text-font",
+          "source_label": "设置字体",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-text-font>)",
+            "module": "writing-markup",
+            "anchor": "grammar-text-font"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 352,
+            "entry_line_end": 358,
+            "code_line_start": 356,
+            "code_line_end": 356
+          },
+          "code": "#text(font: \"Microsoft YaHei\")[板正鸭梨]"
+        }
+      ]
+    },
+    {
+      "id": "script-declarations",
+      "english_heading": "Script Declarations",
+      "source_heading": "脚本声明",
+      "source_anchor": "grammar-table:decl",
+      "heading_line": 361,
+      "entries": [
+        {
+          "lookup_key": "enter-script",
+          "source_label": "进入脚本模式",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-enter-script>)",
+            "module": "writing-markup",
+            "anchor": "grammar-enter-script"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 364,
+            "entry_line_end": 370,
+            "code_line_start": 368,
+            "code_line_end": 368
+          },
+          "code": "#1"
+        },
+        {
+          "lookup_key": "code-block",
+          "source_label": "代码块",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-code-block>)",
+            "module": "writing-markup",
+            "anchor": "grammar-code-block"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 371,
+            "entry_line_end": 377,
+            "code_line_start": 375,
+            "code_line_end": 375
+          },
+          "code": "#{\"a\"; \"b\"}"
+        },
+        {
+          "lookup_key": "content-block",
+          "source_label": "内容块",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-content-block>)",
+            "module": "writing-markup",
+            "anchor": "grammar-content-block"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 378,
+            "entry_line_end": 384,
+            "code_line_start": 382,
+            "code_line_end": 382
+          },
+          "code": "#[内容块]"
+        },
+        {
+          "lookup_key": "none-literal",
+          "source_label": "空字面量",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-none-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-none-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 385,
+            "entry_line_end": 391,
+            "code_line_start": 389,
+            "code_line_end": 389
+          },
+          "code": "#none"
+        },
+        {
+          "lookup_key": "false-literal",
+          "source_label": "假（布尔值）",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-false-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-false-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 392,
+            "entry_line_end": 398,
+            "code_line_start": 396,
+            "code_line_end": 396
+          },
+          "code": "#false"
+        },
+        {
+          "lookup_key": "true-literal",
+          "source_label": "真（布尔值）",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-true-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-true-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 399,
+            "entry_line_end": 405,
+            "code_line_start": 403,
+            "code_line_end": 403
+          },
+          "code": "#true"
+        },
+        {
+          "lookup_key": "integer-literal",
+          "source_label": "整数字面量",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-integer-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-integer-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 406,
+            "entry_line_end": 412,
+            "code_line_start": 410,
+            "code_line_end": 410
+          },
+          "code": "#(-1), #(0), #(1)"
+        },
+        {
+          "lookup_key": "n-adecimal-literal",
+          "source_label": "进制数字面量",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-n-adecimal-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-n-adecimal-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 413,
+            "entry_line_end": 419,
+            "code_line_start": 417,
+            "code_line_end": 417
+          },
+          "code": "#(-0xdeadbeef), #(-0o644), #(-0b1001)"
+        },
+        {
+          "lookup_key": "float-literal",
+          "source_label": "浮点数字面量",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-float-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-float-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 420,
+            "entry_line_end": 426,
+            "code_line_start": 424,
+            "code_line_end": 424
+          },
+          "code": "#(0.001), #(.1), #(2.)"
+        },
+        {
+          "lookup_key": "exp-repr-float",
+          "source_label": "指数表示法",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-exp-repr-float>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-exp-repr-float"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 427,
+            "entry_line_end": 433,
+            "code_line_start": 431,
+            "code_line_end": 431
+          },
+          "code": "#(1e2), #(1.926e3), #(-1e-3)"
+        },
+        {
+          "lookup_key": "string-literal",
+          "source_label": "字符串字面量",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-string-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-string-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 434,
+            "entry_line_end": 440,
+            "code_line_start": 438,
+            "code_line_end": 438
+          },
+          "code": "#\"Hello world!!\""
+        },
+        {
+          "lookup_key": "str-escape-sequences",
+          "source_label": "字符串转义序列",
+          "reference": {
+            "expression": "refs.scripting-base.with(reference: <grammar-str-escape-sequences>)",
+            "module": "scripting-base",
+            "anchor": "grammar-str-escape-sequences"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 441,
+            "entry_line_end": 447,
+            "code_line_start": 445,
+            "code_line_end": 445
+          },
+          "code": "#\"\\\"\""
+        },
+        {
+          "lookup_key": "str-unicode-escape-sequences",
+          "source_label": "字符串的Unicode转义序列",
+          "reference": {
+            "expression": "refs.scripting-base.with(reference: <grammar-str-unicode-escape-sequences>)",
+            "module": "scripting-base",
+            "anchor": "grammar-str-unicode-escape-sequences"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 448,
+            "entry_line_end": 454,
+            "code_line_start": 452,
+            "code_line_end": 452
+          },
+          "code": "#\"\\u{9999}\""
+        },
+        {
+          "lookup_key": "array-literal",
+          "source_label": "数组字面量",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-array-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-array-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 455,
+            "entry_line_end": 461,
+            "code_line_start": 459,
+            "code_line_end": 459
+          },
+          "code": "#(1, \"OvO\", [一段内容])"
+        },
+        {
+          "lookup_key": "dict-literal",
+          "source_label": "字典字面量",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-dict-literal>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-dict-literal"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 462,
+            "entry_line_end": 468,
+            "code_line_start": 466,
+            "code_line_end": 466
+          },
+          "code": "#(neko-mimi: 2, \"utterance\": \"喵喵喵\")"
+        },
+        {
+          "lookup_key": "empty-array",
+          "source_label": "空数组",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-empty-array>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-empty-array"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 469,
+            "entry_line_end": 475,
+            "code_line_start": 473,
+            "code_line_end": 473
+          },
+          "code": "#()"
+        },
+        {
+          "lookup_key": "empty-dict",
+          "source_label": "空字典",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-empty-dict>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-empty-dict"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 476,
+            "entry_line_end": 482,
+            "code_line_start": 480,
+            "code_line_end": 480
+          },
+          "code": "#(:)"
+        },
+        {
+          "lookup_key": "paren-empty-array",
+          "source_label": "被括号包裹的空数组",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-paren-empty-array>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-paren-empty-array"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 483,
+            "entry_line_end": 489,
+            "code_line_start": 487,
+            "code_line_end": 487
+          },
+          "code": "#(())"
+        },
+        {
+          "lookup_key": "single-member-array",
+          "source_label": "含有一个元素的数组",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-single-member-array>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-single-member-array"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 490,
+            "entry_line_end": 496,
+            "code_line_start": 494,
+            "code_line_end": 494
+          },
+          "code": "#(1,)"
+        },
+        {
+          "lookup_key": "var-decl",
+          "source_label": "变量声明",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-var-decl>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-var-decl"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 497,
+            "entry_line_end": 503,
+            "code_line_start": 501,
+            "code_line_end": 501
+          },
+          "code": "#let x = 1"
+        },
+        {
+          "lookup_key": "func-decl",
+          "source_label": "函数声明",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-func-decl>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-func-decl"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 504,
+            "entry_line_end": 510,
+            "code_line_start": 508,
+            "code_line_end": 508
+          },
+          "code": "#let f(x) = x * 2"
+        },
+        {
+          "lookup_key": "closure",
+          "source_label": "函数闭包",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-closure>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-closure"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 511,
+            "entry_line_end": 517,
+            "code_line_start": 515,
+            "code_line_end": 515
+          },
+          "code": "#let f = (x, y) => x + y"
+        },
+        {
+          "lookup_key": "named-param",
+          "source_label": "具名参数声明",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-named-param>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-named-param"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 518,
+            "entry_line_end": 524,
+            "code_line_start": 522,
+            "code_line_end": 522
+          },
+          "code": "#let g(named: none) = named"
+        },
+        {
+          "lookup_key": "variadic-param",
+          "source_label": "含变参函数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-variadic-param>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-variadic-param"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 525,
+            "entry_line_end": 531,
+            "code_line_start": 529,
+            "code_line_end": 529
+          },
+          "code": "#let g(..args) = args.pos().join([、])"
+        },
+        {
+          "lookup_key": "destruct-array",
+          "source_label": "数组解构赋值",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-destruct-array>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-destruct-array"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 532,
+            "entry_line_end": 538,
+            "code_line_start": 536,
+            "code_line_end": 536
+          },
+          "code": "#let (one, hello-world) = (1, \"Hello, World\")"
+        },
+        {
+          "lookup_key": "destruct-array-eliminate",
+          "source_label": "数组解构赋值情形二",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-destruct-array-eliminate>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-destruct-array-eliminate"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 539,
+            "entry_line_end": 545,
+            "code_line_start": 543,
+            "code_line_end": 543
+          },
+          "code": "#let (_, second, ..) = (1, \"Hello, World\", []); #second"
+        },
+        {
+          "lookup_key": "destruct-dict",
+          "source_label": "字典解构赋值",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-destruct-dict>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-destruct-dict"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 546,
+            "entry_line_end": 552,
+            "code_line_start": 550,
+            "code_line_end": 550
+          },
+          "code": "#let (neko-mimi: mimi) = (neko-mimi: 2); #mimi"
+        },
+        {
+          "lookup_key": "array-remapping",
+          "source_label": "数组内容重映射",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-array-remapping>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-array-remapping"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 553,
+            "entry_line_end": 561,
+            "code_line_start": 557,
+            "code_line_end": 559
+          },
+          "code": "#let (a, b, c) = (1, 2, 3)\n#let (b, c, a) = (a, b, c)\n#a, #b, #c"
+        },
+        {
+          "lookup_key": "array-swap",
+          "source_label": "数组内容交换",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-array-swap>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-array-swap"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 562,
+            "entry_line_end": 570,
+            "code_line_start": 566,
+            "code_line_end": 568
+          },
+          "code": "#let (a, b) = (1, 2)\n#((a, b) = (b, a))\n#a, #b"
+        },
+        {
+          "lookup_key": "placeholder",
+          "source_label": "占位符（`let _ = ..`）",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-placeholder>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-placeholder"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 571,
+            "entry_line_end": 581,
+            "code_line_start": 575,
+            "code_line_end": 579
+          },
+          "code": "#let last-two(t) = {\n  let _ = t.pop()\n  t.pop()\n}\n#last-two((1, 2, 3, 4))"
+        }
+      ]
+    },
+    {
+      "id": "script-statements",
+      "english_heading": "Script Statements",
+      "source_heading": "脚本语句",
+      "source_anchor": null,
+      "heading_line": 584,
+      "entries": [
+        {
+          "lookup_key": "if",
+          "source_label": "`if`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-if>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-if"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 587,
+            "entry_line_end": 594,
+            "code_line_start": 591,
+            "code_line_end": 592
+          },
+          "code": "#if true { 1 },\n#if false { 1 } else { 0 }"
+        },
+        {
+          "lookup_key": "if-if",
+          "source_label": "串联`if`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-if-if>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-if-if"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 595,
+            "entry_line_end": 602,
+            "code_line_start": 599,
+            "code_line_end": 600
+          },
+          "code": "#if false { 0 } else if true { 1 },\n#if false { 2 } else if false { 1 } else { 0 }"
+        },
+        {
+          "lookup_key": "while",
+          "source_label": "`while`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-while>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-while"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 603,
+            "entry_line_end": 615,
+            "code_line_start": 607,
+            "code_line_end": 613
+          },
+          "code": "#{\n  let i = 0;\n  while i < 10 {\n    (i * 2, )\n    i += 1;\n  }\n}"
+        },
+        {
+          "lookup_key": "for",
+          "source_label": "`for`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-for>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-for"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 616,
+            "entry_line_end": 624,
+            "code_line_start": 620,
+            "code_line_end": 622
+          },
+          "code": "#for i in range(10) {\n  (i * 2, )\n}"
+        },
+        {
+          "lookup_key": "for-destruct",
+          "source_label": "`for`语句解构赋值",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-for-destruct>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-for-destruct"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 625,
+            "entry_line_end": 631,
+            "code_line_start": 629,
+            "code_line_end": 629
+          },
+          "code": "#for (特色, 这个) in (neko-mimi: 2) [猫猫的 #特色 是 #这个\\ ]"
+        },
+        {
+          "lookup_key": "break",
+          "source_label": "`break`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-break>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-break"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 632,
+            "entry_line_end": 638,
+            "code_line_start": 636,
+            "code_line_end": 636
+          },
+          "code": "#for i in range(10) { (i, ); (i + 1926, ); break }"
+        },
+        {
+          "lookup_key": "continue",
+          "source_label": "`continue`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-continue>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-continue"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 639,
+            "entry_line_end": 648,
+            "code_line_start": 643,
+            "code_line_end": 646
+          },
+          "code": "#for i in range(10) {\n  if calc.even(i) { continue }\n  (i, )\n}"
+        },
+        {
+          "lookup_key": "return",
+          "source_label": "`return`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-return>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-return"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 649,
+            "entry_line_end": 656,
+            "code_line_start": 653,
+            "code_line_end": 654
+          },
+          "code": "#let never(..args) = return\n#type(never(1, 2))"
+        },
+        {
+          "lookup_key": "include",
+          "source_label": "`include`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-include>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-include"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 657,
+            "entry_line_end": 663,
+            "code_line_start": 661,
+            "code_line_end": 661
+          },
+          "code": "#include \"other-file.typ\""
+        }
+      ]
+    },
+    {
+      "id": "script-styling",
+      "english_heading": "Script Styling",
+      "source_heading": "脚本样式",
+      "source_anchor": null,
+      "heading_line": 666,
+      "entries": [
+        {
+          "lookup_key": "set",
+          "source_label": "`set`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-set>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-set"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 669,
+            "entry_line_end": 676,
+            "code_line_start": 673,
+            "code_line_end": 674
+          },
+          "code": "#set text(size: 24pt)\n四斤鸭梨"
+        },
+        {
+          "lookup_key": "scope",
+          "source_label": "作用域",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-scope>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-scope"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 677,
+            "entry_line_end": 686,
+            "code_line_start": 681,
+            "code_line_end": 684
+          },
+          "code": "两只#[兔#set text(fill: rgb(\"#ffd1dc\").darken(15%))\n  #[兔白#set text(fill: orange)\n  又白]，真可爱\n]"
+        },
+        {
+          "lookup_key": "set-if",
+          "source_label": "`set if`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-set-if>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-set-if"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 687,
+            "entry_line_end": 696,
+            "code_line_start": 691,
+            "code_line_end": 694
+          },
+          "code": "#let is-dark-theme = true\n#set rect(fill: black) if is-dark-theme\n#set text(fill: white) if is-dark-theme\n#rect([wink!])"
+        },
+        {
+          "lookup_key": "show-set",
+          "source_label": "`show set`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-show-set>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-show-set"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 697,
+            "entry_line_end": 704,
+            "code_line_start": 701,
+            "code_line_end": 702
+          },
+          "code": "#show: set text(fill: blue)\nwink!"
+        },
+        {
+          "lookup_key": "show",
+          "source_label": "`show`语句",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-show>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-show"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 705,
+            "entry_line_end": 716,
+            "code_line_start": 709,
+            "code_line_end": 714
+          },
+          "code": "#show raw: it => it.lines.at(1)\n获取代码片段第二行内容：```typ\n#{\nset text(fill: true)\n}\n```"
+        },
+        {
+          "lookup_key": "text-selector",
+          "source_label": "文本选择器",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-text-selector>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-text-selector"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 717,
+            "entry_line_end": 724,
+            "code_line_start": 721,
+            "code_line_end": 722
+          },
+          "code": "#show \"cpp\": strong(emph(box(\"C++\")))\n在古代，cpp是一门常用语言。"
+        },
+        {
+          "lookup_key": "regex-selector",
+          "source_label": "正则文本选择器",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-regex-selector>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-regex-selector"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 725,
+            "entry_line_end": 735,
+            "code_line_start": 729,
+            "code_line_end": 733
+          },
+          "code": "#show regex(\"[”。]+\"): it => {\n  set text(font: \"KaiTi\")\n  highlight(it, fill: yellow)\n}\n“无名，万物之始也；有名，万物之母也。”"
+        },
+        {
+          "lookup_key": "label-selector",
+          "source_label": "标签选择器",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-label-selector>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-label-selector"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 736,
+            "entry_line_end": 745,
+            "code_line_start": 740,
+            "code_line_end": 743
+          },
+          "code": "#show <一整段话>: set text(fill: blue)\n#[$lambda$语言是世界上最好的语言。] <一整段话>\n\n另一段话。"
+        },
+        {
+          "lookup_key": "selector-exp",
+          "source_label": "选择器表达式",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-selector-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-selector-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 746,
+            "entry_line_end": 754,
+            "code_line_start": 750,
+            "code_line_end": 752
+          },
+          "code": "#show heading.where(level: 2): set text(fill: blue)\n= 一级标题\n== 二级标题"
+        },
+        {
+          "lookup_key": "here",
+          "source_label": "获取位置",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-here>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-here"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 755,
+            "entry_line_end": 761,
+            "code_line_start": 759,
+            "code_line_end": 759
+          },
+          "code": "#context here().position()"
+        },
+        {
+          "lookup_key": "here-calc",
+          "source_label": "检测当前页面是否为偶数页（位置相关计算）",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-here-calc>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-here-calc"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 762,
+            "entry_line_end": 768,
+            "code_line_start": 766,
+            "code_line_end": 766
+          },
+          "code": "#context [ 页码是偶数：#calc.even(here().page()) ]"
+        },
+        {
+          "lookup_key": "query",
+          "source_label": "查询文档内容",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-query>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-query"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 769,
+            "entry_line_end": 775,
+            "code_line_start": 773,
+            "code_line_end": 773
+          },
+          "code": "#context query(<ref-internal-link>).at(0).body"
+        },
+        {
+          "lookup_key": "state",
+          "source_label": "声明全局状态",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-state>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-state"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 776,
+            "entry_line_end": 782,
+            "code_line_start": 780,
+            "code_line_end": 780
+          },
+          "code": "#state(\"my-state\", 1)"
+        }
+      ]
+    },
+    {
+      "id": "script-expressions",
+      "english_heading": "Script Expressions",
+      "source_heading": "脚本表达式",
+      "source_anchor": null,
+      "heading_line": 785,
+      "entries": [
+        {
+          "lookup_key": "func-call",
+          "source_label": "函数调用",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-func-call>)",
+            "module": "writing-markup",
+            "anchor": "grammar-func-call"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 788,
+            "entry_line_end": 794,
+            "code_line_start": 792,
+            "code_line_end": 792
+          },
+          "code": "#calc.pow(4, 3)"
+        },
+        {
+          "lookup_key": "content-param",
+          "source_label": "函数调用传递内容参数",
+          "reference": {
+            "expression": "refs.writing-markup.with(reference: <grammar-content-param>)",
+            "module": "writing-markup",
+            "anchor": "grammar-content-param"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 795,
+            "entry_line_end": 801,
+            "code_line_start": 799,
+            "code_line_end": 799
+          },
+          "code": "#emph[emphasis]"
+        },
+        {
+          "lookup_key": "member-exp",
+          "source_label": "成员访问",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-member-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-member-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 802,
+            "entry_line_end": 808,
+            "code_line_start": 806,
+            "code_line_end": 806
+          },
+          "code": "#`OvO`.text"
+        },
+        {
+          "lookup_key": "method-exp",
+          "source_label": "方法调用",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-method-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-method-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 809,
+            "entry_line_end": 815,
+            "code_line_start": 813,
+            "code_line_end": 813
+          },
+          "code": "#\"Hello World\".split(\" \")"
+        },
+        {
+          "lookup_key": "dict-member-exp",
+          "source_label": "字典成员访问",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-dict-member-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-dict-member-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 816,
+            "entry_line_end": 823,
+            "code_line_start": 820,
+            "code_line_end": 821
+          },
+          "code": "#let cat = (neko-mimi: 2)\n#cat.neko-mimi"
+        },
+        {
+          "lookup_key": "content-member-exp",
+          "source_label": "内容成员访问",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-content-member-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-content-member-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 824,
+            "entry_line_end": 830,
+            "code_line_start": 828,
+            "code_line_end": 828
+          },
+          "code": "#`OvO`.text"
+        },
+        {
+          "lookup_key": "repr",
+          "source_label": "代码表示的自省函数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-repr>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-repr"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 831,
+            "entry_line_end": 837,
+            "code_line_start": 835,
+            "code_line_end": 835
+          },
+          "code": "#repr[ 一段文本 ]"
+        },
+        {
+          "lookup_key": "type",
+          "source_label": "类型的自省函数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-type>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-type"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 838,
+            "entry_line_end": 844,
+            "code_line_start": 842,
+            "code_line_end": 842
+          },
+          "code": "#type[一段文本]"
+        },
+        {
+          "lookup_key": "eval",
+          "source_label": "求值函数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-eval>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-eval"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 845,
+            "entry_line_end": 851,
+            "code_line_start": 849,
+            "code_line_end": 849
+          },
+          "code": "#type(eval(\"1\"))"
+        },
+        {
+          "lookup_key": "eval-markup-mode",
+          "source_label": "求值函数（标记模式）",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-eval-markup-mode>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-eval-markup-mode"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 852,
+            "entry_line_end": 858,
+            "code_line_start": 856,
+            "code_line_end": 856
+          },
+          "code": "#eval(\"== 一个标题\", mode: \"markup\")"
+        },
+        {
+          "lookup_key": "array-in",
+          "source_label": "判断数组内容",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-array-in>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-array-in"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 859,
+            "entry_line_end": 866,
+            "code_line_start": 863,
+            "code_line_end": 864
+          },
+          "code": "#let pol = (1, \"OvO\", [])\n#(1 in pol)"
+        },
+        {
+          "lookup_key": "array-not-in",
+          "source_label": "判断数组内容不在",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-array-not-in>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-array-not-in"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 867,
+            "entry_line_end": 874,
+            "code_line_start": 871,
+            "code_line_end": 872
+          },
+          "code": "#let pol = (1, \"OvO\", [])\n#([另一段内容] not in pol)"
+        },
+        {
+          "lookup_key": "dict-in",
+          "source_label": "判断字典内容",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-dict-in>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-dict-in"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 875,
+            "entry_line_end": 882,
+            "code_line_start": 879,
+            "code_line_end": 880
+          },
+          "code": "#let cat = (neko-mimi: 2)\n#(\"neko-mimi\" in cat)"
+        },
+        {
+          "lookup_key": "logical-cmp-exp",
+          "source_label": "逻辑比较表达式",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-logical-cmp-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-logical-cmp-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 883,
+            "entry_line_end": 890,
+            "code_line_start": 887,
+            "code_line_end": 888
+          },
+          "code": "#(1 < 0), #(1 >= 2),\n#(1 == 2), #(1 != 2)"
+        },
+        {
+          "lookup_key": "logical-calc-exp",
+          "source_label": "逻辑运算表达式",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-logical-calc-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-logical-calc-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 891,
+            "entry_line_end": 897,
+            "code_line_start": 895,
+            "code_line_end": 895
+          },
+          "code": "#(not false), #(false or true), #(true and false)"
+        },
+        {
+          "lookup_key": "plus-exp",
+          "source_label": "取正运算",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-plus-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-plus-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 898,
+            "entry_line_end": 904,
+            "code_line_start": 902,
+            "code_line_end": 902
+          },
+          "code": "#(+1), #(+0), #(1), #(++1)"
+        },
+        {
+          "lookup_key": "minus-exp",
+          "source_label": "取负运算",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-minus-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-minus-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 905,
+            "entry_line_end": 912,
+            "code_line_start": 909,
+            "code_line_end": 910
+          },
+          "code": "#(-1), #(-0), #(--1),\n#(-+-1)"
+        },
+        {
+          "lookup_key": "arith-exp",
+          "source_label": "算术运算表达式",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-arith-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-arith-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 913,
+            "entry_line_end": 920,
+            "code_line_start": 917,
+            "code_line_end": 918
+          },
+          "code": "#(1 + 1), #(1 + -1),\n#(1 - 1), #(1 - -1)"
+        },
+        {
+          "lookup_key": "assign-exp",
+          "source_label": "赋值表达式",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-assign-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-assign-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 921,
+            "entry_line_end": 927,
+            "code_line_start": 925,
+            "code_line_end": 925
+          },
+          "code": "#let a = 1; #repr(a = 10), #a, #repr(a += 2), #a"
+        },
+        {
+          "lookup_key": "string-concat-exp",
+          "source_label": "字符串连接",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-string-concat-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-string-concat-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 928,
+            "entry_line_end": 934,
+            "code_line_start": 932,
+            "code_line_end": 932
+          },
+          "code": "#(\"a\" + \"b\")"
+        },
+        {
+          "lookup_key": "string-mul-exp",
+          "source_label": "重复连接字符串",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-string-mul-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-string-mul-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 935,
+            "entry_line_end": 941,
+            "code_line_start": 939,
+            "code_line_end": 939
+          },
+          "code": "#(\"a\" * 4), #(4 * \"ab\")"
+        },
+        {
+          "lookup_key": "string-cmp-exp",
+          "source_label": "字符串比较",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-string-cmp-exp>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-string-cmp-exp"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 942,
+            "entry_line_end": 948,
+            "code_line_start": 946,
+            "code_line_end": 946
+          },
+          "code": "#(\"a\" == \"b\"), #(\"a\" != \"b\"), #(\"a\" < \"ab\"), #(\"a\" >= \"a\")"
+        },
+        {
+          "lookup_key": "int-to-float",
+          "source_label": "整数转浮点数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-int-to-float>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-int-to-float"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 949,
+            "entry_line_end": 955,
+            "code_line_start": 953,
+            "code_line_end": 953
+          },
+          "code": "#float(1), #(type(float(1)))"
+        },
+        {
+          "lookup_key": "bool-to-int",
+          "source_label": "布尔值转整数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-bool-to-int>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-bool-to-int"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 956,
+            "entry_line_end": 962,
+            "code_line_start": 960,
+            "code_line_end": 960
+          },
+          "code": "#int(true), #(type(int(true)))"
+        },
+        {
+          "lookup_key": "float-to-int",
+          "source_label": "浮点数转整数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-float-to-int>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-float-to-int"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 963,
+            "entry_line_end": 969,
+            "code_line_start": 967,
+            "code_line_end": 967
+          },
+          "code": "#int(1), #(type(int(1)))"
+        },
+        {
+          "lookup_key": "dec-str-to-int",
+          "source_label": "十进制字符串转整数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-dec-str-to-int>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-dec-str-to-int"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 970,
+            "entry_line_end": 976,
+            "code_line_start": 974,
+            "code_line_end": 974
+          },
+          "code": "#int(\"1\"), #(type(int(\"1\")))"
+        },
+        {
+          "lookup_key": "nadec-str-to-int",
+          "source_label": "十六进制/八进制/二进制字符串转整数",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-nadec-str-to-int>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-nadec-str-to-int"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 977,
+            "entry_line_end": 990,
+            "code_line_start": 981,
+            "code_line_end": 988
+          },
+          "code": "#let safe-to-int(x) = {\n  let res = eval(x)\n  assert(type(res) == int, message: \"should be integer\")\n  res\n}\n#safe-to-int(\"0xf\"), #(type(safe-to-int(\"0xf\"))) \\\n#safe-to-int(\"0o755\"), #(type(safe-to-int(\"0o755\"))) \\\n#safe-to-int(\"0b1011\"), #(type(safe-to-int(\"0b1011\"))) \\"
+        },
+        {
+          "lookup_key": "num-to-str",
+          "source_label": "数字转字符串",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-num-to-str>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-num-to-str"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 991,
+            "entry_line_end": 998,
+            "code_line_start": 995,
+            "code_line_end": 996
+          },
+          "code": "#repr(str(1)),\n#repr(str(.5))"
+        },
+        {
+          "lookup_key": "int-to-nadec-str",
+          "source_label": "整数转十六进制字符串",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-int-to-nadec-str>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-int-to-nadec-str"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 999,
+            "entry_line_end": 1005,
+            "code_line_start": 1003,
+            "code_line_end": 1003
+          },
+          "code": "#str(501, base:16), #str(0xdeadbeef, base:36)"
+        },
+        {
+          "lookup_key": "bool-to-str",
+          "source_label": "布尔值转字符串",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-bool-to-str>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-bool-to-str"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 1006,
+            "entry_line_end": 1012,
+            "code_line_start": 1010,
+            "code_line_end": 1010
+          },
+          "code": "#repr(false)"
+        },
+        {
+          "lookup_key": "int-to-bool",
+          "source_label": "数字转布尔值",
+          "reference": {
+            "expression": "refs.content-scope-style.with(reference: <grammar-int-to-bool>)",
+            "module": "content-scope-style",
+            "anchor": "grammar-int-to-bool"
+          },
+          "source": {
+            "path": "src/tutorial/reference-grammar.typ",
+            "entry_line_start": 1013,
+            "entry_line_end": 1021,
+            "code_line_start": 1017,
+            "code_line_end": 1019
+          },
+          "code": "#let to-bool(x) = x != 0\n#repr(to-bool(0)),\n#repr(to-bool(1))"
+        }
+      ]
+    }
+  ]
+}

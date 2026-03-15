@@ -1,0 +1,4 @@
+interface:
+  display_name: "Typst Grammar Authoring"
+  short_description: "Author Typst docs from canonical grammar examples"
+  default_prompt: "Use $typst-grammar-authoring to draft or validate a Typst document from the tutorial's canonical grammar examples."
