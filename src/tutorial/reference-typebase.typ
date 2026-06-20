@@ -254,86 +254,86 @@
 
 == 类型转换
 
-整数转浮点数：<grammar-int-to-float>
+// 整数转浮点数：<grammar-int-to-float>
 
-#code(```typ
-#float(1), #(type(float(1)))
-```)
+// #code(```typ
+// #float(1), #(type(float(1)))
+// ```)
 
-布尔值转整数：<grammar-bool-to-int>
+// 布尔值转整数：<grammar-bool-to-int>
 
-#code(```typ
-#int(false), #(type(int(false))) \
-#int(true), #(type(int(true)))
-```)
+// #code(```typ
+// #int(false), #(type(int(false))) \
+// #int(true), #(type(int(true)))
+// ```)
 
-浮点数转整数：<grammar-float-to-int>
+// 浮点数转整数：<grammar-float-to-int>
 
-#code(```typ
-#int(1), #(type(int(1)))
-```)
+// #code(```typ
+// #int(1), #(type(int(1)))
+// ```)
 
-该方法是就近取整，并有精度损失（根据规范，超出精度范围时，如何选择较近的值舍入是「与实现相关」）：
+// 该方法是就近取整，并有精度损失（根据规范，超出精度范围时，如何选择较近的值舍入是「与实现相关」）：
 
-#code(```typ
-#int(1.5), #int(1.99),
-// 超出浮点精度范围会就近舍入再转换成整数
-#int(1.9999999999999999)
-```)
+// #code(```typ
+// #int(1.5), #int(1.99),
+// // 超出浮点精度范围会就近舍入再转换成整数
+// #int(1.9999999999999999)
+// ```)
 
-为了向下或向上取整，你可以同时使用`calc.floor`或`calc.ceil`函数（有精度损失）：
+// 为了向下或向上取整，你可以同时使用`calc.floor`或`calc.ceil`函数（有精度损失）：
 
-#code(```typ
-#int(calc.floor(1.9)), #int(calc.ceil(1.9))
-```)
+// #code(```typ
+// #int(calc.floor(1.9)), #int(calc.ceil(1.9))
+// ```)
 
-十进制字符串转整数：<grammar-dec-str-to-int>
+// 十进制字符串转整数：<grammar-dec-str-to-int>
 
-#code(```typ
-#int("1"), #(type(int("1")))
-```)
+// #code(```typ
+// #int("1"), #(type(int("1")))
+// ```)
 
-十六进制/八进制/二进制字符串转整数：<grammar-nadec-str-to-int>
+// 十六进制/八进制/二进制字符串转整数：<grammar-nadec-str-to-int>
 
-#code(```typ
-#let safe-to-int(x) = {
-  let res = eval(x)
-  assert(type(res) == int, message: "should be integer")
-  res
-}
-#safe-to-int("0xf"), #(type(safe-to-int("0xf"))) \
-#safe-to-int("0o755"), #(type(safe-to-int("0o755"))) \
-#safe-to-int("0b1011"), #(type(safe-to-int("0b1011"))) \
-```)
+// #code(```typ
+// #let safe-to-int(x) = {
+//   let res = eval(x)
+//   assert(type(res) == int, message: "should be integer")
+//   res
+// }
+// #safe-to-int("0xf"), #(type(safe-to-int("0xf"))) \
+// #safe-to-int("0o755"), #(type(safe-to-int("0o755"))) \
+// #safe-to-int("0b1011"), #(type(safe-to-int("0b1011"))) \
+// ```)
 
-注意：`assert(type(res) == int)`是必须的，否则是不安全的。
+// 注意：`assert(type(res) == int)`是必须的，否则是不安全的。
 
-数字转字符串：<grammar-num-to-str>
+// 数字转字符串：<grammar-num-to-str>
 
-#code(```typ
-#repr(str(1)), #(type(str(1)))
-#repr(str(.5)), #(type(str(.5)))
-```)
+// #code(```typ
+// #repr(str(1)), #(type(str(1)))
+// #repr(str(.5)), #(type(str(.5)))
+// ```)
 
-整数转 $N$ 进制字符串：<grammar-int-to-nadec-str>
+// 整数转 $N$ 进制字符串：<grammar-int-to-nadec-str>
 
-#code(```typ
-#str(501, base:16), #str(0xdeadbeef, base:36)
-```)
+// #code(```typ
+// #str(501, base:16), #str(0xdeadbeef, base:36)
+// ```)
 
-布尔值转字符串：<grammar-bool-to-str>
+// 布尔值转字符串：<grammar-bool-to-str>
 
-#code(```typ
-#repr(false), #(type(repr(false)))
-```)
+// #code(```typ
+// #repr(false), #(type(repr(false)))
+// ```)
 
-数字转布尔值：<grammar-int-to-bool>
+// 数字转布尔值：<grammar-int-to-bool>
 
-#code(```typ
-#let to-bool(x) = x != 0
-#repr(to-bool(0)), #(type(to-bool(0))) \
-#repr(to-bool(1)), #(type(to-bool(1)))
-```)
+// #code(```typ
+// #let to-bool(x) = x != 0
+// #repr(to-bool(0)), #(type(to-bool(0))) \
+// #repr(to-bool(1)), #(type(to-bool(1)))
+// ```)
 
 Typst的基本类型设计大量参考Python和Rust。Typst基本类型的特点是半纯的API设计。其基本类型的方法倾向于保持纯度，但如果影响到了使用的方便性，Typst会适当牺牲纯度。
 
