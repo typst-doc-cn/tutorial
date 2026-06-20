@@ -16,10 +16,11 @@
     = 模式
     - #chapter("tutorial/writing-markup.typ")[标记模式]
     - #chapter("tutorial/writing-scripting.typ")[脚本模式]
-    = 脚本
+    = 类型
     - #chapter("tutorial/scripting-literal.typ")[基本类型]
     - #chapter("tutorial/scripting-variable.typ")[变量与函数]
     - #chapter("tutorial/scripting-composite.typ")[复合类型]
+    = 文档模型
     - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
     - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]
     - #chapter("tutorial/scripting-control-flow.typ")[控制流]
