@@ -6,6 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: typst-community/setup-typst@v3
+        with:
+          typst-version: "0.14.2"
       - run: git submodule update --init --recursive
       - name: Download & install shiroa
         run: |
