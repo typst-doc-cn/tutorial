@@ -20,11 +20,11 @@
     - #chapter("tutorial/scripting-literal.typ")[基本类型]
     - #chapter("tutorial/scripting-variable.typ")[变量与函数]
     - #chapter("tutorial/scripting-composite.typ")[复合类型]
-    - #chapter("tutorial/scripting-main.typ")[编译流程]
     = 样式
+    - #chapter("tutorial/scripting-main.typ")[编译流程]
+    - #chapter("tutorial/scripting-style.typ")[样式模型]
     - #chapter("tutorial/writing-chinese.typ")[中文排版]
     - #chapter("tutorial/writing-math.typ")[数学排版]
-    - #chapter("tutorial/scripting-style.typ")[样式模型]
     = 文档
     - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
     - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]
