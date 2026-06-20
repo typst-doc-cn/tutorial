@@ -46,8 +46,6 @@
 + `lang: "zh", region: "cn"`告诉Typst这是中国大陆中文文档。
 + 行距、文字外框和首行缩进按中文文档习惯略作调整。
 
-当然，这不是唯一正确的模板。你完全可以换成其它中西文字体，也可以把`justify`、`leading`和首行缩进交给具体模板控制。
-
 == 中文排版 —— 字体
 
 === 设置中文字体
@@ -234,8 +232,6 @@ Typst 0.13起，`par.first-line-indent`支持`all`选项，可以让标题后的
 
 #code(```typ
 #set par(first-line-indent: (amount: 2em, all: true))
-
-= 标题
 
 首段也缩进。
 
