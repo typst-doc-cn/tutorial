@@ -20,16 +20,16 @@
     - #chapter("tutorial/scripting-literal.typ")[基本类型]
     - #chapter("tutorial/scripting-variable.typ")[变量与函数]
     - #chapter("tutorial/scripting-composite.typ")[复合类型]
-    = 文档模型
+    = 脚本即文档
     - #chapter("tutorial/doc-modulize.typ")[模块化（多文件）]
     - #chapter("tutorial/scripting-block-and-expression.typ")[表达式]
     - #chapter("tutorial/scripting-control-flow.typ")[控制流]
     - #chapter("tutorial/doc-stateful.typ")[状态化]
-    = 中文排版
+    = 排版Ⅰ
     - #chapter("tutorial/scripting-main.typ")[编译流程]
     - #chapter("tutorial/writing-chinese.typ")[中文排版]
     - #chapter("tutorial/scripting-style.typ")[样式模型]
-    = 科技排版
+    = 排版Ⅱ
     - #chapter("tutorial/writing-math.typ")[数学排版]
     - #chapter("tutorial/scripting-shape.typ")[图形排版]
     - #chapter("tutorial/scripting-layout.typ")[布局模型]
