@@ -466,7 +466,7 @@ Typst的#term("comment")直接采用C语言风格的注释语法，有两种表�
 ````
 
 #exercise[
-  插入行内的“typc”代码，期望的输出：#rect(width: 100%, eval(q1.text, mode: "markup"))
+  插入行内代码块 （语言标签为 “typc”，即 Typst Code），期望输出为：#rect(width: 100%, eval(q1.text, mode: "markup"))
 ][
   #q1
 ]
