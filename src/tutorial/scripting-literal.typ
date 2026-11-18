@@ -342,7 +342,7 @@ Typst中所有字符串都是`utf-8`编码的，因此使用时不存在编码�
 #set align(center)
 #let matrix-fmt(..args) = table(
   columns: args.at(0).len(),
-  ..args.pos().flatten().flatten().map(str)
+  ..args.pos().flatten().map(str)
 )
 #matrix-fmt(
   (1, 2, 3),
