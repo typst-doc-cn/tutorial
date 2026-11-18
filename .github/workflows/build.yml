@@ -7,14 +7,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: typst-community/setup-typst@v3
         with:
-          typst-version: "0.14.2"
+          typst-version: "0.15.1"
       - run: git submodule update --init --recursive
       - name: Download & install shiroa
         run: |
-          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/Myriad-Dreamin/shiroa/releases/download/v0.3.1-rc2/shiroa-installer.sh | sh
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/Myriad-Dreamin/shiroa/releases/download/v0.4.0-rc2/shiroa-installer.sh | sh
       - name: Build Book
         run: |
-          shiroa build --font-path ./assets/typst-fonts/ --font-path ./assets/fonts/ --path-to-root /tutorial/ -w . src
+          shiroa build --font-path ./assets/typst-fonts/ --font-path ./assets/fonts/ --path-to-root /tutorial/ --root . src
       - run: typst compile --root . --font-path ./assets/typst-fonts/ --font-path ./assets/fonts/ ./src/ebook.typ
       - uses: actions/upload-artifact@v4
         id: artifact-upload-step
