@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "长度与布局")
+#show: book.page.with(title: "布局模型")
 
 #todo-box[本节处于校对阶段，所以可能存在不完整或错误。]
 
@@ -81,11 +81,9 @@ Typst会将你提供的任意长度单位都统一成点单位，以便进行长
 
 请观察下列算式，它们都不能编译：
 
-#(
-  ```typ
-  #(1cm + 3), #(3 / 1cm), #(1cm * 1cm)
-  ```
-)
+```typ
+#(1cm + 3), #(3 / 1cm), #(1cm * 1cm)
+```
 
 所谓*保持长度量纲*，即它存在一系列判别规则：
 
@@ -125,7 +123,7 @@ Typst会将你提供的任意长度单位都统一成点单位，以便进行长
 
 #code(```typ
 #1cm 是 #1cm.pt() 点 \
-#1cm 是 #1cm.inches() 英尺
+#1cm 是 #1cm.inches() 英寸
 ```)
 
 你可以使用乘法实现浮点数到长度上的转换，例如```typc 28.3465 * 1pt```：
@@ -365,7 +363,7 @@ B
 ]
 ```)
 
-`parbreak`与`pagebreak`也是除了同理，除了`parbreak`一定是弱分段，并且没有可以指定的`weak`参数：
+`parbreak`与`pagebreak`同理，区别在于`parbreak`一定是弱分段，并且没有可以指定的`weak`参数：
 
 #code(```typ
 // 第一段
@@ -388,10 +386,10 @@ B
 #block(fill: blue)[B]
 ```)
 
-事实上`par`本来就由`block`组成。你可以通过对`block`设置规则影响到段间距：
+你可以通过对`par`设置规则影响到段间距：
 
 #code(```typ
-#set block(spacing: 0.5em)
+#set par(spacing: 0.5em)
 A
 #parbreak()
 #parbreak()
@@ -430,7 +428,7 @@ B
 
 === sequence
 
-`sequence`是布局中最松散的组织。事实上，它正是我们在《基础文档》中就学过的「内容块」。它起不到任何效果，仅仅容纳一系列其他内容。
+`sequence`是布局中最松散的组织。事实上，它正是我们在#(refs.writing-scripting)[《脚本模式》]中就学过的「内容块」。它起不到任何效果，仅仅容纳一系列其他内容。
 
 #code(```typ
 #rect(width: 100pt)[#[a a a a a a] #[a a a a a a a a] ]
@@ -808,7 +806,7 @@ Typst允许你使用更简便的参数表示。特别地，如果`columns`数组
 
 此类函数的概念引自LaTeX，又称胶水函数。一共有两个方向的间距，分别是水平间距与竖直间距。
 
-水平间距（`h`，horizon）不包含内容，而仅仅在布局中占据一定宽度：
+水平间距（`h`，horizontal）不包含内容，而仅仅在布局中占据一定宽度：
 
 #code(```typ
 两句话之间间隔`0pt`#h(0pt)两句话之间间隔`0pt` \
@@ -868,7 +866,7 @@ Typst允许你使用更简便的参数表示。特别地，如果`columns`数组
 `scale`可以拉伸元素，且`scale`会导致强制换行：
 
 #code(```typ
-#scale(x: 110%)[This is mirrored.]
+#scale(x: 110%)[This is scaled.]
 #box(scale(x: 100%)[This is scaled.]) 1 \
 #box(scale(x: 115%)[This is scaled.]) 1
 ```)
