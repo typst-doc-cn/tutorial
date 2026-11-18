@@ -258,4 +258,49 @@ Typst通过数组和字典的形式在执行时向函数传递参数。上一章
 
 这里`((a, b)) => a + b`看起来多了一层括号。外层括号是闭包的参数列表，内层`(a, b)`才是解构模式。若写成`(a, b) => a + b`，意思就变成“这个闭包接受两个位置参数”，而不是“这个闭包接受一个数组参数并拆成两个变量”。
 
-#todo-box[总结]
+== 总结
+
+本节介绍了数组与字典两种复合类型、解构赋值语法，以及具名参数、变长参数与参数模式解构。
+
+
+== 习题
+
+#let q1 = ````typ
+#let swap-ends((first, ..middle, last)) = (last, ..middle, first)
+#swap-ends((1, 2, 3, 4, 5))
+````
+
+#exercise[
+  编写函数，交换数组`(1, 2, 3, 4, 5)`的首尾元素：#rect(width: 100%, eval(q1.text, mode: "markup"))
+][
+  #q1
+]
+
+#let q2 = ````typ
+#set align(center)
+#let matrix-fmt(..args) = table(
+  columns: args.at(0).len(),
+  ..args.pos().flatten().map(str),
+)
+#matrix-fmt(
+  (1, 2, 3),
+  (4, 5, 6),
+  (7, 8, 9),
+)
+````
+
+#exercise[
+  编写函数，使用`table`（表格）元素打印任意$N times M$矩阵，例如：
+
+  ```typ
+  #matrix-fmt(
+    (1, 2, 3),
+    (4, 5, 6),
+    (7, 8, 9),
+  )
+  ```
+
+  #rect(width: 100%, eval(q2.text, mode: "markup"))
+][
+  #q2
+]
