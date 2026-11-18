@@ -133,7 +133,7 @@ Typst的数学模式如下：<grammar-inline-math> ~ <grammar-display-math>
 
 == 函数和函数调用 <grammar-func-call>
 
-这里仅作最基础的介绍。#(refs.scripting-base)[《常量与变量》]和#(refs.scripting-complex)[《块与表达式》]中有对函数和函数调用更详细的介绍。
+这里仅作最基础的介绍。#(refs.scripting-base)[《基本类型》]、《变量与函数》和#(refs.scripting-complex)[《表达式》]中有对函数和函数调用更详细的介绍。
 
 函数与函数调用同样归属#term("code mode")，所以在调用函数前，你需要先使用#mark("#")让Typst先进入#term("code mode")。
 
@@ -167,7 +167,7 @@ Typst的数学模式如下：<grammar-inline-math> ~ <grammar-display-math>
 ])
 ```)
 
-你应该也注意到了#typst-func("strong")事实上就是《初识标记模式》中讲过的着重标记，#typst-func("emph")就是强调标记。
+你应该也注意到了#typst-func("strong")事实上就是《标记模式》中讲过的着重标记，#typst-func("emph")就是强调标记。
 
 Typst强调#term("consistency")，因此无论是使用标记还是使用函数修饰内容，最终效果都是一样的。你可以根据实际情况选择合适的方法修饰内容。
 
@@ -245,9 +245,9 @@ Typst强调#term("consistency")，因此无论是使用标记还是使用函数�
 #{
   set text(font: "Source Han Serif SC")
   code(```typ
-  平地翻滚：#underline[ጿኈቼዽጿኈቼዽ] \
-  施展轻功：#overline[ጿኈቼዽጿኈቼዽ] \
-  泥地打滚：#strike[ጿኈቼዽጿኈቼዽ] \
+  平地翻滚：#underline[ꈻꃰꎰꍳꈻꃰꎰꍳ] \
+  施展轻功：#overline[ꈻꃰꎰꍳꈻꃰꎰꍳ] \
+  泥地打滚：#strike[ꈻꃰꎰꍳꈻꃰꎰꍳ] \
   ```)
 }
 
@@ -431,17 +431,16 @@ Typst强调#term("consistency")，因此无论是使用标记还是使用函数�
 === 设置字体 <grammar-text-font>
 
 你可以通过`font`参数为文字配置字体：
-todo: CI上没有这些字体。
 
 #code(```typ
-#text(font: "FangSong")[北京鸭梨]
-#text(font: "Microsoft YaHei")[板正鸭梨]
+#text(font: "FandolKai")[北京鸭梨]
+#text(font: "Noto Sans CJK SC")[板正鸭梨]
 ```)
 
-你还可以用逗号分隔的「列表」为文本同时设置多个字体。Typst优先使用列表中靠前的字体。例如，可以同时设置西文为Times New Roman字体，中文为仿宋字体：
+你还可以用逗号分隔的「列表」为文本同时设置多个字体。Typst优先使用列表中靠前的字体。例如，可以同时设置西文为New Computer Modern字体，中文回退为楷体：
 
 #code(```typ
-#text(font: ("Times New Roman", "FangSong"))[中西Pear]
+#text(font: ("New Computer Modern", "FandolKai"))[中西Pear]
 ```)
 
 关于如何配置中文、西文、数学等多种字体，详见#(refs.misc-font-setting)[《字体设置》]。
@@ -489,7 +488,7 @@ Typst的元素可以与其构造函数一一对应。Typst允许你设置元素�
 
 本节前面讲述的所有元素的「具名参数」都可以如是设置，例如文本大小、字体等。
 
-关于「`set`」语法更详细的介绍，详见#(refs.content-scope-style)[《内容、作用域与样式》]。
+关于「`set`」语法更详细的介绍，详见#(refs.content-scope-style)[《样式模型》]。
 
 == 图像 <grammar-image>
 
@@ -586,7 +585,7 @@ Typst的元素可以与其构造函数一一对应。Typst允许你设置元素�
 
 == 行内盒子 <grammar-box>
 
-todo：本节添加box的基础使用。<grammar-image-inline>
+默认情况下，#typst-func("image")会独占一行。若要将图片嵌入段落行内，可以使用#typst-func("box")函数：<grammar-image-inline>
 
 #code(```typ
 在一段话中插入一个#box(baseline: 0.15em, image("/assets/files/info-icon.svg", width: 1em))图片。
