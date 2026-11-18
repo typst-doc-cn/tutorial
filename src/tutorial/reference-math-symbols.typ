@@ -13,6 +13,7 @@
 + #link("https://github.com/brynne8/typst-undergradmath-zh/blob/6a1028bc13c525f29f6445e92fc6af3246b3c3cb/undergradmath.pdf")[本科生Typst数学中文版，适用于Typst 0.9.0]
 
 以下表格列出了*数学模式*中的常用符号。
+（符号名已更新至 Typst 0.14 命名。）
 
 #figure(
   table(
@@ -80,8 +81,8 @@
     [$union$], [`union`], [$inter$], [`inter`], [$*$], [`*`],
     [$union.sq$], [`union.sq`], [$inter.sq$], [`inter.sq`], [$circle.stroked.tiny$], [`circle.stroked.tiny`],
     [$or$], [`or`], [$and$], [`and`], [$bullet$], [`bullet`],
-    [$xor$], [`xor`], [$minus.circle$], [`minus.circle`], [$dot.circle$], [`dot.circle`],
-    [$union.plus$], [`union.plus`], [$times.circle$], [`times.circle`], [$circle.big$], [`circle.big`],
+    [$xor$], [`xor`], [$minus.o$], [`minus.o`], [$dot.o$], [`dot.o`],
+    [$union.plus$], [`union.plus`], [$times.o$], [`times.o`], [$circle.big$], [`circle.big`],
     [$product.co$],
     [`product.co`],
     [$triangle.stroked.t$],
@@ -102,8 +103,8 @@
     [$sum$], [`sum`], [$union.big$], [`union.big`], [$or.big$], [`or.big`],
     [$product$], [`product`], [$inter.big$], [`inter.big`], [$and.big$], [`and.big`],
     [$product.co$], [`product.co`], [$union.sq.big$], [`union.sq.big`], [$union.plus.big$], [`union.plus.big`],
-    [$integral$], [`integral`], [$integral.cont$], [`integral.cont`], [$dot.circle.big$], [`dot.circle.big`],
-    [$plus.circle.big$], [`plus.circle.big`], [$times.circle.big$], [`times.circle.big`],
+    [$integral$], [`integral`], [$integral.cont$], [`integral.cont`], [$dot.o.big$], [`dot.o.big`],
+    [$plus.o.big$], [`plus.o.big`], [$times.o.big$], [`times.o.big`],
   ),
   caption: [「大」运算符],
 )
@@ -135,7 +136,7 @@
   table(
     columns: 6,
     [$dots$], [`dots`], [$dots.c$], [`dots.c`], [$dots.v$], [`dots.v`],
-    [$dots.down$], [`dots.down`], [$planck.reduce$], [`planck.reduce`], [$dotless.i$], [`dotless.i`],
+    [$dots.down$], [`dots.down`], [$planck$], [`planck`], [$dotless.i$], [`dotless.i`],
     [$dotless.j$], [`dotless.j`], [$ell$], [`ell`], [$Re$], [`Re`],
     [$Im$], [`Im`], [$aleph$], [`aleph`], [$forall$], [`forall`],
     [$exists$], [`exists`], [$Omega.inv$], [`Omega.inv`], [$partial$], [`partial`],

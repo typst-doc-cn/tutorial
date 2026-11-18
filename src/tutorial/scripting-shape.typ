@@ -102,7 +102,7 @@ Typst较LaTeX的一个有趣的特色是内置了很多方法对颜色进行计�
 Typst不仅支持颜色填充，还支持按照固定的模式将其他图形对元素进行填充。例如下面的pat定义了一个长为`61.8pt`，宽为`50pt`的图形。将其填充进一个矩形中，填充图形从左至右，从上至下布满矩形内容中。
 
 #code(```typ
-#let pat = pattern(size: (61.8pt, 50pt))[
+#let pat = tiling(size: (61.8pt, 50pt))[
   #place(line(start: (0%, 0%), end: (100%, 100%)))
   #place(line(start: (0%, 100%), end: (100%, 0%)))
 ]

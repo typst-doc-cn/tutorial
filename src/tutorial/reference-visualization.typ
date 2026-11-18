@@ -36,16 +36,16 @@ A stroke has a paint (a solid color or gradient), a thickness, a line cap, a lin
 
 == 贝塞尔路径（曲线）
 
-A path through a list of points, connected by Bezier curves. #ref-bookmark[`path`]
+A path through a list of points, connected by Bezier curves. #ref-bookmark[`curve`]
 
 #code(```typ
-#path(
+#curve(
   fill: blue.lighten(80%),
   stroke: blue,
-  closed: true,
-  (0pt, 50pt),
-  (100%, 50pt),
-  ((50%, 0pt), (40pt, 0pt)),
+  curve.move((0pt, 50pt)),
+  curve.line((100%, 50pt)),
+  curve.cubic(none, (50% + 40pt, 0pt), (50%, 0pt)),
+  curve.close(),
 )
 ```)
 
