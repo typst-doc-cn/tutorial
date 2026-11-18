@@ -10,7 +10,6 @@ Typst只有一种颜色类型，其由两部分组成。
 
 #figure([
   #block(
-    width: 200pt,
     align(left)[
       ```typ
       #color.rgb(87, 127, 230)
