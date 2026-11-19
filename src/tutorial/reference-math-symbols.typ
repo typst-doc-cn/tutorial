@@ -13,6 +13,7 @@
 + #link("https://github.com/brynne8/typst-undergradmath-zh/blob/6a1028bc13c525f29f6445e92fc6af3246b3c3cb/undergradmath.pdf")[本科生Typst数学中文版，适用于Typst 0.9.0]
 
 以下表格列出了*数学模式*中的常用符号。
+（符号名已更新至 Typst 0.14 命名。）
 
 #figure(
   table(
