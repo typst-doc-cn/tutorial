@@ -1,15 +1,25 @@
 
 // This is important for typst-book to produce a responsive layout
 // and multiple targets.
-#import "@preview/shiroa:0.4.0": get-page-width, is-pdf-target, is-web-target, plain-text, x-target, templates
+#import "@preview/shiroa:0.4.0": (
+  get-page-width, is-html-target, is-pdf-target, is-web-target, plain-text, shiroa-sys-target, templates, x-target,
+)
 #import templates: *
 #import "template-link.typ": *
 #import "/typ/templates/side-notes.typ": side-attrs
 
+/// The site theme to use. If we renders to static HTML, it is suggested to use `starlight`.
+/// otherwise, since `starlight` with dynamic SVG HTML is not supported, `mdbook` is used.
+/// The `is-html-target(exclude-wrapper: true)` is currently a bit internal so you shouldn't use it other place.
+#let web-theme = if is-html-target(exclude-wrapper: true) { "starlight" } else { "mdbook" }
+#let is-starlight-theme = web-theme == "starlight"
+
 // Metadata
 #let page-width = get-page-width()
+#let is-html-target = is-html-target()
 #let is-pdf-target = is-pdf-target()
 #let is-web-target = is-web-target()
+#let sys-is-html-target = ("html" in dictionary(std))
 
 // Theme (Colors)
 #let (
@@ -125,7 +135,7 @@
 // The project function defines how your document looks.
 // It takes your content and some metadata and formats it.
 // Go ahead and customize it to your liking!
-#let project(title: "Typst中文教程", authors: (), kind: "page", body) = {
+#let project(title: "Typst中文教程", description: auto, authors: (), kind: "page", body) = {
   let is-ref-page = kind == "reference-page"
   let is-page = kind == "page"
 
@@ -140,13 +150,9 @@
     numbering: if is-pdf-target {
       "1"
     },
-  )
-
-  // set web/pdf page properties
-  set page(
     number-align: center,
     width: page-width,
-  )
+  ) if not (sys-is-html-target or is-html-target)
 
   // remove margins for web target
   set page(
@@ -162,7 +168,25 @@
       rest: 0pt,
     ),
     height: auto,
-  ) if is-web-target
+  ) if is-web-target and not is-html-target
+
+  let template-args = arguments(
+    include "/src/book.typ",
+    title: title,
+    description: description,
+    plain-body: body,
+  )
+
+  // Applies a theme.
+  show: if web-theme == "starlight" {
+    import "@preview/shiroa-starlight:0.4.0": starlight
+    starlight.with(..template-args)
+  } else if web-theme == "mdbook" {
+    import "@preview/shiroa-mdbook:0.4.0": mdbook
+    mdbook.with(..template-args)
+  } else {
+    panic("Unknown web theme: " + web-theme)
+  }
 
   // set text style
   set text(
