@@ -34,7 +34,7 @@
 
 一个容易值得思考的问题是，如果我在文档的开始位置调用了#typst-func("state.final")方法，那么Typst要如何做才能把文档的最终状态返回给我呢？
 
-容易推测出，原来Typst并不会只对内容执行一遍「`typeset`」。仅考虑我们使用#typst-func("state.final")方法的情况。初始情况下#typst-func("state.final")方法会返回状态默认值，并完成一次布局。接下来的迭代，#typst-func("state.final")方法会返回上一次迭代布局完成时的。直到布局的内容不再发生变化。#typst-func("state.at")会导致相似的布局迭代，只不过情况更为复杂，这里便不再展开细节。
+容易推测出，原来Typst并不会只对内容执行一遍「`typeset`」。仅考虑我们使用#typst-func("state.final")方法的情况。初始情况下#typst-func("state.final")方法会返回状态默认值，并完成一次布局。接下来的迭代，#typst-func("state.final")方法会返回上一次迭代布局完成时的最终状态值，直到布局的内容不再发生变化。#typst-func("state.at")会导致相似的布局迭代，只不过情况更为复杂，这里便不再展开细节。
 
 所有对文档的查询都会导致布局的迭代：`query`函数可能会导致布局的迭代；`state.at`函数可能会导致布局的迭代；`state.final`函数一定会导致布局的迭代。
 
@@ -46,7 +46,9 @@
 
 == 时间维度 -- 控制流
 
+
 == 空间维度 -- 文档（内容）树
+
 
 // == 回顾其一
 
@@ -122,10 +124,6 @@
 // #locate(loc => query(heading.where(level: 2), loc))
 
 == 「here」<grammar-here>
-
-#todo-box[
-  修改以适配全面 context 化的 0.12+ 语法
-]
 
 有的时候我们会需要获取当前位置的「位置」信息。
 
@@ -653,14 +651,14 @@ for i in range(res-headings.len()) {
 思考下面函数：
 
 ```typ
-#let get-heading-at-page(loc) = {
+#let get-heading-at-page() = {
   let (headings, last-heading) = calc-headings(
-    query(heading.where(level: 2), loc))
-  headings.at(loc.page() - 1, default: last-heading)
+    query(heading.where(level: 2)))
+  headings.at(here().page() - 1, default: last-heading)
 }
 ```
 
-对于每个页面，它都运行```typc query(heading.where(level: 2), loc)```。显然每页的「位置」信息，即`loc`对应不相同。因此：
+对于每个页面，它都会运行一次`get-heading-at-page()`。因此：
 1. 它会*每页*都重新执行一遍`heading.where(level: 2)`查询。
 2. 同时，每次`query`都是对*全文档的线性扫描*。
 
@@ -713,29 +711,22 @@ s1: #context s1.get(), s2: #context s2.get()
 
 这提示我们需要在不同的文件之间维护全局状态的名称唯一性。
 
-另一个需要注意的是，`state`允许指定一个默认值，但是一个良好的状态设置必须保持不同文件之间的默认值相同。如下所示：
-
-#s.update(it => 1)
+另一个需要注意的是，`state`允许指定初始值，但同名状态共享的是更新操作序列，计算当前值时会各自从该变量指定的初始值出发。如下所示：
 
 #code(```typ
-#let s1 = state("my-state", 1)
+#let s1 = state("my-diff-state", 1)
 s1: #context s1.get() \
-#let s2 = state("my-state", 2)
+#let s2 = state("my-diff-state", 2)
 s1: #context s1.get(), s2: #context s2.get() \
 #s2.update(it => it + 1)
 s1: #context s1.get(), s2: #context s2.get()
 ```)
 
-尽管`s2`指定了状态的默认值为`2`，因为之前已经在文档中创建了该状态，默认值并不会应用。请注意：你不应该利用这个特性，该特性是Typst中的「未定义行为」。
+因此，一个良好的状态设置必须保持不同文件之间的初始值相同。
 
 == 「state.update」也是「内容」
 
-#todo-box[
-  不再有 `locate` 了, 此处需要修正
-]
-一个值得注意的地方是，似乎与#typst-func("locate")函数相似，#typst-func("state.update")也接收一个闭包。
-
-事实上，与#typst-func("locate")函数相同，#typst-func("state.update")也具备延迟执行的特性。
+一个值得注意的地方是，#typst-func("state.update")接收一个闭包，并且具备延迟执行的特性。
 
 让我们检查下列脚本的输出结果：
 
@@ -797,20 +788,13 @@ s1: #context s1.get()
 == 查询特定时间点的「状态」
 
 
-#todo-box[
-  `state.final` 不再需要 `loc` 了
-]
-
 Typst提供两个方法查询特定时间点的「状态」：
 
 一个方法是```typc state.at(loc)```方法，其接收一个「位置」，返回在该位置对应的状态「值」。
 
 另一个方法是```typc state.final()```方法，返回在文档结束一切排版时对应的状态「值」。
 
-熟悉的剧情再次发生了。让我们回想之前介绍#typst-func("query")时讲述的知识点。
-
-
-这两个方法都只能在#typst-func("context")内部调用。对于#typst-func("state.at")方法，其「位置」参数是有用的/*；对于#typst-func("state.final")方法，其「位置」参数仅仅作为「哑参数」*/。
+这两个方法都只能在#typst-func("context")内部调用。对于#typst-func("state.at")方法，其「位置」参数是有用的。
 
 我们回想上一小节，由于文档的每个位置「状态」都会存有对应的值，而且当你使用状态的时候至少会指定一个默认值，我们可以知道在我们文档的任意位置使用文档的任意其他位置的状态的内容。
 
@@ -823,8 +807,8 @@ Typst提供两个方法查询特定时间点的「状态」：
 首先，我们声明两个与法一类似的状态，只不过这次我们将状态定义在全局。
 
 ```typ
-#let first-heading = state("first-heading", ())
-#let last-heading = state("last-heading", ())
+#let first-heading = state("first-heading", (:))
+#let last-heading = state("last-heading", (:))
 ```
 
 然后，我们在每个二级标题后紧接着触发一个更新：
@@ -859,14 +843,14 @@ context first-heading.update(headings => {
 })
 ```
 
-对于每页靠后的一级标题，都不能使`if`条件成立。所以`str(here().page())`总是能对应到每页的第一个一级标题的内容。
+对于每页靠后的二级标题，都不能使`if`条件成立。所以`str(here().page())`总是能对应到每页的第一个二级标题的内容。
 
 接下来便是简单的查询了，我们回忆之前`get-heading-at-page`的逻辑，它首先判断是否存在本页的第一个标题，否则取前页的最后一个标题。以下函数完成了前半部分：
 
 ```typc
 let get-heading-at-page() = {
   let page-num = here().page()
-  let first-headings = first-heading.final(here())
+  let first-headings = first-heading.final()
 
   first-headings.at(str(page-num))
 }
@@ -908,6 +892,7 @@ let find-headings(headings, page-num) = if page-num > 0 {
   code-as: ```typ
   // 这里有get-heading-at-page的实现..
 
-  #set page(header: emph(get-heading-at-page()))
+  #set page(header: context emph(get-heading-at-page()))
   ```,
 )
+
