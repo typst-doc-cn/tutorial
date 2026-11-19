@@ -1,6 +1,6 @@
 #import "mod.typ": *
 
-#show: book.page.with(title: "文档树")
+#show: book.page.with(title: "文档模型")
 
 #todo-box[本节处于校对阶段，所以可能存在不完整或错误。]
 
@@ -332,16 +332,14 @@ Typst中一切皆组合，它将所有内容打包成「内容类型」的值以
 ```)
 
 #pro-tip[
-  这里的“部分信息”描述稍显模糊。具体来说，Typst只允许你直接访问元素中不受样式影响的信息，至少包含语法属性，而不允许你*直接*访问元素的样式。
+  这里的“部分信息”描述稍显模糊。具体来说，Typst只允许你直接访问元素中不受样式影响的信息，至少包含语法属性，而不允许你*直接*访问元素的样式。如下：
 
-  // 如下：
-
-  // #code.with(al: top)(````typ
-  // #let x = [= 123]
-  // #rect([#x <the-heading>])
-  // #x.fields() \
-  // #locate(loc => query(<the-heading>, loc))
-  // ````)
+  #code.with(al: top)(```typ
+  #let x = [= 123]
+  #rect([#x <the-heading>])
+  #x.fields() \
+  #context query(<the-heading>).first().fields()
+  ```)
 ]
 
 === 特性四：内容类型与`fields`相关的糖 <grammar-content-member-exp>
@@ -366,3 +364,4 @@ Typst提供了`at`方法帮助我们访问一个内容的`fields`中键对应的
 使用`at`方法：#(`www`.at("text")) \
 等同于访问`text`成员：#(`www`.text)
 ```)
+
