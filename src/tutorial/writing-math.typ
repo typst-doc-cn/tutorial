@@ -337,7 +337,7 @@ $ f(x) = cases(
 
 如果`cases`里的分数太小，可以把每一行转成`display`：
 
-#```typ
+```typ
 #let dcases(..args) = math.cases(
   ..args.pos().map(math.display),
   ..args.named(),
