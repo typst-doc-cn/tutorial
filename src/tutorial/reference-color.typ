@@ -133,7 +133,7 @@ A gradient can be used for the following purposes:
 
 A repeating pattern fill. #ref-bookmark[`tiling`]
 
-Typst supports the most common pattern type of tiled patterns, where a pattern is repeated in a grid-like fashion, covering the entire area of an element that is filled or stroked. The pattern is defined by a tile size and a body defining the content of each cell. You can also add horizontal or vertical spacing between the cells of the patterng.
+Typst supports the most common pattern type of tiled patterns, where a pattern is repeated in a grid-like fashion, covering the entire area of an element that is filled or stroked. The pattern is defined by a tile size and a body defining the content of each cell. You can also add horizontal or vertical spacing between the cells of the pattern.
 
 #code(```typ
 #let pat = tiling(size: (30pt, 30pt))[
